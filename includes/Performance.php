@@ -53,7 +53,9 @@ class Performance {
 		$this->hooks( $container );
 
 		$cacheManager = new CacheManager( $container );
-		new CachePurgingService( $cacheManager->getInstances() );
+		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+
+		$container->set( 'cachePurger', $cachePurger );
 
 	}
 
