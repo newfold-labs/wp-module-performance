@@ -10,14 +10,11 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function NewfoldLabs\WP\ModuleLoader\register;
 
-require __DIR__ . '/vendor/autoload.php';
-
 if ( function_exists( 'add_action' ) ) {
 
 	add_action(
 		'plugins_loaded',
 		function () {
-
 			register(
 				[
 					'name'     => 'performance',
