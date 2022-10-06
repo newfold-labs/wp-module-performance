@@ -97,6 +97,9 @@ function shouldCacheAssets() {
  * @param string $path
  */
 function removeDirectory( $path ) {
+	if ( ! is_dir( $path ) ) {
+		return;
+	}
 	$files = glob( $path . '/*' );
 	foreach ( $files as $file ) {
 		is_dir( $file ) ? removeDirectory( $file ) : unlink( $file );
