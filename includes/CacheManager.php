@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
-use wpscholar\Collection;
+use WP_Forge\Collection\Collection;
 
 class CacheManager {
 
