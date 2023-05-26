@@ -24,6 +24,20 @@ class Performance {
 	const OPTION_SKIP_404 = 'newfold_skip_404_handling';
 
 	/**
+	 * URL parameter used to purge the entire cache.
+	 *
+	 * @var string
+	 */
+	const PURGE_ALL = 'nfd_purge_all';
+
+	/**
+	 * URL parameter used to purge the cache for a specific URL.
+	 *
+	 * @var string
+	 */
+	const PURGE_URL = 'nfd_purge_url';
+
+	/**
 	 * The HTML ID of the section in the settings where performance options can be managed.
 	 */
 	const SETTINGS_ID = 'newfold-performance-settings';
@@ -43,7 +57,7 @@ class Performance {
 	/**
 	 * Constructor.
 	 *
-	 * @param Container $container
+	 * @param  Container  $container
 	 */
 	public function __construct( Container $container ) {
 
@@ -55,7 +69,14 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
+		// Ensure that purgeable cache types are enabled before showing the UI.
+		if ( $cachePurger->canPurge() ) {
+			add_action( 'admin_bar_menu', [ $this, 'adminBarMenu' ], 999 );
+		}
+
 		$container->set( 'cachePurger', $cachePurger );
+
+		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-caceh.php' ) );
 
 	}
 
@@ -80,22 +101,6 @@ class Performance {
 	 * Add hooks.
 	 */
 	public function hooks( Container $container ) {
-
-		// On deactivation, remove htaccess rules
-		register_deactivation_hook(
-			$container->plugin()->file,
-			function () {
-
-				Skip404::onDeactivation();
-				File::onDeactivation();
-				Browser::onDeactivation();
-
-				// Remove all headers from .htaccess
-				$responseHeaderManager = new ResponseHeaderManager();
-				$responseHeaderManager->removeAllHeaders();
-
-			}
-		);
 
 		add_action( 'admin_init', [ $this, 'registerSettings' ] );
 
@@ -138,7 +143,7 @@ class Performance {
 	/**
 	 * On cache level change, update the response headers.
 	 *
-	 * @param int|null $cacheLevel The cache level.
+	 * @param  int|null  $cacheLevel  The cache level.
 	 */
 	public function onCacheLevelChange( $cacheLevel ) {
 		/**
@@ -168,6 +173,59 @@ class Performance {
 		);
 
 		register_setting( 'general', self::OPTION_CACHE_LEVEL );
+	}
+
+	/**
+	 * Add options to the WordPress admin bar.
+	 *
+	 * @param  \WP_Admin_Bar  $wp_admin_bar
+	 */
+	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
+
+		// If the EPC MU plugin exists, don't add an extra cache clearing option.
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			return;
+		}
+
+		if ( current_user_can( 'manage_options' ) ) {
+
+			$wp_admin_bar->add_node(
+				[
+					'id'    => 'nfd_purge_menu',
+					'title' => __( 'Caching', 'newfold-module-performance' ),
+				]
+			);
+
+			$wp_admin_bar->add_node(
+				[
+					'id'     => 'nfd_purge_menu-purge_all',
+					'title'  => __( 'Purge All', 'newfold-module-performance' ),
+					'parent' => 'nfd_purge_menu',
+					'href'   => add_query_arg( [ self::PURGE_ALL => true ] ),
+				]
+			);
+
+			if ( ! is_admin() ) {
+				$wp_admin_bar->add_node(
+					[
+						'id'     => 'nfd_purge_menu-purge_single',
+						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+						'parent' => 'nfd_purge_menu',
+						'href'   => add_query_arg( [ self::PURGE_URL => true ] ),
+					]
+				);
+			}
+
+			$wp_admin_bar->add_node(
+				[
+					'id'     => 'nfd_purge_menu-cache_settings',
+					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
+					'parent' => 'nfd_purge_menu',
+					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+				]
+			);
+		}
+
 	}
 
 }

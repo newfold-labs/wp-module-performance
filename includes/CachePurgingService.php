@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use wpscholar\Url;
 
 class CachePurgingService {
 
@@ -17,17 +18,68 @@ class CachePurgingService {
 	/**
 	 * Constructor.
 	 *
-	 * @param CacheBase[] $cacheTypes
+	 * @param  CacheBase[]  $cacheTypes
 	 */
 	public function __construct( array $cacheTypes ) {
 
 		$this->cacheTypes = $cacheTypes;
 
-		add_action( 'transition_post_status', array( $this, 'onSavePost' ), 10, 3 );
-		add_action( 'edit_terms', array( $this, 'onEditTerm' ) );
-		add_action( 'comment_post', array( $this, 'onUpdateComment' ) );
-		add_action( 'updated_option', array( $this, 'onUpdateOption' ), 10, 3 );
-		add_action( 'wp_update_nav_menu', array( $this, 'purgeAll' ) );
+		if ( $this->canPurge() ) {
+
+			// Handle manual purge requests
+			add_action( 'init', [ $this, 'manualPurgeRequest' ] );
+
+			// Handle automatic purging
+			add_action( 'transition_post_status', array( $this, 'onSavePost' ), 10, 3 );
+			add_action( 'edit_terms', array( $this, 'onEditTerm' ) );
+			add_action( 'comment_post', array( $this, 'onUpdateComment' ) );
+			add_action( 'updated_option', array( $this, 'onUpdateOption' ), 10, 3 );
+			add_action( 'wp_update_nav_menu', array( $this, 'purgeAll' ) );
+
+		}
+	}
+
+	/**
+	 * Check if the cache can be purged.
+	 *
+	 * @return bool
+	 */
+	public function canPurge() {
+		foreach ( $this->cacheTypes as $instance ) {
+			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Listens for purge actions and handles based on type.
+	 */
+	public function manualPurgeRequest() {
+
+		$purgeAll = Performance::PURGE_ALL;
+		$purgeUrl = Performance::PURGE_URL;
+
+		if ( ( isset( $_GET[ $purgeAll ] ) || isset( $_GET[ $purgeUrl ] ) ) && is_user_logged_in() && current_user_can( 'manage_options' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+
+			$url = new Url();
+			$url->removeQueryVar( $purgeAll );
+			$url->removeQueryVar( $purgeUrl );
+
+			if ( isset( $_GET[ $purgeAll ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$this->purgeAll();
+			} else {
+				$this->purgeUrl( Url::stripQueryString( $url ) );
+			}
+			wp_safe_redirect(
+				$url,
+				302,
+				'Newfold File Caching'
+			);
+			exit;
+		}
 	}
 
 	/**
@@ -47,7 +99,7 @@ class CachePurgingService {
 	/**
 	 * Purge a specific URL.
 	 *
-	 * @param string $url The URL to be purged.
+	 * @param  string  $url  The URL to be purged.
 	 */
 	public function purgeUrl( $url ) {
 		foreach ( $this->cacheTypes as $instance ) {
@@ -63,9 +115,9 @@ class CachePurgingService {
 	/**
 	 * Purge appropriate caches when a post is updated.
 	 *
-	 * @param string   $oldStatus The previous post status
-	 * @param string   $newStatus The new post status
-	 * @param \WP_Post $post      The post object of the edited or created post
+	 * @param  string  $oldStatus  The previous post status
+	 * @param  string  $newStatus  The new post status
+	 * @param  \WP_Post  $post  The post object of the edited or created post
 	 */
 	public function onSavePost( $oldStatus, $newStatus, \WP_Post $post ) {
 
@@ -114,7 +166,7 @@ class CachePurgingService {
 	/**
 	 * Purge taxonomy term URL when a term is updated.
 	 *
-	 * @param int $termId Term ID
+	 * @param  int  $termId  Term ID
 	 */
 	public function onEditTerm( $termId ) {
 		$url = get_term_link( $termId );
@@ -126,7 +178,7 @@ class CachePurgingService {
 	/**
 	 * Purge a single post when a comment is updated.
 	 *
-	 * @param int $commentId ID of the comment.
+	 * @param  int  $commentId  ID of the comment.
 	 */
 	public function onUpdateComment( $commentId ) {
 		$comment = get_comment( $commentId );
@@ -252,7 +304,7 @@ class CachePurgingService {
 	/**
 	 * Checks if a taxonomy is public.
 	 *
-	 * @param string $taxonomy Taxonomy name.
+	 * @param  string  $taxonomy  Taxonomy name.
 	 *
 	 * @return boolean
 	 */

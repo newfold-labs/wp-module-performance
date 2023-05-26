@@ -18,7 +18,7 @@ class CacheManager {
 	/**
 	 * Constructor.
 	 *
-	 * @param string[] $supportedCacheTypes Cache types supported by the plugin
+	 * @param  string[]  $supportedCacheTypes  Cache types supported by the plugin
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
@@ -31,9 +31,12 @@ class CacheManager {
 	 */
 	protected function classMap() {
 		return [
-			'browser' => __NAMESPACE__ . '\\CacheTypes\\Browser',
-			'file'    => __NAMESPACE__ . '\\CacheTypes\\File',
-			'skip404' => __NAMESPACE__ . '\\CacheTypes\\Skip404',
+			'browser'    => __NAMESPACE__ . '\\CacheTypes\\Browser',
+			'cloudflare' => __NAMESPACE__ . '\\CacheTypes\\Cloudflare',
+			'file'       => __NAMESPACE__ . '\\CacheTypes\\File',
+			'nginx'      => __NAMESPACE__ . '\\CacheTypes\\Nginx',
+			'sitelock'   => __NAMESPACE__ . '\\CacheTypes\\Sitelock',
+			'skip404'    => __NAMESPACE__ . '\\CacheTypes\\Skip404',
 		];
 	}
 

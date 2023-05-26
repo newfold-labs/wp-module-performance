@@ -31,23 +31,9 @@ class File extends CacheBase implements Purgeable {
 	const MARKER = 'Newfold File Cache';
 
 	/**
-	 * URL parameter used to purge the entire cache.
-	 *
-	 * @var string
-	 */
-	const PURGE_ALL = 'nfd_purge_all';
-
-	/**
-	 * URL parameter used to purge the cache for a specific URL.
-	 *
-	 * @var string
-	 */
-	const PURGE_URL = 'nfd_purge_url';
-
-	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container
+	 * @param  Container  $container
 	 *
 	 * @return bool
 	 */
@@ -63,33 +49,7 @@ class File extends CacheBase implements Purgeable {
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, [ __CLASS__, 'maybeAddRules' ] );
 
 		add_action( 'init', [ $this, 'maybeGeneratePageCache' ] );
-		add_action( 'init', [ $this, 'handlePurgeRequests' ] );
 		add_action( 'newfold_update_htaccess', [ $this, 'onRewrite' ] );
-		add_action( 'admin_bar_menu', [ $this, 'adminBarMenu' ], 999 );
-	}
-
-	/**
-	 * Listens for purge actions and handles based on type.
-	 */
-	public function handlePurgeRequests() {
-		if ( ( isset( $_GET[ self::PURGE_ALL ] ) || isset( $_GET[ self::PURGE_URL ] ) ) && is_user_logged_in() && current_user_can( 'manage_options' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-
-			$url = new Url();
-			$url->removeQueryVar( self::PURGE_ALL );
-			$url->removeQueryVar( self::PURGE_URL );
-
-			if ( isset( $_GET[ self::PURGE_ALL ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$this->purgeAll();
-			} else {
-				$this->purgeUrl( Url::stripQueryString( $url ) );
-			}
-			wp_safe_redirect(
-				$url,
-				302,
-				'Newfold File Caching'
-			);
-			exit;
-		}
 	}
 
 	/**
@@ -102,7 +62,7 @@ class File extends CacheBase implements Purgeable {
 	/**
 	 * Determine whether to add or remove rules based on caching level.
 	 *
-	 * @param int $cacheLevel The caching level.
+	 * @param  int  $cacheLevel  The caching level.
 	 */
 	public static function maybeAddRules( $cacheLevel ) {
 		absint( $cacheLevel ) > 1 ? self::addRules() : self::removeRules();
@@ -160,7 +120,7 @@ HTACCESS;
 	/**
 	 * Write page content to cache.
 	 *
-	 * @param string $content Page content to be cached.
+	 * @param  string  $content  Page content to be cached.
 	 *
 	 * @return string
 	 */
@@ -313,13 +273,15 @@ HTACCESS;
 	/**
 	 * Purge a specific URL from the cache.
 	 *
-	 * @param string $url
+	 * @param  string  $url
 	 */
 	public function purgeUrl( $url ) {
 		$path = $this->getStoragePathForRequest();
 
 		if ( trailingslashit( self::CACHE_DIR ) === $path ) {
-			unlink( self::CACHE_DIR . '/_index.html' );
+			if ( file_exists( self::CACHE_DIR . '/_index.html' ) ) {
+				unlink( self::CACHE_DIR . '/_index.html' );
+			}
 
 			return;
 		}
@@ -342,54 +304,6 @@ HTACCESS;
 		}
 
 		return $path;
-	}
-
-	/**
-	 * Add options to the WordPress admin bar.
-	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar
-	 */
-	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
-
-		if ( current_user_can( 'manage_options' ) ) {
-
-			$wp_admin_bar->add_node(
-				[
-					'id'    => 'nfd_purge_menu',
-					'title' => __( 'Caching', 'newfold-module-performance' ),
-				]
-			);
-
-			$wp_admin_bar->add_node(
-				[
-					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'newfold-module-performance' ),
-					'parent' => 'nfd_purge_menu',
-					'href'   => add_query_arg( [ self::PURGE_ALL => true ] ),
-				]
-			);
-
-			if ( ! is_admin() ) {
-				$wp_admin_bar->add_node(
-					[
-						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
-						'parent' => 'nfd_purge_menu',
-						'href'   => add_query_arg( [ self::PURGE_URL => true ] ),
-					]
-				);
-			}
-
-			$wp_admin_bar->add_node(
-				[
-					'id'     => 'nfd_purge_menu-cache_settings',
-					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
-					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
-				]
-			);
-		}
-
 	}
 
 	/**
