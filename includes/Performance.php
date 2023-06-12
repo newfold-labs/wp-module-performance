@@ -76,7 +76,7 @@ class Performance {
 
 		$container->set( 'cachePurger', $cachePurger );
 
-		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-caceh.php' ) );
+		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 
 	}
 
