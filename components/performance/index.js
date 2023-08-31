@@ -37,7 +37,7 @@ const Performance = ({methods, constants, Components, ...props}) => {
 
 	return (
         <>
-            <Components.SectionContent separator={true} className={'newfold-performance'}>
+            <Components.SectionContent separator={true} className={'newfold-cache-settings'}>
                 <CacheSettings
                     methods={methods}
                     constants={constants}

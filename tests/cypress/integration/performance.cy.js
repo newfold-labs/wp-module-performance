@@ -1,6 +1,7 @@
 // <reference types="Cypress" />
 
 describe('Performance Page', function () {
+	let appClass = '.' + Cypress.env('appId');
 
 	before(() => {
 		cy.visit('/wp-admin/admin.php?page=' + Cypress.env('pluginId') + '#/performance');
@@ -10,73 +11,51 @@ describe('Performance Page', function () {
 
 	it('Is Accessible', () => {
 		cy.wait(500);
-		cy.checkA11y('.wppbh-app-body');
+		cy.checkA11y( appClass + '-app-body');
 	});
 
 	it('Has Cache Settings', () => {
-		cy
-			.get('.cache-options')
+		cy.get('.newfold-cache-settings')
 			.scrollIntoView()
 			.should('be.visible');
 	});
 
 	it('Has Clear Cache Settings', () => {
-		cy
-			.get('.clear-cache')
+		cy.get('.newfold-clear-cache')
 			.scrollIntoView()
 			.should('be.visible');
 	});
 
 	it('Clear Cache Disabled when Cache is Disabled', () => {
 
-		cy
-			.get('input[type="radio"]#cache-level-0').check();
+		cy.get('input[type="radio"]#cache-level-0').check();
 
 		cy.wait(500);
 
-		cy
-			.get('.clear-cache-button')
+		cy.get('.clear-cache-button')
 			.scrollIntoView()
-			.should('have.class', 'disabled');
+			.should('have.attr', 'disabled');
 
 		cy.get('input[type="radio"]#cache-level-1').check();
 
-		cy
-			.get('.clear-cache-button')
+		cy.get('.clear-cache-button')
 			.scrollIntoView()
-			.should('not.have.class', 'disabled');
+			.should('not.have.attr', 'disabled');
 		
-		cy
-			.get('.edit-site-notices .components-snackbar__content')
-			.contains('div', 'Cache')
-			.should('be.visible');
+		cy.get('.nfd-notifications')
+            .contains('p', 'Cache')
+            .should('be.visible');
 	});
 
-	// this is no longer in place
-	it.skip('Settings Callout Navigates to Settings Page', () => {
-		cy.hash().should('eq', '#/performance');
-		cy.get('a.callout-link-settings').click();
-		cy.wait(500);
-		cy.hash().should('eq', '#/settings');
-		cy.get('a.callout-link-performance').click();
-		cy.wait(500);
-		cy.hash().should('eq', '#/performance');
-		cy
-			.get('.card-cache-settings')
-			.should('be.visible');
+	it('Clear Cache Button Functions', () => {
+		
+		cy.get('.clear-cache-button').click();
+
+			
+		cy.get('.nfd-notifications')
+            .contains('p', 'Cache cleared')
+            .should('be.visible');
+			
 	});
-
-	// can't test clear cache without endurance page cache being installed
-	// how to do in cypress env?
-	// it('Clear Cache Button Functions', () => {
-	// 	cy
-	// 		.get('.card-clear-cache button')
-	// 		.click();
-
-	// 	cy
-	// 		.get('.edit-site-notices .components-snackbar__content')
-	// 		.contains('div', 'Cache cleared')
-	// 		.should('be.visible');
-	// });
 
 });
