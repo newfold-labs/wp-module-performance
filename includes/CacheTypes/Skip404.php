@@ -36,13 +36,15 @@ class Skip404 extends CacheBase {
 		new OptionListener( Performance::OPTION_SKIP_404, [ __CLASS__, 'maybeAddRules' ] );
 
 		add_filter( 'newfold_update_htaccess', [ $this, 'onUpdateHtaccess' ] );
-		add_action( 'admin_init', [ $this, 'registerSettings' ] );
+		add_action( 'admin_init', [ $this, 'registerSettings' ], 11 );
 	}
 
 	/**
 	 * Register our setting to the main performance settings section.
 	 */
 	public function registerSettings() {
+
+		global $wp_settings_fields;
 
 		add_settings_field(
 			Performance::OPTION_SKIP_404,
@@ -54,6 +56,12 @@ class Skip404 extends CacheBase {
 
 		register_setting( 'general', Performance::OPTION_SKIP_404 );
 
+		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'epc_skip_404_handling' );
+		}
+
 	}
 
 	/**
@@ -61,6 +69,12 @@ class Skip404 extends CacheBase {
 	 */
 	public function onUpdateHtaccess() {
 		self::maybeAddRules( getSkip404Option() );
+
+		// Remove the old option from EPC, if it exists
+		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'epc_skip_404_handling', 0 ) ) ) {
+			update_option( 'epc_skip_404_handling', 0 );
+			delete_option( 'epc_skip_404_handling' );
+		}
 	}
 
 	/**

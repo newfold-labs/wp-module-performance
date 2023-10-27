@@ -57,7 +57,7 @@ class Performance {
 	/**
 	 * Constructor.
 	 *
-	 * @param  Container  $container
+	 * @param Container $container
 	 */
 	public function __construct( Container $container ) {
 
@@ -71,7 +71,7 @@ class Performance {
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', [ $this, 'adminBarMenu' ], 999 );
+			add_action( 'admin_bar_menu', [ $this, 'adminBarMenu' ], 100 );
 		}
 
 		$container->set( 'cachePurger', $cachePurger );
@@ -102,7 +102,7 @@ class Performance {
 	 */
 	public function hooks( Container $container ) {
 
-		add_action( 'admin_init', [ $this, 'registerSettings' ] );
+		add_action( 'admin_init', [ $this, 'registerSettings' ], 11 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, [ $this, 'onCacheLevelChange' ] );
 
@@ -143,7 +143,7 @@ class Performance {
 	/**
 	 * On cache level change, update the response headers.
 	 *
-	 * @param  int|null  $cacheLevel  The cache level.
+	 * @param int|null $cacheLevel The cache level.
 	 */
 	public function onCacheLevelChange( $cacheLevel ) {
 		/**
@@ -151,9 +151,17 @@ class Performance {
 		 */
 		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
 		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
+
+		// Remove the old option from EPC, if it exists
+		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
+			update_option( 'endurance_cache_level', 0 );
+			delete_option( 'endurance_cache_level' );
+		}
 	}
 
 	public function registerSettings() {
+
+		global $wp_settings_fields;
 
 		$section_name = self::SETTINGS_SECTION;
 
@@ -173,18 +181,24 @@ class Performance {
 		);
 
 		register_setting( 'general', self::OPTION_CACHE_LEVEL );
+
+		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'endurance_cache_level' );
+		}
 	}
 
 	/**
 	 * Add options to the WordPress admin bar.
 	 *
-	 * @param  \WP_Admin_Bar  $wp_admin_bar
+	 * @param \WP_Admin_Bar $wp_admin_bar
 	 */
 	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
 
-		// If the EPC MU plugin exists, don't add an extra cache clearing option.
+		// If the EPC MU plugin exists, remove its cache clearing options.
 		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
-			return;
+			$wp_admin_bar->remove_node( 'epc_purge_menu' );
 		}
 
 		if ( current_user_can( 'manage_options' ) ) {
