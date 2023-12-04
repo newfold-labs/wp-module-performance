@@ -1,6 +1,6 @@
-import { Button } from "@newfold/ui-component-library";
+import { Button, Container } from "@newfold/ui-component-library";
 
-const ClearCache = ({ methods, constants, Components }) => {
+const ClearCache = ({ methods, constants }) => {
 
     const clearCache = () => {
         methods.newfoldPurgeCacheApiFetch(
@@ -19,7 +19,7 @@ const ClearCache = ({ methods, constants, Components }) => {
     };
 
     return (
-        <Components.SectionSettings
+        <Container.SettingsField
             title={constants.text.clearCacheTitle}
             description={constants.text.clearCacheDescription}
         >
@@ -31,7 +31,7 @@ const ClearCache = ({ methods, constants, Components }) => {
                 >
                 {constants.text.clearCacheButton}
             </Button>
-        </Components.SectionSettings>
+        </Container.SettingsField>
             
     );
 ;}

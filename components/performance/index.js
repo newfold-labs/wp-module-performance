@@ -1,3 +1,4 @@
+import { Container } from '@newfold/ui-component-library';
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
 import { default as defaultText } from './defaultText';
@@ -37,20 +38,19 @@ const Performance = ({methods, constants, Components, ...props}) => {
 
 	return (
         <>
-            <Components.SectionContent separator={true} className={'newfold-cache-settings'}>
+            <Container.Block separator={true} className={'newfold-cache-settings'}>
                 <CacheSettings
                     methods={methods}
                     constants={constants}
                     Components={Components}
                 />
-            </Components.SectionContent>
-            <Components.SectionContent className={'newfold-clear-cache'}>
+            </Container.Block>
+            <Container.Block className={'newfold-clear-cache'}>
                 <ClearCache
                     methods={methods}
                     constants={constants}
-                    Components={Components}
                 />
-            </Components.SectionContent>
+            </Container.Block>
         </>
 	);
 

@@ -1,4 +1,4 @@
-import { RadioGroup } from "@newfold/ui-component-library";
+import { Container, RadioGroup } from "@newfold/ui-component-library";
 
 const CacheSettings = ({ methods, constants, Components }) => {
     const [ cacheLevel, setCacheLevel ] = methods.useState(constants.store.cacheLevel);
@@ -63,7 +63,7 @@ const CacheSettings = ({ methods, constants, Components }) => {
     }, [cacheLevel]);
 
     return (
-        <Components.SectionSettings
+        <Container.SettingsField
             title={constants.text.cacheLevelTitle}
             description={constants.text.cacheLevelDescription}
         >
@@ -91,7 +91,7 @@ const CacheSettings = ({ methods, constants, Components }) => {
                 );
             })}
         </RadioGroup>
-        </Components.SectionSettings>
+        </Container.SettingsField>
     );
 }
 
