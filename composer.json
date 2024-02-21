@@ -17,9 +17,19 @@
       "bootstrap.php"
     ]
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://newfold-labs.github.io/satis/",
+      "only": [
+        "newfold-labs/*"
+      ]
+    }
+  ],
   "require": {
+    "newfold-labs/wp-module-context": "^0.3.0",
+    "wp-forge/collection": "^1.0",
     "wp-forge/wp-htaccess-manager": "^1.0",
-    "wpscholar/url": "^1.2",
-    "wp-forge/collection": "^1.0"
+    "wpscholar/url": "^1.2"
   }
 }
