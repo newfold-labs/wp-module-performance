@@ -7,8 +7,8 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
-
 use wpscholar\Url;
+
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function NewfoldLabs\WP\Module\Performance\removeDirectory;
 use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
@@ -299,7 +299,7 @@ HTACCESS;
 
 		if ( ! isset( $path ) ) {
 			$url      = new Url();
-			$basePath = wp_parse_url( home_url(), PHP_URL_PATH );
+			$basePath = wp_parse_url( home_url('/'), PHP_URL_PATH );
 			$path     = trailingslashit( self::CACHE_DIR . str_replace( $basePath, '', esc_url( $url->path ) ) );
 		}
 
