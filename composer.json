@@ -27,7 +27,7 @@
     }
   ],
   "require": {
-    "newfold-labs/wp-module-context": "^0.3.0",
+    "newfold-labs/wp-module-context": "^1.0",
     "wp-forge/collection": "^1.0",
     "wp-forge/wp-htaccess-manager": "^1.0",
     "wpscholar/url": "^1.2"
