@@ -10,6 +10,7 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function NewfoldLabs\WP\ModuleLoader\register;
+use function NewfoldLabs\WP\Context\getContext;
 
 if ( function_exists( 'add_action' ) ) {
 
@@ -21,6 +22,9 @@ if ( function_exists( 'add_action' ) ) {
 					'name'     => 'performance',
 					'label'    => __( 'Performance', 'newfold' ),
 					'callback' => function ( Container $container ) {
+						if ( 'atomic' === getContext( 'platform' ) ) {
+							return;
+						}
 						new Performance( $container );
 					},
 					'isActive' => true,
@@ -34,7 +38,10 @@ if ( function_exists( 'add_action' ) ) {
 	add_action(
 		'newfold_container_set',
 		function ( Container $container ) {
-
+			if ( 'atomic' === getContext( 'platform' ) ) {
+				return;
+			}
+			
 			register_activation_hook(
 				$container->plugin()->file,
 				function () use ( $container ) {
