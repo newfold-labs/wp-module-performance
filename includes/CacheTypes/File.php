@@ -21,7 +21,7 @@ class File extends CacheBase implements Purgeable {
 	 *
 	 * @var string
 	 */
-	const CACHE_DIR = WP_CONTENT_DIR . '/newfold-page-cache';
+	const CACHE_DIR = WP_CONTENT_DIR . '/newfold-page-cache/';
 
 	/**
 	 * The file marker name.
