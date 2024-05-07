@@ -13,7 +13,8 @@
       "NewfoldLabs\\WP\\Module\\Performance\\": "includes"
     },
     "files": [
-      "includes/functions.php"
+      "includes/functions.php",
+      "bootstrap.php"
     ]
   },
   "repositories": [
