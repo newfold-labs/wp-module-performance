@@ -11,7 +11,7 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
-use function NewfoldLabs\WP\ModuleLoader\register;
+use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
 /**
  * Child class for a feature
@@ -39,18 +39,7 @@ class PerformanceFeature extends \NewfoldLabs\WP\Module\Features\Feature {
             add_action(
                 'plugins_loaded',
                 function () {
-                    register(
-                        [
-                            'name'     => 'performance',
-                            'label'    => __( 'Performance', 'newfold' ),
-                            'callback' => function ( Container $container ) {
-                                new Performance( $container );
-                            },
-                            'isActive' => true,
-                            'isHidden' => true,
-                        ]
-                    );
-
+                    new Performance( getContainer() );
                 }
             );
 
