@@ -19,13 +19,13 @@ class PerformanceFeatureHooks {
 	public function hooks() {
 
         // Filter vale based on context
-        add_filter( 'newfold/features/filter/isEnabled:performance', array( $this, 'filterValue' ) );
+        \add_filter( 'newfold/features/filter/isEnabled:performance', array( $this, 'filterValue' ) );
 
         // Force disable based on context
-        add_action( 'newfold/features/action/onEnable:performance', array( $this, 'maybeDisable' ) );
+        \add_action( 'newfold/features/action/onEnable:performance', array( $this, 'maybeDisable' ) );
 
         // Check if should disable on setup
-        add_action( 'after_setup_theme', array( $this, 'maybeDisable' ) );
+        \add_action( 'after_setup_theme', array( $this, 'maybeDisable' ) );
 
     }
 
