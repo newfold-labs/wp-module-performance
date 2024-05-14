@@ -10,7 +10,7 @@ class PerformanceFeatureHooks {
 	 * Constructor.
 	 */
 	public function __construct() {
-        $this->hooks();
+        \add_action( 'plugins_loaded', array( $this, 'hooks' ) );
     }
 
     /**
