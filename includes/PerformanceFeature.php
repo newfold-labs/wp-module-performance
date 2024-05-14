@@ -20,17 +20,23 @@ use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
  * Child class naming convention is {FeatureName}Feature.
  */
 class PerformanceFeature extends \NewfoldLabs\WP\Module\Features\Feature {
+
     /**
      * The feature name.
      *
      * @var string
      */
     protected $name = 'performance';
+
+	/**
+	 * The feature value. Defaults to on.
+	 *
+	 * @var boolean
+	 */
     protected $value = true; // default to on
 
     /**
-     * Initialize performance feature
-     * 
+     * Initialize performance feature.
      */
     public function initialize() {
         if ( function_exists( 'add_action' ) ) {
@@ -78,8 +84,6 @@ class PerformanceFeature extends \NewfoldLabs\WP\Module\Features\Feature {
                     );
                 }
             );
-
         }
     }
-
 }
