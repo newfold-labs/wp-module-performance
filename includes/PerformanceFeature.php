@@ -62,7 +62,6 @@ class PerformanceFeature extends \NewfoldLabs\WP\Module\Features\Feature {
 							// Add headers to .htaccess
 							$responseHeaderManager = new ResponseHeaderManager();
 							$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( getCacheLevel() ) );
-		
 						}
 					);
 					register_deactivation_hook(
