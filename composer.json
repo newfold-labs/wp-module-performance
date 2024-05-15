@@ -13,6 +13,7 @@
       "NewfoldLabs\\WP\\Module\\Performance\\": "includes"
     },
     "files": [
+      "includes/PerformanceFeature.php",
       "includes/functions.php",
       "bootstrap.php"
     ]
