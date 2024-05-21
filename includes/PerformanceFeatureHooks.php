@@ -19,18 +19,19 @@ class PerformanceFeatureHooks {
 	 */
 	public function __construct() {
 		if ( function_exists( 'add_action' ) ) {
-			add_action( 'newfold_container_set', array( $this, 'pluginHooks') );
+			add_action( 'newfold_container_set', array( $this, 'pluginHooks' ) );
 			add_action( 'plugins_loaded', array( $this, 'hooks' ) );
 		}
 	}
 
 	/**
 	 * Hooks for plugin activation/deactivation
+	 * 
+	 * @param Container $container from the plugin
 	 */
 	public function pluginHooks( Container $container ) {
 		register_activation_hook( $container->plugin()->file, array( $this, 'onActivation' ) );
 		register_deactivation_hook( $container->plugin()->file, array( $this, 'onDeactivation' ) );
-		
 	}
 
 	/**
