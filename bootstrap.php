@@ -2,6 +2,11 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-require_once __DIR__ . '/includes/PerformanceFeature.php';
+add_filter( 
+    'newfold/features/filter/register', 
+    function( $features ) { 
+        return array_merge( $features, array( PerformanceFeature::class ) );
+    }
+);
 
 new PerformanceFeatureHooks();
