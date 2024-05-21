@@ -1,7 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance;
 
-
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
@@ -9,10 +8,6 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
-use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
-use function NewfoldLabs\WP\Context\getContext;
-use function NewfoldLabs\WP\Module\Features\disable as disableFeature;
-use function NewfoldLabs\WP\Module\Features\isEnabled;
 
 /**
  * This class adds performance feature hooks.
@@ -25,6 +20,7 @@ class PerformanceFeatureHooks {
 	public function __construct() {
 		if ( function_exists( 'add_action' ) ) {
 			add_action( 'newfold_container_set', array( $this, 'pluginHooks') );
+			add_action( 'plugins_loaded', array( $this, 'hooks' ) );
 		}
 	}
 
@@ -34,6 +30,15 @@ class PerformanceFeatureHooks {
 	public function pluginHooks( Container $container ) {
 		register_activation_hook( $container->plugin()->file, array( $this, 'onActivation' ) );
 		register_deactivation_hook( $container->plugin()->file, array( $this, 'onDeactivation' ) );
+		
+	}
+
+	/**
+	 * Add hooks.
+	 */
+	public function hooks() {
+		add_action( 'newfold/features/action/onEnable:performance', array( $this, 'onActivation' ) );
+		add_action( 'newfold/features/action/onDisable:performance', array( $this, 'onDeactivation' ) );
 	}
 
 	/**
