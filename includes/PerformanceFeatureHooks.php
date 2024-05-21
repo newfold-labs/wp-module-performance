@@ -26,7 +26,7 @@ class PerformanceFeatureHooks {
 
 	/**
 	 * Hooks for plugin activation/deactivation
-	 * 
+	 *
 	 * @param Container $container from the plugin
 	 */
 	public function pluginHooks( Container $container ) {
