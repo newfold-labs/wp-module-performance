@@ -15,6 +15,8 @@ class ResponseHeaderManager {
 	 */
 	const MARKER = 'Newfold Headers';
 
+	public $htaccess;
+
 	/**
 	 * Constructor.
 	 */
