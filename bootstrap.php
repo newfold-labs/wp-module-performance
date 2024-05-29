@@ -1,78 +1,14 @@
 <?php
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Cloudflare;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
-use NewfoldLabs\WP\Module\Performance\Performance;
-use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
-use NewfoldLabs\WP\ModuleLoader\Container;
+namespace NewfoldLabs\WP\Module\Performance;
 
-use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
-use function NewfoldLabs\WP\ModuleLoader\register;
-use function NewfoldLabs\WP\Context\getContext;
-
-if ( function_exists( 'add_action' ) ) {
-
-	add_action(
-		'plugins_loaded',
-		function () {
-			register(
-				[
-					'name'     => 'performance',
-					'label'    => __( 'Performance', 'newfold' ),
-					'callback' => function ( Container $container ) {
-						if ( 'atomic' === getContext( 'platform' ) ) {
-							return;
-						}
-						new Performance( $container );
-					},
-					'isActive' => true,
-					'isHidden' => true,
-				]
-			);
-
+if ( function_exists( 'add_filter' ) ) {
+	add_filter(
+		'newfold/features/filter/register',
+		function ( $features ) {
+			return array_merge( $features, array( PerformanceFeature::class ) );
 		}
 	);
-
-	add_action(
-		'newfold_container_set',
-		function ( Container $container ) {
-			if ( 'atomic' === getContext( 'platform' ) ) {
-				return;
-			}
-			
-			register_activation_hook(
-				$container->plugin()->file,
-				function () use ( $container ) {
-
-					Skip404::onActivation();
-					File::onActivation();
-					Browser::onActivation();
-
-					// Add headers to .htaccess
-					$responseHeaderManager = new ResponseHeaderManager();
-					$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( getCacheLevel() ) );
-
-				}
-			);
-
-			register_deactivation_hook(
-				$container->plugin()->file,
-				function () use ( $container ) {
-
-					Skip404::onDeactivation();
-					File::onDeactivation();
-					Browser::onDeactivation();
-
-					// Remove all headers from .htaccess
-					$responseHeaderManager = new ResponseHeaderManager();
-					$responseHeaderManager->removeAllHeaders();
-
-				}
-			);
-
-		}
-	);
-
 }
+
+new PerformanceFeatureHooks();
