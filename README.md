@@ -48,8 +48,15 @@ A module for managing caching functionality.
  composer require newfold-labs/wp-module-performance
  ```
 
+### 3. Instantiate the Features singleton to load all features.
+
+```
+Features::getInstance();
+```
+
 [More on NewFold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
 
+[More on the NewFold Features Modules](https://github.com/newfold-labs/wp-module-features)
 
 ## TODO
 
