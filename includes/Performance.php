@@ -130,7 +130,8 @@ class Performance {
 		);
 
 		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
-		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );  
+		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
+		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
 	}
 
 	/**
@@ -146,6 +147,29 @@ class Performance {
 	 */
 	public function nfd_asr_default( $retention_period ) {
 		return 5 * constant( 'DAY_IN_SECONDS' );
+	}
+
+	/**
+	 * Increase the batch size for the cleanup process from default of 20 to 1000.
+	 *
+	 * @hooked action_scheduler_cleanup_batch_size
+	 * @see ActionScheduler_QueueCleaner::get_batch_size()
+	 *
+	 * @param int $batch_size Existing batch size; default is 20.
+	 *
+	 * @return int 1000 when running the cleanup process, otherwise the existing batch size.
+	 */
+	public function nfd_as_cleanup_batch_size( $batch_size ) {
+		/**
+		 * Apply only to {@see ActionScheduler_QueueCleaner::delete_old_actions()} and not to
+		 * {@see ActionScheduler_QueueCleaner::reset_timeouts()} or
+		 * {@see ActionScheduler_QueueCleaner::mark_failures()} batch sizes.
+		 */
+		if ( ! did_filter( 'action_scheduler_retention_period' ) ) {
+			return $batch_size;
+		}
+
+		return 1000;
 	}
 
 	/**
