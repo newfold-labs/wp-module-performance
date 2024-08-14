@@ -71,7 +71,7 @@ class Performance {
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', [ $this, 'adminBarMenu' ], 100 );
+			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		}
 
 		$container->set( 'cachePurger', $cachePurger );
@@ -102,9 +102,9 @@ class Performance {
 	 */
 	public function hooks( Container $container ) {
 
-		add_action( 'admin_init', [ $this, 'registerSettings' ], 11 );
+		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
-		new OptionListener( self::OPTION_CACHE_LEVEL, [ $this, 'onCacheLevelChange' ] );
+		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
 		/**
 		 * On CLI requests, mod_rewrite is unavailable, so it fails to update
@@ -129,7 +129,7 @@ class Performance {
 			}
 		);
 
-		add_action( 'after_mod_rewrite_rules', [ $this, 'onRewrite' ] );
+		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );  
 	}
 
@@ -213,42 +213,40 @@ class Performance {
 		if ( current_user_can( 'manage_options' ) ) {
 
 			$wp_admin_bar->add_node(
-				[
+				array(
 					'id'    => 'nfd_purge_menu',
 					'title' => __( 'Caching', 'newfold-module-performance' ),
-				]
+				)
 			);
 
 			$wp_admin_bar->add_node(
-				[
+				array(
 					'id'     => 'nfd_purge_menu-purge_all',
 					'title'  => __( 'Purge All', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => add_query_arg( [ self::PURGE_ALL => true ] ),
-				]
+					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
+				)
 			);
 
 			if ( ! is_admin() ) {
 				$wp_admin_bar->add_node(
-					[
+					array(
 						'id'     => 'nfd_purge_menu-purge_single',
 						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   => add_query_arg( [ self::PURGE_URL => true ] ),
-					]
+						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+					)
 				);
 			}
 
 			$wp_admin_bar->add_node(
-				[
+				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
-				]
+				)
 			);
 		}
-
 	}
-
 }
