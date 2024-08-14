@@ -130,9 +130,18 @@ class Performance {
 		);
 
 		add_action( 'after_mod_rewrite_rules', [ $this, 'onRewrite' ] );
-
+		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );  
 	}
 
+	/**
+	 * Update the default action scheduler retention period to 5 days instead of 30.
+	 * The actions scheduler table tends to grow to gigantic sizes and this should help.
+	 * 
+	 * @return int new retention period
+	 */
+	function nfd_asr_default() {  
+		return 5 * DAY_IN_SECONDS;  
+	}
 	/**
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
 	 */
