@@ -136,12 +136,18 @@ class Performance {
 	/**
 	 * Update the default action scheduler retention period to 5 days instead of 30.
 	 * The actions scheduler table tends to grow to gigantic sizes and this should help.
-	 * 
-	 * @return int new retention period
+	 *
+	 * @hooked action_scheduler_retention_period
+	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
+	 *
+	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
+	 *
+	 * @return int New retention period in seconds.
 	 */
-	function nfd_asr_default() {  
-		return 5 * DAY_IN_SECONDS;  
+	public function nfd_asr_default( $retention_period ) {
+		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
+
 	/**
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
 	 */
