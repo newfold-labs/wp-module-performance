@@ -105,7 +105,7 @@ class Performance {
 
 	/**
 	 * Add hooks.
-	 * 
+	 *
 	 * @param Container $container the container
 	 */
 	public function hooks( Container $container ) {
