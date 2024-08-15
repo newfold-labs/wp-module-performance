@@ -7,6 +7,9 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
+/**
+ * Performance Class
+ */
 class Performance {
 
 	/**
@@ -57,7 +60,7 @@ class Performance {
 	/**
 	 * Constructor.
 	 *
-	 * @param Container $container
+	 * @param Container $container the container
 	 */
 	public function __construct( Container $container ) {
 
@@ -77,9 +80,13 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
-
 	}
 
+	/**
+	 * Constructor.
+	 *
+	 * @param Container $container the container
+	 */
 	public function configureContainer( Container $container ) {
 
 		global $is_apache;
@@ -94,11 +101,12 @@ class Performance {
 				}
 			)
 		);
-
 	}
 
 	/**
 	 * Add hooks.
+	 * 
+	 * @param Container $container the container
 	 */
 	public function hooks( Container $container ) {
 
@@ -186,6 +194,8 @@ class Performance {
 	 */
 	public function onCacheLevelChange( $cacheLevel ) {
 		/**
+		 * Respone Header Manager from container
+		 *
 		 * @var ResponseHeaderManager $responseHeaderManager
 		 */
 		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
@@ -198,6 +208,9 @@ class Performance {
 		}
 	}
 
+	/**
+	 * Register settings
+	 */
 	public function registerSettings() {
 
 		global $wp_settings_fields;
@@ -231,7 +244,7 @@ class Performance {
 	/**
 	 * Add options to the WordPress admin bar.
 	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar
+	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
 	 */
 	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
 
