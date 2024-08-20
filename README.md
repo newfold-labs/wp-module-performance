@@ -54,9 +54,9 @@ A module for managing caching functionality.
 Features::getInstance();
 ```
 
-[More on NewFold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
+[More on Newfold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
 
-[More on the NewFold Features Modules](https://github.com/newfold-labs/wp-module-features)
+[More on the Newfold Features Modules](https://github.com/newfold-labs/wp-module-features)
 
 ## TODO
 
