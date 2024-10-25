@@ -23,8 +23,8 @@ class LinkPrefetch {
 	public function __construct( Container $container ) {
 		$this->container = $container;
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts') );
-		add_filter('script_loader_tag', array( $this, 'addDefer' ), 10, 2 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+		add_filter( 'script_loader_tag', array( $this, 'addDefer' ), 10, 2 );
 	}
 	/**
 	 * Enqueue de script.
@@ -40,8 +40,7 @@ class LinkPrefetch {
 		$settings['isMobile'] = wp_is_mobile();
 
 		wp_enqueue_script( 'linkprefetcher', $plugin_url, array(), $this->container->plugin()->version, true );
-		wp_add_inline_script( 'linkprefetcher', 'window.LP_CONFIG = ' . json_encode( $settings ), 'before' );
-		
+		wp_add_inline_script( 'linkprefetcher', 'window.LP_CONFIG = ' . wp_json_encode( $settings ), 'before' );
 	}
 
 	/**
@@ -64,8 +63,8 @@ class LinkPrefetch {
 			'activeOnDesktop' => false,
 			'behavior'        => 'mouseHover',
 			'hoverDelay'      => 60,
-			'instantClick'    => false ,
-			'activeOnMobile'  => false ,
+			'instantClick'    => false,
+			'activeOnMobile'  => false,
 			'mobileBehavior'  => 'viewport',
 			'ignoreKeywords'  => 'wp-admin,#,?',
 		);
@@ -76,12 +75,12 @@ class LinkPrefetch {
 	 *
 	 * @param string $tag html tag.
 	 * @param string $handle handle of the script.
-	 * 
+	 *
 	 * return string
 	 */
 	public function addDefer( $tag, $handle ) {
-		if ('linkprefetcher' === $handle && false === strpos($tag, 'defer')) {
-			$tag = preg_replace(':(?=></script>):', ' defer', $tag);
+		if ( 'linkprefetcher' === $handle && false === strpos( $tag, 'defer' ) ) {
+			$tag = preg_replace( ':(?=></script>):', ' defer', $tag );
 		}
 		return $tag;
 	}
