@@ -24,6 +24,7 @@ class LinkPrefetch {
 		$this->container = $container;
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts') );
+		add_filter('script_loader_tag', array( $this, 'addDefer' ), 10, 2 );
 	}
 	/**
 	 * Enqueue de script.
@@ -40,6 +41,7 @@ class LinkPrefetch {
 
 		wp_enqueue_script( 'linkprefetcher', $plugin_url, array(), $this->container->plugin()->version, true );
 		wp_add_inline_script( 'linkprefetcher', 'window.LP_CONFIG = ' . json_encode( $settings ), 'before' );
+		
 	}
 
 	/**
@@ -67,5 +69,20 @@ class LinkPrefetch {
 			'mobileBehavior'  => 'viewport',
 			'ignoreKeywords'  => 'wp-admin,#,?',
 		);
+	}
+
+	/**
+	 * Add defer attribute to the script.
+	 *
+	 * @param string $tag html tag.
+	 * @param string $handle handle of the script.
+	 * 
+	 * return string
+	 */
+	public function addDefer( $tag, $handle ) {
+		if ('linkprefetcher' === $handle && false === strpos($tag, 'defer')) {
+			$tag = preg_replace(':(?=></script>):', ' defer', $tag);
+		}
+		return $tag;
 	}
 }
