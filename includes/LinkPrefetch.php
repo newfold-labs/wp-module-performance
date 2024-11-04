@@ -65,7 +65,7 @@ class LinkPrefetch {
 			'hoverDelay'      => 60,
 			'instantClick'    => false,
 			'activeOnMobile'  => false,
-			'mobileBehavior'  => 'viewport',
+			'mobileBehavior'  => 'touchstart',
 			'ignoreKeywords'  => 'wp-admin,#,?',
 		);
 	}

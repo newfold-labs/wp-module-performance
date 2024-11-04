@@ -1,6 +1,13 @@
-import { ToggleField, TextField, TextareaField, SelectField, Container } from "@newfold/ui-component-library";
+import { Toggle, TextField, TextareaField, SelectField, Container } from "@newfold/ui-component-library";
+
 const LinkPrefetch = ({methods, constants}) => {
-	const [settings, setSettings] = methods.useState(constants.store.linkPrefetch)
+	const [settings, setSettings] = methods.useState(constants.store?.linkPrefetch ? constants.store?.linkPrefetch : null)
+
+	if ( !settings ) {
+		return;
+	}
+
+	console.log(methods.NewfoldRuntime)
 
 	const handleChangeOption = ( option, value ) => {
 		if ( option in settings ) {
@@ -36,69 +43,66 @@ const LinkPrefetch = ({methods, constants}) => {
     }, [settings]);
 
 	return(
+		<>
 		<Container.SettingsField
 			title={constants.text.linkPrefetchTitle}
 			description={constants.text.linkPrefetchDescription}
 		>
-			<ToggleField
-				id="link-prefetch-active-desktop"
-				label={constants.text.linkPrefetchActivateOnDekstopLabel}
-				checked={settings.activeOnDesktop}
-				onChange={(v) => handleChangeOption( 'activeOnDesktop', !settings.activeOnDesktop) }
-				description={constants.text.linkPrefetchActivateOnDekstopDescription}
-			/>
+			<div className="nfd-toggle-field" style={{display: 'flex', flexDirection:'row'}}>
+				<div >
+					<label className="nfd-label" htmlFor="link-prefetch-active-desktop">{constants.text.linkPrefetchActivateOnDekstopLabel}</label>
+					<div className="nfd-select-field__description">
+						{constants.text.linkPrefetchActivateOnDekstopDescription}
+					</div>
+				</div>		
+				<Toggle 
+					id='link-prefetch-active-desktop'
+					screenReaderLabel={constants.text.linkPrefetchActivateOnDekstopLabel}
+					checked={settings.activeOnDesktop}
+					onChange={() => handleChangeOption( 'activeOnDesktop', !settings.activeOnDesktop) }
+				/>
+			</div>
 			{ settings.activeOnDesktop && (
-				<>
-					<SelectField
-						id="link-prefetch-behavior"
-						label={constants.text.linkPrefetchBehaviorLabel}
-						value={settings.behavior}
-						selectedLabel={'mouseDown' === settings.behavior ? constants.text.linkPrefetchBehaviorMouseDownLabel : constants.text.linkPrefetchBehaviorMouseHoverLabel}
-						onChange={(v) => handleChangeOption( 'behavior', v) }
-						description={constants.text.linkPrefetchBehaviorDescription}
-					>
-						<SelectField.Option
-							label={constants.text.linkPrefetchBehaviorMouseHoverLabel}
-							value="mouseHover"
-						/>
-						<SelectField.Option
-							label={constants.text.linkPrefetchBehaviorMouseDownLabel}
-							value="mouseDown"
-						/>
-					</SelectField>
-					{
-						'mouseDown' === settings.behavior && (
-							<ToggleField
-								id="link-prefetch-instant-click"
-								label={constants.text.linkPrefetchInstantClickLabel}
-								checked={settings.instantClick}
-								onChange={(v) => handleChangeOption( 'instantClick', !settings.instantClick) }
-								description={constants.text.linkPrefetchInstantClickDescription}
-							/>
-						)
-					}
-					{
-						'mouseHover' === settings.behavior && (
-							<TextField
-								id="link-prefetch-hover-delay"
-								label={constants.text.linkPrefetchHoverDelayLabel}
-								onChange={(e) => handleChangeOption( 'hoverDelay', '' === e.target.value ? 60 : e.target.value )}
-								type="number"
-								value={settings.hoverDelay}
-								description={constants.text.linkPrefetchHoverDelayDescription}
-							/>
-						)
-					}
-				</>
+				<SelectField
+					id="link-prefetch-behavior"
+					label={constants.text.linkPrefetchBehaviorLabel}
+					value={settings.behavior}
+					selectedLabel={'mouseDown' === settings.behavior ? constants.text.linkPrefetchBehaviorMouseDownLabel : constants.text.linkPrefetchBehaviorMouseHoverLabel}
+					onChange={(v) => handleChangeOption( 'behavior', v) }
+					description={ 'mouseDown' === settings.behavior ? constants.text.linkPrefetchBehaviorMouseDownDescription : constants.text.linkPrefetchBehaviorMouseHoverDescription}
+				>
+					<SelectField.Option
+						label={constants.text.linkPrefetchBehaviorMouseHoverLabel}
+						value="mouseHover"
+					/>
+					<SelectField.Option
+						label={constants.text.linkPrefetchBehaviorMouseDownLabel}
+						value="mouseDown"
+					/>
+				</SelectField>
 				)
 			}
-			<ToggleField
+			<div className="nfd-toggle-field" style={{display: 'flex', flexDirection:'row'}}>
+				<div >
+					<label className="nfd-label" htmlFor="link-prefetch-active-mobile">{constants.text.linkPrefetchActivateOnMobileLabel}</label>
+					<div className="nfd-select-field__description">
+						{constants.text.linkPrefetchActivateOnMobileDescription}
+					</div>
+				</div>		
+				<Toggle 
+					id='link-prefetch-active-mobile'
+					screenReaderLabel={constants.text.linkPrefetchActivateOnMobileLabel}
+					checked={settings.activeOnMobile}
+					onChange={() => handleChangeOption('activeOnMobile', !settings.activeOnMobile) }
+				/>
+			</div>
+{/* 			<ToggleField
 				id="link-prefetch-active-mobile"
 				label={constants.text.linkPrefetchActivateOnMobileLabel}
 				checked={settings.activeOnMobile}
-				onChange={(v) => handleChangeOption( 'activeOnMobile', !settings.activeOnMobile) }
+				onChange={() => handleChangeOption('activeOnMobile', !settings.activeOnMobile) }
 				description={constants.text.linkPrefetchActivateOnMobileDescription}
-			/>
+			/> */}
 			{ settings.activeOnMobile && (
 				<SelectField
 					id="link-prefetch-behavior-mobile"
@@ -106,7 +110,7 @@ const LinkPrefetch = ({methods, constants}) => {
 					value={settings.mobileBehavior}
 					selectedLabel={'touchstart' === settings.mobileBehavior ? constants.text.linkPrefetchBehaviorMobileTouchstartLabel : constants.text.linkPrefetchBehaviorMobileViewportLabel}
 					onChange={(v) => handleChangeOption( 'mobileBehavior', v) }
-					description={constants.text.linkPrefetchBehaviorDescription}
+					description={'touchstart' === settings.mobileBehavior ? constants.text.linkPrefetchBehaviorMobileTouchstartDescription : constants.text.linkPrefetchBehaviorMobileViewportDescription}
 				>
 					<SelectField.Option
 						label={constants.text.linkPrefetchBehaviorMobileTouchstartLabel}
@@ -120,16 +124,17 @@ const LinkPrefetch = ({methods, constants}) => {
 				)
 			}
 			{ ( settings.activeOnMobile || settings.activeOnDesktop ) && 
-				<TextareaField
+				<TextField
 					id="link-prefetch-ignore-keywords"
 					label={constants.text.linkPrefetchIgnoreKeywordsLabel}
 					description={constants.text.linkPrefetchIgnoreKeywordsDescription}
 					onChange={(e) => handleChangeOption('ignoreKeywords', e.target.value)}
-					defaultValue={settings.ignoreKeywords}
+					value={settings.ignoreKeywords}
 				/>
 			}
 
 		</Container.SettingsField>
+		</>
 	)
 }
 
