@@ -16,6 +16,15 @@ class LinkPrefetch {
 	protected $container;
 
 	/**
+	 * Array map of API controllers.
+	 *
+	 * @var array
+	 */
+	protected $controllers = array(
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
+	);
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Container $container the container
@@ -23,8 +32,39 @@ class LinkPrefetch {
 	public function __construct( Container $container ) {
 		$this->container = $container;
 
+		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 		add_filter( 'script_loader_tag', array( $this, 'addDefer' ), 10, 2 );
+	}
+
+	/**
+	 * Register API routes.
+	 */
+	public function register_routes() {
+		foreach ( $this->controllers as $Controller ) {
+			/**
+			 * Get an instance of the WP_REST_Controller.
+			 *
+			 * @var $instance \WP_REST_Controller
+			 */
+			$instance = new $Controller( $this->container );
+			$instance->register_routes();
+		}
+	}
+	/**
+	 * Add values to the runtime object.
+	 *
+	 * @param array $sdk The runtime object.
+	 *
+	 * @return array
+	 */
+	public function add_to_runtime( $sdk ) {
+		$values = array(
+			'settings' => get_option( 'nfd_linkPrefetch', $this->getDefaultSettings() ),
+		);
+		return array_merge( $sdk, array( 'linkPrefetch' => $values ) );
 	}
 	/**
 	 * Enqueue de script.

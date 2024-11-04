@@ -1,29 +1,29 @@
-import { Toggle, TextField, TextareaField, SelectField, Container } from "@newfold/ui-component-library";
+import { Toggle, TextField, SelectField, Container } from "@newfold/ui-component-library";
 
 const LinkPrefetch = ({methods, constants}) => {
-	const [settings, setSettings] = methods.useState(constants.store?.linkPrefetch ? constants.store?.linkPrefetch : null)
-
-	if ( !settings ) {
-		return;
-	}
-
-	console.log(methods.NewfoldRuntime)
+	const [settings, setSettings] = methods.useState(methods.NewfoldRuntime.sdk.linkPrefetch.settings);
+	const [isError, setIsError] = methods.useState(false);
+	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-ecommerce/v1/linkprefetch/update");
 
 	const handleChangeOption = ( option, value ) => {
 		if ( option in settings ) {
 			const updatedSettings = settings;
 			updatedSettings[option] = value;
-			methods.newfoldSettingsApiFetch(
-				{ linkPrefetch: updatedSettings }, 
-				methods.setError, (response) => {
-					setSettings( (prev)=> {
-						return {
-							...prev,
-							[option]: value
-						}
-					});
-				}
-			);
+			methods.apiFetch({
+				url: apiUrl,
+				method: "POST",
+				data: {settings: updatedSettings}
+			  }).then((result)=>{
+				  console.log('updating settings',result)
+				  setSettings( (prev)=> {
+					return {
+						...prev,
+						[option]: value
+					}
+				});
+			  }).catch((error) => {     
+				setIsError(error.message);  
+			  });
 		}
 	}
 
@@ -36,11 +36,11 @@ const LinkPrefetch = ({methods, constants}) => {
         methods.makeNotice(
             "link-prefetch-change-notice", 
             constants.text.linkPrefetchTitle,
-            constants.text.linkPrefetchNoticeTitle,
-            "success",
+            !isError ? constants.text.linkPrefetchNoticeTitle : isError,
+            !isError ? "success" : "error",
             5000
         );
-    }, [settings]);
+    }, [settings, isError]);
 
 	return(
 		<>
@@ -48,7 +48,7 @@ const LinkPrefetch = ({methods, constants}) => {
 			title={constants.text.linkPrefetchTitle}
 			description={constants.text.linkPrefetchDescription}
 		>
-			<div className="nfd-toggle-field" style={{display: 'flex', flexDirection:'row'}}>
+			<div className="nfd-toggle-field nfd-mb-6" style={{display: 'flex', flexDirection:'row'}}>
 				<div >
 					<label className="nfd-label" htmlFor="link-prefetch-active-desktop">{constants.text.linkPrefetchActivateOnDekstopLabel}</label>
 					<div className="nfd-select-field__description">
@@ -70,6 +70,7 @@ const LinkPrefetch = ({methods, constants}) => {
 					selectedLabel={'mouseDown' === settings.behavior ? constants.text.linkPrefetchBehaviorMouseDownLabel : constants.text.linkPrefetchBehaviorMouseHoverLabel}
 					onChange={(v) => handleChangeOption( 'behavior', v) }
 					description={ 'mouseDown' === settings.behavior ? constants.text.linkPrefetchBehaviorMouseDownDescription : constants.text.linkPrefetchBehaviorMouseHoverDescription}
+					className='nfd-mb-6'
 				>
 					<SelectField.Option
 						label={constants.text.linkPrefetchBehaviorMouseHoverLabel}
@@ -82,7 +83,7 @@ const LinkPrefetch = ({methods, constants}) => {
 				</SelectField>
 				)
 			}
-			<div className="nfd-toggle-field" style={{display: 'flex', flexDirection:'row'}}>
+			<div className="nfd-toggle-field nfd-mb-6" style={{display: 'flex', flexDirection:'row'}}>
 				<div >
 					<label className="nfd-label" htmlFor="link-prefetch-active-mobile">{constants.text.linkPrefetchActivateOnMobileLabel}</label>
 					<div className="nfd-select-field__description">
@@ -96,13 +97,6 @@ const LinkPrefetch = ({methods, constants}) => {
 					onChange={() => handleChangeOption('activeOnMobile', !settings.activeOnMobile) }
 				/>
 			</div>
-{/* 			<ToggleField
-				id="link-prefetch-active-mobile"
-				label={constants.text.linkPrefetchActivateOnMobileLabel}
-				checked={settings.activeOnMobile}
-				onChange={() => handleChangeOption('activeOnMobile', !settings.activeOnMobile) }
-				description={constants.text.linkPrefetchActivateOnMobileDescription}
-			/> */}
 			{ settings.activeOnMobile && (
 				<SelectField
 					id="link-prefetch-behavior-mobile"
@@ -111,6 +105,7 @@ const LinkPrefetch = ({methods, constants}) => {
 					selectedLabel={'touchstart' === settings.mobileBehavior ? constants.text.linkPrefetchBehaviorMobileTouchstartLabel : constants.text.linkPrefetchBehaviorMobileViewportLabel}
 					onChange={(v) => handleChangeOption( 'mobileBehavior', v) }
 					description={'touchstart' === settings.mobileBehavior ? constants.text.linkPrefetchBehaviorMobileTouchstartDescription : constants.text.linkPrefetchBehaviorMobileViewportDescription}
+					className='nfd-mb-6'
 				>
 					<SelectField.Option
 						label={constants.text.linkPrefetchBehaviorMobileTouchstartLabel}

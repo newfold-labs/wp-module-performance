@@ -17,7 +17,7 @@ window.addEventListener( 'load', () => {
 				this.hoverDelay = config.hoverDelay;
 				this.ignoreKeywords = config.ignoreKeywords.split(',');
 				this.instantClick = config.instantClick;
-				this.mobileActive = config.mobileActive;
+				this.mobileActive = config.activeOnMobile;
 				this.isMobile = config.isMobile;
 				this.mobileBehavior = config.mobileBehavior;
 				this.prefetchedUrls = new Set();
@@ -35,7 +35,7 @@ window.addEventListener( 'load', () => {
 				if ( isChrome && chromeVersion < 110 ) {return;}
 				if ( this.isMobile && ! this.mobileActive ) {return;}
 				if ( ! this.isMobile && ! this.activeOnDesktop ) {return;}
-	
+				
 				if ( ! this.isMobile ) {
 					if ( 'mouseHover' === this.behavior ) {
 						let hoverDelay = parseInt(this.hoverDelay);
@@ -49,7 +49,7 @@ window.addEventListener( 'load', () => {
 						}
 					}
 				}
-
+				
 				if ( this.mobileActive ) {
 					if ( 'touchstart' === this.mobileBehavior ) {
 						document.addEventListener("touchstart", this.touchstart.bind(this), this.eventListenerOptions);
