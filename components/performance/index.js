@@ -1,6 +1,10 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
 import { Container } from '@newfold/ui-component-library';
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import AdvancedSettings from '../advancedSettings';
 import { default as defaultText } from './defaultText';
 
 /**
@@ -45,10 +49,16 @@ const Performance = ({methods, constants, Components, ...props}) => {
                     Components={Components}
                 />
             </Container.Block>
-            <Container.Block className={'newfold-clear-cache'}>
+            <Container.Block separator={true} className={'newfold-clear-cache'}>
                 <ClearCache
                     methods={methods}
                     constants={constants}
+                />
+            </Container.Block>
+            <Container.Block separator={true} className={'newfold-cache-advanced-settings'}>
+                <AdvancedSettings
+                  constants={constants}
+                  methods={methods}
                 />
             </Container.Block>
         </>

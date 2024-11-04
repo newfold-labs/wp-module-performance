@@ -58,6 +58,15 @@ class Performance {
 	protected $container;
 
 	/**
+	 * Array map of API controllers.
+	 *
+	 * @var array
+	 */
+	protected $controllers = array(
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
+	);
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Container $container the container
@@ -80,6 +89,10 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
+
+		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 
 	/**
@@ -140,6 +153,26 @@ class Performance {
 		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
+	}
+
+
+	public function register_scripts() {
+		\wp_enqueue_style( 'nfd-performance', plugin_dir_url( __DIR__ ) . '/src/css/style.css', null, '1', 'screen' );
+	}
+
+	/**
+	 * Register API routes.
+	 */
+	public function register_routes() {
+		foreach ( $this->controllers as $Controller ) {
+			/**
+			 * Get an instance of the WP_REST_Controller.
+			 *
+			 * @var $instance \WP_REST_Controller
+			 */
+			$instance = new $Controller( $this->container );
+			$instance->register_routes();
+		}
 	}
 
 	/**
@@ -287,7 +320,7 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+					'href'   => admin_url( 'options-general.php#' . self::SETTINGS_ID ),
 				)
 			);
 		}
