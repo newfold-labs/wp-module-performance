@@ -4,21 +4,56 @@ namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
+/**
+ * Class JetpackController
+ *
+ * @package NewfoldLabs\WP\Module\Performance
+ */
 class JetpackController {
 
-
+	/**
+	 * The REST route namespace.
+	 *
+	 * @var string
+	 */
 	protected $namespace = 'newfold-performance/v1';
 
+	/**
+	 * The REST route base.
+	 *
+	 * @var string
+	 */
 	protected $rest_base = '/jetpack';
 
+	/**
+	 * Container
+	 *
+	 * @var [type]
+	 */
 	protected $container;
 
+	/**
+	 * Plugin slug
+	 *
+	 * @var string
+	 */
 	protected $plugin_slug = 'jetpack-boost';
 
+
+	/**
+	 * JetpackController constructor.
+	 *
+	 * @param Container $container the container.
+	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
 	}
 
+	/**
+	 * Register API routes.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -46,6 +81,11 @@ class JetpackController {
 		);
 	}
 
+	/**
+	 * Get options
+	 *
+	 * @return WP_REST_Response
+	 */
 	public function get_options() {
 		return new \WP_REST_Response(
 			array(
@@ -62,11 +102,17 @@ class JetpackController {
 	}
 
 
+	/**
+	 * Set options
+	 *
+	 * @param WP_REST_Request $request The request object.
+	 * @return WP_REST_Response
+	 */
 	public function set_options( $request ) {
 		$data = $request->get_params();
 		if ( isset( $data['field'] ) ) {
 			$field = $data['field'];
-			if ( in_array( $field['id'], array( 'minify-js-excludes', 'minify-css-excludes' ) ) ) {
+			if ( in_array( $field['id'], array( 'minify-js-excludes', 'minify-css-excludes' ) ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 				$id    = str_replace( '-', '_', $field['id'] );
 				$value = explode( ',', $field['value'] );
 				$data  = update_option( 'jetpack_boost_ds_' . $id, $value );

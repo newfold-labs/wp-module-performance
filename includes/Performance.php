@@ -156,6 +156,11 @@ class Performance {
 	}
 
 
+	/**
+	 * Register admin scripts for module.
+	 *
+	 * @return void
+	 */
 	public function register_scripts() {
 		\wp_enqueue_style( 'nfd-performance', plugin_dir_url( __DIR__ ) . '/src/css/style.css', null, '1', 'screen' );
 	}
