@@ -1,6 +1,7 @@
 import { Container } from '@newfold/ui-component-library';
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import { default as CacheExclusion } from '../cacheExclusion/';
 import { default as defaultText } from './defaultText';
 
 /**
@@ -43,6 +44,12 @@ const Performance = ({methods, constants, Components, ...props}) => {
                     methods={methods}
                     constants={constants}
                     Components={Components}
+                />
+            </Container.Block>
+            <Container.Block separator={true} className={'newfold-cache-exclusion'}>
+                <CacheExclusion
+                    methods={methods}
+                    constants={constants}
                 />
             </Container.Block>
             <Container.Block className={'newfold-clear-cache'}>
