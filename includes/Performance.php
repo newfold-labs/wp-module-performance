@@ -200,11 +200,11 @@ class Performance {
 		 */
 		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
 		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
-		
+
 		Browser::maybeAddRules( $cacheLevel );
 		File::maybeAddRules( $cacheLevel );
 		Skip404::maybeAddRules( $cacheLevel );
-		
+
 		// Remove the old option from EPC, if it exists
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
 			update_option( 'endurance_cache_level', 0 );
