@@ -14,7 +14,6 @@ const LinkPrefetch = ({methods, constants}) => {
 				method: "POST",
 				data: {settings: updatedSettings}
 			  }).then((result)=>{
-				  console.log('updating settings',result)
 				  setSettings( (prev)=> {
 					return {
 						...prev,
