@@ -3,7 +3,6 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
-use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 

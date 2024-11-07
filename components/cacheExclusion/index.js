@@ -1,11 +1,11 @@
 import { Button, Container, TextareaField } from "@newfold/ui-component-library";
 
 const CacheExclusion = ({ methods, constants }) => {
-
-    const [ currentValue, setCurrentValue ] = methods.useState(constants.store.cacheExclusion);
     const [ isEdited, setIsEdited ] = methods.useState(false);
-    const [ cacheExclusion, setCacheExclusion ] = methods.useState(constants.store.cacheExclusion);
-
+	const [ isError, setIsError ] = methods.useState(false);
+	const [ isSaved, setIsSaved ] = methods.useState(false);
+    const [ cacheExclusion, setCacheExclusion ] = methods.useState(methods.NewfoldRuntime.sdk.cacheExclusion);
+	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-ecommerce/v1/cacheexclusion/update");
 
     const handleCacheExclusionChange = (e) => {
         if( e.target.value !== cacheExclusion  ) {
@@ -13,27 +13,35 @@ const CacheExclusion = ({ methods, constants }) => {
         }else{
             setIsEdited(false);
         }
-        setCurrentValue( e.target.value );
+        setCacheExclusion( e.target.value );
     }
-    
 
     const handlingSaveButton = () => {
-        methods.newfoldSettingsApiFetch(
-            { cacheExclusion: currentValue }, 
-            methods.setError, (response) => {
-                setCacheExclusion( currentValue )
-                methods.makeNotice(
-                    "disable-old-posts-comments-notice", 
-                    constants.text.cacheExclusionSaved,
-                    null,
-                    "success",
-                    5000
-                );
-                setIsEdited(false);
-            }
-        );
-        
+		methods.apiFetch({
+			url: apiUrl,
+			method: "POST",
+			data: {cacheExclusion: cacheExclusion}
+		}).then((result)=>{
+			  setIsSaved(true);
+		}).catch((error) => {     
+			setIsError(error.message);
+		});
     };
+
+	methods.useUpdateEffect(() => {
+        methods.setStore({
+            ...constants.store,
+            CacheExclusion: cacheExclusion,
+        });
+
+        methods.makeNotice(
+            "cache-exlusion-notice", 
+            constants.text.cacheExclusionTitle,
+            !isError ? constants.text.cacheExclusionSaved : isError,
+            !isError ? "success" : "error",
+            5000
+        );
+    }, [ isSaved, isError]);
 
     return (
         <Container.SettingsField
@@ -44,16 +52,18 @@ const CacheExclusion = ({ methods, constants }) => {
                 id="cache-exclusion"
                 name="cache-xxclusion"
                 onChange={ handleCacheExclusionChange }
-                value={currentValue}
+                value={cacheExclusion}
             />
-            <Button
-                variant="secondary"
-                className="save-cache-exclusion-button"
-                disabled={isEdited ? false : true}
-                onClick={handlingSaveButton}
-            >
-                {constants.text.cacheExclusionSaveButton}
-            </Button>
+			{isEdited && 
+				<Button
+					variant="secondary"
+					className="save-cache-exclusion-button"
+					disabled={isEdited ? false : true}
+					onClick={handlingSaveButton}
+				>
+					{constants.text.cacheExclusionSaveButton}
+				</Button>
+			}
             
         </Container.SettingsField>
             
