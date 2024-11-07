@@ -7,6 +7,8 @@ use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 
+use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
+
 class CacheManager {
 
 	/**
@@ -60,16 +62,7 @@ class CacheManager {
 	 * @return array
 	 */
 	public function add_to_runtime( $sdk ) {
-		return array_merge( $sdk, array( 'cacheExclusion' => get_option( 'cache_exclusion', $this->defaultCacheExclusions() ) ) );
-	}
-
-	/**
-	 * Return defaul exclusions.
-	 *
-	 * @return array
-	 */
-	public function defaultCacheExclusions() {
-		return join( ',', [ 'cart', 'checkout', 'wp-admin', rest_get_url_prefix() ] );
+		return array_merge( $sdk, array( 'cacheExclusion' => get_option( 'cache_exclusion', getDefaultCacheExclusions() ) ) );
 	}
 
 	/**
