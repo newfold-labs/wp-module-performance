@@ -6,9 +6,9 @@ use NewfoldLabs\WP\Module\ECommerce\Permissions;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
- * Class CacheSettings
+ * Class CacheExclusionController
  */
-class CacheSettings {
+class CacheExclusionController {
 
 
 	/**
@@ -23,7 +23,7 @@ class CacheSettings {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/cachesettings';
+	protected $rest_base = '/cacheexclusion';
 
 	/**
 	 * Container loaded from the brand plugin.
@@ -79,7 +79,7 @@ class CacheSettings {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'settings' => get_option( 'cache_exlusion', '' ),
+				'settings' => get_option( 'cache_exclusion', '' ),
 			),
 			200
 		);
@@ -92,8 +92,8 @@ class CacheSettings {
 	 * @return \WP_REST_Response
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
-		$cache_exlusion = $request->get_param( 'cache_exlusion' );
-		if ( update_option( 'cache_exlusion', $cache_exlusion ) ) {
+		$cache_exclusion = $request->get_param( 'cache_exclusion' );
+		if ( update_option( 'cache_exclusion', $cache_exclusion ) ) {
 			return new \WP_REST_Response(
 				array(
 					'result' => true,
@@ -104,7 +104,7 @@ class CacheSettings {
 
 		return new \WP_REST_Response(
 			array(
-				'result'  => false,
+				'result' => false,
 			),
 			400
 		);
