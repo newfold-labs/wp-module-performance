@@ -79,7 +79,7 @@ class CacheExclusionController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'settings' => get_option( 'cache_exclusion', '' ),
+				'cacheExclusion' => get_option( 'cache_exclusion', '' ),
 			),
 			200
 		);
@@ -92,7 +92,7 @@ class CacheExclusionController {
 	 * @return \WP_REST_Response
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
-		$cache_exclusion = $request->get_param( 'cache_exclusion' );
+		$cache_exclusion = $request->get_param( 'cacheExclusion' );
 		if ( update_option( 'cache_exclusion', $cache_exclusion ) ) {
 			return new \WP_REST_Response(
 				array(
