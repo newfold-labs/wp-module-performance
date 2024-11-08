@@ -30,3 +30,12 @@
 	border-radius: 6px;
 	width: 100%;
 }
+
+.newfold-cache-advanced-settings .nfd-toggle-field__header {
+	justify-content: left;
+}
+
+.newfold-cache-advanced-settings .child-field .wrap-button button{
+	text-decoration: underline;
+    margin: 10px 0 0 0;
+}

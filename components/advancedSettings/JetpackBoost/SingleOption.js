@@ -77,7 +77,7 @@ const SingleOption = ( {params, isChild, methods, constants } ) =>  {
               checked={params.value ? true: false}
               onChange={ ( value ) => { handleChangeOption( value, params.id ) } }
             />
-            { params.externalLink ? <p style={{ textAlign: "right", marginBottom: "30px" }}>{ constants.text.jetpackBoostDicoverMore } <a href={`${window.location.origin}/wp-admin/admin.php?page=jetpack-boost`}> { __( 'here', 'newfold-module-performance' ) } </a></p> : '' }
+            { params.externalLink ? <p style={{ textDecoration: "underline", margin: "10px 0" }}>{ constants.text.jetpackBoostDicoverMore } <a href={`${window.location.origin}/wp-admin/admin.php?page=jetpack-boost`}> { __( 'here', 'newfold-module-performance' ) } </a></p> : '' }
           </>
         );
 
