@@ -13,6 +13,7 @@ use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
 class CacheExclusionController {
 
 
+
 	/**
 	 * REST namespace
 	 *
@@ -33,6 +34,13 @@ class CacheExclusionController {
 	 * @var Container
 	 */
 	protected $container;
+
+	/**
+	 * Option used to store all pages should be excluded from cache.
+	 *
+	 * @var string
+	 */
+	const OPTION_CACHE_EXCLUSION = 'newfold_cache_exclusion';
 
 	/**
 	 * Constructor
@@ -81,7 +89,7 @@ class CacheExclusionController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'cacheExclusion' => get_option( 'cache_exclusion', getDefaultCacheExclusions() ),
+				'cacheExclusion' => get_option( self::OPTION_CACHE_EXCLUSION, getDefaultCacheExclusions() ),
 			),
 			200
 		);
@@ -95,7 +103,7 @@ class CacheExclusionController {
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
 		$cache_exclusion = $request->get_param( 'cacheExclusion' );
-		if ( update_option( 'cache_exclusion', $cache_exclusion ) ) {
+		if ( update_option( self::OPTION_CACHE_EXCLUSION, $cache_exclusion ) ) {
 			return new \WP_REST_Response(
 				array(
 					'result' => true,

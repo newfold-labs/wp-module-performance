@@ -5,10 +5,12 @@ namespace NewfoldLabs\WP\Module\Performance;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
+use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
 
 use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
 
 class CacheManager {
+
 
 	/**
 	 * Dependency injection container.
@@ -52,7 +54,7 @@ class CacheManager {
 			$instance->register_routes();
 		}
 	}
-	
+
 	/**
 	 * Add values to the runtime object.
 	 *
@@ -61,7 +63,7 @@ class CacheManager {
 	 * @return array
 	 */
 	public function add_to_runtime( $sdk ) {
-		return array_merge( $sdk, array( 'cacheExclusion' => get_option( 'cache_exclusion', getDefaultCacheExclusions() ) ) );
+		return array_merge( $sdk, array( 'cacheExclusion' => get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION, getDefaultCacheExclusions() ) ) );
 	}
 
 	/**
@@ -70,14 +72,14 @@ class CacheManager {
 	 * @return string[]
 	 */
 	protected function classMap() {
-		return [
+		return array(
 			'browser'    => __NAMESPACE__ . '\\CacheTypes\\Browser',
 			'cloudflare' => __NAMESPACE__ . '\\CacheTypes\\Cloudflare',
 			'file'       => __NAMESPACE__ . '\\CacheTypes\\File',
 			'nginx'      => __NAMESPACE__ . '\\CacheTypes\\Nginx',
 			'sitelock'   => __NAMESPACE__ . '\\CacheTypes\\Sitelock',
 			'skip404'    => __NAMESPACE__ . '\\CacheTypes\\Skip404',
-		];
+		);
 	}
 
 	/**
@@ -95,7 +97,7 @@ class CacheManager {
 	 * @return array
 	 */
 	public function enabledCacheTypes() {
-		$cacheTypes = [];
+		$cacheTypes = array();
 		if ( $this->container->has( 'cache_types' ) ) {
 			$providedTypes = $this->container->get( 'cache_types' );
 			if ( is_array( $providedTypes ) ) {
@@ -115,7 +117,7 @@ class CacheManager {
 	 * @return CacheBase[]
 	 */
 	public function getInstances() {
-		$instances  = [];
+		$instances  = array();
 		$collection = new Collection( $this->classMap() );
 		$map        = $collection->only( $this->enabledCacheTypes() );
 		foreach ( $map as $type => $class ) {
@@ -130,5 +132,4 @@ class CacheManager {
 
 		return $instances;
 	}
-
 }
