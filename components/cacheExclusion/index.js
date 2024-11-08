@@ -4,6 +4,7 @@ const CacheExclusion = ({ methods, constants }) => {
     const [ isEdited, setIsEdited ] = methods.useState(false);
 	const [ isError, setIsError ] = methods.useState(false);
 	const [ isSaved, setIsSaved ] = methods.useState(false);
+    const [ currentValue, setCurrentValue ] = methods.useState(methods.NewfoldRuntime.sdk.cacheExclusion);
     const [ cacheExclusion, setCacheExclusion ] = methods.useState(methods.NewfoldRuntime.sdk.cacheExclusion);
 	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-ecommerce/v1/cacheexclusion/update");
 
@@ -13,16 +14,17 @@ const CacheExclusion = ({ methods, constants }) => {
         }else{
             setIsEdited(false);
         }
-        setCacheExclusion( e.target.value );
+        setCurrentValue( e.target.value );
     }
 
     const handlingSaveButton = () => {
 		methods.apiFetch({
 			url: apiUrl,
 			method: "POST",
-			data: {cacheExclusion: cacheExclusion}
+			data: {cacheExclusion: currentValue}
 		}).then((result)=>{
 			  setIsSaved(true);
+              setCacheExclusion(currentValue);
 		}).catch((error) => {     
 			setIsError(error.message);
 		});
@@ -52,7 +54,7 @@ const CacheExclusion = ({ methods, constants }) => {
                 id="cache-exclusion"
                 name="cache-xxclusion"
                 onChange={ handleCacheExclusionChange }
-                value={cacheExclusion}
+                value={currentValue}
             />
 			{isEdited && 
 				<Button
