@@ -14,11 +14,6 @@ use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 class Browser extends CacheBase {
 
 
-
-
-
-
-
 	/**
 	 * The file marker name.
 	 *
@@ -44,7 +39,7 @@ class Browser extends CacheBase {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
-		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'excludeFromCache' ) );
+		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'maybeAddRules' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
 	}
@@ -95,6 +90,19 @@ class Browser extends CacheBase {
 				$rules[] = "{$tab}ExpiresByType {$fileType} \"access plus {$expiration}\"";
 			}
 		}
+
+		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
+
+		// Add the cache exclusion rules.
+		$rules[] = 'RewriteEngine On';
+		foreach ( $cache_exclusion_parameters as $param ) {
+			if ( ! empty( $param ) ) {
+				$rules[] = "RewriteCond %{REQUEST_URI} !{$param} [NC]";
+			}
+		}
+		$rules[] = 'RewriteRule .* - [E=Cache-Control:no-cache]';
+
+		// Add the end of the rules about cache exclusion.
 
 		$rules[] = '</IfModule>';
 
@@ -172,82 +180,5 @@ class Browser extends CacheBase {
 	 */
 	public static function onDeactivation() {
 		self::removeRules();
-	}
-
-
-	/**
-	 * Write .htaccess file in order to xxclude page from cache.
-	 *
-	 * @return void
-	 */
-	/*
-	public function excludeFromCache() {
-
-		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
-
-		$tab = "\t";
-
-		$rules[] = '<IfModule mod_expires.c>';
-		$rules[] = "{$tab}RewriteEngine On";
-
-		foreach ( $cache_exclusion_parameters as $param ) {
-			if ( ! empty( $param ) ) {
-				// Exclude from cache urls that containt one of following parameters.
-				$rules[] = "RewriteCond %{REQUEST_URI} !{$param} [NC]\n";
-			}
-		}
-		$rules[] = 'RewriteRule .* - [E=Cache-Control:no-cache]';
-
-		$rules[] = '</IfModule>';
-
-		// END Custom Cache Exclusions.
-
-		$htaccess = new htaccess( self::MARKER );
-
-		return $htaccess->addContent( $rules );
-	}/*
-
-	/**
-	 * Write .htaccess file in order to xxclude page from cache.
-	 *
-	 * @return void
-	 */
-	public function excludeFromCache() {
-
-		$htaccess_path = ABSPATH . '.htaccess';
-
-		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
-
-		$rewrite_conds = '';
-		foreach ( $cache_exclusion_parameters as $param ) {
-			if ( ! empty( $param ) ) {
-				$rewrite_conds .= "RewriteCond %{REQUEST_URI} !{$param} [NC]\n";
-			}
-		}
-		$htaccess_content = "
-		# BEGIN Custom Cache Exclusions
-		<IfModule mod_rewrite.c>
-		RewriteEngine On
-		# Exclude from cache urls that containt one of following parameters.
-		{$rewrite_conds}
-		RewriteRule .* - [E=Cache-Control:no-cache]
-		</IfModule>
-		# END Custom Cache Exclusions
-		";
-
-		if ( file_exists( $htaccess_path ) ) {
-			$existing_content = file_get_contents( $htaccess_path );
-		} else {
-			$existing_content = '';
-		}
-
-		// Remove any existing block created by this method previously.
-		$new_content = preg_replace( '/# BEGIN Custom Cache Exclusions.*# END Custom Cache Exclusions/s', '', $existing_content );
-
-		// Add new block to .htaccess file.
-		$new_content .= "\n" . $htaccess_content;
-
-		// Write the new content in .htaccess file.
-		file_put_contents( $htaccess_path, $new_content );
 	}
 }
