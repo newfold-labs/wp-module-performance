@@ -39,7 +39,7 @@ class Browser extends CacheBase {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
-		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
 	}
@@ -48,6 +48,13 @@ class Browser extends CacheBase {
 	 * When updating .htaccess, also update our rules as appropriate.
 	 */
 	public function onRewrite() {
+		self::maybeAddRules( getCacheLevel() );
+	}
+
+	/**
+	 * Manage on exlcusion option change.
+	 */
+	public static function exclusionChange() {
 		self::maybeAddRules( getCacheLevel() );
 	}
 
