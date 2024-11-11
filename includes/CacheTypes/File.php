@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
@@ -15,6 +16,7 @@ use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 class File extends CacheBase implements Purgeable {
+
 
 
 	/**
@@ -48,9 +50,17 @@ class File extends CacheBase implements Purgeable {
 	public function __construct() {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
 		add_action( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
+	}
+
+	/**
+	 * Manage on exlcusion option change.
+	 */
+	public static function exclusionChange() {
+		self::maybeAddRules( getCacheLevel() );
 	}
 
 	/**
@@ -79,6 +89,11 @@ class File extends CacheBase implements Purgeable {
 		$base = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$path = str_replace( get_home_path(), '/', self::CACHE_DIR );
 
+		$exclude_conditions = '';
+		foreach ( $this->exclusions() as $exclude ) {
+			$exclude_conditions .= "RewriteCond %{REQUEST_URI} !^/{$exclude} [NC]\n";
+		}
+
 		$content = <<<HTACCESS
 <IfModule mod_rewrite.c>
 	RewriteEngine On
@@ -88,7 +103,7 @@ class File extends CacheBase implements Purgeable {
 	RewriteCond %{QUERY_STRING} !.*=.*
 	RewriteCond %{HTTP_COOKIE} !(wordpress_test_cookie|comment_author|wp\-postpass|wordpress_logged_in|wptouch_switch_toggle|wp_woocommerce_session_) [NC]
 	RewriteCond %{HTTP:Cache-Control} ^((?!no-cache).)*$
-	RewriteCond %{DOCUMENT_ROOT}{$path}/$1/_index.html -f
+	{$exclude_conditions}RewriteCond %{DOCUMENT_ROOT}{$path}/$1/_index.html -f
 	RewriteRule ^(.*)\$ {$path}/$1/_index.html [L]
 </IfModule>
 HTACCESS;
@@ -156,17 +171,6 @@ HTACCESS;
 			return false;
 		}
 
-		// Check cache exclusion.
-		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
-
-		if ( ! empty( $cache_exclusion_parameters ) ) {
-			foreach ( $cache_exclusion_parameters as $param ) {
-				if ( stripos( $_SERVER['REQUEST_URI'], $param ) !== false ) {
-					return false;
-				}
-			}
-		}
-
 		// Don't cache if pretty permalinks are disabled
 		if ( false === get_option( 'permalink_structure' ) ) {
 			return false;
@@ -231,11 +235,14 @@ HTACCESS;
 			return false;
 		}
 
-		// Don't cache if any string exclusions are present in the URL
-		$exclusions = $this->exclusions();
-		foreach ( $exclusions as $exclude ) {
-			if ( false !== strpos( $_SERVER['REQUEST_URI'], $exclude ) ) {
-				return false;
+		// Check cache exclusion.
+		$cache_exclusion_parameters = $this->exclusions();
+
+		if ( ! empty( $cache_exclusion_parameters ) ) {
+			foreach ( $cache_exclusion_parameters as $param ) {
+				if ( stripos( $_SERVER['REQUEST_URI'], $param ) !== false ) {
+					return false;
+				}
 			}
 		}
 
@@ -254,7 +261,9 @@ HTACCESS;
 	 * @return array
 	 */
 	protected function exclusions() {
-		return array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
+		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix();
+		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
+		return array_merge( $default, $cache_exclusion_option );
 	}
 
 	/**
