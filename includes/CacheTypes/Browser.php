@@ -6,11 +6,18 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
+use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 class Browser extends CacheBase {
+
+
+
+
+
+
 
 	/**
 	 * The file marker name.
@@ -35,9 +42,11 @@ class Browser extends CacheBase {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_CACHE_LEVEL, [ __CLASS__, 'maybeAddRules' ] );
+		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
-		add_filter( 'newfold_update_htaccess', [ $this, 'onRewrite' ] );
+		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'excludeFromCache' ) );
+
+		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
 	}
 
 	/**
@@ -87,12 +96,11 @@ class Browser extends CacheBase {
 			}
 		}
 
-		$rules [] = '</IfModule>';
+		$rules[] = '</IfModule>';
 
 		$htaccess = new htaccess( self::MARKER );
 
 		return $htaccess->addContent( $rules );
-
 	}
 
 	/**
@@ -106,7 +114,7 @@ class Browser extends CacheBase {
 
 		switch ( $cacheLevel ) {
 			case 3:
-				return [
+				return array(
 					'default'         => '1 week',
 					'text/html'       => '8 hours',
 					'image/jpg'       => '1 week',
@@ -117,10 +125,10 @@ class Browser extends CacheBase {
 					'text/javascript' => '1 week',
 					'application/pdf' => '1 month',
 					'image/x-icon'    => '1 year',
-				];
+				);
 
 			case 2:
-				return [
+				return array(
 					'default'         => '24 hours',
 					'text/html'       => '2 hours',
 					'image/jpg'       => '24 hours',
@@ -131,10 +139,10 @@ class Browser extends CacheBase {
 					'text/javascript' => '24 hours',
 					'application/pdf' => '1 week',
 					'image/x-icon'    => '1 year',
-				];
+				);
 
 			case 1:
-				return [
+				return array(
 					'default'         => '5 minutes',
 					'text/html'       => '0 seconds',
 					'image/jpg'       => '1 hour',
@@ -145,10 +153,10 @@ class Browser extends CacheBase {
 					'text/javascript' => '1 hour',
 					'application/pdf' => '6 hours',
 					'image/x-icon'    => '1 year',
-				];
+				);
 
 			default:
-				return [];
+				return array();
 		}
 	}
 
@@ -166,4 +174,80 @@ class Browser extends CacheBase {
 		self::removeRules();
 	}
 
+
+	/**
+	 * Write .htaccess file in order to xxclude page from cache.
+	 *
+	 * @return void
+	 */
+	/*
+	public function excludeFromCache() {
+
+		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
+
+		$tab = "\t";
+
+		$rules[] = '<IfModule mod_expires.c>';
+		$rules[] = "{$tab}RewriteEngine On";
+
+		foreach ( $cache_exclusion_parameters as $param ) {
+			if ( ! empty( $param ) ) {
+				// Exclude from cache urls that containt one of following parameters.
+				$rules[] = "RewriteCond %{REQUEST_URI} !{$param} [NC]\n";
+			}
+		}
+		$rules[] = 'RewriteRule .* - [E=Cache-Control:no-cache]';
+
+		$rules[] = '</IfModule>';
+
+		// END Custom Cache Exclusions.
+
+		$htaccess = new htaccess( self::MARKER );
+
+		return $htaccess->addContent( $rules );
+	}/*
+
+	/**
+	 * Write .htaccess file in order to xxclude page from cache.
+	 *
+	 * @return void
+	 */
+	public function excludeFromCache() {
+
+		$htaccess_path = ABSPATH . '.htaccess';
+
+		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
+
+		$rewrite_conds = '';
+		foreach ( $cache_exclusion_parameters as $param ) {
+			if ( ! empty( $param ) ) {
+				$rewrite_conds .= "RewriteCond %{REQUEST_URI} !{$param} [NC]\n";
+			}
+		}
+		$htaccess_content = "
+		# BEGIN Custom Cache Exclusions
+		<IfModule mod_rewrite.c>
+		RewriteEngine On
+		# Exclude from cache urls that containt one of following parameters.
+		{$rewrite_conds}
+		RewriteRule .* - [E=Cache-Control:no-cache]
+		</IfModule>
+		# END Custom Cache Exclusions
+		";
+
+		if ( file_exists( $htaccess_path ) ) {
+			$existing_content = file_get_contents( $htaccess_path );
+		} else {
+			$existing_content = '';
+		}
+
+		// Remove any existing block created by this method previously.
+		$new_content = preg_replace( '/# BEGIN Custom Cache Exclusions.*# END Custom Cache Exclusions/s', '', $existing_content );
+
+		// Add new block to .htaccess file.
+		$new_content .= "\n" . $htaccess_content;
+
+		// Write the new content in .htaccess file.
+		file_put_contents( $htaccess_path, $new_content );
+	}
 }
