@@ -49,8 +49,8 @@ window.addEventListener( 'load', () => {
 						}
 					}
 				}
-				
-				if ( this.mobileActive ) {
+
+				if ( this.mobileActive && this.isMobile ) {
 					if ( 'touchstart' === this.mobileBehavior ) {
 						document.addEventListener("touchstart", this.touchstart.bind(this), this.eventListenerOptions);
 					} else if ( 'viewport' && intersectionObserverCheck ) {
