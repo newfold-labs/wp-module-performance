@@ -55,6 +55,7 @@ const CacheExclusion = ({ methods, constants }) => {
                 name="cache-xxclusion"
                 onChange={ handleCacheExclusionChange }
                 value={currentValue}
+				rows="1"
             />
 			{isEdited && 
 				<Button

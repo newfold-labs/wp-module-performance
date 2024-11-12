@@ -91,11 +91,11 @@ class Browser extends CacheBase {
 		$rules[] = '<IfModule mod_expires.c>';
 		$rules[] = "{$tab}ExpiresActive On";
 
-		foreach ( $fileTypeExpirations as $fileType => $expiration ) {
-			if ( 'default' === $fileType ) {
+		foreach ( $fileTypeExpirations as $file_type => $expiration ) {
+			if ( 'default' === $file_type ) {
 				$rules[] = "{$tab}ExpiresDefault \"access plus {$expiration}\"";
 			} else {
-				$rules[] = "{$tab}ExpiresByType {$fileType} \"access plus {$expiration}\"";
+				$rules[] = "{$tab}ExpiresByType {$file_type} \"access plus {$expiration}\"";
 			}
 		}
 		$rules[] = '</IfModule>';
