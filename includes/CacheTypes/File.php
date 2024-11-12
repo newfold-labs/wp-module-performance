@@ -15,10 +15,10 @@ use function NewfoldLabs\WP\Module\Performance\removeDirectory;
 use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
+/**
+ * Page cache class
+ */
 class File extends CacheBase implements Purgeable {
-
-
-
 	/**
 	 * The directory where cached files live.
 	 *
@@ -36,7 +36,7 @@ class File extends CacheBase implements Purgeable {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param  Container $container
+	 * @param  Container $container the container.
 	 *
 	 * @return bool
 	 */
@@ -89,11 +89,6 @@ class File extends CacheBase implements Purgeable {
 		$base = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$path = str_replace( get_home_path(), '/', self::CACHE_DIR );
 
-		$exclude_conditions = '';
-		foreach ( $this->exclusions() as $exclude ) {
-			$exclude_conditions .= "RewriteCond %{REQUEST_URI} !^/{$exclude} [NC]\n";
-		}
-
 		$content = <<<HTACCESS
 <IfModule mod_rewrite.c>
 	RewriteEngine On
@@ -103,7 +98,7 @@ class File extends CacheBase implements Purgeable {
 	RewriteCond %{QUERY_STRING} !.*=.*
 	RewriteCond %{HTTP_COOKIE} !(wordpress_test_cookie|comment_author|wp\-postpass|wordpress_logged_in|wptouch_switch_toggle|wp_woocommerce_session_) [NC]
 	RewriteCond %{HTTP:Cache-Control} ^((?!no-cache).)*$
-	{$exclude_conditions}RewriteCond %{DOCUMENT_ROOT}{$path}/$1/_index.html -f
+	RewriteCond %{DOCUMENT_ROOT}{$path}/$1/_index.html -f
 	RewriteRule ^(.*)\$ {$path}/$1/_index.html [L]
 </IfModule>
 HTACCESS;
@@ -261,7 +256,7 @@ HTACCESS;
 	 * @return array
 	 */
 	protected function exclusions() {
-		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix();
+		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
 		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
 		return array_merge( $default, $cache_exclusion_option );
 	}
@@ -292,7 +287,7 @@ HTACCESS;
 	/**
 	 * Purge a specific URL from the cache.
 	 *
-	 * @param  string $url
+	 * @param string $url the url to purge.
 	 */
 	public function purgeUrl( $url ) {
 		$path = $this->getStoragePathForRequest();

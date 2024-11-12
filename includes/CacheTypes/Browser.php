@@ -11,9 +11,10 @@ use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
+/**
+ * Browser cache class
+ */
 class Browser extends CacheBase {
-
-
 	/**
 	 * The file marker name.
 	 *
@@ -24,7 +25,7 @@ class Browser extends CacheBase {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container
+	 * @param Container $container the container.
 	 *
 	 * @return bool
 	 */
@@ -97,10 +98,12 @@ class Browser extends CacheBase {
 				$rules[] = "{$tab}ExpiresByType {$fileType} \"access plus {$expiration}\"";
 			}
 		}
+		$rules[] = '</IfModule>';
 
 		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
 
 		// Add the cache exclusion rules.
+		$rules[] = '<IfModule mod_rewrite.c>';
 		$rules[] = 'RewriteEngine On';
 		foreach ( $cache_exclusion_parameters as $param ) {
 			if ( ! empty( $param ) ) {
@@ -108,10 +111,8 @@ class Browser extends CacheBase {
 			}
 		}
 		$rules[] = 'RewriteRule .* - [E=Cache-Control:no-cache]';
-
-		// Add the end of the rules about cache exclusion.
-
 		$rules[] = '</IfModule>';
+		// Add the end of the rules about cache exclusion.
 
 		$htaccess = new htaccess( self::MARKER );
 
