@@ -26,7 +26,7 @@ const InstallActivatePluginButton = ( { methods, constants, setModuleStatus } ) 
       setModuleStatus(true);
       setMessage( constants.text.jetpackBoostInstalling );
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       setMessage( constants.text.jetpackBoostActivationFailed );
     } finally {
       setIsLoading(false);

@@ -1,4 +1,4 @@
-import { Container, RadioGroup, Alert } from "@newfold/ui-component-library";
+import { Container, RadioGroup } from "@newfold/ui-component-library";
 
 const CacheSettings = ({ methods, constants, Components }) => {
     const [ cacheLevel, setCacheLevel ] = methods.useState(constants.store.cacheLevel);
