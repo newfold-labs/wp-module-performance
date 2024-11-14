@@ -9,7 +9,7 @@ const CacheExclusion = ({ methods, constants }) => {
 	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-ecommerce/v1/cacheexclusion/update");
 
     const handleCacheExclusionChange = (e) => {
-        if( e.target.value !== cacheExclusion  ) {
+        if( e.target.value !== currentValue  ) {
             setIsEdited(true);            
         }else{
             setIsEdited(false);
@@ -25,6 +25,7 @@ const CacheExclusion = ({ methods, constants }) => {
 		}).then((result)=>{
 			  setIsSaved(true);
               setCacheExclusion(currentValue);
+			  setIsEdited(false)
 		}).catch((error) => {     
 			setIsError(error.message);
 		});
