@@ -10,8 +10,7 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 /**
  * Performance Class
  */
-class Performance
-{
+class Performance {
 
 	/**
 	 * The option name where the cache level is stored.
@@ -64,25 +63,24 @@ class Performance
 	 *
 	 * @param Container $container the container
 	 */
-	public function __construct(Container $container)
-	{
+	public function __construct( Container $container ) {
 
 		$this->container = $container;
-		$this->configureContainer($container);
+		$this->configureContainer( $container );
 
-		$this->hooks($container);
+		$this->hooks( $container );
 
-		$cacheManager = new CacheManager($container);
-		$cachePurger  = new CachePurgingService($cacheManager->getInstances());
+		$cacheManager = new CacheManager( $container );
+		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ($cachePurger->canPurge()) {
-			add_action('admin_bar_menu', array($this, 'adminBarMenu'), 100);
+		if ( $cachePurger->canPurge() ) {
+			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		}
 
-		$container->set('cachePurger', $cachePurger);
+		$container->set( 'cachePurger', $cachePurger );
 
-		$container->set('hasMustUsePlugin', file_exists(WPMU_PLUGIN_DIR . '/endurance-page-cache.php'));
+		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 	}
 
 	/**
@@ -90,12 +88,11 @@ class Performance
 	 *
 	 * @param Container $container the container
 	 */
-	public function configureContainer(Container $container)
-	{
+	public function configureContainer( Container $container ) {
 
 		global $is_apache;
 
-		$container->set('isApache', $is_apache);
+		$container->set( 'isApache', $is_apache );
 
 		$container->set(
 			'responseHeaderManager',
@@ -109,32 +106,29 @@ class Performance
 
 	/**
 	 * Add hooks.
-	 *
-	 * @param Container $container the container
 	 */
-	public function hooks(Container $container)
-	{
+	public function hooks() {
 
-		add_action('admin_init', array($this, 'registerSettings'), 11);
+		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
-		new OptionListener(self::OPTION_CACHE_LEVEL, array($this, 'onCacheLevelChange'));
+		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
 		/**
 		 * On CLI requests, mod_rewrite is unavailable, so it fails to update
 		 * the .htaccess file when save_mod_rewrite_rules() is called. This
 		 * forces that to be true so updates from WP CLI work.
 		 */
-		if (defined('WP_CLI') && WP_CLI) {
-			add_filter('got_rewrite', '__return_true');
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			add_filter( 'got_rewrite', '__return_true' );
 		}
 
 		add_filter(
 			'mod_rewrite_rules',
-			function ($content) {
+			function ( $content ) {
 				add_action(
 					'shutdown',
 					function () {
-						do_action('newfold_update_htaccess');
+						do_action( 'newfold_update_htaccess' );
 					}
 				);
 
@@ -142,9 +136,9 @@ class Performance
 			}
 		);
 
-		add_action('after_mod_rewrite_rules', array($this, 'onRewrite'));
-		add_filter('action_scheduler_retention_period', array($this, 'nfd_asr_default'));
-		add_filter('action_scheduler_cleanup_batch_size', array($this, 'nfd_as_cleanup_batch_size'));
+		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
+		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
+		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
 	}
 
 	/**
@@ -154,13 +148,10 @@ class Performance
 	 * @hooked action_scheduler_retention_period
 	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
 	 *
-	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
-	 *
 	 * @return int New retention period in seconds.
 	 */
-	public function nfd_asr_default($retention_period)
-	{
-		return 5 * constant('DAY_IN_SECONDS');
+	public function nfd_asr_default() {
+		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
 
 	/**
@@ -173,14 +164,13 @@ class Performance
 	 *
 	 * @return int 1000 when running the cleanup process, otherwise the existing batch size.
 	 */
-	public function nfd_as_cleanup_batch_size($batch_size)
-	{
+	public function nfd_as_cleanup_batch_size( $batch_size ) {
 		/**
 		 * Apply only to {@see ActionScheduler_QueueCleaner::delete_old_actions()} and not to
 		 * {@see ActionScheduler_QueueCleaner::reset_timeouts()} or
 		 * {@see ActionScheduler_QueueCleaner::mark_failures()} batch sizes.
 		 */
-		if (! did_filter('action_scheduler_retention_period')) {
+		if ( ! did_filter( 'action_scheduler_retention_period' ) ) {
 			return $batch_size;
 		}
 
@@ -190,9 +180,8 @@ class Performance
 	/**
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
 	 */
-	public function onRewrite()
-	{
-		$this->onCacheLevelChange(getCacheLevel());
+	public function onRewrite() {
+		$this->onCacheLevelChange( getCacheLevel() );
 	}
 
 	/**
@@ -200,32 +189,26 @@ class Performance
 	 *
 	 * @param int|null $cacheLevel The cache level.
 	 */
-	public function onCacheLevelChange($cacheLevel)
-	{
+	public function onCacheLevelChange( $cacheLevel ) {
 		/**
 		 * Respone Header Manager from container
 		 *
 		 * @var ResponseHeaderManager $responseHeaderManager
 		 */
-		$responseHeaderManager = $this->container->get('responseHeaderManager');
-		$responseHeaderManager->addHeader('X-Newfold-Cache-Level', absint($cacheLevel));
-
-		Browser::maybeAddRules($cacheLevel);
-		File::maybeAddRules($cacheLevel);
-		Skip404::maybeAddRules($cacheLevel);
+		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
+		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
 
 		// Remove the old option from EPC, if it exists
-		if ($this->container->get('hasMustUsePlugin') && absint(get_option('endurance_cache_level', 0))) {
-			update_option('endurance_cache_level', 0);
-			delete_option('endurance_cache_level');
+		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
+			update_option( 'endurance_cache_level', 0 );
+			delete_option( 'endurance_cache_level' );
 		}
 	}
 
 	/**
 	 * Register settings
 	 */
-	public function registerSettings()
-	{
+	public function registerSettings() {
 
 		global $wp_settings_fields;
 
@@ -233,25 +216,25 @@ class Performance
 
 		add_settings_section(
 			$section_name,
-			'<span id="' . self::SETTINGS_ID . '">' . esc_html__('Caching', 'newfold-performance-module') . '</span>',
+			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'newfold-performance-module' ) . '</span>',
 			'__return_false',
 			'general'
 		);
 
 		add_settings_field(
 			self::OPTION_CACHE_LEVEL,
-			__('Cache Level', 'newfold-performance-module'),
+			__( 'Cache Level', 'newfold-performance-module' ),
 			__NAMESPACE__ . '\\getCacheLevelDropdown',
 			'general',
 			$section_name
 		);
 
-		register_setting('general', self::OPTION_CACHE_LEVEL);
+		register_setting( 'general', self::OPTION_CACHE_LEVEL );
 
 		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
-		if ($this->container->get('hasMustUsePlugin')) {
-			unset($wp_settings_fields['general']['epc_settings_section']);
-			unregister_setting('general', 'endurance_cache_level');
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'endurance_cache_level' );
 		}
 	}
 
@@ -260,39 +243,38 @@ class Performance
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
 	 */
-	public function adminBarMenu(\WP_Admin_Bar $wp_admin_bar)
-	{
+	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
 
 		// If the EPC MU plugin exists, remove its cache clearing options.
-		if ($this->container->get('hasMustUsePlugin')) {
-			$wp_admin_bar->remove_node('epc_purge_menu');
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			$wp_admin_bar->remove_node( 'epc_purge_menu' );
 		}
 
-		if (current_user_can('manage_options')) {
+		if ( current_user_can( 'manage_options' ) ) {
 
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
-					'title' => __('Caching', 'newfold-module-performance'),
+					'title' => __( 'Caching', 'newfold-module-performance' ),
 				)
 			);
 
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __('Purge All', 'newfold-module-performance'),
+					'title'  => __( 'Purge All', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => add_query_arg(array(self::PURGE_ALL => true)),
+					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 				)
 			);
 
-			if (! is_admin()) {
+			if ( ! is_admin() ) {
 				$wp_admin_bar->add_node(
 					array(
 						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __('Purge This Page', 'newfold-module-performance'),
+						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   => add_query_arg(array(self::PURGE_URL => true)),
+						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
 					)
 				);
 			}
@@ -300,9 +282,9 @@ class Performance
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
-					'title'  => __('Cache Settings', 'newfold-module-performance'),
+					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url('options-general.php#' . Performance::SETTINGS_ID),
+					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
 				)
 			);
 		}
