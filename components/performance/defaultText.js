@@ -22,6 +22,10 @@ const defaultText = {
     clearCacheDescription: __('We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.', 'wp-module-performance'),
     clearCacheNoticeTitle: __('Cache cleared', 'wp-module-performance'),
     clearCacheTitle: __('Clear Cache', 'wp-module-performance'),
+    skip404Title: __( 'Skip 404', 'wp-module-performance' ),
+    skip404Description: __( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' ),
+    skip404NoticeTitle: __('Skip 404 saved', 'wp-module-performance'),
+    skip404Notice: __('Skip 404 saved', 'wp-module-performance'),
 };
 
 export default defaultText;

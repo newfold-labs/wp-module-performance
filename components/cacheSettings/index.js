@@ -1,7 +1,8 @@
-import { Container, RadioGroup } from "@newfold/ui-component-library";
+import { Checkbox, Container, RadioGroup } from "@newfold/ui-component-library";
 
 const CacheSettings = ({ methods, constants, Components }) => {
     const [ cacheLevel, setCacheLevel ] = methods.useState(constants.store.cacheLevel);
+    const [ skip404, setSkip404 ] = methods.useState(constants.store.skip404);
 
     const cacheOptions = [
         {
@@ -38,11 +39,25 @@ const CacheSettings = ({ methods, constants, Components }) => {
         return cacheOptions[cacheLevel].notice;
     };
 
+
+    const getSkip404NoticeTitle = () => {
+        return constants.text.skip404NoticeTitle;
+    };
+
     const handleCacheLevelChange = (e) => {
         methods.newfoldSettingsApiFetch(
             { cacheLevel: parseInt(e.target.value) }, 
             methods.setError, (response) => {
                 setCacheLevel(parseInt(e.target.value));
+            }
+        );
+    };
+
+    const handleSkip404Change = (e) => {
+        methods.newfoldSettingsApiFetch(
+            { skip404: ! skip404 }, 
+            methods.setError, (response) => {
+                setSkip404( ! skip404 );
             }
         );
     };
@@ -62,36 +77,67 @@ const CacheSettings = ({ methods, constants, Components }) => {
         );
     }, [cacheLevel]);
 
+
+    methods.useUpdateEffect(() => {
+        methods.setStore({
+            ...constants.store,
+            skip404,
+        });
+
+        methods.makeNotice(
+            "skip-404-change-notice", 
+            getSkip404NoticeTitle(),
+            '',
+            "success",
+            5000
+        );
+    }, [skip404]);
+
     return (
-        <Container.SettingsField
-            title={constants.text.cacheLevelTitle}
-            description={constants.text.cacheLevelDescription}
-        >
-        <RadioGroup
-            className="cache-options"
-            id="cache-type"
-            name="cache-level"
-            value=""
-        >
-            {cacheOptions.map((option) => {
-                return (
-                    <Components.Fragment key={option.value}>
-                        <RadioGroup.Radio
-                            defaultChecked={option.value === constants.store.cacheLevel}
-                            id={'cache-level-' + option.value}
-                            label={option.label}
-                            value={option.value}
-                            name="cache-level"
-                            onChange={handleCacheLevelChange}
-                        />
-                        <div className="nfd-radio__description">
-                            {option.description}
-                        </div>
-                    </Components.Fragment>
-                );
-            })}
-        </RadioGroup>
-        </Container.SettingsField>
+        <>
+            <Container.SettingsField
+                title={constants.text.cacheLevelTitle}
+                description={constants.text.cacheLevelDescription}
+            >
+                <RadioGroup
+                    className="cache-options"
+                    id="cache-type"
+                    name="cache-level"
+                    value=""
+                >
+                    {cacheOptions.map((option) => {
+                        return (
+                            <Components.Fragment key={option.value}>
+                                <RadioGroup.Radio
+                                    defaultChecked={option.value === constants.store.cacheLevel}
+                                    id={'cache-level-' + option.value}
+                                    label={option.label}
+                                    value={option.value}
+                                    name="cache-level"
+                                    onChange={handleCacheLevelChange}
+                                />
+                                <div className="nfd-radio__description">
+                                    {option.description}
+                                </div>
+                            </Components.Fragment>
+                        );
+                    })}
+                </RadioGroup>
+            </Container.SettingsField>
+            <Container.SettingsField
+                title={constants.text.skip404Title}
+            >
+                <Checkbox
+                    id="skip-404"
+                    name="skip-404"
+                    onChange={handleSkip404Change}
+                    value={skip404}
+                    checked={skip404}
+                    label={__("Skip 404 Handling For Static Files", "wp-module-performance")}
+                />
+            </Container.SettingsField>
+        </>
+        
     );
 }
 
