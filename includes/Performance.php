@@ -72,17 +72,13 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
-		$linkPrefetch = new LinkPrefetch( $container );
-
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		}
 
 		$container->set( 'cachePurger', $cachePurger );
-		
-		$container->set( 'linkPrefetch', $linkPrefetch );
-		
+
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 	}
 

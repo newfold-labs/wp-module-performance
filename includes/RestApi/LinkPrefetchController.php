@@ -2,14 +2,12 @@
 
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
-use NewfoldLabs\WP\Module\ECommerce\Permissions;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch;
 
 /**
  * Class LinkPrefetchController
  */
 class LinkPrefetchController {
-
 
 	/**
 	 * REST namespace
