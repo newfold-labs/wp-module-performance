@@ -5,26 +5,22 @@ const LinkPrefetch = ({methods, constants}) => {
 	const [isError, setIsError] = methods.useState(false);
 	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-performance/v1/link-prefetch/settings");
 
-	const handleChangeOption = ( option, value ) => {
-		if ( option in settings ) {
-			const updatedSettings = settings;
-			updatedSettings[option] = value;
-			methods.apiFetch({
+	const handleChangeOption = (option, value) => {
+		if (!(option in settings)) return;
+		const updatedSettings = { ...settings, [option]: value };
+		methods
+			.apiFetch({
 				url: apiUrl,
 				method: "POST",
-				data: {settings: updatedSettings}
-			  }).then((result)=>{
-				  setSettings( (prev)=> {
-					return {
-						...prev,
-						[option]: value
-					}
-				});
-			  }).catch((error) => {     
-				setIsError(error.message);  
-			  });
-		}
-	}
+				data: { settings: updatedSettings },
+			})
+			.then(() => {
+				setSettings((prev) => ({ ...prev, [option]: value }));
+			})
+			.catch((error) => {
+				setIsError(error.message);
+			});
+	};
 
 	methods.useUpdateEffect(() => {
         methods.setStore({
@@ -35,8 +31,8 @@ const LinkPrefetch = ({methods, constants}) => {
         methods.makeNotice(
             "link-prefetch-change-notice", 
             constants.text.linkPrefetchTitle,
-            !isError ? constants.text.linkPrefetchNoticeTitle : isError,
-            !isError ? "success" : "error",
+			isError || constants.text.linkPrefetchNoticeTitle,
+			isError ? "error" : "success",
             5000
         );
     }, [settings, isError]);
@@ -47,16 +43,17 @@ const LinkPrefetch = ({methods, constants}) => {
 			title={constants.text.linkPrefetchTitle}
 			description={constants.text.linkPrefetchDescription}
 		>
+			{/* Desktop Settings */}
 			<div className="nfd-toggle-field nfd-mb-6" style={{display: 'flex', flexDirection:'row'}}>
 				<div >
-					<label className="nfd-label" htmlFor="link-prefetch-active-desktop">{constants.text.linkPrefetchActivateOnDekstopLabel}</label>
+					<label className="nfd-label" htmlFor="link-prefetch-active-desktop">{constants.text.linkPrefetchActivateOnDesktopLabel}</label>
 					<div className="nfd-select-field__description">
-						{constants.text.linkPrefetchActivateOnDekstopDescription}
+						{constants.text.linkPrefetchActivateOnDesktopDescription}
 					</div>
 				</div>		
 				<Toggle 
 					id='link-prefetch-active-desktop'
-					screenReaderLabel={constants.text.linkPrefetchActivateOnDekstopLabel}
+					screenReaderLabel={constants.text.linkPrefetchActivateOnDesktopLabel}
 					checked={settings.activeOnDesktop}
 					onChange={() => handleChangeOption( 'activeOnDesktop', !settings.activeOnDesktop) }
 				/>
@@ -82,6 +79,7 @@ const LinkPrefetch = ({methods, constants}) => {
 				</SelectField>
 				)
 			}
+			{/* Mobile Settings */}
 			<div className="nfd-toggle-field nfd-mb-6" style={{display: 'flex', flexDirection:'row'}}>
 				<div >
 					<label className="nfd-label" htmlFor="link-prefetch-active-mobile">{constants.text.linkPrefetchActivateOnMobileLabel}</label>
@@ -117,6 +115,7 @@ const LinkPrefetch = ({methods, constants}) => {
 				</SelectField>
 				)
 			}
+			{/* Ignore Keywords */}
 			{ ( settings.activeOnMobile || settings.activeOnDesktop ) && 
 				<TextField
 					id="link-prefetch-ignore-keywords"
