@@ -16,7 +16,7 @@ class LinkPrefetchController {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'newfold-ecommerce/v1';
+	protected $namespace = 'newfold-performance/v1';
 
 	/**
 	 * REST base
