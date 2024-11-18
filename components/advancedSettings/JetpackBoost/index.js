@@ -110,10 +110,7 @@ const JetpackBoost = ({ methods, constants }) => {
       {!moduleStatus ? (
         <div className="nfd-container-upsell" >
           <InstallActivatePluginButton methods={methods} constants={constants} setModuleStatus={setModuleStatus} />
-          <FeatureUpsell
-            cardText={__('Enjoy with Jetpack Boost module', 'wp-module-performance')}
-            cardLink='https://wordpress.org/plugins/jetpack-boost/'
-          >
+          <FeatureUpsell>
             {fields.map((field) => {
               return (
                 <SingleOption key={field.id} params={field} methods={methods} constants={constants} />
