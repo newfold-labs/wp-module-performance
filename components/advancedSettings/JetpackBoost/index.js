@@ -1,5 +1,4 @@
 // Wordpress
-import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
 
 // Newfold
@@ -66,7 +65,7 @@ const JetpackBoost = ({ methods, constants }) => {
 
   return (
     <>
-      {moduleStatus ? (
+      { ! moduleStatus ? (
     <div className="nfd-performance-jetpack-boost-upsell">
       <InstallActivatePluginButton methods={methods} constants={constants} setModuleStatus={setModuleStatus} />
       <FeatureUpsell>

@@ -1,8 +1,8 @@
-.nfd-container-upsell{
+.nfd-performance-jetpack-boost-upsell{
 	position: relative;
 }
 
-.nfd-container-upsell:before {
+.nfd-performance-jetpack-boost-upsell:before {
 	content: '';
 	display: block;
 	width: 100%;

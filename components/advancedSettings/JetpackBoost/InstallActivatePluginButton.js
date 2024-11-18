@@ -14,7 +14,7 @@ const InstallActivatePluginButton = ( { methods, constants, setModuleStatus } ) 
     setMessage( constants.text.jetpackBoostInstalling );
 
     const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-installer/v1/plugins/install");
-    const INSTALL_TOKEN = methods.NewfoldRuntime.ecommerce.install_token;
+    const INSTALL_TOKEN = NewfoldRuntime.sdk.performance.install_token;
     const plugin = 'jetpack-boost';
 
     try {

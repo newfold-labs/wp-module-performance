@@ -8,6 +8,7 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 /**
  * Performance Class
@@ -328,6 +329,7 @@ class Performance {
 			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array() ) ),
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array() ) ),
+			'install_token'  					=> PluginInstaller::rest_get_plugin_install_hash(),
 		);
 		return array_merge( $sdk, array( 'performance' => $values ) );
 	}
