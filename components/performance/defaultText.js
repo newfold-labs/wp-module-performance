@@ -37,11 +37,12 @@ const defaultText = {
     jetpackBoostShowMore: __( 'Show more', 'wp-module-performance' ),
     jetpackBoostShowLess: __( 'Show less', 'wp-module-performance' ),
     jetpackBoostDicoverMore: __( 'Discover More', 'wp-module-performance' ),
-    jetpackOptionSaved: __( 'Option saved', 'wp-module-performance' ),
     jetpackBoostCtaText: __( 'Install Jetpack Boost to unlock', 'wp-module-performance' ),
     jetpackBoostInstalling: __( "Installing Jetpack Boost...", 'wp-module-performance' ),
     jetpackBoostActivated: __( "Jetpack Boost is now active", 'wp-module-performance' ),
     jetpackBoostActivationFailed: __( "Activation failed", 'wp-module-performance' ),
+    optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
+    optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
 };
 
 export default defaultText;

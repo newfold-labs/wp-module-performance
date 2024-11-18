@@ -33,12 +33,12 @@ const SingleOption = ( {params, isChild, methods, constants } ) =>  {
 
     setOptionDetails({ ...optionDetails, value: value });
 
-    // Cancella il timeout precedente se l'utente digita di nuovo
+    // Clear the previous timeout if user types again.
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
 
-    // Imposta un nuovo timeout di 2 secondi
+    // Set a new timeout of 2 seconds.
     debounceTimeout.current = setTimeout(() => {
       apiFetch({
         path: 'newfold-performance/v1/jetpack/settings',
@@ -52,23 +52,25 @@ const SingleOption = ( {params, isChild, methods, constants } ) =>  {
       }).then((response) => {
         methods.makeNotice(
           "cache-level-change-notice",
-          constants.text.jetpackOptionSaved,
+          constants.text.optionSet,
           '',
           "success",
           5000
         );
       }).catch((error) => {
-
+        console.error(error);
+        methods.makeNotice(
+          "cache-level-change-notice",
+          constants.text.optionNotSet,
+          '',
+          "error",
+          5000
+        );
       });
     }, 1000);
 
 
   }
-
-  const handleTextInputChange = ( value, id ) => {
-
-  };
-
 
   const displayOption = ( params ) => {
     switch( params.type ){

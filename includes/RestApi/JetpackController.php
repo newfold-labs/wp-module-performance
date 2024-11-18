@@ -23,7 +23,7 @@ class JetpackController {
 	protected $rest_base = '/jetpack';
 
 	/**
-	 * Plugin slug
+	 * Plugin slug.
 	 *
 	 * @var string
 	 */
@@ -58,7 +58,7 @@ class JetpackController {
 	}
 
 	/**
-	 * Get options
+	 * Get Jetpack options.
 	 *
 	 * @return WP_REST_Response
 	 */
@@ -79,26 +79,75 @@ class JetpackController {
 
 
 	/**
-	 * Set options
+	 * Set Jetpack options.
 	 *
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response
 	 */
 	public function set_options( $request ) {
-		$data = $request->get_params();
-		if ( isset( $data['field'] ) ) {
-			$field = $data['field'];
-			if ( in_array( $field['id'], array( 'minify-js-excludes', 'minify-css-excludes' ) ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
-				$id    = str_replace( '-', '_', $field['id'] );
-				$value = explode( ',', $field['value'] );
-				$data  = update_option( 'jetpack_boost_ds_' . $id, $value );
-			} else {
-				$data = update_option( 'jetpack_boost_status_' . $field['id'], $field['value'] );
+		try {
+			$params = $request->get_params();
+	
+			if ( ! isset( $params['field'] ) || ! is_array( $params['field'] ) ) {
+				return new \WP_REST_Response(
+					array(
+						'success' => false,
+						'error'   => 'Il parametro "field" è mancante o non è valido.',
+					),
+					400
+				);
 			}
+	
+			$field = $params['field'];
+	
+			if ( ! isset( $field['id'], $field['value'] ) ) {
+				return new \WP_REST_Response(
+					array(
+						'success' => false,
+						'error'   => 'I campi "id" e "value" sono richiesti.',
+					),
+					400
+				);
+			}
+	
+			$option_key   = 'jetpack_boost_status_' . $field['id'];
+			$option_value = $field['value'];
+	
+			if ( in_array( $field['id'], array( 'minify-js-excludes', 'minify-css-excludes' ), true ) ) {
+				$option_key   = 'jetpack_boost_ds_' . str_replace( '-', '_', $field['id'] );
+				$option_value = explode( ',', $field['value'] );
+			}
+	
+			$result = update_option( $option_key, $option_value );
+	
+			if ( $result === false ) {
+				return new \WP_REST_Response(
+					array(
+						'success' => false,
+						'error'   => 'Errore durante l\'aggiornamento delle opzioni.',
+					),
+					500
+				);
+			}
+	
+			// Restituisci una risposta di successo.
+			return new \WP_REST_Response(
+				array(
+					'success' => true,
+					'updated_option' => $option_key,
+					'updated_value'  => $option_value,
+				),
+				200
+			);
+		} catch ( \Exception $e ) {
+			// Gestione delle eccezioni.
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => 'Si è verificato un errore: ' . $e->getMessage(),
+				),
+				500
+			);
 		}
-		return new \WP_REST_Response(
-			array( $data ),
-			200
-		);
 	}
 }
