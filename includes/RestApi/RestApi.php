@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 final class RestApi {

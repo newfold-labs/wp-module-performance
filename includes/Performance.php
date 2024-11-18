@@ -2,9 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -71,6 +69,9 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+
+		new LinkPrefetch( $container );
+		new RestApi();
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
