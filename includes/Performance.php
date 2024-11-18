@@ -317,7 +317,7 @@ class Performance {
 	/**
 	 * Add to Newfold SDK runtime.
 	 *
-	 * @param array $sdk
+	 * @param array $sdk SDK data.
 	 * @return array SDK data.
 	 */
 	public function add_to_runtime( $sdk ) {
