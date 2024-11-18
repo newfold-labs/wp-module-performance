@@ -5,6 +5,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -71,6 +72,7 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new ImageManager();
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
@@ -287,7 +289,7 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+					'href'   => admin_url( 'options-general.php#' . self::SETTINGS_ID ),
 				)
 			);
 		}
