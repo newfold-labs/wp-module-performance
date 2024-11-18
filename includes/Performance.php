@@ -81,6 +81,8 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -292,5 +294,14 @@ class Performance {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Enqueue scripts and styles in admin
+	 */
+	public function enqueue_scripts() {
+		$plugin_url = $this->container->plugin()->url . get_styles_path();
+		wp_register_style( 'wp-module-performance-styles', $plugin_url );
+		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 }

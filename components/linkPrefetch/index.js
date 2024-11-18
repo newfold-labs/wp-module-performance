@@ -44,7 +44,7 @@ const LinkPrefetch = ({methods, constants}) => {
 			description={constants.text.linkPrefetchDescription}
 		>
 			{/* Desktop Settings */}
-			<div className="nfd-toggle-field nfd-mb-6" style={{display: 'flex', flexDirection:'row'}}>
+			<div className="nfd-toggle-field nfd-mb-6">
 				<div >
 					<label className="nfd-label" htmlFor="link-prefetch-active-desktop">{constants.text.linkPrefetchActivateOnDesktopLabel}</label>
 					<div className="nfd-select-field__description">
@@ -80,7 +80,7 @@ const LinkPrefetch = ({methods, constants}) => {
 				)
 			}
 			{/* Mobile Settings */}
-			<div className="nfd-toggle-field nfd-mb-6" style={{display: 'flex', flexDirection:'row'}}>
+			<div className="nfd-toggle-field nfd-mb-6">
 				<div >
 					<label className="nfd-label" htmlFor="link-prefetch-active-mobile">{constants.text.linkPrefetchActivateOnMobileLabel}</label>
 					<div className="nfd-select-field__description">

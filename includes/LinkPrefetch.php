@@ -47,7 +47,7 @@ class LinkPrefetch {
 	 * return void
 	 */
 	public function enqueueScripts() {
-		$plugin_url = $this->container->plugin()->url . $this->getScriptPath();
+		$plugin_url = $this->container->plugin()->url . get_scripts_path( 'linkPrefetch' );
 		$settings   = get_option( 'nfd_link_prefetch_settings', static::getDefaultSettings() );
 
 		if ( ! $settings['activeOnDesktop'] && ! $settings['activeOnMobile'] ) {
@@ -58,16 +58,6 @@ class LinkPrefetch {
 
 		wp_enqueue_script( 'linkprefetcher', $plugin_url, array(), $this->container->plugin()->version, true );
 		wp_add_inline_script( 'linkprefetcher', 'window.LP_CONFIG = ' . wp_json_encode( $settings ), 'before' );
-	}
-
-	/**
-	 * Get js script path.
-	 *
-	 * return string
-	 */
-	public function getScriptPath() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		return 'vendor/newfold-labs/wp-module-performance/scripts/linkPrefetch' . $suffix . '.js';
 	}
 
 	/**
