@@ -88,6 +88,8 @@ class Performance {
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
 		}
+
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
 
 	/**
@@ -309,5 +311,24 @@ class Performance {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Add to Newfold SDK runtime.
+	 *
+	 * @param array $sdk
+	 * @return array
+	 */
+	public function add_to_runtime( $sdk ){
+		$values = array(
+			'jetpack_boost_is_active'    		=> defined( 'JETPACK_BOOST_VERSION' ),
+			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
+			'jetpack_boost_blocking_js'  		=> get_option( 'jetpack_boost_status_render-blocking-js' ),
+			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
+			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array() ) ),
+			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
+			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array() ) ),
+		);
+		return array_merge( $sdk, array( 'performance' => $values ) );
 	}
 }

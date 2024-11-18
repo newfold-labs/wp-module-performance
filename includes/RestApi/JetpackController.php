@@ -40,13 +40,6 @@ class JetpackController {
 			$this->rest_base . '/settings',
 			array(
 				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_options' ),
-					'permission_callback' => function () {
-						return current_user_can( 'manage_options' );
-					},
-				),
-				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'set_options' ),
 					'permission_callback' => function () {
@@ -56,27 +49,6 @@ class JetpackController {
 			)
 		);
 	}
-
-	/**
-	 * Get Jetpack options.
-	 *
-	 * @return WP_REST_Response
-	 */
-	public function get_options() {
-		return rest_ensure_response(
-			array(
-				'is_module_active'    => defined( 'JETPACK_BOOST_VERSION' ),
-				'critical-css'        => get_option( 'jetpack_boost_status_critical-css' ),
-				'render-blocking-js'  => get_option( 'jetpack_boost_status_render-blocking-js' ),
-				'minify-js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
-				'minify-js-excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array() ) ),
-				'minify-css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
-				'minify-css-excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array() ) ),
-			),
-			200
-		);
-	}
-
 
 	/**
 	 * Set Jetpack options.
