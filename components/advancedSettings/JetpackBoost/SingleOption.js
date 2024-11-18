@@ -41,7 +41,7 @@ const SingleOption = ( {params, isChild, methods, constants } ) =>  {
     // Imposta un nuovo timeout di 2 secondi
     debounceTimeout.current = setTimeout(() => {
       apiFetch({
-        path: 'newfold-performance/v1/jetpack/set_options',
+        path: 'newfold-performance/v1/jetpack/settings',
         method: 'POST',
         data: {
           field: {

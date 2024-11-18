@@ -73,7 +73,7 @@ const JetpackBoost = ({ methods, constants }) => {
   useEffect(() => {
     setLoading(true) // Inizia il caricamento
     apiFetch({
-      path: 'newfold-performance/v1/jetpack/get_options'
+      path: 'newfold-performance/v1/jetpack/settings'
     })
       .then(async (response) => {
 

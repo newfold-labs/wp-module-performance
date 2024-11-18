@@ -2,10 +2,12 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\Permissions;
 
 /**
  * Performance Class
@@ -58,15 +60,6 @@ class Performance {
 	protected $container;
 
 	/**
-	 * Array map of API controllers.
-	 *
-	 * @var array
-	 */
-	protected $controllers = array(
-		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
-	);
-
-	/**
 	 * Constructor.
 	 *
 	 * @param Container $container the container
@@ -92,13 +85,15 @@ class Performance {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
 
-		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
+			new RestAPI();
+		}
 	}
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Container $container the container
+	 * @param Container $container the container.
 	 */
 	public function configureContainer( Container $container ) {
 
@@ -163,21 +158,6 @@ class Performance {
 	 */
 	public function register_scripts() {
 		\wp_enqueue_style( 'nfd-performance', plugin_dir_url( __DIR__ ) . '/src/css/style.css', null, '1', 'screen' );
-	}
-
-	/**
-	 * Register API routes.
-	 */
-	public function register_routes() {
-		foreach ( $this->controllers as $Controller ) {
-			/**
-			 * Get an instance of the WP_REST_Controller.
-			 *
-			 * @var $instance \WP_REST_Controller
-			 */
-			$instance = new $Controller( $this->container );
-			$instance->register_routes();
-		}
 	}
 
 	/**

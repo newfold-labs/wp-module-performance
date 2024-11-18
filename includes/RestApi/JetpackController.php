@@ -1,8 +1,5 @@
 <?php
-
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
-
-use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
  * Class JetpackController
@@ -26,28 +23,11 @@ class JetpackController {
 	protected $rest_base = '/jetpack';
 
 	/**
-	 * Container
-	 *
-	 * @var [type]
-	 */
-	protected $container;
-
-	/**
 	 * Plugin slug
 	 *
 	 * @var string
 	 */
 	protected $plugin_slug = 'jetpack-boost';
-
-
-	/**
-	 * JetpackController constructor.
-	 *
-	 * @param Container $container the container.
-	 */
-	public function __construct( Container $container ) {
-		$this->container = $container;
-	}
 
 	/**
 	 * Register API routes.
@@ -55,26 +35,22 @@ class JetpackController {
 	 * @return void
 	 */
 	public function register_routes() {
-		\register_rest_route(
+		register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/get_options',
+			$this->rest_base . '/settings',
 			array(
-				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_options' ),
-				'permission_callback' => function () {
-					return 'manage_options';
-				},
-			)
-		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/set_options',
-			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_options' ),
+					'permission_callback' => function () {
+						return current_user_can( 'manage_options' );
+					},
+				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'set_options' ),
 					'permission_callback' => function () {
-						return 'manage_options';
+						return current_user_can( 'manage_options' );
 					},
 				),
 			)
@@ -87,7 +63,7 @@ class JetpackController {
 	 * @return WP_REST_Response
 	 */
 	public function get_options() {
-		return new \WP_REST_Response(
+		return rest_ensure_response(
 			array(
 				'is_module_active'    => defined( 'JETPACK_BOOST_VERSION' ),
 				'critical-css'        => get_option( 'jetpack_boost_status_critical-css' ),
