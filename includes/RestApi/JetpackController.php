@@ -92,7 +92,7 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => 'Il parametro "field" è mancante o non è valido.',
+						'error'   => __( "The parameter 'field' is missing or invalid.", 'newfold-performance-module' ),
 					),
 					400
 				);
@@ -104,7 +104,7 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => 'I campi "id" e "value" sono richiesti.',
+						'error'   =>  __( "The fields 'id' and 'value' are required.", 'newfold-performance-module' ),
 					),
 					400
 				);
@@ -124,13 +124,13 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => 'Errore durante l\'aggiornamento delle opzioni.',
+						'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' )
 					),
 					500
 				);
 			}
 	
-			// Restituisci una risposta di successo.
+			// Success response.
 			return new \WP_REST_Response(
 				array(
 					'success' => true,
@@ -140,11 +140,11 @@ class JetpackController {
 				200
 			);
 		} catch ( \Exception $e ) {
-			// Gestione delle eccezioni.
+			// Exceptions handling.
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => 'Si è verificato un errore: ' . $e->getMessage(),
+					'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ) . $e->getMessage(),
 				),
 				500
 			);

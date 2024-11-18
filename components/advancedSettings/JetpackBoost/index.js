@@ -63,7 +63,7 @@ const JetpackBoost = ({ methods, constants }) => {
     }
   ]);
 
-  const [is_module_active, setModuleStatus] = useState(false);
+  const [moduleStatus, setModuleStatus] = useState(false);
 
   const [loading, setLoading] = useState(true); // Nuovo stato per il caricamento
 
@@ -107,7 +107,7 @@ const JetpackBoost = ({ methods, constants }) => {
 
         setLoading(false)
       })
-  }, [is_module_active])
+  }, [moduleStatus])
 
   if (loading) {
 
@@ -116,7 +116,7 @@ const JetpackBoost = ({ methods, constants }) => {
 
   return (
     <>
-      {!is_module_active ? (
+      {!moduleStatus ? (
         <div className="nfd-container-upsell" >
           <InstallActivatePluginButton methods={methods} constants={constants} setModuleStatus={setModuleStatus} />
           <FeatureUpsell
