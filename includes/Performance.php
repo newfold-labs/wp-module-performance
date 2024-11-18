@@ -108,8 +108,6 @@ class Performance {
 
 	/**
 	 * Add hooks.
-	 *
-	 * @param Container $container the container
 	 */
 	public function hooks() {
 
@@ -151,8 +149,6 @@ class Performance {
 	 *
 	 * @hooked action_scheduler_retention_period
 	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
-	 *
-	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
 	 *
 	 * @return int New retention period in seconds.
 	 */
