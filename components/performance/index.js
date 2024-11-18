@@ -55,7 +55,7 @@ const Performance = ({methods, constants, Components, ...props}) => {
                     constants={constants}
                 />
             </Container.Block>
-            <Container.Block separator={true} className={'newfold-cache-advanced-settings'}>
+            <Container.Block separator={true} className={'newfold-performance-advanced-settings'}>
                 <AdvancedSettings
                   constants={constants}
                   methods={methods}

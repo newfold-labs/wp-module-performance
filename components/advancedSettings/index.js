@@ -7,8 +7,8 @@ import JetpackBoost from './JetpackBoost/index';
 const AdvancedSettings = ( { methods, constants } ) => {
   return (
     <Container.SettingsField
-      title={constants.text.cacheAdvancedSettingsTitle}
-      description={constants.text.cacheAdvancedSettingsDescription}
+      title={constants.text.performanceAdvancedSettingsTitle}
+      description={constants.text.performanceAdvancedSettingsDescription}
     >
       <JetpackBoost methods={methods} constants={constants} />
     </Container.SettingsField>
