@@ -1,6 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
+/**
+ * Performace Rest Api Class
+ */
 final class RestApi {
 
 	/**
@@ -19,7 +22,7 @@ final class RestApi {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 
-		/**
+	/**
 	 * Register API routes.
 	 */
 	public function register_routes() {

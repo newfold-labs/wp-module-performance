@@ -111,7 +111,7 @@ class Performance {
 	 *
 	 * @param Container $container the container
 	 */
-	public function hooks( Container $container ) {
+	public function hooks() {
 
 		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
@@ -156,7 +156,7 @@ class Performance {
 	 *
 	 * @return int New retention period in seconds.
 	 */
-	public function nfd_asr_default( $retention_period ) {
+	public function nfd_asr_default() {
 		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
 
@@ -301,7 +301,7 @@ class Performance {
 	 */
 	public function enqueue_scripts() {
 		$plugin_url = $this->container->plugin()->url . get_styles_path();
-		wp_register_style( 'wp-module-performance-styles', $plugin_url );
+		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
 		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 }

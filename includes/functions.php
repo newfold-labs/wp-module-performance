@@ -147,7 +147,7 @@ function get_styles_path() {
 /**
  * Get js script path.
  *
- * @param $string script name.
+ * @param string $script_name script name.
  * return string
  */
 function get_scripts_path( $script_name = '' ) {
