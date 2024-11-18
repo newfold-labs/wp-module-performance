@@ -160,7 +160,7 @@ class Performance {
 	 * @return void
 	 */
 	public function register_scripts() {
-		wp_enqueue_style( 'nfd-performance', $this->container->plugin()->url . '/vendor/newfold-labs/wp-module-performance'. '/styles/styles.css', null, '1', 'screen' );
+		wp_enqueue_style( 'nfd-performance', $this->container->plugin()->url . '/vendor/newfold-labs/wp-module-performance' . '/styles/styles.css', null, '1', 'screen' );
 	}
 
 	/**
@@ -320,16 +320,16 @@ class Performance {
 	 * @param array $sdk
 	 * @return array
 	 */
-	public function add_to_runtime( $sdk ){
+	public function add_to_runtime( $sdk ) {
 		$values = array(
-			'jetpack_boost_is_active'    		=> defined( 'JETPACK_BOOST_VERSION' ),
+			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
 			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
-			'jetpack_boost_blocking_js'  		=> get_option( 'jetpack_boost_status_render-blocking-js' ),
+			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
 			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
 			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array() ) ),
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array() ) ),
-			'install_token'  					=> PluginInstaller::rest_get_plugin_install_hash(),
+			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
 		);
 		return array_merge( $sdk, array( 'performance' => $values ) );
 	}

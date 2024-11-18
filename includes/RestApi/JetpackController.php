@@ -59,7 +59,7 @@ class JetpackController {
 	public function set_options( $request ) {
 		try {
 			$params = $request->get_params();
-	
+
 			if ( ! isset( $params['field'] ) || ! is_array( $params['field'] ) ) {
 				return new \WP_REST_Response(
 					array(
@@ -69,43 +69,43 @@ class JetpackController {
 					400
 				);
 			}
-	
+
 			$field = $params['field'];
-	
+
 			if ( ! isset( $field['id'], $field['value'] ) ) {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   =>  __( "The fields 'id' and 'value' are required.", 'newfold-performance-module' ),
+						'error'   => __( "The fields 'id' and 'value' are required.", 'newfold-performance-module' ),
 					),
 					400
 				);
 			}
-	
+
 			$option_key   = 'jetpack_boost_status_' . $field['id'];
 			$option_value = $field['value'];
-	
+
 			if ( in_array( $field['id'], array( 'minify-js-excludes', 'minify-css-excludes' ), true ) ) {
 				$option_key   = 'jetpack_boost_ds_' . str_replace( '-', '_', $field['id'] );
 				$option_value = explode( ',', $field['value'] );
 			}
-	
+
 			$result = update_option( $option_key, $option_value );
-	
+
 			if ( $result === false ) {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' )
+						'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ),
 					),
 					500
 				);
 			}
-	
+
 			// Success response.
 			return new \WP_REST_Response(
 				array(
-					'success' => true,
+					'success'        => true,
 					'updated_option' => $option_key,
 					'updated_value'  => $option_value,
 				),

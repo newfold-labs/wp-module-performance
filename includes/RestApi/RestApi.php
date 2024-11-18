@@ -2,8 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
-//use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApiFilter;
-
 /**
  * Instantiate controllers and register routes.
  */
