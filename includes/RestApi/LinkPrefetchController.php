@@ -31,25 +31,23 @@ class LinkPrefetchController {
 	 * @return void
 	 */
 	public function register_routes() {
-		\register_rest_route(
+		register_rest_route(
 			$this->namespace,
 			$this->rest_base . '/settings',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_settings' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'permission_callback' => function () {
+						return current_user_can( 'manage_options' );
+					},
 				),
-			)
-		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/update',
-			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'update_settings' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'permission_callback' => function () {
+						return current_user_can( 'manage_options' );
+					},
 				),
 			)
 		);
@@ -63,7 +61,7 @@ class LinkPrefetchController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'settings' => get_option( 'nfd_linkPrefetch', LinkPrefetch::getDefaultSettings() ),
+				'settings' => get_option( 'nfd_link_prefetch_settings', LinkPrefetch::getDefaultSettings() ),
 			),
 			200
 		);
@@ -77,18 +75,20 @@ class LinkPrefetchController {
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
 		$settings = $request->get_param( 'settings' );
-		if ( is_array( $settings ) && update_option( 'nfd_linkPrefetch', $settings ) ) {
+		if ( is_array( $settings ) ) {
+			$updated = update_option( 'nfd_link_prefetch_settings', $settings );
 			return new \WP_REST_Response(
 				array(
-					'result' => true,
+					'result' => $updated,
 				),
-				200
+				$updated ? 200 : 400
 			);
 		}
 
 		return new \WP_REST_Response(
 			array(
 				'result'  => false,
+				'message' => 'Invalid settings format',
 			),
 			400
 		);
