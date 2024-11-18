@@ -63,10 +63,7 @@ const JetpackBoost = ({ methods, constants }) => {
     }
   ]);
 
-  const style = {};
-
   const [is_module_active, setModuleStatus] = useState(false);
-
 
   const [loading, setLoading] = useState(true); // Nuovo stato per il caricamento
 
