@@ -3,7 +3,7 @@ import { Toggle, TextField, SelectField, Container } from "@newfold/ui-component
 const LinkPrefetch = ({methods, constants}) => {
 	const [settings, setSettings] = methods.useState(methods.NewfoldRuntime.sdk.linkPrefetch.settings);
 	const [isError, setIsError] = methods.useState(false);
-	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-ecommerce/v1/linkprefetch/update");
+	const apiUrl = methods.NewfoldRuntime.createApiUrl("/newfold-performance/v1/link-prefetch/settings");
 
 	const handleChangeOption = ( option, value ) => {
 		if ( option in settings ) {
