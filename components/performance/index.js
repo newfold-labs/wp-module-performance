@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-
+// Newfold.
 import { Container } from '@newfold/ui-component-library';
+
+// Components.
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
-import AdvancedSettings from '../advancedSettings';
+import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
 
 /**

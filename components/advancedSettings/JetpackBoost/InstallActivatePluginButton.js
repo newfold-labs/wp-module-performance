@@ -36,7 +36,7 @@ const InstallActivatePluginButton = ( { methods, constants, setModuleStatus } ) 
   };
 
   return (
-    <div className="nfd-container-install-activate-button">
+    <div className="nfd-performance-jetpack-boost-container-install-activate-button">
       <button className="nfd-button--upsell" onClick={handleInstallActivate}>
         { isLoading ? (
           <>

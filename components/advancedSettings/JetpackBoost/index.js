@@ -77,7 +77,7 @@ const JetpackBoost = ({ methods, constants }) => {
     </div>
   ) : (
     fields.map((field) => (
-      <div className="nfd-performance-jetpack-boost-single-option" style={{ marginBottom: '20px' }} key={field.id}>
+      <div className="nfd-performance-jetpack-boost-single-option" key={field.id}>
         <SingleOption params={field} methods={methods} constants={constants} />
         {field.children?.map((subfield) => (
           <div key={subfield.id}>

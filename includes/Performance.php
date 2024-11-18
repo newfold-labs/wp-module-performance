@@ -159,7 +159,7 @@ class Performance {
 	 * @return void
 	 */
 	public function register_scripts() {
-		\wp_enqueue_style( 'nfd-performance', plugin_dir_url( __DIR__ ) . '/src/css/style.css', null, '1', 'screen' );
+		wp_enqueue_style( 'nfd-performance', $this->container->plugin()->url . '/vendor/newfold-labs/wp-module-performance'. '/styles/styles.css', null, '1', 'screen' );
 	}
 
 	/**
