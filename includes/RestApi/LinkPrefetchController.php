@@ -23,7 +23,7 @@ class LinkPrefetchController {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/linkprefetch';
+	protected $rest_base = '/link-prefetch';
 
 	/**
 	 * Container loaded from the brand plugin.
