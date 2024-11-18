@@ -160,7 +160,7 @@ class Performance {
 	 * @return void
 	 */
 	public function register_scripts() {
-		wp_enqueue_style( 'nfd-performance', $this->container->plugin()->url . '/vendor/newfold-labs/wp-module-performance' . '/styles/styles.css', null, '1', 'screen' );
+		wp_enqueue_style( 'nfd-performance', $this->container->plugin()->url . '/vendor/newfold-labs/wp-module-performance/styles/styles.css', null, '1', 'screen' );
 	}
 
 	/**
@@ -318,7 +318,7 @@ class Performance {
 	 * Add to Newfold SDK runtime.
 	 *
 	 * @param array $sdk
-	 * @return array
+	 * @return array SDK data.
 	 */
 	public function add_to_runtime( $sdk ) {
 		$values = array(

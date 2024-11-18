@@ -92,7 +92,7 @@ class JetpackController {
 
 			$result = update_option( $option_key, $option_value );
 
-			if ( $result === false ) {
+			if ( false === $result ) {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
