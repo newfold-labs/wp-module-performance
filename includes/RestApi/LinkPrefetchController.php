@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 use NewfoldLabs\WP\Module\ECommerce\Permissions;
-use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch;
 
 /**
  * Class LinkPrefetchController
@@ -24,22 +24,6 @@ class LinkPrefetchController {
 	 * @var string
 	 */
 	protected $rest_base = '/link-prefetch';
-
-	/**
-	 * Container loaded from the brand plugin.
-	 *
-	 * @var Container
-	 */
-	protected $container;
-
-	/**
-	 * Constructor
-	 *
-	 * @param Container $container the container.
-	 */
-	public function __construct( Container $container ) {
-		$this->container = $container;
-	}
 
 	/**
 	 * Registers rest routes for PluginsController class.
@@ -79,7 +63,7 @@ class LinkPrefetchController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'settings' => get_option( 'nfd_linkPrefetch', $this->container->get( 'linkPrefetch' )->getDefaultSettings() ),
+				'settings' => get_option( 'nfd_linkPrefetch', LinkPrefetch::getDefaultSettings() ),
 			),
 			200
 		);
