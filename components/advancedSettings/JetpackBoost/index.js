@@ -63,49 +63,42 @@ const JetpackBoost = ({ methods, constants }) => {
 
   const [moduleStatus, setModuleStatus] = useState(false);
 
-  const [loading, setLoading] = useState(true); // Nuovo stato per il caricamento
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true) // Inizia il caricamento
-    apiFetch({
-      path: 'newfold-performance/v1/jetpack/settings'
-    })
-      .then(async (response) => {
-
-        const newFields = []
-        fields.forEach((element) => {
-          const id = element.id
-          const value = response[id] // Assign the value from database to the const value
-          let newField = element // Assign the current field to a variable
-          newField.value = value // Assign the db value fo the variable just created
-
-
+    const fetchOptions = async () => {
+      try {
+        setLoading(true);
+  
+        const response = await apiFetch({
+          path: 'newfold-performance/v1/jetpack/settings',
+        });
+  
+        const newFields = fields.map((element) => {
+          const value = response[element.id];
+          const updatedField = { ...element, value };
+  
           if (element.children) {
-            const newChildrenFields = []
-            element.children.forEach((childElement) => {
-              const id = childElement.id
-
-              const value = response[id] // Assign the value from database to the const value
-
-              let newChildField = childElement // Assign the current field to a variable
-              newChildField.value = value // Assign the db value fo the variable just created
-              newChildrenFields.push(newChildField) // Push the new field to the array that will be used to update the status
-            })
-            newField.children = newChildrenFields;
+            updatedField.children = element.children.map((child) => ({
+              ...child,
+              value: response[child.id],
+            }));
           }
-
-          newFields.push(newField) // Push the new field to the array that will be used to update the status
-        })
-
-        setFields(newFields)
-        setModuleStatus(response.is_module_active)
-        setLoading(false)
-      })
-      .catch((error) => {
-
-        setLoading(false)
-      })
-  }, [moduleStatus])
+  
+          return updatedField;
+        });
+  
+        setFields(newFields);
+        setModuleStatus(response.is_module_active);
+      } catch (error) {
+        console.error('Error fetching options:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchOptions();
+  }, [moduleStatus]);
 
   if (loading) {
 
