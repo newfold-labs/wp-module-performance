@@ -1,5 +1,5 @@
-// Thid-party
-import React, { useState } from 'react';
+// WordPress
+import { useState } from '@wordpress/element';
 
 // Component
 import { Spinner } from "@newfold/ui-component-library";

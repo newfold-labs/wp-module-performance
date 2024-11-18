@@ -1,11 +1,9 @@
 // Wordpress
 import apiFetch from '@wordpress/api-fetch';
-
-// Third-party
-import React, { useEffect, useState } from 'react';
+import { useState } from '@wordpress/element';
 
 // Newfold
-import { FeatureUpsell, ToggleField } from '@newfold/ui-component-library';
+import { FeatureUpsell } from '@newfold/ui-component-library';
 
 // Component
 import SingleOption from './SingleOption';

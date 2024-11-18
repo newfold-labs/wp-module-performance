@@ -1,8 +1,6 @@
 // WordPress
 import apiFetch from '@wordpress/api-fetch';
-
-// Third-party
-import React, { useState, useRef } from 'react';
+import { useRef, useState } from '@wordpress/element';
 
 // Newfold
 import { ToggleField, Textarea } from '@newfold/ui-component-library';
