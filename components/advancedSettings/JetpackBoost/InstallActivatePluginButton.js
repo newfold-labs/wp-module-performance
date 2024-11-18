@@ -1,5 +1,7 @@
+// Thid-party
 import React, { useState } from 'react';
-import apiFetch from '@wordpress/api-fetch';
+
+// Component
 import { Spinner } from "@newfold/ui-component-library";
 
 const InstallActivatePluginButton = ( { methods, constants, setModuleStatus } ) => {

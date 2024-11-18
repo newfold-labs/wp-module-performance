@@ -1,5 +1,7 @@
+// Newfold
 import {  Container } from '@newfold/ui-component-library'
 
+// Components
 import JetpackBoost from './JetpackBoost/index';
 
 const AdvancedSettings = ( { methods, constants } ) => {

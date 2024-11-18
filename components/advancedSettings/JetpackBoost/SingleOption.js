@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+// WordPress
 import apiFetch from '@wordpress/api-fetch';
-import { ToggleField, Textarea, Notifications } from '@newfold/ui-component-library';
+
+// Third-party
+import React, { useState, useRef } from 'react';
+
+// Newfold
+import { ToggleField, Textarea } from '@newfold/ui-component-library';
 
 const SingleOption = ( {params, isChild, methods, constants } ) =>  {
 

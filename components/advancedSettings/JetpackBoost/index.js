@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+// Wordpress
 import apiFetch from '@wordpress/api-fetch';
 
+// Third-party
+import React, { useEffect, useState } from 'react';
+
+// Newfold
 import { FeatureUpsell, ToggleField } from '@newfold/ui-component-library';
 
+// Component
 import SingleOption from './SingleOption';
-
 import InstallActivatePluginButton from './InstallActivatePluginButton';
 
 const JetpackBoost = ({ methods, constants }) => {
