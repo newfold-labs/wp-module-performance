@@ -2,9 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -72,10 +69,7 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
-		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		}
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -105,10 +99,8 @@ class Performance {
 
 	/**
 	 * Add hooks.
-	 *
-	 * @param Container $container the container
 	 */
-	public function hooks( Container $container ) {
+	public function hooks() {
 
 		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
@@ -149,11 +141,9 @@ class Performance {
 	 * @hooked action_scheduler_retention_period
 	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
 	 *
-	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
-	 *
 	 * @return int New retention period in seconds.
 	 */
-	public function nfd_asr_default( $retention_period ) {
+	public function nfd_asr_default() {
 		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
 
@@ -254,7 +244,6 @@ class Performance {
 		}
 
 		if ( current_user_can( 'manage_options' ) ) {
-
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
@@ -282,12 +271,13 @@ class Performance {
 				);
 			}
 
+			$brand = $this->container->get( 'plugin' )['id'];
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
 			);
 		}
