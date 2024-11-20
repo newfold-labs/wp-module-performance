@@ -1,16 +1,9 @@
-// WordPress
-import apiFetch from '@wordpress/api-fetch';
-
 // Newfold
-import { Checkbox, Container, RadioGroup } from '@newfold/ui-component-library';
-import { NewfoldRuntime } from '@newfold-labs/wp-module-runtime';
+import { Container, RadioGroup } from '@newfold/ui-component-library';
 
 const CacheSettings = ( { methods, constants, Components } ) => {
 	const [ cacheLevel, setCacheLevel ] = methods.useState(
 		constants.store.cacheLevel
-	);
-	const [ skip404, setSkip404 ] = methods.useState(
-		NewfoldRuntime.sdk.skip404
 	);
 
 	const cacheOptions = [
@@ -56,10 +49,6 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 		return cacheOptions[ cacheLevel ].notice;
 	};
 
-	const getSkip404NoticeTitle = () => {
-		return constants.text.skip404NoticeTitle;
-	};
-
 	const handleCacheLevelChange = ( e ) => {
 		methods.newfoldSettingsApiFetch(
 			{ cacheLevel: parseInt( e.target.value ) },
@@ -68,41 +57,6 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 				setCacheLevel( parseInt( e.target.value ) );
 			}
 		);
-	};
-
-	const handleSkip404Change = () => {
-		const value = ! skip404;
-
-		apiFetch( {
-			path: 'newfold-performance/v1/settings',
-			method: 'POST',
-			data: {
-				field: {
-					id: 'skip404',
-					value,
-				},
-			},
-		} )
-			.then( () => {
-				setSkip404( value );
-
-				methods.makeNotice(
-					'skip-404-change-notice',
-					getSkip404NoticeTitle(),
-					'',
-					'success',
-					5000
-				);
-			} )
-			.catch( () => {
-				methods.makeNotice(
-					'skip-404-change-notice',
-					constants.text.optionNotSet,
-					'',
-					'error',
-					5000
-				);
-			} );
 	};
 
 	methods.useUpdateEffect( () => {
@@ -153,19 +107,6 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 						);
 					} ) }
 				</RadioGroup>
-			</Container.SettingsField>
-			<Container.SettingsField title={ constants.text.skip404Title }>
-				<Checkbox
-					id="skip-404"
-					name="skip-404"
-					onChange={ handleSkip404Change }
-					value={ skip404 }
-					checked={ skip404 }
-					label={ __(
-						'Skip 404 Handling For Static Files',
-						'wp-module-performance'
-					) }
-				/>
 			</Container.SettingsField>
 		</>
 	);

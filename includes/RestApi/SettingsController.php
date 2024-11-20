@@ -74,7 +74,7 @@ class SettingsController {
 					400
 				);
 			}
-
+error_log($field['value']);
 			switch ( $field['id'] ) {
 				case 'skip404':
 					$result = update_option( 'newfold_skip_404_handling', $field['value'] );
