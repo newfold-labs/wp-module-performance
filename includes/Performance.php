@@ -2,9 +2,11 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -80,6 +82,12 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
+			new RestAPI();
+		}
+
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 10 );
 	}
 
 	/**
@@ -287,9 +295,23 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+					'href'   => admin_url( 'options-general.php#' . self::SETTINGS_ID ),
 				)
 			);
 		}
+	}
+
+
+	/**
+	 * Add to Newfold SDK runtime.
+	 *
+	 * @param array $sdk SDK data.
+	 * @return array SDK data.
+	 */
+	public function add_to_runtime( $sdk ) {
+		$values = array(
+			'skip404' => (bool) get_option( 'newfold_skip_404_handling', false ),
+		);
+		return array_merge( $sdk, array( 'performance' => $values ) );
 	}
 }

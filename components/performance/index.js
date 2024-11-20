@@ -1,59 +1,68 @@
 import { Container } from '@newfold/ui-component-library';
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import { default as Skip404 } from '../skip404/';
 import { default as defaultText } from './defaultText';
 
 /**
  * Performance Module
  * For use in brand plugin apps to display performance page and settings
- * 
- * @param {*} props 
- * @returns 
+ *
+ * @param {*} props
+ * @return
  */
-const Performance = ({methods, constants, Components, ...props}) => {
-    const { store, setStore } = methods.useContext(methods.AppStore);
-    const [ isError, setError ] = methods.useState(false);
+const Performance = ( { methods, constants, Components, ...props } ) => {
+	const { store, setStore } = methods.useContext( methods.AppStore );
+	const [ isError, setError ] = methods.useState( false );
 
-	let notify = methods.useNotification();
+	const notify = methods.useNotification();
 
 	// set default text if not provided
-	constants.text = Object.assign(defaultText, constants.text);
+	constants.text = Object.assign( defaultText, constants.text );
 
-    const makeNotice = (id, title, description, variant="success", duration=false) => {
-        notify.push(`performance-notice-${id}`, {
-            title,
-            description: (
-                <span>
-                    {description}
-                </span>
-            ),
-            variant,
-            autoDismiss: duration,
-        });
-    };
-    constants.store = store;
-    methods.makeNotice = makeNotice;
-    methods.setStore = setStore;
-    methods.setError = setError;
+	const makeNotice = (
+		id,
+		title,
+		description,
+		variant = 'success',
+		duration = false
+	) => {
+		notify.push( `performance-notice-${ id }`, {
+			title,
+			description: <span>{ description }</span>,
+			variant,
+			autoDismiss: duration,
+		} );
+	};
+	constants.store = store;
+	methods.makeNotice = makeNotice;
+	methods.setStore = setStore;
+	methods.setError = setError;
 
 	return (
-        <>
-            <Container.Block separator={true} className={'newfold-cache-settings'}>
-                <CacheSettings
-                    methods={methods}
-                    constants={constants}
-                    Components={Components}
-                />
-            </Container.Block>
-            <Container.Block className={'newfold-clear-cache'}>
-                <ClearCache
-                    methods={methods}
-                    constants={constants}
-                />
-            </Container.Block>
-        </>
+		<>
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-cache-settings' }
+			>
+				<CacheSettings
+					methods={ methods }
+					constants={ constants }
+					Components={ Components }
+				/>
+			</Container.Block>
+			<Container.Block separator={ true } className={ 'newfold-skip404' }>
+				<Skip404
+					className={ 'newfold-skip404' }
+					methods={ methods }
+					constants={ constants }
+				/>
+			</Container.Block>
+			<Container.Block className={ 'newfold-clear-cache' }>
+				<ClearCache methods={ methods } constants={ constants } />
+			</Container.Block>
+		</>
 	);
-
 };
 
 export default Performance;
