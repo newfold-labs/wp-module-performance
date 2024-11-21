@@ -69,10 +69,7 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
-		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		}
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
@@ -106,8 +103,6 @@ class Performance {
 	 * Add hooks.
 	 */
 	public function hooks() {
-
-		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
@@ -200,39 +195,6 @@ class Performance {
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
 			update_option( 'endurance_cache_level', 0 );
 			delete_option( 'endurance_cache_level' );
-		}
-	}
-
-	/**
-	 * Register settings
-	 */
-	public function registerSettings() {
-
-		global $wp_settings_fields;
-
-		$section_name = self::SETTINGS_SECTION;
-
-		add_settings_section(
-			$section_name,
-			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'newfold-performance-module' ) . '</span>',
-			'__return_false',
-			'general'
-		);
-
-		add_settings_field(
-			self::OPTION_CACHE_LEVEL,
-			__( 'Cache Level', 'newfold-performance-module' ),
-			__NAMESPACE__ . '\\getCacheLevelDropdown',
-			'general',
-			$section_name
-		);
-
-		register_setting( 'general', self::OPTION_CACHE_LEVEL );
-
-		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
-		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
-			unset( $wp_settings_fields['general']['epc_settings_section'] );
-			unregister_setting( 'general', 'endurance_cache_level' );
 		}
 	}
 
