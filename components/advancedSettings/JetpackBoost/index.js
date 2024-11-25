@@ -113,7 +113,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 						NewfoldRuntime.sdk.performance
 							.jetpack_boost_premium_is_active
 					) {
-						return null; // Salta questo elemento
+						return null;
 					}
 
 					return (
