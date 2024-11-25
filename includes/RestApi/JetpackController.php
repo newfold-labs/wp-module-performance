@@ -82,6 +82,10 @@ class JetpackController {
 				);
 			}
 
+			if ( 'critical-css-premium' === $field['id'] ) {
+				$field['id'] = 'critical-css';
+			}
+
 			$option_key   = 'jetpack_boost_status_' . $field['id'];
 			$option_value = $field['value'];
 

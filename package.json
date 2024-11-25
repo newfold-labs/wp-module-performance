@@ -12,9 +12,10 @@
   ],
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@newfold/ui-component-library": "^1.0.1",
     "@newfold-labs/wp-module-runtime": "^1.0.0",
-    "@tailwindcss/forms": "^0.5.8"
+    "@newfold/ui-component-library": "^1.0.1",
+    "@tailwindcss/forms": "^0.5.8",
+    "html-react-parser": "^5.1.18"
   },
   "devDependencies": {
     "@testing-library/cypress": "^9.0.0",

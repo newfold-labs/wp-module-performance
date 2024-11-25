@@ -1,3 +1,5 @@
+import { sprintf, __ } from '@wordpress/i18n';
+
 const defaultText = {
 	cacheLevel0Description: __(
 		'No cache enabled. Every page load is fresh.',
@@ -79,6 +81,20 @@ const defaultText = {
 	jetpackBoostCriticalCssDescription: __(
 		'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.',
 		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssPremiumTitle: __(
+		'Optimize Critical CSS Loading (UPGRADED)',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssPremiumDescription: sprintf(
+		// translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+		__(
+			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.',
+			'wp-module-performance'
+		),
+		'<br>',
+		'<strong>',
+		'</strong>'
 	),
 	jetpackBoostRenderBlockingTitle: __(
 		'Defer Non-Essential JavaScript',

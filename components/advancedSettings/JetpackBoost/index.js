@@ -1,5 +1,6 @@
 // Wordpress
 import { useState } from '@wordpress/element';
+import { sprintf, __ } from '@wordpress/i18n';
 
 // Newfold
 import { FeatureUpsell } from '@newfold/ui-component-library';
@@ -17,7 +18,26 @@ const JetpackBoost = ( { methods, constants } ) => {
 			description: constants.text.jetpackBoostCriticalCssDescription,
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_critical_css,
 			type: 'toggle',
-			externalLink: true,
+			externalText: sprintf(
+				// translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
+				__( 'Discover more %1$shere%2$s', 'wp-module-performance' ),
+				'<a href="' +
+					window.location.origin +
+					'/wp-admin/admin.php?page=jetpack-boost">',
+				'</a>'
+			),
+			hideOnPremium: true,
+		},
+		{
+			id: 'critical-css-premium',
+			label: constants.text.jetpackBoostCriticalCssPremiumTitle,
+			description:
+				constants.text.jetpackBoostCriticalCssPremiumDescription,
+			value: NewfoldRuntime.sdk.performance.jetpack_boost_critical_css,
+			type: 'toggle',
+			premiumUrl:
+				window.location.origin +
+				'/wp-admin/admin.php?page=jetpack-boost',
 		},
 		{
 			id: 'render-blocking-js',
@@ -87,28 +107,43 @@ const JetpackBoost = ( { methods, constants } ) => {
 					</FeatureUpsell>
 				</div>
 			) : (
-				fields.map( ( field ) => (
-					<div
-						className="nfd-performance-jetpack-boost-single-option"
-						key={ field.id }
-					>
-						<SingleOption
-							params={ field }
-							methods={ methods }
-							constants={ constants }
-						/>
-						{ field.children?.map( ( subfield ) => (
-							<div key={ subfield.id }>
-								<SingleOption
-									params={ subfield }
-									isChild
-									methods={ methods }
-									constants={ constants }
-								/>
-							</div>
-						) ) }
-					</div>
-				) )
+				fields.map( ( field ) => {
+					if (
+						field.hideOnPremium &&
+						NewfoldRuntime.sdk.performance
+							.jetpack_boost_premium_is_active
+					) {
+						return null; // Salta questo elemento
+					}
+
+					return (
+						<div
+							className={ `nfd-performance-jetpack-boost-single-option ${
+								! NewfoldRuntime.sdk.performance
+									.jetpack_boost_premium_is_active
+									? 'margin20'
+									: ''
+							}` }
+							key={ field.id }
+						>
+							<SingleOption
+								params={ field }
+								methods={ methods }
+								constants={ constants }
+							/>
+							{ field.children?.map( ( subfield ) => (
+								<div key={ subfield.id }>
+									<SingleOption
+										params={ subfield }
+										isChild
+										methods={ methods }
+										constants={ constants }
+									/>
+								</div>
+							) ) }
+						</div>
+					);
+				} )
 			) }
 		</>
 	);

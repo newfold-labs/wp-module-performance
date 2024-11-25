@@ -10,6 +10,8 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
+use Automattic\Jetpack\Current_Plan;
+
 /**
  * Performance Class
  */
@@ -323,6 +325,7 @@ class Performance {
 	public function add_to_runtime( $sdk ) {
 		$values = array(
 			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
+			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostActive(),
 			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
 			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
 			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
@@ -331,6 +334,29 @@ class Performance {
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array() ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
 		);
+
 		return array_merge( $sdk, array( 'performance' => $values ) );
+	}
+
+
+	/**
+	 * Check if Jetpack Boost premium is active.
+	 *
+	 * @return boolean
+	 */
+	public function isJetPackBoostActive() {
+		$exists = false;
+
+		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
+			$products = Current_Plan::get_products();
+			foreach ( $products as $product ) {
+				if ( isset( $product['product_slug'] ) && strpos( $product['product_slug'], 'jetpack-boost' ) !== false ) {
+					$exists = true;
+					break;
+				}
+			}
+		}
+
+		return $exists;
 	}
 }

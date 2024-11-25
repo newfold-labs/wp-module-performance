@@ -3,7 +3,15 @@ import apiFetch from '@wordpress/api-fetch';
 import { useRef, useState } from '@wordpress/element';
 
 // Newfold
-import { ToggleField, Textarea } from '@newfold/ui-component-library';
+import {
+	ToggleField,
+	Textarea,
+	FeatureUpsell,
+} from '@newfold/ui-component-library';
+import { NewfoldRuntime } from '@newfold-labs/wp-module-runtime';
+
+// Third-parts
+import parse from 'html-react-parser';
 
 const SingleOption = ( { params, isChild, methods, constants } ) => {
 	const [ optionDetails, setOptionDetails ] = useState( {
@@ -12,7 +20,8 @@ const SingleOption = ( { params, isChild, methods, constants } ) => {
 		description: params.description,
 		value: params.value ? String( params.value ) : '',
 		type: params.type,
-		externalLink: params.externalLink,
+		externalText: params.externalText,
+		premiumUrl: params.premiumUrl ?? '',
 		children: params.children,
 	} );
 
@@ -70,35 +79,63 @@ const SingleOption = ( { params, isChild, methods, constants } ) => {
 			case 'toggle':
 				return (
 					<>
-						<ToggleField
-							id={ option.id }
-							label={ option.label }
-							description={ option.description }
-							checked={ option.value ? true : false }
-							onChange={ ( value ) => {
-								handleChangeOption( value, option.id );
-							} }
-						/>
-						{ option.externalLink ? (
-							<p
-								style={ {
-									textDecoration: 'underline',
-									margin: '10px 0',
-								} }
-							>
-								{ constants.text.jetpackBoostDicoverMore }{ ' ' }
-								<a
-									href={ `${ window.location.origin }/wp-admin/admin.php?page=jetpack-boost` }
+						{ option.premiumUrl &&
+							! NewfoldRuntime.sdk.performance
+								.jetpack_boost_premium_is_active && (
+								<FeatureUpsell
+									cardText="Upgrade to Unlock"
+									cardLink={ option.premiumUrl }
 								>
-									{ ' ' }
-									{ __(
-										'here',
-										'newfold-module-performance'
-									) }{ ' ' }
-								</a>
-							</p>
-						) : (
-							''
+									<ToggleField
+										id={ option.id }
+										label={ option.label }
+										description={ parse(
+											option.description
+										) }
+										checked={ !! option.value }
+										onChange={ ( value ) =>
+											handleChangeOption(
+												value,
+												option.id
+											)
+										}
+									/>
+									{ option.externalText ? (
+										<p
+											style={ {
+												textDecoration: 'underline',
+												margin: '10px 0',
+											} }
+										>
+											{ parse( option.externalText ) }
+										</p>
+									) : null }
+								</FeatureUpsell>
+							) }
+						{ ( ! option.premiumUrl ||
+							NewfoldRuntime.sdk.performance
+								.jetpack_boost_premium_is_active ) && (
+							<>
+								<ToggleField
+									id={ option.id }
+									label={ option.label }
+									description={ option.description }
+									checked={ !! option.value }
+									onChange={ ( value ) =>
+										handleChangeOption( value, option.id )
+									}
+								/>
+								{ option.externalText ? (
+									<p
+										style={ {
+											textDecoration: 'underline',
+											margin: '10px 0',
+										} }
+									>
+										{ parse( option.externalText ) }
+									</p>
+								) : null }
+							</>
 						) }
 					</>
 				);
