@@ -27,6 +27,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 				'</a>'
 			),
 			hideOnPremium: true,
+			showOnModuleDisabled: true,
 		},
 		{
 			id: 'critical-css-premium',
@@ -38,6 +39,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 			premiumUrl:
 				window.location.origin +
 				'/wp-admin/admin.php?page=jetpack-boost',
+			showOnModuleDisabled: false,
 		},
 		{
 			id: 'render-blocking-js',
@@ -45,6 +47,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 			description: constants.text.jetpackBoostRenderBlockingDescription,
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_blocking_js,
 			type: 'toggle',
+			showOnModuleDisabled: true,
 		},
 		{
 			id: 'minify-js',
@@ -52,6 +55,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 			description: constants.text.jetpackBoostMinifyJsDescription,
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_minify_js,
 			type: 'toggle',
+			showOnModuleDisabled: true,
 			children: [
 				{
 					id: 'minify-js-excludes',
@@ -69,6 +73,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 			description: constants.text.jetpackBoostMinifyCssDescription,
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_minify_css,
 			type: 'toggle',
+			showOnModuleDisabled: true,
 			children: [
 				{
 					id: 'minify-css-excludes',
@@ -96,14 +101,19 @@ const JetpackBoost = ( { methods, constants } ) => {
 						setModuleStatus={ setModuleStatus }
 					/>
 					<FeatureUpsell>
-						{ fields.map( ( field ) => (
-							<SingleOption
-								key={ field.id }
-								params={ field }
-								methods={ methods }
-								constants={ constants }
-							/>
-						) ) }
+						{ fields.map( ( field ) => {
+							if ( field.showOnModuleDisabled ) {
+								return (
+									<SingleOption
+										key={ field.id }
+										params={ field }
+										methods={ methods }
+										constants={ constants }
+									/>
+								);
+							}
+							return null;
+						} ) }
 					</FeatureUpsell>
 				</div>
 			) : (
