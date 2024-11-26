@@ -30,7 +30,7 @@ class ImageService {
 
 		// Make a POST request to the Cloudflare Worker
 		$response = wp_remote_post(
-			self::WORKER_URL . '?image=' . rawurlencode( $image_url ),
+			self::WORKER_URL . '/?image=' . rawurlencode( $image_url ),
 			array(
 				'method'  => 'POST',
 				'timeout' => 30,
