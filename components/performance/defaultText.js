@@ -86,6 +86,10 @@ const defaultText = {
 		'Optimize Critical CSS Loading (UPGRADED)',
 		'wp-module-performance'
 	),
+	jetpackBoostCriticalCssUpgradeTitle: __(
+		'Generate Critical CSS Automatically',
+		'wp-module-performance'
+	),
 	jetpackBoostCriticalCssPremiumDescription: sprintf(
 		// translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 		__(
