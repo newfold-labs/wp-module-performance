@@ -31,14 +31,17 @@ const JetpackBoost = ( { methods, constants } ) => {
 		},
 		{
 			id: 'critical-css-premium',
-			label: constants.text.jetpackBoostCriticalCssPremiumTitle,
+			label: NewfoldRuntime.sdk.performance
+				.jetpack_boost_premium_is_active
+				? constants.text.jetpackBoostCriticalCssPremiumTitle
+				: constants.text.jetpackBoostCriticalCssUpgradeTitle,
 			description:
 				constants.text.jetpackBoostCriticalCssPremiumDescription,
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_critical_css,
 			type: 'toggle',
 			premiumUrl:
 				window.location.origin +
-				'/wp-admin/admin.php?page=jetpack-boost',
+				'/wp-admin/admin.php?page=jetpack-boost#upgrade',
 			showOnModuleDisabled: false,
 		},
 		{
