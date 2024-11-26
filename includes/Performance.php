@@ -346,7 +346,6 @@ class Performance {
 	 */
 	public function isJetPackBoostActive() {
 		$exists = false;
-
 		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
 			$products = Current_Plan::get_products();
 			foreach ( $products as $product ) {
