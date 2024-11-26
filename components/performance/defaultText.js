@@ -91,11 +91,11 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	imageOptimizationAutoDeleteLabel: __(
-		'Auto Delete Original Image',
+		'Auto Delete Original Image (Recommended)',
 		'wp-module-performance'
 	),
 	imageOptimizationAutoDeleteDescription: __(
-		'Automatically delete the original uploaded image after optimization to save storage space.',
+		'When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.',
 		'wp-module-performance'
 	),
 	imageOptimizationNoSettings: __(
