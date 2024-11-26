@@ -9,9 +9,9 @@ class ImageUploadListener {
 	/**
 	 * The service class for image optimization.
 	 *
-	 * @var ImagesService
+	 * @var ImageService
 	 */
-	private $images_service;
+	private $image_service;
 
 	/**
 	 * Whether to delete the original uploaded file after optimization.
@@ -26,7 +26,7 @@ class ImageUploadListener {
 	 * @param bool $delete_original Whether to delete the original file after optimization.
 	 */
 	public function __construct( $delete_original = false ) {
-		$this->images_service  = new ImageService();
+		$this->image_service   = new ImageService();
 		$this->delete_original = $delete_original;
 		$this->register_hooks();
 	}
@@ -45,44 +45,63 @@ class ImageUploadListener {
 	 * @return array|WP_Error The modified upload array or WP_Error on failure.
 	 */
 	public function handle_media_upload( $upload ) {
-		// Optimize the image
-		$optimized_image = $this->images_service->optimize_image( $upload['url'], $upload['file'] );
+		$optimized_image = $this->image_service->optimize_image( $upload['url'], $upload['file'] );
 
-		// Handle errors during optimization
 		if ( is_wp_error( $optimized_image ) ) {
-			return $optimized_image; // Return the error for handling
+			return $upload;
 		}
 
-		// Conditionally delete the original file after successful optimization
 		if ( $this->delete_original ) {
-			$delete_result = $this->delete_original_file( $upload['file'] );
-			if ( is_wp_error( $delete_result ) ) {
-				return $delete_result; // Return the error if file deletion fails
-			}
+			$upload = $this->replace_original_with_webp( $upload, $optimized_image );
+		} else {
+			$this->add_webp_as_new_attachment( $optimized_image );
 		}
-
-		// Update the upload array to use the optimized WebP image
-		$upload = $this->update_upload_array( $upload, $optimized_image );
 
 		return $upload;
 	}
 
 	/**
-	 * Updates the upload array to reflect the optimized WebP image.
+	 * Replaces the original file with the optimized WebP file in the Media Library.
 	 *
 	 * @param array  $upload The original upload array.
-	 * @param string $optimized_file_path The path to the optimized WebP file.
+	 * @param string $webp_file_path The path to the optimized WebP file.
 	 * @return array The updated upload array.
 	 */
-	private function update_upload_array( $upload, $optimized_file_path ) {
-		$upload_dir    = wp_upload_dir();
-		$optimized_url = trailingslashit( $upload_dir['url'] ) . wp_basename( $optimized_file_path );
+	private function replace_original_with_webp( $upload, $webp_file_path ) {
+		// Update the upload array to use the WebP file
+		$upload['file'] = $webp_file_path;
+		$upload['url']  = trailingslashit( wp_upload_dir()['url'] ) . wp_basename( $webp_file_path );
+		$upload['type'] = 'image/webp';
 
-		return array(
-			'file' => $optimized_file_path,
-			'url'  => $optimized_url,
-			'type' => 'image/webp',
+		// Delete the original file from disk
+		$this->delete_original_file( $upload['file'] );
+
+		return $upload;
+	}
+
+	/**
+	 * Adds the optimized WebP file as a new attachment in the Media Library.
+	 *
+	 * @param string $webp_file_path The path to the optimized WebP file.
+	 */
+	private function add_webp_as_new_attachment( $webp_file_path ) {
+
+		$attachment_data = array(
+			'post_mime_type' => 'image/webp',
+			'post_title'     => wp_basename( $webp_file_path ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
 		);
+
+		$attachment_id = wp_insert_attachment( $attachment_data, $webp_file_path );
+
+		if ( is_wp_error( $attachment_id ) ) {
+			return;
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		$metadata = wp_generate_attachment_metadata( $attachment_id, $webp_file_path );
+		wp_update_attachment_metadata( $attachment_id, $metadata );
 	}
 
 	/**
@@ -103,15 +122,6 @@ class ImageUploadListener {
 					)
 				);
 			}
-		} else {
-			return new \WP_Error(
-				'nfd_performance_error',
-				sprintf(
-					/* translators: %s: File path */
-					__( 'Original file not found: %s', 'wp-module-performance' ),
-					$file_path
-				)
-			);
 		}
 
 		return true; // File deletion successful
