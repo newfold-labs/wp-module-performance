@@ -3,9 +3,6 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
@@ -77,6 +74,9 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
+		new LinkPrefetch( $container );
+		new RestApi();
+
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
@@ -118,10 +118,8 @@ class Performance {
 
 	/**
 	 * Add hooks.
-	 *
-	 * @param Container $container the container
 	 */
-	public function hooks( Container $container ) {
+	public function hooks() {
 
 		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
@@ -172,11 +170,9 @@ class Performance {
 	 * @hooked action_scheduler_retention_period
 	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
 	 *
-	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
-	 *
 	 * @return int New retention period in seconds.
 	 */
-	public function nfd_asr_default( $retention_period ) {
+	public function nfd_asr_default() {
 		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
 
