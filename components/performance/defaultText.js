@@ -66,6 +66,8 @@ const defaultText = {
 	),
 	clearCacheNoticeTitle: __( 'Cache cleared', 'wp-module-performance' ),
 	clearCacheTitle: __( 'Clear Cache', 'wp-module-performance' ),
+
+	// Image Optimization
 	imageOptimizationSettingsTitle: __(
 		'Image Optimization',
 		'wp-module-performance'
@@ -116,6 +118,22 @@ const defaultText = {
 	),
 	imageOptimizationUpdatedDescription: __(
 		'Your image optimization settings have been saved.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingLabel: __(
+		'Enable Lazy Loading',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingDescription: __(
+		'Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingNoticeText: __(
+		'Lazy loading has been updated.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingErrorMessage: __(
+		'Oops! There was an error updating the lazy loading settings.',
 		'wp-module-performance'
 	),
 };
