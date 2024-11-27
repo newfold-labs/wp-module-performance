@@ -96,7 +96,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 		handleMouseDown( event ) {
 			const el = event.target.closest( 'a' );
-			this.prefetchIfEligible( el?.href );
+			this.prefetchIfEligible( el?.href ) && this.prefetchIt( el?.href );
 		}
 
 		handleInstantClick( event ) {
