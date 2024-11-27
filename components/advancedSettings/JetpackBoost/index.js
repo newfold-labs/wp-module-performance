@@ -11,6 +11,10 @@ import SingleOption from './SingleOption';
 import InstallActivatePluginButton from './InstallActivatePluginButton';
 
 const JetpackBoost = ( { methods, constants } ) => {
+
+	const currentUrl = window.location.href;
+	const siteUrl = currentUrl.split('/wp-admin/')[0];
+
 	const fields = [
 		{
 			id: 'critical-css',
@@ -22,7 +26,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 				// translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
 				__( 'Discover more %1$shere%2$s', 'wp-module-performance' ),
 				'<a href="' +
-					window.location.origin +
+				siteUrl +
 					'/wp-admin/admin.php?page=jetpack-boost">',
 				'</a>'
 			),
@@ -40,7 +44,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_critical_css,
 			type: 'toggle',
 			premiumUrl:
-				window.location.origin +
+			siteUrl +
 				'/wp-admin/admin.php?page=jetpack-boost#upgrade',
 			showOnModuleDisabled: false,
 		},
