@@ -2,9 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -18,6 +15,7 @@ class Performance {
 	 * @var string
 	 */
 	const OPTION_CACHE_LEVEL = 'newfold_cache_level';
+
 
 	/**
 	 * The option name where the "Skip WordPress 404 Handling for Static Files" option is stored.
@@ -80,6 +78,8 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -105,10 +105,8 @@ class Performance {
 
 	/**
 	 * Add hooks.
-	 *
-	 * @param Container $container the container
 	 */
-	public function hooks( Container $container ) {
+	public function hooks() {
 
 		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 
@@ -149,11 +147,9 @@ class Performance {
 	 * @hooked action_scheduler_retention_period
 	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
 	 *
-	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
-	 *
 	 * @return int New retention period in seconds.
 	 */
-	public function nfd_asr_default( $retention_period ) {
+	public function nfd_asr_default() {
 		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
 
@@ -291,5 +287,13 @@ class Performance {
 				)
 			);
 		}
+	}
+	/**
+	 * Enqueue scripts and styles in admin
+	 */
+	public function enqueue_scripts() {
+		$plugin_url = $this->container->plugin()->url . get_styles_path();
+		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
+		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 }

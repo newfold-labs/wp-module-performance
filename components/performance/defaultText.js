@@ -22,6 +22,11 @@ const defaultText = {
     clearCacheDescription: __('We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.', 'wp-module-performance'),
     clearCacheNoticeTitle: __('Cache cleared', 'wp-module-performance'),
     clearCacheTitle: __('Clear Cache', 'wp-module-performance'),
+    clearCacheTitle: __('Clear Cache', 'wp-module-performance'),
+    cacheExclusionTitle: __( 'Exclude from cache', 'wp-module-performance' ),
+    cacheExclusionDescription: __( 'This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used.', 'wp-module-performance' ),
+    cacheExclusionSaved: __( 'Cache Exclusion saved', 'wp-module-performance' ),
+    cacheExclusionSaveButton: __( 'Save', 'wp-module-performance' ),
 };
 
 export default defaultText;

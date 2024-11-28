@@ -13,7 +13,7 @@ describe( 'Performance Page', function () {
 	} );
 
 	it( 'Is Accessible', () => {
-		cy.wait( 500 );
+		cy.wait( 1000 );
 		cy.checkA11y( appClass + '-app-body' );
 	} );
 
