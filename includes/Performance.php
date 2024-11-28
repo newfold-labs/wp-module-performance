@@ -2,9 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -81,6 +78,8 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -288,5 +287,13 @@ class Performance {
 				)
 			);
 		}
+	}
+	/**
+	 * Enqueue scripts and styles in admin
+	 */
+	public function enqueue_scripts() {
+		$plugin_url = $this->container->plugin()->url . get_styles_path();
+		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
+		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 }

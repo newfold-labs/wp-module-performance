@@ -143,3 +143,12 @@ function toSnakeCase( string $value, string $delimiter = '_' ) {
 function toStudlyCase( $value ) {
 	return str_replace( ' ', '', ucwords( str_replace( array( '-', '_' ), ' ', $value ) ) );
 }
+
+/**
+ * Get styles path.
+ *
+ * return string
+ */
+function get_styles_path() {
+	return 'vendor/newfold-labs/wp-module-performance/styles/styles.css';
+}
