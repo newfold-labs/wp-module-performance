@@ -103,7 +103,7 @@ class Performance {
 	 * Add hooks.
 	 */
 	public function hooks() {
-
+		add_action( 'admin_init', array( $this, 'removeEPC_settings' ), 99 );
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
 		/**
@@ -132,6 +132,23 @@ class Performance {
 		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
+	}
+
+	/**
+	 * Remove EPC Settings if needed
+	 *
+	 * @return void
+	 */
+	public function removeEPC_settings() {
+		global $wp_settings_fields, $wp_settings_sections;
+		//phpcs:ignore
+		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unset( $wp_settings_sections['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'endurance_cache_level' );
+			unregister_setting( 'general', 'epc_skip_404_handling' );
+		}
 	}
 
 	/**
