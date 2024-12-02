@@ -2,9 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -72,10 +69,9 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
-		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		}
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+
+		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -105,13 +101,9 @@ class Performance {
 
 	/**
 	 * Add hooks.
-	 *
-	 * @param Container $container the container
 	 */
-	public function hooks( Container $container ) {
-
-		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
-
+	public function hooks() {
+		add_action( 'admin_init', array( $this, 'removeEPC_settings' ), 99 );
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
 		/**
@@ -143,17 +135,32 @@ class Performance {
 	}
 
 	/**
+	 * Remove EPC Settings if needed
+	 *
+	 * @return void
+	 */
+	public function removeEPC_settings() {
+		global $wp_settings_fields, $wp_settings_sections;
+		//phpcs:ignore
+		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unset( $wp_settings_sections['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'endurance_cache_level' );
+			unregister_setting( 'general', 'epc_skip_404_handling' );
+		}
+	}
+
+	/**
 	 * Update the default action scheduler retention period to 5 days instead of 30.
 	 * The actions scheduler table tends to grow to gigantic sizes and this should help.
 	 *
 	 * @hooked action_scheduler_retention_period
 	 * @see ActionScheduler_QueueCleaner::delete_old_actions()
 	 *
-	 * @param int $retention_period Minimum scheduled age in seconds of the actions to be deleted.
-	 *
 	 * @return int New retention period in seconds.
 	 */
-	public function nfd_asr_default( $retention_period ) {
+	public function nfd_asr_default() {
 		return 5 * constant( 'DAY_IN_SECONDS' );
 	}
 
@@ -209,39 +216,6 @@ class Performance {
 	}
 
 	/**
-	 * Register settings
-	 */
-	public function registerSettings() {
-
-		global $wp_settings_fields;
-
-		$section_name = self::SETTINGS_SECTION;
-
-		add_settings_section(
-			$section_name,
-			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'newfold-performance-module' ) . '</span>',
-			'__return_false',
-			'general'
-		);
-
-		add_settings_field(
-			self::OPTION_CACHE_LEVEL,
-			__( 'Cache Level', 'newfold-performance-module' ),
-			__NAMESPACE__ . '\\getCacheLevelDropdown',
-			'general',
-			$section_name
-		);
-
-		register_setting( 'general', self::OPTION_CACHE_LEVEL );
-
-		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
-		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
-			unset( $wp_settings_fields['general']['epc_settings_section'] );
-			unregister_setting( 'general', 'endurance_cache_level' );
-		}
-	}
-
-	/**
 	 * Add options to the WordPress admin bar.
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
@@ -282,14 +256,30 @@ class Performance {
 				);
 			}
 
+			$brand = $this->container->get( 'plugin' )['id'];
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
 			);
 		}
+	}
+
+	/**
+	 * Add performance menu in WP/Settings
+	 */
+	public function add_sub_menu_page() {
+		$brand = $this->container->get( 'plugin' )['id'];
+		add_options_page(
+			__( 'Performance', 'newfold-performance-module' ),
+			__( 'Performance', 'newfold-performance-module' ),
+			'manage_options',
+			admin_url( "admin.php?page=$brand#/performance" ),
+			null,
+			5
+		);
 	}
 }
