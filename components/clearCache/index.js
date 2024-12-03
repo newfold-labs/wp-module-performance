@@ -4,11 +4,11 @@ const ClearCache = ({ methods, constants }) => {
 
     const clearCache = () => {
         methods.newfoldPurgeCacheApiFetch(
-            {}, 
-            methods.setError, 
+            {},
+            methods.setError,
             (response) => {
                 methods.makeNotice(
-                    "disable-old-posts-comments-notice", 
+                    "disable-old-posts-comments-notice",
                     constants.text.clearCacheNoticeTitle,
                     null,
                     "success",
@@ -32,7 +32,7 @@ const ClearCache = ({ methods, constants }) => {
                 {constants.text.clearCacheButton}
             </Button>
         </Container.SettingsField>
-            
+
     );
 ;}
 

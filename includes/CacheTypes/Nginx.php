@@ -3,15 +3,15 @@
 namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
-
 use wpscholar\Url;
 
+/**
+ * Nginx cache type.
+ */
 class Nginx extends CacheBase implements Purgeable {
 
 	/**
 	 * Purge all assets from the Nginx cache.
-	 *
-	 * @return void
 	 */
 	public function purgeAll() {
 		$this->purgeRequest();
@@ -20,9 +20,7 @@ class Nginx extends CacheBase implements Purgeable {
 	/**
 	 * Purge the Nginx cache for a specific URL.
 	 *
-	 * @param  string  $url
-	 *
-	 * @return void
+	 * @param string $url The URL to purge.
 	 */
 	public function purgeUrl( $url ) {
 		$this->purgeRequest( $url );
@@ -31,24 +29,22 @@ class Nginx extends CacheBase implements Purgeable {
 	/**
 	 * Purge the cache.
 	 *
-	 * @param  string  $url
-	 *
-	 * @return void
+	 * @param string $url The URL to purge.
 	 */
 	protected function purgeRequest( $url = '' ) {
 		global $wp_version;
 
-		$URL = $url ? new Url( $url ) : new Url( \home_url() );
+		$url = $url ? new Url( $url ) : new Url( \home_url() );
 
-		$pluginBrand   = $this->getContainer()->plugin()->get( 'id' );
-		$pluginVersion = $this->getContainer()->plugin()->version;
+		$plugin_brand   = $this->getContainer()->plugin()->get( 'id' );
+		$plugin_version = $this->getContainer()->plugin()->version;
 
 		$args = array(
 			'method'     => 'PURGE',
 			'headers'    => array(
-				'host' => $URL->host,
+				'host' => $url->host,
 			),
-			'user-agent' => "WordPress/{$wp_version}; {$URL->host}; {$pluginBrand}/v{$pluginVersion}",
+			'user-agent' => "WordPress/{$wp_version}; {$url->host}; {$plugin_brand}/v{$plugin_version}",
 			'sslverify'  => false,
 		);
 
@@ -58,32 +54,31 @@ class Nginx extends CacheBase implements Purgeable {
 			$args['timeout']  = 0.01;
 		}
 
-		$path = '/' . ltrim( $URL->path, '/' ) . '.*';
+		$path = '/' . ltrim( $url->path, '/' ) . '.*';
 
-		$httpUrl = $URL::buildUrl(
+		$http_url = $url::buildUrl(
 			array_merge(
-				$URL->toArray(),
-				[
+				$url->toArray(),
+				array(
 					'scheme' => 'http',
 					'host'   => '127.0.0.1:8080',
 					'path'   => $path,
-				]
+				)
 			)
 		);
 
-		$httpsUrl = $URL::buildUrl(
+		$https_url = $url::buildUrl(
 			array_merge(
-				$URL->toArray(),
-				[
+				$url->toArray(),
+				array(
 					'scheme' => 'https',
 					'host'   => '127.0.0.1:8443',
 					'path'   => $path,
-				]
+				)
 			)
 		);
 
-		wp_remote_request( $httpUrl, $args );
-		wp_remote_request( $httpsUrl, $args );
+		wp_remote_request( $http_url, $args );
+		wp_remote_request( $https_url, $args );
 	}
-
 }

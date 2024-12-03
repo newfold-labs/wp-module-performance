@@ -2,6 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Concerns;
 
+/**
+ * Interface for cache types that can be purged.
+ */
 interface Purgeable {
 
 	/**
@@ -14,10 +17,9 @@ interface Purgeable {
 	/**
 	 * Purge a specific URL for the given cache type.
 	 *
-	 * @param string $url
+	 * @param string $url The URL to purge.
 	 *
 	 * @return void
 	 */
 	public function purgeUrl( $url );
-
 }

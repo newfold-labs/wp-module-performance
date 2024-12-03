@@ -5,14 +5,17 @@ namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
 use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
+/**
+ * Sitelock cache type.
+ */
 class Sitelock extends CacheBase implements Purgeable {
 
 	/**
 	 * Whether the code for this cache type should be loaded.
 	 *
-	 * @param  Container  $container
+	 * @param Container $container The dependency injection container.
 	 *
-	 * @return bool
+	 * @return bool True if the code should be loaded, false otherwise.
 	 */
 	public static function shouldEnable( Container $container ) {
 		return (bool) \get_option( 'endurance_sitelock_enabled', false );
@@ -20,8 +23,6 @@ class Sitelock extends CacheBase implements Purgeable {
 
 	/**
 	 * Purge all content from the Sitelock CDN cache.
-	 *
-	 * @return void
 	 */
 	public function purgeAll() {
 
@@ -57,15 +58,12 @@ class Sitelock extends CacheBase implements Purgeable {
 		}
 
 		wp_remote_get( $query, $args );
-
 	}
 
 	/**
 	 * Purge a specific URL from the Sitelock CDN cache.
 	 *
-	 * @param $url
-	 *
-	 * @return void
+	 * @param string $url The URL to purge.
 	 */
 	public function purgeUrl( $url ) {
 
@@ -79,12 +77,12 @@ class Sitelock extends CacheBase implements Purgeable {
 		$pattern = rawurlencode( $path . '$' );
 		$domain  = wp_parse_url( \home_url(), PHP_URL_HOST );
 
-		$args = [
+		$args = array(
 			'method'  => 'PUT',
-			'headers' => [
+			'headers' => array(
 				'X-MOJO-TOKEN' => $refreshToken,
-			],
-		];
+			),
+		);
 
 		// If WP_DEBUG is enabled, we want to wait for a response.
 		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
@@ -94,5 +92,4 @@ class Sitelock extends CacheBase implements Purgeable {
 
 		wp_remote_post( "https://my.bluehost.com/api/domains/{$domain}/caches/sitelock/{$pattern}", $args );
 	}
-
 }

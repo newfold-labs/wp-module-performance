@@ -1,4 +1,5 @@
 <?php
+
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
@@ -10,7 +11,7 @@ use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 
 /**
- * This class adds performance feature hooks.
+ * Add activation/deactivation hooks for the performance feature.
  **/
 class PerformanceFeatureHooks {
 

@@ -6,6 +6,9 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 
+/**
+ * Cache manager.
+ */
 class CacheManager {
 
 	/**
@@ -18,7 +21,7 @@ class CacheManager {
 	/**
 	 * Constructor.
 	 *
-	 * @param  string[]  $supportedCacheTypes  Cache types supported by the plugin
+	 * @param Container $container Dependency injection container.
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
@@ -30,14 +33,14 @@ class CacheManager {
 	 * @return string[]
 	 */
 	protected function classMap() {
-		return [
+		return array(
 			'browser'    => __NAMESPACE__ . '\\CacheTypes\\Browser',
 			'cloudflare' => __NAMESPACE__ . '\\CacheTypes\\Cloudflare',
 			'file'       => __NAMESPACE__ . '\\CacheTypes\\File',
 			'nginx'      => __NAMESPACE__ . '\\CacheTypes\\Nginx',
 			'sitelock'   => __NAMESPACE__ . '\\CacheTypes\\Sitelock',
 			'skip404'    => __NAMESPACE__ . '\\CacheTypes\\Skip404',
-		];
+		);
 	}
 
 	/**
@@ -55,7 +58,7 @@ class CacheManager {
 	 * @return array
 	 */
 	public function enabledCacheTypes() {
-		$cacheTypes = [];
+		$cacheTypes = array();
 		if ( $this->container->has( 'cache_types' ) ) {
 			$providedTypes = $this->container->get( 'cache_types' );
 			if ( is_array( $providedTypes ) ) {
@@ -72,16 +75,13 @@ class CacheManager {
 	/**
 	 * Get an array of page cache type instances based on the enabled cache types.
 	 *
-	 * @return CacheBase[]
+	 * @return CacheBase[] An array of cache type instances.
 	 */
 	public function getInstances() {
-		$instances  = [];
+		$instances  = array();
 		$collection = new Collection( $this->classMap() );
 		$map        = $collection->only( $this->enabledCacheTypes() );
 		foreach ( $map as $type => $class ) {
-			/**
-			 * @var CacheBase $class
-			 */
 			if ( $class::shouldEnable( $this->container ) ) {
 				$instances[ $type ] = new $class();
 				$instances[ $type ]->setContainer( $this->container );
@@ -90,5 +90,4 @@ class CacheManager {
 
 		return $instances;
 	}
-
 }

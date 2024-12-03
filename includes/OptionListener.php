@@ -2,6 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+/**
+ * Class to monitor changes to an option.
+ */
 class OptionListener {
 
 	/**
@@ -21,18 +24,17 @@ class OptionListener {
 	/**
 	 * Constructor
 	 *
-	 * @param string   $optionName The name of the option to monitor.
-	 * @param callable $callable   The callback function to be called on change.
+	 * @param string   $option_name The name of the option to monitor.
+	 * @param callable $callback    The callback function to be called on change.
 	 */
-	public function __construct( string $optionName, callable $callable ) {
+	public function __construct( string $option_name, callable $callback ) {
 
-		$this->callable = $callable;
-		$this->option   = $optionName;
+		$this->callable = $callback;
+		$this->option   = $option_name;
 
-		add_action( "add_option_{$optionName}", [ $this, 'onAdd' ], 10, 2 );
-		add_action( "update_option_{$optionName}", [ $this, 'onUpdate' ], 10, 2 );
-		add_action( "delete_option_{$optionName}", [ $this, 'onDelete' ] );
-
+		add_action( "add_option_{$option_name}", array( $this, 'onAdd' ), 10, 2 );
+		add_action( "update_option_{$option_name}", array( $this, 'onUpdate' ), 10, 2 );
+		add_action( "delete_option_{$option_name}", array( $this, 'onDelete' ) );
 	}
 
 	/**
@@ -48,12 +50,12 @@ class OptionListener {
 	/**
 	 * Call function when an option value is updated.
 	 *
-	 * @param mixed $oldValue The old option value.
-	 * @param mixed $newValue The new option value.
+	 * @param mixed $old_value The old option value.
+	 * @param mixed $new_value The new option value.
 	 */
-	public function onUpdate( $oldValue, $newValue ) {
-		if ( $oldValue !== $newValue ) {
-			call_user_func( $this->callable, $newValue, $this->option );
+	public function onUpdate( $old_value, $new_value ) {
+		if ( $old_value !== $new_value ) {
+			call_user_func( $this->callable, $new_value, $this->option );
 		}
 	}
 
@@ -63,5 +65,4 @@ class OptionListener {
 	public function onDelete() {
 		call_user_func( $this->callable, null, $this->option );
 	}
-
 }
