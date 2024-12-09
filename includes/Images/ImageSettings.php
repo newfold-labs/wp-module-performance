@@ -25,6 +25,7 @@ class ImageSettings {
 		'lazy_loading'                   => array(
 			'enabled' => true,
 		),
+		'bulk_optimization'              => false, // Default value for bulk optimization
 	);
 
 	/**
@@ -51,7 +52,7 @@ class ImageSettings {
 					'schema' => array(
 						'type'                 => 'object',
 						'properties'           => array(
-							'enabled'      => array(
+							'enabled'           => array(
 								'type'        => 'boolean',
 								'description' => __( 'Enable image optimization.', 'wp-module-performance' ),
 								'default'     => self::DEFAULT_SETTINGS['enabled'],
@@ -72,7 +73,7 @@ class ImageSettings {
 									),
 								),
 							),
-							'lazy_loading' => array(
+							'lazy_loading'      => array(
 								'type'        => 'object',
 								'description' => __( 'Settings for lazy loading.', 'wp-module-performance' ),
 								'properties'  => array(
@@ -82,6 +83,11 @@ class ImageSettings {
 										'default'     => self::DEFAULT_SETTINGS['lazy_loading']['enabled'],
 									),
 								),
+							),
+							'bulk_optimization' => array(
+								'type'        => 'boolean',
+								'description' => __( 'Enable bulk optimization of images.', 'wp-module-performance' ),
+								'default'     => self::DEFAULT_SETTINGS['bulk_optimization'],
 							),
 						),
 						'additionalProperties' => false, // Disallow undefined properties
@@ -119,6 +125,7 @@ class ImageSettings {
 			'lazy_loading'                   => array(
 				'enabled' => ! empty( $settings['lazy_loading']['enabled'] ),
 			),
+			'bulk_optimization'              => ! empty( $settings['bulk_optimization'] ),
 		);
 	}
 
@@ -160,5 +167,15 @@ class ImageSettings {
 	public static function is_lazy_loading_enabled() {
 		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		return ! empty( $settings['lazy_loading']['enabled'] );
+	}
+
+	/**
+	 * Checks if bulk optimization is enabled.
+	 *
+	 * @return bool True if bulk optimization is enabled, false otherwise.
+	 */
+	public static function is_bulk_optimization_enabled() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		return ! empty( $settings['bulk_optimization'] );
 	}
 }

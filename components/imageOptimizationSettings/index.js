@@ -1,8 +1,12 @@
-// WordPress
 import { useState, useEffect } from '@wordpress/element';
 
 // Components
-import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
+import {
+	Alert,
+	Container,
+	ToggleField,
+	Button,
+} from '@newfold/ui-component-library';
 
 // Classes and functions
 import defaultText from '../performance/defaultText';
@@ -47,6 +51,12 @@ const ImageOptimizationSettings = ( { methods } ) => {
 			} );
 		} catch ( error ) {
 			setIsError( true );
+			notify.push( 'image-optimization-update-error', {
+				title: defaultText.imageOptimizationUpdateErrorTitle,
+				description: defaultText.imageOptimizationGenericErrorMessage,
+				variant: 'error',
+				autoDismiss: 8000,
+			} );
 		}
 	};
 
@@ -54,7 +64,9 @@ const ImageOptimizationSettings = ( { methods } ) => {
 	const handleToggleChange = ( field, value ) => {
 		const updatedSettings = { ...settings };
 
-		if ( field === 'enabled' ) {
+		if ( field === 'bulkOptimize' ) {
+			updatedSettings.bulk_optimization = value;
+		} else if ( field === 'enabled' ) {
 			updatedSettings.enabled = value;
 
 			// Automatically enable/disable dependent settings
@@ -112,6 +124,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		enabled,
 		auto_optimized_uploaded_images: autoOptimizedUploadedImages,
 		lazy_loading: lazyLoading = { enabled: true },
+		bulk_optimization: bulkOptimization = false,
 	} = settings || {};
 
 	const {
@@ -190,6 +203,41 @@ const ImageOptimizationSettings = ( { methods } ) => {
 							disabled={ ! enabled }
 						/>
 					</div>
+				</div>
+				{ /* New Bulk Optimization Section */ }
+				<div className="nfd-flex nfd-flex-col nfd-gap-6">
+					<ToggleField
+						id="bulk-optimize-images"
+						label={ defaultText.imageOptimizationBulkOptimizeLabel }
+						description={
+							defaultText.imageOptimizationBulkOptimizeDescription
+						}
+						checked={ bulkOptimization }
+						onChange={ () =>
+							handleToggleChange(
+								'bulkOptimize',
+								! bulkOptimization
+							)
+						}
+					/>
+					{ bulkOptimization && (
+						<div className="nfd-flex nfd-justify-end">
+							<Button
+								variant="primary"
+								size="small" // Adjusts the size of the button
+								onClick={ () =>
+									window.open(
+										'/wp-admin/media.php',
+										'_blank'
+									)
+								}
+							>
+								{
+									defaultText.imageOptimizationBulkOptimizeButtonLabel
+								}
+							</Button>
+						</div>
+					) }
 				</div>
 			</div>
 		</Container.SettingsField>
