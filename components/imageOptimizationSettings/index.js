@@ -1,6 +1,4 @@
 import { useState, useEffect } from '@wordpress/element';
-
-// Components
 import {
 	Alert,
 	Container,
@@ -8,11 +6,10 @@ import {
 	Button,
 } from '@newfold/ui-component-library';
 
-// Classes and functions
 import defaultText from '../performance/defaultText';
 
 const ImageOptimizationSettings = ( { methods } ) => {
-	const [ settings, setSettings ] = useState( null ); // Local state for settings
+	const [ settings, setSettings ] = useState( null );
 	const [ isError, setIsError ] = useState( false );
 	const [ isLoading, setIsLoading ] = useState( true );
 
@@ -23,6 +20,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 	const fetchSettings = async () => {
 		setIsLoading( true );
 		setIsError( false );
+
 		try {
 			const fetchedSettings = await methods.apiFetch( { path: apiUrl } );
 			setSettings( fetchedSettings.nfd_image_optimization || {} );
@@ -33,7 +31,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		}
 	};
 
-	// Update settings via the REST API
+	// Update settings via REST API
 	const updateSettings = async ( newSettings ) => {
 		setIsError( false );
 		try {
@@ -43,6 +41,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 				data: { nfd_image_optimization: newSettings },
 			} );
 			setSettings( updatedSettings.nfd_image_optimization || {} );
+
 			notify.push( 'image-optimization-updated', {
 				title: defaultText.imageOptimizationUpdatedTitle,
 				description: defaultText.imageOptimizationUpdatedDescription,
@@ -60,38 +59,62 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		}
 	};
 
-	// Handle toggle changes
+	// Handle Toggle Changes
 	const handleToggleChange = ( field, value ) => {
 		const updatedSettings = { ...settings };
 
-		if ( field === 'bulkOptimize' ) {
-			updatedSettings.bulk_optimization = value;
-		} else if ( field === 'enabled' ) {
-			updatedSettings.enabled = value;
+		switch ( field ) {
+			case 'enabled':
+				updatedSettings.enabled = value;
+				updatedSettings.auto_optimized_uploaded_images.enabled = value;
+				updatedSettings.bulk_optimization = value;
+				updatedSettings.lazy_loading.enabled = value;
+				updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
+					value;
+				break;
 
-			// Automatically enable/disable dependent settings
-			updatedSettings.auto_optimized_uploaded_images = {
-				enabled: value,
-				auto_delete_original_image: value,
-			};
-			updatedSettings.lazy_loading = { enabled: value };
-		} else if ( field === 'autoOptimizeEnabled' ) {
-			updatedSettings.auto_optimized_uploaded_images.enabled = value;
-			if ( ! value ) {
-				updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image = false;
-			}
-		} else if ( field === 'autoDeleteOriginalImage' ) {
-			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
-				value;
-		} else if ( field === 'lazyLoading' ) {
-			updatedSettings.lazy_loading.enabled = value;
+			case 'autoOptimizeEnabled':
+				updatedSettings.auto_optimized_uploaded_images.enabled = value;
+				break;
+
+			case 'bulkOptimize':
+				updatedSettings.bulk_optimization = value;
+				break;
+
+			case 'lazyLoading':
+				updatedSettings.lazy_loading.enabled = value;
+				break;
+
+			case 'autoDeleteOriginalImage':
+				updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
+					value;
+				break;
+
+			default:
+				break;
+		}
+
+		// Auto-disable Auto Delete Original Image if both options are off
+		if (
+			! updatedSettings.bulk_optimization &&
+			! updatedSettings.auto_optimized_uploaded_images.enabled
+		) {
+			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image = false;
+		}
+
+		// Re-enable Auto Delete if either option is turned on
+		if (
+			updatedSettings.bulk_optimization ||
+			updatedSettings.auto_optimized_uploaded_images.enabled
+		) {
+			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image = true;
 		}
 
 		setSettings( updatedSettings );
 		updateSettings( updatedSettings );
 	};
 
-	// Fetch settings on component mount
+	// Fetch settings on mount
 	useEffect( () => {
 		fetchSettings();
 	}, [] );
@@ -119,7 +142,6 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		);
 	}
 
-	// Destructure settings with camel case for internal use
 	const {
 		enabled,
 		auto_optimized_uploaded_images: autoOptimizedUploadedImages,
@@ -149,96 +171,92 @@ const ImageOptimizationSettings = ( { methods } ) => {
 						handleToggleChange( 'enabled', ! enabled )
 					}
 				/>
-				<div className="nfd-flex nfd-flex-col nfd-gap-6">
-					<ToggleField
-						id="auto-optimize-images"
-						label={ defaultText.imageOptimizationAutoOptimizeLabel }
-						description={
-							defaultText.imageOptimizationAutoOptimizeDescription
-						}
-						checked={ autoOptimizeEnabled }
-						onChange={ () =>
-							handleToggleChange(
-								'autoOptimizeEnabled',
-								! autoOptimizeEnabled
-							)
-						}
-						disabled={ ! enabled }
-					/>
-					<div className="nfd-flex nfd-flex-col nfd-gap-6">
-						<ToggleField
-							id="auto-delete-original"
-							label={
-								defaultText.imageOptimizationAutoDeleteLabel
+
+				<ToggleField
+					id="auto-optimize-images"
+					label={ defaultText.imageOptimizationAutoOptimizeLabel }
+					description={
+						defaultText.imageOptimizationAutoOptimizeDescription
+					}
+					checked={ autoOptimizeEnabled }
+					onChange={ () =>
+						handleToggleChange(
+							'autoOptimizeEnabled',
+							! autoOptimizeEnabled
+						)
+					}
+					disabled={ ! enabled }
+				/>
+
+				<ToggleField
+					id="auto-delete-original"
+					label={ defaultText.imageOptimizationAutoDeleteLabel }
+					description={
+						defaultText.imageOptimizationAutoDeleteDescription
+					}
+					checked={ autoDeleteOriginalImage }
+					onChange={ () =>
+						handleToggleChange(
+							'autoDeleteOriginalImage',
+							! autoDeleteOriginalImage
+						)
+					}
+					disabled={
+						! enabled ||
+						( ! autoOptimizeEnabled && ! bulkOptimization )
+					}
+				/>
+
+				<ToggleField
+					id="lazy-loading-enabled"
+					label={ defaultText.imageOptimizationLazyLoadingLabel }
+					description={
+						defaultText.imageOptimizationLazyLoadingDescription
+					}
+					checked={ lazyLoading.enabled }
+					onChange={ () =>
+						handleToggleChange(
+							'lazyLoading',
+							! lazyLoading.enabled
+						)
+					}
+					disabled={ ! enabled }
+				/>
+
+				<ToggleField
+					id="bulk-optimize-images"
+					label={ defaultText.imageOptimizationBulkOptimizeLabel }
+					description={
+						defaultText.imageOptimizationBulkOptimizeDescription
+					}
+					checked={ bulkOptimization }
+					onChange={ () =>
+						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
+					}
+					disabled={ ! enabled }
+				/>
+
+				{ bulkOptimization && (
+					<div className="nfd-flex nfd-justify-end">
+						<Button
+							variant="primary"
+							size="small"
+							onClick={ () => {
+								const adminUrl = `${
+									window.location.origin
+								}${ window.location.pathname.replace(
+									/\/$/,
+									''
+								) }/wp-admin/media.php`;
+								window.open( adminUrl, '_blank' );
+							} }
+						>
+							{
+								defaultText.imageOptimizationBulkOptimizeButtonLabel
 							}
-							description={
-								defaultText.imageOptimizationAutoDeleteDescription
-							}
-							checked={ autoDeleteOriginalImage }
-							onChange={ () =>
-								handleToggleChange(
-									'autoDeleteOriginalImage',
-									! autoDeleteOriginalImage
-								)
-							}
-							disabled={ ! enabled || ! autoOptimizeEnabled }
-						/>
+						</Button>
 					</div>
-					<div className="nfd-flex nfd-flex-col nfd-gap-6">
-						<ToggleField
-							id="lazy-loading-enabled"
-							label={
-								defaultText.imageOptimizationLazyLoadingLabel
-							}
-							description={
-								defaultText.imageOptimizationLazyLoadingDescription
-							}
-							checked={ lazyLoading.enabled }
-							onChange={ () =>
-								handleToggleChange(
-									'lazyLoading',
-									! lazyLoading.enabled
-								)
-							}
-							disabled={ ! enabled }
-						/>
-					</div>
-				</div>
-				{ /* New Bulk Optimization Section */ }
-				<div className="nfd-flex nfd-flex-col nfd-gap-6">
-					<ToggleField
-						id="bulk-optimize-images"
-						label={ defaultText.imageOptimizationBulkOptimizeLabel }
-						description={
-							defaultText.imageOptimizationBulkOptimizeDescription
-						}
-						checked={ bulkOptimization }
-						onChange={ () =>
-							handleToggleChange(
-								'bulkOptimize',
-								! bulkOptimization
-							)
-						}
-					/>
-					{ bulkOptimization && (
-						<div className="nfd-flex nfd-justify-end">
-							<Button
-								variant="primary"
-								size="small" // Adjusts the size of the button
-								onClick={ () =>
-									window.open(
-										'/wp-admin/media.php',
-										'_blank'
-									)
-								}
-							>
-								{
-									defaultText.imageOptimizationBulkOptimizeButtonLabel
-								}
-							</Button>
-						</div>
-					) }
-				</div>
+				) }
 			</div>
 		</Container.SettingsField>
 	);
