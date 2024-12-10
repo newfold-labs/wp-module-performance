@@ -53,6 +53,22 @@ class HealthCheckManager {
 	/**
 	 * Add a health check.
 	 *
+	 * To add a health check, simply call this with the options you want to use.
+	 *
+	 * Example:
+	 *
+	 * $healthCheckManager->addHealthCheck( [
+	 *  'id'          => 'example',
+	 *  'title'       => 'Example Health Check',
+	 *  'pass'        => 'This is the user-facing text for a passing health check',
+	 *  'fail'        => 'This is the user-facing text for a failing health check',
+	 *  'text'        => 'This is the user-facing description of the health check',
+	 *  'badge_label' => 'Label', // Optional, defaults to 'Performance'.
+	 *  'badge_color' => 'blue', // Optional, defaults to 'blue'.
+	 *  'test'        => function() {
+	 *     return true; // This is the test that will be run. and should return true or false for pass/fail.
+	 * ] );
+	 *
 	 * @param array $options Health check options.
 	 */
 	public function addHealthCheck( $options ) {
