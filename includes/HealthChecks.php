@@ -160,6 +160,8 @@ class HealthChecks {
 			)
 		);
 
+		/* // phpcs:ignore Squiz.PHP.CommentedOutCode
+		Enable when https://github.com/newfold-labs/wp-module-performance/pull/32 is merged.
 		// PRESS7-119: Lazy Loading.
 		$manager->addHealthCheck(
 			array(
@@ -174,7 +176,10 @@ class HealthChecks {
 				},
 			)
 		);
+		*/
 
+		/* // phpcs:ignore Squiz.PHP.CommentedOutCode
+		Enable when https://github.com/newfold-labs/wp-module-performance/pull/26 is merged.
 		// PRESS7-120: Link Prefetching.
 		$manager->addHealthCheck(
 			array(
@@ -189,8 +194,10 @@ class HealthChecks {
 					return ( isset( $enabled['activeOnDesktop'] ) && $enabled['activeOnDesktop'] );
 				},
 			)
-		);
+		);*/
 
+		/* // phpcs:ignore Squiz.PHP.CommentedOutCode
+		Enable when https://github.com/newfold-labs/wp-module-performance/pull/25 is merged.
 		// PRESS7-114: Prioritize Critical CSS.
 		$manager->addHealthCheck(
 			array(
@@ -249,6 +256,6 @@ class HealthChecks {
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-css', array() ) ) );
 				},
 			)
-		);
+		);*/
 	}
 }
