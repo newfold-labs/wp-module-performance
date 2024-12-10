@@ -48,8 +48,8 @@ class HealthChecks {
 			array(
 				'id'    => 'post-revisions',
 				'title' => __( 'Post Revisions', 'newfold-performance-module' ),
-				'pass'  => __( 'Number of post revisions is limited to 5 or less.', 'newfold-performance-module' ),
-				'fail'  => __( 'Number of post revisions is set to a high number.', 'newfold-performance-module' ),
+				'pass'  => __( 'Number of post revisions is limited to 5 or less', 'newfold-performance-module' ),
+				'fail'  => __( 'Number of post revisions is set to a high number', 'newfold-performance-module' ),
 				'text'  => __( 'Setting the number of post revisions to a lower number can reduce database bloat.', 'newfold-performance-module' ),
 				'test'  => function () {
 					return ( defined( 'WP_POST_REVISIONS' ) && WP_POST_REVISIONS <= 5 );
@@ -61,7 +61,7 @@ class HealthChecks {
 			array(
 				'id'    => 'empty-trash-days',
 				'title' => __( 'Empty Trash Days', 'newfold-performance-module' ),
-				'pass'  => __( 'Trash is emptied every 30 days or less.', 'newfold-performance-module' ),
+				'pass'  => __( 'Trash is emptied every 30 days or less', 'newfold-performance-module' ),
 				'fail'  => __( 'Trash is emptied less frequently than every 30 days.', 'newfold-performance-module' ),
 				'text'  => __( 'Emptying the trash more frequently can reduce database bloat.', 'newfold-performance-module' ),
 				'test'  => function () {
@@ -78,7 +78,7 @@ class HealthChecks {
 				'fail'  => __( 'Cron lock timeout is set to a high number.', 'newfold-performance-module' ),
 				'text'  => __( 'Cron lock timeout affects how long a cron job can run for, setting it to a lower number can improve performance.', 'newfold-performance-module' ),
 				'test'  => function () {
-					return ( defined( 'WP_CRON_LOCK_TIMEOUT' ) && WP_CRON_LOCK_TIMEOUT <= 60 );
+					return ( defined( 'WP_CRON_LOCK_TIMEOUT' ) && WP_CRON_LOCK_TIMEOUT <= 300 );
 				},
 			)
 		);
