@@ -104,7 +104,7 @@ class HealthChecks {
 				'fail'  => __( 'Page caching is disabled', 'newfold-performance-module' ),
 				'text'  => __( 'Page caching can improve performance by bypassing PHP and database queries for faster page loads.', 'newfold-performance-module' ),
 				'test'  => function () {
-					return ( get_option( 'newfold_cache_level' ) >= 1 );
+					return ( get_option( 'newfold_cache_level' ) >= 2 );
 				},
 			)
 		);
@@ -117,21 +117,26 @@ class HealthChecks {
 				'fail'  => __( 'Browser caching is disabled', 'newfold-performance-module' ),
 				'text'  => __( 'Enabling browser caching can improve performance by storing static assets in the browser for faster page loads.', 'newfold-performance-module' ),
 				'test'  => function () {
+					return ( get_option( 'newfold_cache_level' ) >= 1 );
 				},
 			)
 		);
 
-		$manager->addHealthCheck(
-			array(
-				'id'    => 'object-caching',
-				'title' => __( 'Object Caching', 'newfold-performance-module' ),
-				'pass'  => __( 'Object caching is enabled', 'newfold-performance-module' ),
-				'fail'  => __( 'Object caching is disabled', 'newfold-performance-module' ),
-				'text'  => __( 'Object caching can improve performance by storing database queries in memory for faster page loads.', 'newfold-performance-module' ),
-				'test'  => function () {
-				},
-			)
-		);
+		// Only show object caching health check for Bluehost brand.
+		if ( 'bluehost' === $this->container->plugin()->brand ) {
+			$manager->addHealthCheck(
+				array(
+					'id'    => 'persistent_object_cache', // Replaces the default test.
+					'title' => __( 'Object Caching', 'newfold-performance-module' ),
+					'pass'  => __( 'Object caching is enabled', 'newfold-performance-module' ),
+					'fail'  => __( 'Object caching is disabled', 'newfold-performance-module' ),
+					'text'  => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
+					'test'  => function () {
+						return wp_using_ext_object_cache();
+					},
+				)
+			);
+		}
 
 		$manager->addHealthCheck(
 			array(
@@ -141,7 +146,7 @@ class HealthChecks {
 				'fail'  => __( 'Cloudflare integration is disabled', 'newfold-performance-module' ),
 				'text'  => __( 'Cloudflare integration can improve performance and security.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// return $this->container->get( 'cacheManager' )->isEnabled( 'cloudflare' );
+					return isset( $_SERVER['HTTP_CF_RAY'] );
 				},
 			)
 		);
@@ -154,8 +159,8 @@ class HealthChecks {
 				'fail'  => __( 'Lazy loading is disabled', 'newfold-performance-module' ),
 				'text'  => __( 'Lazy loading can improve performance by only loading images when they are in view.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/32
-					// nfd_image_optimization
+					$enabled = get_option( 'nfd_image_optimization', array() );
+					return ( isset( $enabled['lazy_loading'], $enabled['lazy_loading']['enabled'] ) && $enabled['lazy_loading']['enabled'] );
 				},
 			)
 		);
@@ -168,8 +173,9 @@ class HealthChecks {
 				'fail'  => __( 'Link prefetching is disabled', 'newfold-performance-module' ),
 				'text'  => __( 'Link prefetching can improve performance by loading pages immediately before they are requested.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/26
-					// nfd_link_prefetch_settings
+					https://github.com/newfold-labs/wp-module-performance/pull/26
+					$enabled = get_option( 'nfd_link_prefetch_settings', array() );
+					return ( isset( $enabled['activeOnDesktop'] ) && $enabled['activeOnDesktop'] );
 				},
 			)
 		);
@@ -182,7 +188,8 @@ class HealthChecks {
 				'fail'  => __( 'Critical CSS is not prioritized', 'newfold-performance-module' ),
 				'text'  => __( 'Prioritizing critical CSS can improve performance by loading the most important CSS first.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/25
+					https://github.com/newfold-labs/wp-module-performance/pull/25
+					return get_option( 'jetpack_boost_status_critical-css', false );
 				},
 			)
 		);
@@ -195,7 +202,8 @@ class HealthChecks {
 				'fail'  => __( 'Non-essential JavaScript is not deferred', 'newfold-performance-module' ),
 				'text'  => __( 'JavaScript can be deferred to improve performance by loading it after the page has loaded.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/25
+					https://github.com/newfold-labs/wp-module-performance/pull/25
+					return get_option( 'jetpack_boost_status_render-blocking-js', false );
 				},
 			)
 		);
@@ -208,7 +216,8 @@ class HealthChecks {
 				'fail'  => __( 'JavaScript files are not concatenated', 'newfold-performance-module' ),
 				'text'  => __( 'Concatenating JavaScript can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/25
+					https://github.com/newfold-labs/wp-module-performance/pull/25
+					return ( ! empty( get_option( 'jetpack_boost_status_minify-js', array() ) ) );
 				},
 			)
 		);
@@ -221,7 +230,8 @@ class HealthChecks {
 				'fail'  => __( 'CSS files are not concatenated', 'newfold-performance-module' ),
 				'text'  => __( 'Concatenating CSS can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
 				'test'  => function () {
-					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/25
+					https://github.com/newfold-labs/wp-module-performance/pull/25
+					return ( ! empty( get_option( 'jetpack_boost_status_minify-css', array() ) ) );
 				},
 			)
 		);
