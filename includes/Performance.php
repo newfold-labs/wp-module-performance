@@ -70,10 +70,10 @@ class Performance {
 
 		$this->hooks( $container );
 
-		$cacheManager = new CacheManager( $container );
-		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		$cacheManager       = new CacheManager( $container );
+		$cachePurger        = new CachePurgingService( $cacheManager->getInstances() );
 		$healthCheckManager = new HealthCheckManager( $container );
-		$healthChecks = new HealthChecks( $container );
+		$healthChecks       = new HealthChecks( $container );
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {

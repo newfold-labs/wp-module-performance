@@ -33,7 +33,7 @@ class HealthChecks {
 
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'autosave_interval',
+				'id'    => 'autosave-interval',
 				'title' => __( 'Autosave Interval', 'newfold-performance-module' ),
 				'pass'  => __( 'Autosaving is set to happen every 30 seconds or more.', 'newfold-performance-module' ),
 				'fail'  => __( 'Autosaving is set to be frequent, less than every 30 seconds.', 'newfold-performance-module' ),
@@ -135,7 +135,7 @@ class HealthChecks {
 
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'cloudflare_active',
+				'id'    => 'cloudflare-active',
 				'title' => __( 'Cloudflare enabled', 'newfold-performance-module' ),
 				'pass'  => __( 'Cloudflare integration is enabled', 'newfold-performance-module' ),
 				'fail'  => __( 'Cloudflare integration is disabled', 'newfold-performance-module' ),
@@ -174,7 +174,6 @@ class HealthChecks {
 			)
 		);
 
-
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'prioritize-critical-css',
@@ -203,14 +202,14 @@ class HealthChecks {
 
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'concatenate js',
+				'id'    => 'concatenate-js',
 				'title' => __( 'Concatenate JavaScript', 'newfold-performance-module' ),
 				'pass'  => __( 'JavaScript files are concatenated', 'newfold-performance-module' ),
 				'fail'  => __( 'JavaScript files are not concatenated', 'newfold-performance-module' ),
 				'text'  => __( 'Concatenating JavaScript can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
 				'test'  => function () {
 					// TODO: https://github.com/newfold-labs/wp-module-performance/pull/25
-			},
+				},
 			)
 		);
 
