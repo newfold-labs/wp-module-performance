@@ -36,8 +36,8 @@ class HealthChecks {
 			array(
 				'id'    => 'autosave-interval',
 				'title' => __( 'Autosave Interval', 'newfold-performance-module' ),
-				'pass'  => __( 'Autosaving is set to happen every 30 seconds or more.', 'newfold-performance-module' ),
-				'fail'  => __( 'Autosaving is set to be frequent, less than every 30 seconds.', 'newfold-performance-module' ),
+				'pass'  => __( 'Autosaving is set to happen every 30 seconds or more', 'newfold-performance-module' ),
+				'fail'  => __( 'Autosaving is set to be frequent, less than every 30 seconds', 'newfold-performance-module' ),
 				'text'  => __( 'Setting the autosave interval to a longer period can reduce server load, it is recommended to set it to 30 seconds or more.', 'newfold-performance-module' ),
 				'test'  => function () {
 					return ( defined( 'AUTOSAVE_INTERVAL' ) && AUTOSAVE_INTERVAL >= 30 );
@@ -134,12 +134,20 @@ class HealthChecks {
 		if ( 'bluehost' === $this->container->plugin()->brand ) {
 			$manager->addHealthCheck(
 				array(
-					'id'    => 'persistent_object_cache', // Replaces the default test.
-					'title' => __( 'Object Caching', 'newfold-performance-module' ),
-					'pass'  => __( 'Object caching is enabled', 'newfold-performance-module' ),
-					'fail'  => __( 'Object caching is disabled', 'newfold-performance-module' ),
-					'text'  => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
-					'test'  => function () {
+					'id'      => 'persistent_object_cache',                                                                                                                                                                                                     // Replaces the default test.
+					'title'   => __( 'Object Caching', 'newfold-performance-module' ),
+					'pass'    => __( 'Object caching is enabled', 'newfold-performance-module' ),
+					'fail'    => __( 'Object caching is disabled', 'newfold-performance-module' ),
+					'text'    => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
+					'actions' => sprintf(
+						'<a href="https://www.bluehost.com/hosting/cloud" target="_blank">%1$s%2$s</a>',
+						__( 'Learn more about Bluehost Cloud Hosting.', 'newfold-performance-module' ),
+						sprintf(
+							'<span class="screen-reader-text"> (%s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
+							__( 'opens in a new tab', 'newfold-performance-module' )
+						)
+					),
+					'test'    => function () {
 						return wp_using_ext_object_cache();
 					},
 				)
