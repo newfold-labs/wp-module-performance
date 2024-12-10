@@ -31,6 +31,7 @@ class HealthChecks {
 	public function addHealthChecks() {
 		$manager = $this->container->get( 'healthCheckManager' );
 
+		// PRESS7-108: Autosave Interval.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'autosave-interval',
@@ -44,6 +45,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-109: Post Revisions.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'post-revisions',
@@ -57,6 +59,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-110: Empty Trash Days.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'empty-trash-days',
@@ -70,6 +73,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-111: Cron Lock Timeout.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'wp-cron-lock-timeout',
@@ -83,6 +87,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-118: Permalinks.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'permalinks',
@@ -96,6 +101,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-112: Page Caching.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'page-caching',
@@ -109,6 +115,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-113: Browser Caching.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'browser-caching',
@@ -122,6 +129,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-121: Object Caching.
 		// Only show object caching health check for Bluehost brand.
 		if ( 'bluehost' === $this->container->plugin()->brand ) {
 			$manager->addHealthCheck(
@@ -138,6 +146,7 @@ class HealthChecks {
 			);
 		}
 
+		// PRESS7-107: Cloudflare.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'cloudflare-active',
@@ -151,6 +160,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-119: Lazy Loading.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'lazy-loading',
@@ -165,6 +175,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-120: Link Prefetching.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'link-prefetch',
@@ -180,6 +191,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-114: Prioritize Critical CSS.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'prioritize-critical-css',
@@ -194,6 +206,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-115: Defer Non-Essential JavaScript.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'defer-non-essential-javascript',
@@ -208,6 +221,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-116: Concatenate JavaScript.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'concatenate-js',
@@ -222,6 +236,7 @@ class HealthChecks {
 			)
 		);
 
+		// PRESS7-117: Concatenate CSS.
 		$manager->addHealthCheck(
 			array(
 				'id'    => 'concatenate-css',
