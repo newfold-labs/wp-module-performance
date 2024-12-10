@@ -96,6 +96,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 
 		// Auto-disable Auto Delete Original Image if both options are off
 		if (
+			field !== 'autoDeleteOriginalImage' &&
 			! updatedSettings.bulk_optimization &&
 			! updatedSettings.auto_optimized_uploaded_images.enabled
 		) {
@@ -104,8 +105,9 @@ const ImageOptimizationSettings = ( { methods } ) => {
 
 		// Re-enable Auto Delete if either option is turned on
 		if (
-			updatedSettings.bulk_optimization ||
-			updatedSettings.auto_optimized_uploaded_images.enabled
+			field !== 'autoDeleteOriginalImage' &&
+			( updatedSettings.bulk_optimization ||
+				updatedSettings.auto_optimized_uploaded_images.enabled )
 		) {
 			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image = true;
 		}
