@@ -69,8 +69,6 @@ const ImageOptimizationSettings = ( { methods } ) => {
 				updatedSettings.auto_optimized_uploaded_images.enabled = value;
 				updatedSettings.bulk_optimization = value;
 				updatedSettings.lazy_loading.enabled = value;
-				updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
-					value;
 				break;
 
 			case 'autoOptimizeEnabled':
@@ -101,15 +99,6 @@ const ImageOptimizationSettings = ( { methods } ) => {
 			! updatedSettings.auto_optimized_uploaded_images.enabled
 		) {
 			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image = false;
-		}
-
-		// Re-enable Auto Delete if either option is turned on
-		if (
-			field !== 'autoDeleteOriginalImage' &&
-			( updatedSettings.bulk_optimization ||
-				updatedSettings.auto_optimized_uploaded_images.enabled )
-		) {
-			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image = true;
 		}
 
 		setSettings( updatedSettings );
@@ -194,7 +183,21 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					id="auto-delete-original"
 					label={ defaultText.imageOptimizationAutoDeleteLabel }
 					description={
-						defaultText.imageOptimizationAutoDeleteDescription
+						<>
+							{
+								defaultText.imageOptimizationAutoDeleteDescription
+							}
+							<p
+								style={ {
+									color: 'red',
+									marginTop: '8px',
+								} }
+							>
+								{
+									defaultText.imageOptimizationAutoDeleteCaution
+								}
+							</p>
+						</>
 					}
 					checked={ autoDeleteOriginalImage }
 					onChange={ () =>
