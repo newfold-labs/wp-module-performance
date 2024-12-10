@@ -247,12 +247,11 @@ const ImageOptimizationSettings = ( { methods } ) => {
 							variant="primary"
 							size="small"
 							onClick={ () => {
-								const adminUrl = `${
-									window.location.origin
-								}${ window.location.pathname.replace(
-									/\/$/,
-									''
-								) }/wp-admin/media.php`;
+								const basePath =
+									window.location.pathname.split(
+										'/wp-admin'
+									)[ 0 ];
+								const adminUrl = `${ window.location.origin }${ basePath }/wp-admin/upload.php`;
 								window.open( adminUrl, '_blank' );
 							} }
 						>
