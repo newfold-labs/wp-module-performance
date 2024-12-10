@@ -57,6 +57,25 @@ class LazyLoader {
 		foreach ( self::$content_filters as $filter ) {
 			add_filter( $filter, array( $this, 'apply_lazy_loading' ) );
 		}
+
+		// Hook into Gutenberg block rendering to apply lazy loading.
+		add_filter( 'render_block', array( $this, 'apply_lazy_loading_to_blocks' ), 10, 2 );
+	}
+
+	/**
+	 * Applies lazy loading to images within Gutenberg blocks.
+	 *
+	 * @param string $block_content The HTML content of the block.
+	 * @param array  $block The block data array.
+	 * @return string Modified block content with lazy loading applied.
+	 */
+	public function apply_lazy_loading_to_blocks( $block_content, $block ) {
+		// Only target core/image blocks or other blocks with images.
+		if ( 'core/image' === $block['blockName'] || strpos( $block_content, '<img' ) !== false ) {
+			return $this->apply_lazy_loading( $block_content );
+		}
+
+		return $block_content;
 	}
 
 	/**
