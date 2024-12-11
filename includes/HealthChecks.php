@@ -67,6 +67,13 @@ class HealthChecks {
 				'pass'  => __( 'Trash is emptied every 30 days or less', 'newfold-performance-module' ),
 				'fail'  => __( 'Trash is emptied less frequently than every 30 days.', 'newfold-performance-module' ),
 				'text'  => __( 'Emptying the trash more frequently can reduce database bloat.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure trash settings.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=content-section#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return ( defined( 'EMPTY_TRASH_DAYS' ) && EMPTY_TRASH_DAYS <= 30 );
 				},
@@ -95,6 +102,13 @@ class HealthChecks {
 				'pass'  => __( 'Permalinks are pretty', 'newfold-performance-module' ),
 				'fail'  => __( 'Permalinks are not set up', 'newfold-performance-module' ),
 				'text'  => __( 'Setting permalinks to anything other than plain can improve performance and SEO.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Set up permalinks.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'options-permalink.php' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return empty( get_option( 'permalink_structure' ) );
 				},
@@ -104,11 +118,18 @@ class HealthChecks {
 		// PRESS7-112: Page Caching.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'page-caching',
-				'title' => __( 'Page Caching', 'newfold-performance-module' ),
-				'pass'  => __( 'Page caching is enabled', 'newfold-performance-module' ),
-				'fail'  => __( 'Page caching is disabled', 'newfold-performance-module' ),
-				'text'  => __( 'Page caching can improve performance by bypassing PHP and database queries for faster page loads.', 'newfold-performance-module' ),
+				'id'      => 'page-caching',
+				'title'   => __( 'Page Caching', 'newfold-performance-module' ),
+				'pass'    => __( 'Page caching is enabled', 'newfold-performance-module' ),
+				'fail'    => __( 'Page caching is disabled', 'newfold-performance-module' ),
+				'text'    => __( 'Page caching can improve performance by bypassing PHP and database queries for faster page loads.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure caching.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=cache-type#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return ( get_option( 'newfold_cache_level' ) >= 2 );
 				},
@@ -118,12 +139,19 @@ class HealthChecks {
 		// PRESS7-113: Browser Caching.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'browser-caching',
-				'title' => __( 'Browser Caching', 'newfold-performance-module' ),
-				'pass'  => __( 'Browser caching is enabled', 'newfold-performance-module' ),
-				'fail'  => __( 'Browser caching is disabled', 'newfold-performance-module' ),
-				'text'  => __( 'Enabling browser caching can improve performance by storing static assets in the browser for faster page loads.', 'newfold-performance-module' ),
-				'test'  => function () {
+				'id'      => 'browser-caching',
+				'title'   => __( 'Browser Caching', 'newfold-performance-module' ),
+				'pass'    => __( 'Browser caching is enabled', 'newfold-performance-module' ),
+				'fail'    => __( 'Browser caching is disabled', 'newfold-performance-module' ),
+				'text'    => __( 'Enabling browser caching can improve performance by storing static assets in the browser for faster page loads.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure caching.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=cache-type#/performance' ),
+						'external' => false,
+					),
+				),
+				'test'    => function () {
 					return ( get_option( 'newfold_cache_level' ) >= 1 );
 				},
 			)
@@ -135,19 +163,18 @@ class HealthChecks {
 			$manager->addHealthCheck(
 				array(
 					'id'      => 'persistent_object_cache',                                                                                                                                                                                                     // Replaces the default test.
-					'title' => __( 'Object Caching', 'newfold-performance-module' ),
-					'pass'  => __( 'Object caching is enabled', 'newfold-performance-module' ),
-					'fail'  => __( 'Object caching is disabled', 'newfold-performance-module' ),
-					'text'  => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
-					'actions' => sprintf(
-						'<a href="https://www.bluehost.com/hosting/cloud" target="_blank">%1$s%2$s</a>',
-						__( 'Learn more about Bluehost Cloud Hosting.', 'newfold-performance-module' ),
-						sprintf(
-							'<span class="screen-reader-text"> (%s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
-							__( 'opens in a new tab', 'newfold-performance-module' )
-						)
+					'title'   => __( 'Object Caching', 'newfold-performance-module' ),
+					'pass'    => __( 'Object caching is enabled', 'newfold-performance-module' ),
+					'fail'    => __( 'Object caching is disabled', 'newfold-performance-module' ),
+					'text'    => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
+					'actions' => array(
+						array(
+							'label' => __( 'Learn more about Bluehost Cloud Hosting.', 'newfold-performance-module' ),
+							'url'   => 'https://www.bluehost.com/hosting/cloud',
+							'external' => true,
+						),
 					),
-					'test'  => function () {
+					'test'    => function () {
 						return wp_using_ext_object_cache();
 					},
 				)
@@ -169,50 +196,70 @@ class HealthChecks {
 		);
 
 		/* // phpcs:ignore Squiz.PHP.CommentedOutCode
-		Enable when https://github.com/newfold-labs/wp-module-performance/pull/32 is merged.
+		// Enable when https://github.com/newfold-labs/wp-module-performance/pull/32 is merged.
 		// PRESS7-119: Lazy Loading.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'lazy-loading',
-				'title' => __( 'Lazy Loading', 'newfold-performance-module' ),
-				'pass'  => __( 'Lazy loading is enabled', 'newfold-performance-module' ),
-				'fail'  => __( 'Lazy loading is disabled', 'newfold-performance-module' ),
-				'text'  => __( 'Lazy loading can improve performance by only loading images when they are in view.', 'newfold-performance-module' ),
+				'id'      => 'lazy-loading',
+				'title'   => __( 'Lazy Loading', 'newfold-performance-module' ),
+				'pass'    => __( 'Lazy loading is enabled', 'newfold-performance-module' ),
+				'fail'    => __( 'Lazy loading is disabled', 'newfold-performance-module' ),
+				'text'    => __( 'Lazy loading can improve performance by only loading images when they are in view.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure lazy loading.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=lazy-loading-enabled#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					$enabled = get_option( 'nfd_image_optimization', array() );
 					return ( isset( $enabled['lazy_loading'], $enabled['lazy_loading']['enabled'] ) && $enabled['lazy_loading']['enabled'] );
 				},
 			)
-		);
-		*/
+		); */
 
 		/* // phpcs:ignore Squiz.PHP.CommentedOutCode
-		Enable when https://github.com/newfold-labs/wp-module-performance/pull/26 is merged.
+		// Enable when https://github.com/newfold-labs/wp-module-performance/pull/26 is merged.
 		// PRESS7-120: Link Prefetching.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'link-prefetch',
-				'title' => __( 'Link Prefetching', 'newfold-performance-module' ),
-				'pass'  => __( 'Link prefetching is enabled', 'newfold-performance-module' ),
-				'fail'  => __( 'Link prefetching is disabled', 'newfold-performance-module' ),
-				'text'  => __( 'Link prefetching can improve performance by loading pages immediately before they are requested.', 'newfold-performance-module' ),
+				'id'      => 'link-prefetch',
+				'title'   => __( 'Link Prefetching', 'newfold-performance-module' ),
+				'pass'    => __( 'Link prefetching is enabled', 'newfold-performance-module' ),
+				'fail'    => __( 'Link prefetching is disabled', 'newfold-performance-module' ),
+				'text'    => __( 'Link prefetching can improve performance by loading pages immediately before they are requested.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure Link prefetching.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=link-prefetch-behavior#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					$enabled = get_option( 'nfd_link_prefetch_settings', array() );
 					return ( isset( $enabled['activeOnDesktop'] ) && $enabled['activeOnDesktop'] );
 				},
 			)
-		);*/
+		); */
 
 		/* // phpcs:ignore Squiz.PHP.CommentedOutCode
-		Enable when https://github.com/newfold-labs/wp-module-performance/pull/25 is merged.
+		// Enable when https://github.com/newfold-labs/wp-module-performance/pull/25 is merged.
 		// PRESS7-114: Prioritize Critical CSS.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'prioritize-critical-css',
-				'title' => __( 'Prioritize Critical CSS', 'newfold-performance-module' ),
-				'pass'  => __( 'Critical CSS is prioritized', 'newfold-performance-module' ),
-				'fail'  => __( 'Critical CSS is not prioritized', 'newfold-performance-module' ),
-				'text'  => __( 'Prioritizing critical CSS can improve performance by loading the most important CSS first.', 'newfold-performance-module' ),
+				'id'      => 'prioritize-critical-css',
+				'title'   => __( 'Prioritize Critical CSS', 'newfold-performance-module' ),
+				'pass'    => __( 'Critical CSS is prioritized', 'newfold-performance-module' ),
+				'fail'    => __( 'Critical CSS is not prioritized', 'newfold-performance-module' ),
+				'text'    => __( 'Prioritizing critical CSS can improve performance by loading the most important CSS first.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure Critical CSS.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=critical-css#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return get_option( 'jetpack_boost_status_critical-css', false );
 				},
@@ -222,11 +269,18 @@ class HealthChecks {
 		// PRESS7-115: Defer Non-Essential JavaScript.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'defer-non-essential-javascript',
-				'title' => __( 'Defer Non-Essential JavaScript', 'newfold-performance-module' ),
-				'pass'  => __( 'Non-essential JavaScript is deferred', 'newfold-performance-module' ),
-				'fail'  => __( 'Non-essential JavaScript is not deferred', 'newfold-performance-module' ),
-				'text'  => __( 'JavaScript can be deferred to improve performance by loading it after the page has loaded.', 'newfold-performance-module' ),
+				'id'      => 'defer-non-essential-javascript',
+				'title'   => __( 'Defer Non-Essential JavaScript', 'newfold-performance-module' ),
+				'pass'    => __( 'Non-essential JavaScript is deferred', 'newfold-performance-module' ),
+				'fail'    => __( 'Non-essential JavaScript is not deferred', 'newfold-performance-module' ),
+				'text'    => __( 'JavaScript can be deferred to improve performance by loading it after the page has loaded.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure JavaScript deferral.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=render-blocking-js#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return get_option( 'jetpack_boost_status_render-blocking-js', false );
 				},
@@ -236,11 +290,18 @@ class HealthChecks {
 		// PRESS7-116: Concatenate JavaScript.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'concatenate-js',
-				'title' => __( 'Concatenate JavaScript', 'newfold-performance-module' ),
-				'pass'  => __( 'JavaScript files are concatenated', 'newfold-performance-module' ),
-				'fail'  => __( 'JavaScript files are not concatenated', 'newfold-performance-module' ),
-				'text'  => __( 'Concatenating JavaScript can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
+				'id'      => 'concatenate-js',
+				'title'   => __( 'Concatenate JavaScript', 'newfold-performance-module' ),
+				'pass'    => __( 'JavaScript files are concatenated', 'newfold-performance-module' ),
+				'fail'    => __( 'JavaScript files are not concatenated', 'newfold-performance-module' ),
+				'text'    => __( 'Concatenating JavaScript can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure JavaScript deferral.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=minify-js#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-js', array() ) ) );
 				},
@@ -250,15 +311,22 @@ class HealthChecks {
 		// PRESS7-117: Concatenate CSS.
 		$manager->addHealthCheck(
 			array(
-				'id'    => 'concatenate-css',
-				'title' => __( 'Concatenate CSS', 'newfold-performance-module' ),
-				'pass'  => __( 'CSS files are concatenated', 'newfold-performance-module' ),
-				'fail'  => __( 'CSS files are not concatenated', 'newfold-performance-module' ),
-				'text'  => __( 'Concatenating CSS can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
+				'id'      => 'concatenate-css',
+				'title'   => __( 'Concatenate CSS', 'newfold-performance-module' ),
+				'pass'    => __( 'CSS files are concatenated', 'newfold-performance-module' ),
+				'fail'    => __( 'CSS files are not concatenated', 'newfold-performance-module' ),
+				'text'    => __( 'Concatenating CSS can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
+				'actions' => array(
+					array(
+						'label'    => __( 'Configure JavaScript deferral.', 'newfold-performance-module' ),
+						'url'      => admin_url( 'admin.php?page=' . $this->container->plugin()->id . '&nfd-target=minify-csss#/performance' ),
+						'external' => false,
+					),
+				),
 				'test'  => function () {
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-css', array() ) ) );
 				},
 			)
-		);*/
+		); */
 	}
 }
