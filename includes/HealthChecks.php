@@ -135,10 +135,10 @@ class HealthChecks {
 			$manager->addHealthCheck(
 				array(
 					'id'      => 'persistent_object_cache',                                                                                                                                                                                                     // Replaces the default test.
-					'title'   => __( 'Object Caching', 'newfold-performance-module' ),
-					'pass'    => __( 'Object caching is enabled', 'newfold-performance-module' ),
-					'fail'    => __( 'Object caching is disabled', 'newfold-performance-module' ),
-					'text'    => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
+					'title' => __( 'Object Caching', 'newfold-performance-module' ),
+					'pass'  => __( 'Object caching is enabled', 'newfold-performance-module' ),
+					'fail'  => __( 'Object caching is disabled', 'newfold-performance-module' ),
+					'text'  => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' ),
 					'actions' => sprintf(
 						'<a href="https://www.bluehost.com/hosting/cloud" target="_blank">%1$s%2$s</a>',
 						__( 'Learn more about Bluehost Cloud Hosting.', 'newfold-performance-module' ),
@@ -147,7 +147,7 @@ class HealthChecks {
 							__( 'opens in a new tab', 'newfold-performance-module' )
 						)
 					),
-					'test'    => function () {
+					'test'  => function () {
 						return wp_using_ext_object_cache();
 					},
 				)
@@ -197,7 +197,6 @@ class HealthChecks {
 				'fail'  => __( 'Link prefetching is disabled', 'newfold-performance-module' ),
 				'text'  => __( 'Link prefetching can improve performance by loading pages immediately before they are requested.', 'newfold-performance-module' ),
 				'test'  => function () {
-					https://github.com/newfold-labs/wp-module-performance/pull/26
 					$enabled = get_option( 'nfd_link_prefetch_settings', array() );
 					return ( isset( $enabled['activeOnDesktop'] ) && $enabled['activeOnDesktop'] );
 				},
@@ -215,7 +214,6 @@ class HealthChecks {
 				'fail'  => __( 'Critical CSS is not prioritized', 'newfold-performance-module' ),
 				'text'  => __( 'Prioritizing critical CSS can improve performance by loading the most important CSS first.', 'newfold-performance-module' ),
 				'test'  => function () {
-					https://github.com/newfold-labs/wp-module-performance/pull/25
 					return get_option( 'jetpack_boost_status_critical-css', false );
 				},
 			)
@@ -230,7 +228,6 @@ class HealthChecks {
 				'fail'  => __( 'Non-essential JavaScript is not deferred', 'newfold-performance-module' ),
 				'text'  => __( 'JavaScript can be deferred to improve performance by loading it after the page has loaded.', 'newfold-performance-module' ),
 				'test'  => function () {
-					https://github.com/newfold-labs/wp-module-performance/pull/25
 					return get_option( 'jetpack_boost_status_render-blocking-js', false );
 				},
 			)
@@ -245,7 +242,6 @@ class HealthChecks {
 				'fail'  => __( 'JavaScript files are not concatenated', 'newfold-performance-module' ),
 				'text'  => __( 'Concatenating JavaScript can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
 				'test'  => function () {
-					https://github.com/newfold-labs/wp-module-performance/pull/25
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-js', array() ) ) );
 				},
 			)
@@ -260,7 +256,6 @@ class HealthChecks {
 				'fail'  => __( 'CSS files are not concatenated', 'newfold-performance-module' ),
 				'text'  => __( 'Concatenating CSS can improve performance by reducing the number of requests.', 'newfold-performance-module' ),
 				'test'  => function () {
-					https://github.com/newfold-labs/wp-module-performance/pull/25
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-css', array() ) ) );
 				},
 			)
