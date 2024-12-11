@@ -3,6 +3,7 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Cloudflare;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
@@ -69,8 +70,10 @@ class Performance {
 
 		$this->hooks( $container );
 
-		$cacheManager = new CacheManager( $container );
-		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		$cacheManager       = new CacheManager( $container );
+		$cachePurger        = new CachePurgingService( $cacheManager->getInstances() );
+		$healthCheckManager = new HealthCheckManager( $container );
+		$healthChecks       = new HealthChecks( $container );
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
@@ -80,6 +83,10 @@ class Performance {
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		$container->set( 'healthCheckManager', $healthCheckManager );
+
+		$healthChecks->addHealthChecks();
 	}
 
 	/**
