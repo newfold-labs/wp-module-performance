@@ -53,22 +53,6 @@ class HealthCheckManager {
 	/**
 	 * Add a health check.
 	 *
-	 * To add a health check, simply call this with the options you want to use.
-	 *
-	 * Example:
-	 *
-	 * $healthCheckManager->addHealthCheck( [
-	 *  'id'          => 'example',
-	 *  'title'       => 'Example Health Check',
-	 *  'pass'        => 'This is the user-facing text for a passing health check',
-	 *  'fail'        => 'This is the user-facing text for a failing health check',
-	 *  'text'        => 'This is the user-facing description of the health check',
-	 *  'badge_label' => 'Label', // Optional, defaults to 'Performance'.
-	 *  'badge_color' => 'blue', // Optional, defaults to 'blue'.
-	 *  'test'        => function() {
-	 *     return true; // This is the test that will be run. and should return true or false for pass/fail.
-	 * ] );
-	 *
 	 * @param array $options Health check options.
 	 */
 	public function addHealthCheck( $options ) {
@@ -96,6 +80,41 @@ class HealthCheckManager {
 	}
 
 	/**
+	 * Concatenate actions array into a string.
+	 *
+	 * @param array $actions Actions to concatenate. Should contain an array of 'label', 'url', and 'external'.
+	 *
+	 * @return string Concatenated actions.
+	 */
+	public function concatActions( $actions ) {
+		 $actions_string = '';
+
+		foreach ( $actions as $action ) {
+			$action = wp_parse_args(
+				$action,
+				array(
+					'label'    => '',
+					'url'      => '',
+					'external' => false,
+				)
+			);
+
+			$actions_string .= sprintf(
+				'<a href="%1$s" %3$s>%2$s</a>%4$s',
+				esc_url( $action['url'] ),
+				esc_html( $action['label'] ),
+				$action['external'] ? 'target="_blank" rel="noopener"' : '',
+				$action['external'] ? sprintf(
+					'<span class="screen-reader-text"> (%s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
+					__( 'opens in a new tab', 'newfold-performance-module' )
+				) : ''
+			);
+		}
+
+		 return $actions_string;
+	}
+
+	/**
 	 * Run a health check.
 	 *
 	 * @param string $id Health check ID.
@@ -111,9 +130,9 @@ class HealthCheckManager {
 		// Return the health check results.
 		return array(
 			'label'       => $check['label'] ? $check['label'] : ( $passed ? $check['pass'] : $check['fail'] ),
-			'status'      => $check['status'] ? $check['status'] : ( $passed ? 'good' : 'critical' ),
-			'description' => $check['text'] ? $check['text'] : '',
-			'actions'     => $check['actions'] ? $check['actions'] : '',
+			'status'      => $passed ? 'good' : ( 'critical' === $check['status'] ? 'critical' : 'recommended' ), // Will default to 'recommended', unless 'critical' is passed.
+			'description' => sprintf( '<p>%s</p>', $check['text'] ? $check['text'] : '' ),
+			'actions'     => is_array( $check['actions'] ) ? $this->concatActions( $check['actions'] ) : ( $check['actions'] ? $check['actions'] : '' ),
 			'test'        => $check['id'],
 			'badge'       => array(
 				'label' => $check['badge_label'],
