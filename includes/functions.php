@@ -17,12 +17,12 @@ function getCacheLevel() {
  * @return string[]
  */
 function getCacheLevels() {
-	return [
+	return array(
 		0 => 'Off',         // Disable caching
 		1 => 'Assets Only', // Cache assets only
 		2 => 'Normal',      // Cache pages and assets for a shorter time range
 		3 => 'Advanced',    // Cache pages and assets for a longer time range
-	];
+	);
 }
 
 /**
@@ -34,12 +34,12 @@ function getCacheLevelDropdown() {
 	$currentCacheLevel = getCacheLevel();
 
 	$name  = Performance::OPTION_CACHE_LEVEL;
-	$label = __( 'Cache Level', 'newfold-performance-module' );
+	$label = __( 'Cache Level', 'wp-module-performance' );
 	?>
-	<select name="<?= esc_attr( $name ) ?>" aria-label="<?= esc_attr( $label ) ?>">
-		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ): ?>
-			<option value="<?= absint( $cacheLevel ) ?>"<?php selected( $cacheLevel, $currentCacheLevel ) ?>>
-				<?= esc_html( $optionLabel ); ?>
+	<select name="<?php esc_attr( $name ); ?>" aria-label="<?php esc_attr( $label ); ?>">
+		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ) : ?>
+			<option value="<?php absint( $cacheLevel ); ?>"<?php selected( $cacheLevel, $currentCacheLevel ); ?>>
+				<?php esc_html( $optionLabel ); ?>
 			</option>
 		<?php endforeach; ?>
 	</select>
@@ -61,14 +61,14 @@ function getSkip404Option() {
 function getSkip404InputField() {
 	$name  = Performance::OPTION_SKIP_404;
 	$value = getSkip404Option();
-	$label = __( 'Skip WordPress 404 Handling for Static Files', 'newfold-performance-module' );
+	$label = __( 'Skip WordPress 404 Handling for Static Files', 'wp-module-performance' );
 	?>
 	<input
 		type="checkbox"
-		name="<?= esc_attr( $name ) ?>"
+		name="<?php esc_attr( $name ); ?>"
 		value="1"
-		aria-label="<?= esc_attr( $label ) ?>"
-		<?php checked( $value, true ) ?>
+		aria-label="<?php esc_attr( $label ); ?>"
+		<?php checked( $value, true ); ?>
 	/>
 	<?php
 }
@@ -94,7 +94,7 @@ function shouldCacheAssets() {
 /**
  * Remove a directory.
  *
- * @param string $path
+ * @param string $path directory path.
  */
 function removeDirectory( $path ) {
 	if ( ! is_dir( $path ) ) {

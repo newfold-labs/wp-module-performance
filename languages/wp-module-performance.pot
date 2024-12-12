@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-module-performance\n"
+
+#: includes/CacheTypes/Skip404.php:51
+msgid "Skip WordPress 404 Handling For Static Files"
+msgstr ""
+
+#: includes/functions.php:37
+#: includes/Performance.php:229
+msgid "Cache Level"
+msgstr ""
+
+#: includes/functions.php:64
+msgid "Skip WordPress 404 Handling for Static Files"
+msgstr ""
+
+#: includes/Performance.php:222
+msgid "Caching"
+msgstr ""

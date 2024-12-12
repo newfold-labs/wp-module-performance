@@ -9,7 +9,9 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 use function NewfoldLabs\WP\Module\Performance\getSkip404Option;
 use function WP_Forge\WP_Htaccess_Manager\addContent;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
-
+/**
+ * Skip404 Class
+ */
 class Skip404 extends CacheBase {
 
 	/**
@@ -20,7 +22,7 @@ class Skip404 extends CacheBase {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container
+	 * @param Container $container the container.
 	 *
 	 * @return bool
 	 */
@@ -33,10 +35,10 @@ class Skip404 extends CacheBase {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_SKIP_404, [ __CLASS__, 'maybeAddRules' ] );
+		new OptionListener( Performance::OPTION_SKIP_404, array( __CLASS__, 'maybeAddRules' ) );
 
-		add_filter( 'newfold_update_htaccess', [ $this, 'onUpdateHtaccess' ] );
-		add_action( 'admin_init', [ $this, 'registerSettings' ], 11 );
+		add_filter( 'newfold_update_htaccess', array( $this, 'onUpdateHtaccess' ) );
+		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 	}
 
 	/**
@@ -48,7 +50,7 @@ class Skip404 extends CacheBase {
 
 		add_settings_field(
 			Performance::OPTION_SKIP_404,
-			__( 'Skip WordPress 404 Handling For Static Files', 'newfold-performance-module' ),
+			__( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' ),
 			'NewfoldLabs\\WP\\Module\\Performance\\getSkip404InputField',
 			'general',
 			Performance::SETTINGS_SECTION
@@ -56,12 +58,11 @@ class Skip404 extends CacheBase {
 
 		register_setting( 'general', Performance::OPTION_SKIP_404 );
 
-		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		// Remove the setting from EPC if it exists
 		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
 			unset( $wp_settings_fields['general']['epc_settings_section'] );
 			unregister_setting( 'general', 'epc_skip_404_handling' );
 		}
-
 	}
 
 	/**
@@ -80,7 +81,7 @@ class Skip404 extends CacheBase {
 	/**
 	 * Conditionally add or remove .htaccess rules based on option value.
 	 *
-	 * @param bool|null $shouldSkip404Handling
+	 * @param bool|null $shouldSkip404Handling option value.
 	 */
 	public static function maybeAddRules( $shouldSkip404Handling ) {
 		(bool) $shouldSkip404Handling ? self::addRules() : self::removeRules();
@@ -124,5 +125,4 @@ HTACCESS;
 	public static function onDeactivation() {
 		self::removeRules();
 	}
-
 }
