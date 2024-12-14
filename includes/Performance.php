@@ -74,8 +74,8 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		new LinkPrefetch( $container );
-		new RestApi();
 
 		// Ensure that purgeable cache types are enabled before showing the UI.
 		if ( $cachePurger->canPurge() ) {
@@ -263,7 +263,6 @@ class Performance {
 		}
 
 		if ( current_user_can( 'manage_options' ) ) {
-
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
@@ -291,12 +290,13 @@ class Performance {
 				);
 			}
 
+			$brand = $this->container->get( 'plugin' )['id'];
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . self::SETTINGS_ID ),
+					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
 			);
 		}
