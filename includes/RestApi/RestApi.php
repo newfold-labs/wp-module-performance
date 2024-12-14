@@ -1,8 +1,9 @@
 <?php
+
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 /**
- * Performace Rest Api Class
+ * Instantiate controllers and register routes.
  */
 final class RestApi {
 
@@ -13,6 +14,7 @@ final class RestApi {
 	 */
 	protected $controllers = array(
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
 	);
 
 	/**
@@ -23,16 +25,16 @@ final class RestApi {
 	}
 
 	/**
-	 * Register API routes.
+	 * Register the custom REST API routes
 	 */
 	public function register_routes() {
-		foreach ( $this->controllers as $Controller ) {
+		foreach ( $this->controllers as $controller ) {
 			/**
 			 * Get an instance of the WP_REST_Controller.
 			 *
-			 * @var $instance \WP_REST_Controller
+			 * @var $instance WP_REST_Controller
 			 */
-			$instance = new $Controller();
+			$instance = new $controller();
 			$instance->register_routes();
 		}
 	}

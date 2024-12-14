@@ -1,6 +1,10 @@
+// Newfold.
 import { Container } from '@newfold/ui-component-library';
+
+// Components.
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
 import { default as LinkPrefetch } from '../linkPrefetch/';
 
@@ -59,6 +63,12 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 			</Container.Block>
 			<Container.Block className={ 'newfold-link-prefetch' }>
 				<LinkPrefetch methods={ methods } constants={ constants } />
+			</Container.Block>
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-performance-advanced-settings' }
+			>
+				<AdvancedSettings constants={ constants } methods={ methods } />
 			</Container.Block>
 		</>
 	);
