@@ -1,3 +1,7 @@
+.nfd-container__block.newfold-link-prefetch .nfd-toggle-field.nfd-mb-6 {
+	display: flex;
+	flex-direction: row;
+  }
 .nfd-performance-jetpack-boost-upsell{
 	position: relative;
 }

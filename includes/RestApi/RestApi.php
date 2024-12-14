@@ -13,6 +13,7 @@ final class RestApi {
 	 * @var array
 	 */
 	protected $controllers = array(
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
 	);
 

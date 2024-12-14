@@ -6,6 +6,7 @@ import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
 import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
+import { default as LinkPrefetch } from '../linkPrefetch/';
 
 /**
  * Performance Module
@@ -59,6 +60,9 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 				className={ 'newfold-clear-cache' }
 			>
 				<ClearCache methods={ methods } constants={ constants } />
+			</Container.Block>
+			<Container.Block className={ 'newfold-link-prefetch' }>
+				<LinkPrefetch methods={ methods } constants={ constants } />
 			</Container.Block>
 			<Container.Block
 				separator={ true }
