@@ -2,7 +2,12 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\Permissions;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+
+use Automattic\Jetpack\Current_Plan;
 
 /**
  * Performance Class
@@ -70,16 +75,30 @@ class Performance {
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		new LinkPrefetch( $container );
+
+		// Ensure that purgeable cache types are enabled before showing the UI.
+		if ( $cachePurger->canPurge() ) {
+			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		}
 
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
+			new RestAPI();
+		}
+
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Container $container the container
+	 * @param Container $container the container.
 	 */
 	public function configureContainer( Container $container ) {
 
@@ -281,5 +300,57 @@ class Performance {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Enqueue scripts and styles in admin
+	 */
+	public function enqueue_scripts() {
+		$plugin_url = $this->container->plugin()->url . get_styles_path();
+		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
+		wp_enqueue_style( 'wp-module-performance-styles' );
+	}
+
+	/*
+	 * Add to Newfold SDK runtime.
+	 *
+	 * @param array $sdk SDK data.
+	 * @return array SDK data.
+	 */
+	public function add_to_runtime( $sdk ) {
+		$values = array(
+			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
+			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostActive(),
+			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
+			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
+			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
+			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array() ) ),
+			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
+			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array() ) ),
+			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
+		);
+
+		return array_merge( $sdk, array( 'performance' => $values ) );
+	}
+
+
+	/**
+	 * Check if Jetpack Boost premium is active.
+	 *
+	 * @return boolean
+	 */
+	public function isJetPackBoostActive() {
+		$exists = false;
+		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
+			$products = Current_Plan::get_products();
+			foreach ( $products as $product ) {
+				if ( isset( $product['product_slug'] ) && strpos( $product['product_slug'], 'jetpack-boost' ) !== false ) {
+					$exists = true;
+					break;
+				}
+			}
+		}
+
+		return $exists;
 	}
 }
