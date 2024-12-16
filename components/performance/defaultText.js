@@ -218,6 +218,7 @@ const defaultText = {
 		'Activation failed',
 		'wp-module-performance'
 	),
+	jetpackBoostDiscoverMore: __( 'Discover more %1$shere%2$s', 'wp-plugin-hostgator' ),
 	optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
 	optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
 };

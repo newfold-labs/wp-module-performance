@@ -23,7 +23,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 			type: 'toggle',
 			externalText: sprintf(
 				// translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
-				__( 'Discover more %1$shere%2$s', 'wp-module-performance' ),
+				constants.text.jetpackBoostDiscoverMore,
 				'<a href="' +
 					siteUrl +
 					'/wp-admin/admin.php?page=jetpack-boost">',
