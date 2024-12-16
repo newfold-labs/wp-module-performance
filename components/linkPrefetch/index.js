@@ -38,7 +38,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 		setIgnoreKeywords( value );
 		ignoreKeywordsTimer = setTimeout(function () {
 			handleChangeOption( 'ignoreKeywords', value );
-		}, 1000);
+		}, 700);
 	}
 
 	methods.useUpdateEffect( () => {
