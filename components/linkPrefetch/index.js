@@ -5,9 +5,13 @@ import {
 	Container,
 } from '@newfold/ui-component-library';
 
+let ignoreKeywordsTimer = null;
 const LinkPrefetch = ( { methods, constants } ) => {
 	const [ settings, setSettings ] = methods.useState(
 		methods.NewfoldRuntime.sdk.linkPrefetch.settings
+	);
+	const [ ignoreKeywords, setIgnoreKeywords ] = methods.useState(
+		settings.ignoreKeywords
 	);
 	const [ isError, setIsError ] = methods.useState( false );
 	const apiUrl = methods.NewfoldRuntime.createApiUrl(
@@ -29,6 +33,14 @@ const LinkPrefetch = ( { methods, constants } ) => {
 			.catch( ( error ) => {
 				setIsError( error.message );
 			} );
+	};
+
+	const handleChangeOptionIgnoreKeywords = ( value ) => {
+		clearTimeout( ignoreKeywordsTimer );
+		setIgnoreKeywords( value );
+		ignoreKeywordsTimer = setTimeout( function () {
+			handleChangeOption( 'ignoreKeywords', value );
+		}, 700 );
 	};
 
 	methods.useUpdateEffect( () => {
@@ -204,12 +216,9 @@ const LinkPrefetch = ( { methods, constants } ) => {
 							constants.text.linkPrefetchIgnoreKeywordsDescription
 						}
 						onChange={ ( e ) =>
-							handleChangeOption(
-								'ignoreKeywords',
-								e.target.value
-							)
+							handleChangeOptionIgnoreKeywords( e.target.value )
 						}
-						value={ settings.ignoreKeywords }
+						value={ ignoreKeywords }
 					/>
 				) }
 			</Container.SettingsField>

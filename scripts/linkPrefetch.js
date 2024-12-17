@@ -18,7 +18,9 @@ document.addEventListener( 'DOMContentLoaded', () => {
 				activeOnDesktop: config.activeOnDesktop,
 				behavior: config.behavior,
 				hoverDelay: parseInt( config.hoverDelay ) || 60,
-				ignoreKeywords: config.ignoreKeywords.split( ',' ),
+				ignoreKeywords: config.ignoreKeywords
+					? config.ignoreKeywords.split( ',' )
+					: '',
 				instantClick: config.instantClick,
 				mobileActive: config.activeOnMobile,
 				isMobile: config.isMobile,
@@ -138,13 +140,16 @@ document.addEventListener( 'DOMContentLoaded', () => {
 			if ( ! url || this.prefetchedUrls.has( url ) ) {
 				return false;
 			}
+
 			if (
 				url.replace( /\/$/, '' ) ===
 					location.href.replace( /\/$/, '' ) ||
-				this.ignoreKeywords.some( ( k ) => url.includes( k ) )
+				( this.ignoreKeywords !== '' &&
+					this.ignoreKeywords.some( ( k ) => url.includes( k ) ) )
 			) {
 				return false;
 			}
+
 			return true;
 		}
 
@@ -164,7 +169,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		instantClick: true,
 		activeOnMobile: true,
 		mobileBehavior: 'viewport',
-		ignoreKeywords: 'wp-admin,#,?',
+		ignoreKeywords: '#,?',
 	};
 
 	new LinkPrefetcher( config ).init();

@@ -1,18 +1,19 @@
 name: Lint
+
 on:
   push:
     branches:
       - '**'
     paths:
-      - '**.php'
+      - '**/*.php'
   pull_request:
     types: [opened, edited, reopened, ready_for_review]
     paths:
-      - '**.php'
+      - '**/*.php'
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  group: "${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}"
   cancel-in-progress: true
 
 jobs:
@@ -24,7 +25,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # User PHP 7.4 here for compatibility with the WordPress codesniffer rules.
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -32,16 +32,17 @@ jobs:
           coverage: none
           tools: composer, cs2pr
 
-      - uses: technote-space/get-diff-action@v6
+      - name: Get Changed Files
+        uses: technote-space/get-diff-action@v6
         with:
           SUFFIX_FILTER: .php
 
-      - name: Get Composer cache directory
+      - name: Get Composer Cache Directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
         if: "!! env.GIT_DIFF"
 
-      - name: Cache Composer vendor directory
+      - name: Cache Composer Vendor Directory
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
@@ -54,7 +55,7 @@ jobs:
         run: composer validate
         if: "!! env.GIT_DIFF"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: composer install --no-progress --optimize-autoloader --prefer-dist
         if: "!! env.GIT_DIFF"
 

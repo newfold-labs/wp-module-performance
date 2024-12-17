@@ -73,7 +73,7 @@ class LinkPrefetch {
 			'instantClick'    => false,
 			'activeOnMobile'  => false,
 			'mobileBehavior'  => 'touchstart',
-			'ignoreKeywords'  => 'wp-admin,#,?',
+			'ignoreKeywords'  => '#,?',
 		);
 	}
 

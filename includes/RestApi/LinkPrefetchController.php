@@ -74,7 +74,8 @@ class LinkPrefetchController {
 	public function update_settings( \WP_REST_Request $request ) {
 		$settings = $request->get_param( 'settings' );
 		if ( is_array( $settings ) ) {
-			$updated = update_option( 'nfd_link_prefetch_settings', $settings );
+			$settings['ignoreKeywords'] = sanitize_text_field( $settings['ignoreKeywords'] );
+			$updated                    = update_option( 'nfd_link_prefetch_settings', $settings );
 			return new \WP_REST_Response(
 				array(
 					'result' => $updated,
