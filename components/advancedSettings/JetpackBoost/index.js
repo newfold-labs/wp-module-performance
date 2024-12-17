@@ -22,7 +22,6 @@ const JetpackBoost = ( { methods, constants } ) => {
 			value: NewfoldRuntime.sdk.performance.jetpack_boost_critical_css,
 			type: 'toggle',
 			externalText: sprintf(
-				// translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
 				constants.text.jetpackBoostDiscoverMore,
 				'<a href="' +
 					siteUrl +

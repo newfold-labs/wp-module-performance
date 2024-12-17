@@ -67,7 +67,10 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 			>
 				<AdvancedSettings constants={ constants } methods={ methods } />
 			</Container.Block>
-			<Container.Block className={ 'newfold-link-prefetch' } separator={ true }>
+			<Container.Block
+				className={ 'newfold-link-prefetch' }
+				separator={ true }
+			>
 				<LinkPrefetch methods={ methods } constants={ constants } />
 			</Container.Block>
 		</>

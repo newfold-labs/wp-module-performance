@@ -10,7 +10,9 @@ const LinkPrefetch = ( { methods, constants } ) => {
 	const [ settings, setSettings ] = methods.useState(
 		methods.NewfoldRuntime.sdk.linkPrefetch.settings
 	);
-	const [ ignoreKeywords, setIgnoreKeywords ] = methods.useState( settings.ignoreKeywords )
+	const [ ignoreKeywords, setIgnoreKeywords ] = methods.useState(
+		settings.ignoreKeywords
+	);
 	const [ isError, setIsError ] = methods.useState( false );
 	const apiUrl = methods.NewfoldRuntime.createApiUrl(
 		'/newfold-performance/v1/link-prefetch/settings'
@@ -33,13 +35,13 @@ const LinkPrefetch = ( { methods, constants } ) => {
 			} );
 	};
 
-	const handleChangeOptionIgnoreKeywords = (value) => {
-		clearTimeout(ignoreKeywordsTimer);
+	const handleChangeOptionIgnoreKeywords = ( value ) => {
+		clearTimeout( ignoreKeywordsTimer );
 		setIgnoreKeywords( value );
-		ignoreKeywordsTimer = setTimeout(function () {
+		ignoreKeywordsTimer = setTimeout( function () {
 			handleChangeOption( 'ignoreKeywords', value );
-		}, 700);
-	}
+		}, 700 );
+	};
 
 	methods.useUpdateEffect( () => {
 		methods.setStore( {
@@ -214,9 +216,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 							constants.text.linkPrefetchIgnoreKeywordsDescription
 						}
 						onChange={ ( e ) =>
-							handleChangeOptionIgnoreKeywords(
-								e.target.value
-							)
+							handleChangeOptionIgnoreKeywords( e.target.value )
 						}
 						value={ ignoreKeywords }
 					/>
