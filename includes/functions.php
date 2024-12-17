@@ -61,7 +61,7 @@ function getSkip404Option() {
 function getSkip404InputField() {
 	$name  = Performance::OPTION_SKIP_404;
 	$value = getSkip404Option();
-	$label = __( 'Skip WordPress 404 Handling for Static Files', 'wp-module-performance' );
+	$label = __( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' );
 	?>
 	<input
 		type="checkbox"

@@ -13,18 +13,28 @@ msgstr ""
 "X-Domain: wp-module-performance\n"
 
 #: includes/CacheTypes/Skip404.php:53
+#: includes/functions.php:64
 msgid "Skip WordPress 404 Handling For Static Files"
 msgstr ""
 
 #: includes/functions.php:37
-#: includes/Performance.php:222
+#: includes/Performance.php:233
 msgid "Cache Level"
 msgstr ""
 
-#: includes/functions.php:64
-msgid "Skip WordPress 404 Handling for Static Files"
+#: includes/Performance.php:226
+#: includes/Performance.php:265
+msgid "Caching"
 msgstr ""
 
-#: includes/Performance.php:215
-msgid "Caching"
+#: includes/Performance.php:272
+msgid "Purge All"
+msgstr ""
+
+#: includes/Performance.php:282
+msgid "Purge This Page"
+msgstr ""
+
+#: includes/Performance.php:292
+msgid "Cache Settings"
 msgstr ""
