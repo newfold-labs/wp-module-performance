@@ -1,8 +1,13 @@
+// Newfold.
 import { Container } from '@newfold/ui-component-library';
+
+// Components.
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
 import ImageOptimizationSettings from '../imageOptimizationSettings';
+import { default as LinkPrefetch } from '../linkPrefetch/';
 
 /**
  * Performance Module
@@ -56,6 +61,18 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 				className={ 'newfold-clear-cache' }
 			>
 				<ClearCache methods={ methods } constants={ constants } />
+			</Container.Block>
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-performance-advanced-settings' }
+			>
+				<AdvancedSettings constants={ constants } methods={ methods } />
+			</Container.Block>
+			<Container.Block
+				className={ 'newfold-link-prefetch' }
+				separator={ true }
+			>
+				<LinkPrefetch methods={ methods } constants={ constants } />
 			</Container.Block>
 			<Container.Block className={ 'newfold-image-optimization' }>
 				<ImageOptimizationSettings
