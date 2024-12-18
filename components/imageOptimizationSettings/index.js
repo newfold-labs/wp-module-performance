@@ -53,19 +53,16 @@ const ImageOptimizationSettings = ( { methods } ) => {
 	// Handle toggle changes
 	const handleToggleChange = ( field, value ) => {
 		const updatedSettings = { ...settings };
+
 		if ( field === 'enabled' ) {
 			updatedSettings.enabled = value;
-			if ( ! value ) {
-				updatedSettings.auto_optimized_uploaded_images = {
-					enabled: false,
-					auto_delete_original_image: false,
-				};
-			} else {
-				updatedSettings.auto_optimized_uploaded_images = {
-					enabled: true,
-					auto_delete_original_image: true,
-				};
-			}
+
+			// Automatically enable/disable dependent settings
+			updatedSettings.auto_optimized_uploaded_images = {
+				enabled: value,
+				auto_delete_original_image: value,
+			};
+			updatedSettings.lazy_loading = { enabled: value };
 		} else if ( field === 'autoOptimizeEnabled' ) {
 			updatedSettings.auto_optimized_uploaded_images.enabled = value;
 			if ( ! value ) {
@@ -74,7 +71,10 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		} else if ( field === 'autoDeleteOriginalImage' ) {
 			updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
 				value;
+		} else if ( field === 'lazyLoading' ) {
+			updatedSettings.lazy_loading.enabled = value;
 		}
+
 		setSettings( updatedSettings );
 		updateSettings( updatedSettings );
 	};
@@ -111,6 +111,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 	const {
 		enabled,
 		auto_optimized_uploaded_images: autoOptimizedUploadedImages,
+		lazy_loading: lazyLoading = { enabled: true },
 	} = settings || {};
 
 	const {
@@ -149,7 +150,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 								! autoOptimizeEnabled
 							)
 						}
-						disabled={ ! enabled } // Grey out when optimization is disabled
+						disabled={ ! enabled }
 					/>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
 						<ToggleField
@@ -167,7 +168,26 @@ const ImageOptimizationSettings = ( { methods } ) => {
 									! autoDeleteOriginalImage
 								)
 							}
-							disabled={ ! enabled || ! autoOptimizeEnabled } // Grey out when auto-optimize or optimization is disabled
+							disabled={ ! enabled || ! autoOptimizeEnabled }
+						/>
+					</div>
+					<div className="nfd-flex nfd-flex-col nfd-gap-6">
+						<ToggleField
+							id="lazy-loading-enabled"
+							label={
+								defaultText.imageOptimizationLazyLoadingLabel
+							}
+							description={
+								defaultText.imageOptimizationLazyLoadingDescription
+							}
+							checked={ lazyLoading.enabled }
+							onChange={ () =>
+								handleToggleChange(
+									'lazyLoading',
+									! lazyLoading.enabled
+								)
+							}
+							disabled={ ! enabled }
 						/>
 					</div>
 				</div>

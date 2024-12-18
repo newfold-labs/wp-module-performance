@@ -12,10 +12,27 @@ class ImageSettings {
 	private const SETTING_KEY = 'nfd_image_optimization';
 
 	/**
+	 * Default settings for image optimization.
+	 *
+	 * @var array
+	 */
+	private const DEFAULT_SETTINGS = array(
+		'enabled'                        => true,
+		'auto_optimized_uploaded_images' => array(
+			'enabled'                    => true,
+			'auto_delete_original_image' => true,
+		),
+		'lazy_loading'                   => array(
+			'enabled' => true,
+		),
+	);
+
+	/**
 	 * Constructor to initialize the settings and the listener.
 	 */
 	public function __construct() {
 		$this->register_settings();
+		$this->initialize_settings();
 	}
 
 	/**
@@ -29,21 +46,15 @@ class ImageSettings {
 				'type'              => 'object',
 				'description'       => __( 'Settings for NFD Image Optimization.', 'wp-module-performance' ),
 				'sanitize_callback' => array( $this, 'sanitize_settings' ),
-				'default'           => array(
-					'enabled'                        => true,
-					'auto_optimized_uploaded_images' => array(
-						'enabled'                    => true,
-						'auto_delete_original_image' => true,
-					),
-				),
+				'default'           => self::DEFAULT_SETTINGS,
 				'show_in_rest'      => array(
 					'schema' => array(
 						'type'                 => 'object',
 						'properties'           => array(
-							'enabled' => array(
+							'enabled'      => array(
 								'type'        => 'boolean',
 								'description' => __( 'Enable image optimization.', 'wp-module-performance' ),
-								'default'     => false,
+								'default'     => self::DEFAULT_SETTINGS['enabled'],
 							),
 							'auto_optimized_uploaded_images' => array(
 								'type'        => 'object',
@@ -52,12 +63,23 @@ class ImageSettings {
 									'enabled' => array(
 										'type'        => 'boolean',
 										'description' => __( 'Automatically optimize uploaded images.', 'wp-module-performance' ),
-										'default'     => false,
+										'default'     => self::DEFAULT_SETTINGS['auto_optimized_uploaded_images']['enabled'],
 									),
 									'auto_delete_original_image' => array(
 										'type'        => 'boolean',
 										'description' => __( 'Automatically delete original uploaded image.', 'wp-module-performance' ),
-										'default'     => false,
+										'default'     => self::DEFAULT_SETTINGS['auto_optimized_uploaded_images']['auto_delete_original_image'],
+									),
+								),
+							),
+							'lazy_loading' => array(
+								'type'        => 'object',
+								'description' => __( 'Settings for lazy loading.', 'wp-module-performance' ),
+								'properties'  => array(
+									'enabled' => array(
+										'type'        => 'boolean',
+										'description' => __( 'Enable lazy loading for images.', 'wp-module-performance' ),
+										'default'     => self::DEFAULT_SETTINGS['lazy_loading']['enabled'],
 									),
 								),
 							),
@@ -69,9 +91,17 @@ class ImageSettings {
 		);
 	}
 
+	/**
+	 * Initializes the setting if it does not exist.
+	 */
+	private function initialize_settings() {
+		$current_settings = get_option( self::SETTING_KEY, false );
 
-
-
+		// If the settings do not exist, initialize them with default values.
+		if ( false === $current_settings ) {
+			add_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		}
+	}
 
 	/**
 	 * Sanitizes the `nfd_image_optimization` settings.
@@ -86,6 +116,9 @@ class ImageSettings {
 				'enabled'                    => ! empty( $settings['auto_optimized_uploaded_images']['enabled'] ),
 				'auto_delete_original_image' => ! empty( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] ),
 			),
+			'lazy_loading'                   => array(
+				'enabled' => ! empty( $settings['lazy_loading']['enabled'] ),
+			),
 		);
 	}
 
@@ -95,7 +128,7 @@ class ImageSettings {
 	 * @return bool True if optimization is enabled, false otherwise.
 	 */
 	public static function is_optimization_enabled() {
-		$settings = get_option( self::SETTING_KEY, array() );
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		return ! empty( $settings['enabled'] );
 	}
 
@@ -105,7 +138,7 @@ class ImageSettings {
 	 * @return bool True if auto-optimization is enabled, false otherwise.
 	 */
 	public static function is_auto_optimization_enabled() {
-		$settings = get_option( self::SETTING_KEY, array() );
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		return ! empty( $settings['auto_optimized_uploaded_images']['enabled'] );
 	}
 
@@ -115,7 +148,17 @@ class ImageSettings {
 	 * @return bool True if auto-deletion is enabled, false otherwise.
 	 */
 	public static function is_auto_delete_enabled() {
-		$settings = get_option( self::SETTING_KEY, array() );
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		return ! empty( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] );
+	}
+
+	/**
+	 * Checks if lazy loading is enabled.
+	 *
+	 * @return bool True if lazy loading is enabled, false otherwise.
+	 */
+	public static function is_lazy_loading_enabled() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		return ! empty( $settings['lazy_loading']['enabled'] );
 	}
 }
