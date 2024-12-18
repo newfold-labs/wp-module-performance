@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 
 use Automattic\Jetpack\Current_Plan;
 
@@ -73,6 +74,7 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new ImageManager();
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		new LinkPrefetch( $container );
