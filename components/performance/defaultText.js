@@ -1,8 +1,8 @@
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 
 const defaultText = {
 	cacheLevel0Description: __(
-		'No cache enabled. Every page load is fresh. ',
+		'No cache enabled. Every page load is fresh.',
 		'wp-module-performance'
 	),
 	cacheLevel0Label: __( 'Disabled', 'wp-module-performance' ),
@@ -118,6 +118,165 @@ const defaultText = {
 		'Your image optimization settings have been saved.',
 		'wp-module-performance'
 	),
+	linkPrefetchDescription: __(
+		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ',
+		'wp-module-performance'
+	),
+	linkPrefetchNoticeTitle: __(
+		'Link prefetching setting saved',
+		'wp-module-performance'
+	),
+	linkPrefetchTitle: __( 'Link Prefetch', 'wp-module-performance' ),
+	linkPrefetchActivateOnDesktopDescription: __(
+		'Enable link prefetching on desktop',
+		'wp-module-performance'
+	),
+	linkPrefetchActivateOnDesktopLabel: __(
+		'Activate on desktop',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorDescription: __(
+		'Behavior of the prefetch',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorLabel: __( 'Behavior', 'wp-module-performance' ),
+	linkPrefetchBehaviorMouseDownLabel: __(
+		'Prefetch on Mouse down',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMouseDownDescription: __(
+		'Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click.',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMouseHoverLabel: __(
+		'Prefetch on Mouse Hover (Recommended)',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMouseHoverDescription: __(
+		'Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link',
+		'wp-module-performance'
+	),
+	linkPrefetchActivateOnMobileDescription: __(
+		'Enable link prefetching on Mobile',
+		'wp-module-performance'
+	),
+	linkPrefetchActivateOnMobileLabel: __(
+		'Activate on mobile',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMobileTouchstartLabel: __(
+		'Prefetch on Touchstart (Recommended)',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMobileTouchstartDescription: __(
+		'Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMobileViewportLabel: __(
+		'Prefetch Above the Fold',
+		'wp-module-performance'
+	),
+	linkPrefetchBehaviorMobileViewportDescription: __(
+		"Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them.",
+		'wp-module-performance'
+	),
+	linkPrefetchIgnoreKeywordsDescription: __(
+		'Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding "app" will prevent https://example.com/apple from being prefetched.',
+		'wp-module-performance'
+	),
+	linkPrefetchIgnoreKeywordsLabel: __(
+		'Exclude keywords',
+		'wp-module-performance'
+	),
+	performanceAdvancedSettingsTitle: __(
+		'Advanced settings',
+		'wp-module-performance'
+	),
+	performanceAdvancedSettingsDescription: __(
+		'Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be.',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssTitle: __(
+		'Optimize Critical CSS Loading (manual)',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssDescription: __(
+		'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssPremiumTitle: __(
+		'Optimize Critical CSS Loading (UPGRADED)',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssUpgradeTitle: __(
+		'Generate Critical CSS Automatically',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssPremiumDescription: sprintf(
+		// translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+		__(
+			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.',
+			'wp-module-performance'
+		),
+		'<br>',
+		'<strong>',
+		'</strong>'
+	),
+	jetpackBoostRenderBlockingTitle: __(
+		'Defer Non-Essential JavaScript',
+		'wp-module-performance'
+	),
+	jetpackBoostRenderBlockingDescription: __(
+		'Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.',
+		'wp-module-performance'
+	),
+	jetpackBoostMinifyJsTitle: __( 'Concatenate JS', 'wp-module-performance' ),
+	jetpackBoostMinifyJsDescription: __(
+		'Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.',
+		'wp-module-performance'
+	),
+	jetpackBoostExcludeJsTitle: __(
+		'Exclude JS Strings',
+		'wp-module-performance'
+	),
+	jetpackBoostMinifyCssTitle: __(
+		'Concatenate CSS',
+		'wp-module-performance'
+	),
+	jetpackBoostMinifyCssDescription: __(
+		'Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.',
+		'wp-module-performance'
+	),
+	jetpackBoostExcludeCssTitle: __(
+		'Exclude CSS Strings',
+		'wp-module-performance'
+	),
+	jetpackBoostShowMore: __( 'Show more', 'wp-module-performance' ),
+	jetpackBoostShowLess: __( 'Show less', 'wp-module-performance' ),
+	jetpackBoostDicoverMore: __( 'Discover More', 'wp-module-performance' ),
+	jetpackBoostCtaText: __(
+		'Install Jetpack Boost to unlock',
+		'wp-module-performance'
+	),
+	jetpackBoostInstalling: __(
+		'Installing Jetpack Boost…',
+		'wp-module-performance'
+	),
+	jetpackBoostActivated: __(
+		'Jetpack Boost is now active',
+		'wp-module-performance'
+	),
+	jetpackBoostActivationFailed: __(
+		'Activation failed',
+		'wp-module-performance'
+	),
+	// translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
+	jetpackBoostDiscoverMore: __(
+		'Discover more %1$shere%2$s',
+		'wp-module-performance'
+	),
+	optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
+	optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
 };
 
 export default defaultText;
