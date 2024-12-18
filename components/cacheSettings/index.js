@@ -63,6 +63,7 @@ const CacheSettings = ({ methods, constants, Components }) => {
     }, [cacheLevel]);
 
     return (
+      <>
         <Container.SettingsField
             title={constants.text.cacheLevelTitle}
             description={constants.text.cacheLevelDescription}
@@ -92,6 +93,7 @@ const CacheSettings = ({ methods, constants, Components }) => {
             })}
         </RadioGroup>
         </Container.SettingsField>
+      </>
     );
 }
 
