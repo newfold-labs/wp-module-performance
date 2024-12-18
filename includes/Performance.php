@@ -273,7 +273,7 @@ class Performance {
 	 */
 	public function add_sub_menu_page() {
 		$brand = $this->container->get( 'plugin' )['id'];
-		add_options_page(
+		add_management_page(
 			__( 'Performance', 'newfold-performance-module' ),
 			__( 'Performance', 'newfold-performance-module' ),
 			'manage_options',
