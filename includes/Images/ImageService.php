@@ -209,6 +209,9 @@ class ImageService {
 			}
 
 			wp_update_attachment_metadata( $media_id_or_path, $metadata );
+
+			// Save metadata for optimized image
+			update_post_meta( $media_id_or_path, '_nfd_performance_image_optimized', 1 );
 		}
 
 		// Return the updated upload array
@@ -226,9 +229,6 @@ class ImageService {
 	 * @return int|WP_Error The attachment ID of the new media item, or WP_Error on failure.
 	 */
 	public function register_webp_as_new_media( $webp_file_path ) {
-		$upload_dir = wp_upload_dir();
-		$webp_url   = trailingslashit( $upload_dir['url'] ) . wp_basename( $webp_file_path );
-
 		// Prepare the attachment data
 		$attachment_data = array(
 			'post_mime_type' => 'image/webp',
@@ -248,6 +248,9 @@ class ImageService {
 		require_once ABSPATH . 'wp-admin/includes/image.php';
 		$metadata = wp_generate_attachment_metadata( $attachment_id, $webp_file_path );
 		wp_update_attachment_metadata( $attachment_id, $metadata );
+
+		// Save metadata for optimized image
+		update_post_meta( $attachment_id, '_nfd_performance_image_optimized', 1 );
 
 		return $attachment_id;
 	}
