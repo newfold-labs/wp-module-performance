@@ -40,7 +40,7 @@ class ImageOptimizedMarker {
 	 *
 	 * @param array   $response  The prepared attachment response.
 	 * @param WP_Post $attachment The current attachment object.
-	 * 
+	 *
 	 * @return array The modified response.
 	 */
 	public function add_media_library_data_attribute( $response, $attachment ) {

@@ -47,7 +47,7 @@ class LinkPrefetch {
 	 * return void
 	 */
 	public function enqueueScripts() {
-		$settings   = get_option( 'nfd_link_prefetch_settings', static::getDefaultSettings() );
+		$settings = get_option( 'nfd_link_prefetch_settings', static::getDefaultSettings() );
 
 		if ( ! $settings['activeOnDesktop'] && ! $settings['activeOnMobile'] ) {
 			return;
