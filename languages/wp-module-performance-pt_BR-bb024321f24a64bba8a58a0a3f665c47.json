@@ -1,0 +1,216 @@
+{
+    "translation-revision-date": "2024-12-19 13:10+0000",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "components\/performance\/defaultText.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "pt_BR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "No cache enabled. Every page load is fresh.": [
+                ""
+            ],
+            "Disabled": [
+                ""
+            ],
+            "Caching disabled.": [
+                ""
+            ],
+            "Not recommended.": [
+                ""
+            ],
+            "Cache static assets like images and the appearance of your site for 1 hour.": [
+                ""
+            ],
+            "Assets Only": [
+                ""
+            ],
+            "Cache enabled for assets only.": [
+                ""
+            ],
+            "Tuned for online stores and member sites that need to be fresh.": [
+                ""
+            ],
+            "Cache static assets for 24 hours and web pages for 2 hours.": [
+                ""
+            ],
+            "Assets & Web Pages": [
+                ""
+            ],
+            "Cache enabled for assets and pages.": [
+                ""
+            ],
+            "Tuned for sites that change at least weekly.": [
+                ""
+            ],
+            "Cache static assets for 1 week and web pages for 8 hours.": [
+                ""
+            ],
+            "Assets & Web Pages - Extended": [
+                ""
+            ],
+            "Cache enabled for assets and pages (extended).": [
+                ""
+            ],
+            "Tuned for sites that update a few times a month or less.": [
+                ""
+            ],
+            "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors.": [
+                "Aumente a velocidade e o desempenho armazenando uma c\u00f3pia do conte\u00fado, arquivos e imagens do seu site on-line para que as p\u00e1ginas do seu site sejam carregadas mais rapidamente para seus visitantes."
+            ],
+            "Cache setting saved": [
+                ""
+            ],
+            "Cache Level": [
+                ""
+            ],
+            "Clear All Cache Now": [
+                ""
+            ],
+            "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
+                ""
+            ],
+            "Cache cleared": [
+                ""
+            ],
+            "Clear Cache": [
+                ""
+            ],
+            "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ": [
+                ""
+            ],
+            "Link prefetching setting saved": [
+                ""
+            ],
+            "Link Prefetch": [
+                ""
+            ],
+            "Enable link prefetching on desktop": [
+                ""
+            ],
+            "Activate on desktop": [
+                ""
+            ],
+            "Behavior of the prefetch": [
+                ""
+            ],
+            "Behavior": [
+                ""
+            ],
+            "Prefetch on Mouse down": [
+                ""
+            ],
+            "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click.": [
+                ""
+            ],
+            "Prefetch on Mouse Hover (Recommended)": [
+                ""
+            ],
+            "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link": [
+                ""
+            ],
+            "Enable link prefetching on Mobile": [
+                ""
+            ],
+            "Activate on mobile": [
+                ""
+            ],
+            "Prefetch on Touchstart (Recommended)": [
+                ""
+            ],
+            "Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.": [
+                ""
+            ],
+            "Prefetch Above the Fold": [
+                ""
+            ],
+            "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them.": [
+                ""
+            ],
+            "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
+                ""
+            ],
+            "Exclude keywords": [
+                ""
+            ],
+            "Advanced settings": [
+                ""
+            ],
+            "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be.": [
+                ""
+            ],
+            "Optimize Critical CSS Loading (manual)": [
+                ""
+            ],
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
+                ""
+            ],
+            "Optimize Critical CSS Loading (UPGRADED)": [
+                ""
+            ],
+            "Generate Critical CSS Automatically": [
+                ""
+            ],
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
+                ""
+            ],
+            "Defer Non-Essential JavaScript": [
+                ""
+            ],
+            "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
+                ""
+            ],
+            "Concatenate JS": [
+                ""
+            ],
+            "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
+                ""
+            ],
+            "Exclude JS Strings": [
+                ""
+            ],
+            "Concatenate CSS": [
+                ""
+            ],
+            "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
+                ""
+            ],
+            "Exclude CSS Strings": [
+                ""
+            ],
+            "Show more": [
+                ""
+            ],
+            "Show less": [
+                ""
+            ],
+            "Discover More": [
+                ""
+            ],
+            "Install Jetpack Boost to unlock": [
+                ""
+            ],
+            "Installing Jetpack Boost\u2026": [
+                ""
+            ],
+            "Jetpack Boost is now active": [
+                ""
+            ],
+            "Activation failed": [
+                ""
+            ],
+            "Discover more %1$shere%2$s": [
+                ""
+            ],
+            "Option saved correctly": [
+                ""
+            ],
+            "Error saving option": [
+                ""
+            ]
+        }
+    }
+}

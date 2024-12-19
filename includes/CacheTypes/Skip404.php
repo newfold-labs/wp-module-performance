@@ -48,7 +48,7 @@ class Skip404 extends CacheBase {
 
 		add_settings_field(
 			Performance::OPTION_SKIP_404,
-			__( 'Skip WordPress 404 Handling For Static Files', 'newfold-performance-module' ),
+			__( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' ),
 			'NewfoldLabs\\WP\\Module\\Performance\\getSkip404InputField',
 			'general',
 			Performance::SETTINGS_SECTION

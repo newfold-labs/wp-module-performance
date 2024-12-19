@@ -77,11 +77,6 @@ class Performance {
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		new LinkPrefetch( $container );
 
-		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		}
-
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
@@ -93,6 +88,9 @@ class Performance {
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
+
+		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_PATH' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_PATH', dirname( $container->plugin()->basename ) . '/vendor/newfold-labs/wp-module-performance/languages' );
+		add_action( 'init', array( $this, 'load_text_domain'), 100 );
 	}
 
 	/**
@@ -228,14 +226,14 @@ class Performance {
 
 		add_settings_section(
 			$section_name,
-			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'newfold-performance-module' ) . '</span>',
+			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'wp-module-performance' ) . '</span>',
 			'__return_false',
 			'general'
 		);
 
 		add_settings_field(
 			self::OPTION_CACHE_LEVEL,
-			__( 'Cache Level', 'newfold-performance-module' ),
+			__( 'Cache Level', 'wp-module-performance' ),
 			__NAMESPACE__ . '\\getCacheLevelDropdown',
 			'general',
 			$section_name
@@ -266,14 +264,14 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
-					'title' => __( 'Caching', 'newfold-module-performance' ),
+					'title' => __( 'Caching', 'wp-module-performance' ),
 				)
 			);
 
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'newfold-module-performance' ),
+					'title'  => __( 'Purge All', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 				)
@@ -283,7 +281,7 @@ class Performance {
 				$wp_admin_bar->add_node(
 					array(
 						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+						'title'  => __( 'Purge This Page', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
 						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
 					)
@@ -294,7 +292,7 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
-					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
+					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
@@ -352,5 +350,18 @@ class Performance {
 		}
 
 		return $exists;
+	}
+
+	/**
+	 * Load module text domain
+	 *
+	 * @return void
+	 */
+	public function load_text_domain() {
+		load_plugin_textdomain(
+			'wp-module-performance',
+			false,
+			NFD_PERFORMANCE_PLUGIN_LANGUAGES_PATH
+		);
 	}
 }

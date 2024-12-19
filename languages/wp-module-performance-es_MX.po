@@ -1,0 +1,323 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2024-12-19 15:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Domain: wp-module-performance\n"
+
+#: components/advancedSettings/JetpackBoost/index.js:108
+msgid "Installing"
+msgstr ""
+
+#: components/performance/defaultText.js:4
+msgid "No cache enabled. Every page load is fresh."
+msgstr ""
+
+#: components/performance/defaultText.js:8
+msgid "Disabled"
+msgstr ""
+
+#: components/performance/defaultText.js:9
+msgid "Caching disabled."
+msgstr ""
+
+#: components/performance/defaultText.js:10
+msgid "Not recommended."
+msgstr ""
+
+#: components/performance/defaultText.js:14
+msgid "Cache static assets like images and the appearance of your site for 1 hour."
+msgstr ""
+
+#: components/performance/defaultText.js:18
+msgid "Assets Only"
+msgstr ""
+
+#: components/performance/defaultText.js:19
+msgid "Cache enabled for assets only."
+msgstr ""
+
+#: components/performance/defaultText.js:23
+msgid "Tuned for online stores and member sites that need to be fresh."
+msgstr ""
+
+#: components/performance/defaultText.js:27
+msgid "Cache static assets for 24 hours and web pages for 2 hours."
+msgstr ""
+
+#: components/performance/defaultText.js:31
+msgid "Assets & Web Pages"
+msgstr ""
+
+#: components/performance/defaultText.js:32
+msgid "Cache enabled for assets and pages."
+msgstr ""
+
+#: components/performance/defaultText.js:36
+msgid "Tuned for sites that change at least weekly."
+msgstr ""
+
+#: components/performance/defaultText.js:40
+msgid "Cache static assets for 1 week and web pages for 8 hours."
+msgstr ""
+
+#: components/performance/defaultText.js:44
+msgid "Assets & Web Pages - Extended"
+msgstr ""
+
+#: components/performance/defaultText.js:48
+msgid "Cache enabled for assets and pages (extended)."
+msgstr ""
+
+#: components/performance/defaultText.js:52
+msgid "Tuned for sites that update a few times a month or less."
+msgstr ""
+
+#: components/performance/defaultText.js:56
+msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+msgstr ""
+
+#: components/performance/defaultText.js:60
+msgid "Cache setting saved"
+msgstr ""
+
+#: includes/functions.php:37 includes/Performance.php:236
+#: components/performance/defaultText.js:61
+msgid "Cache Level"
+msgstr "Nivel de caché"
+
+#: components/performance/defaultText.js:62
+msgid "Clear All Cache Now"
+msgstr ""
+
+#: components/performance/defaultText.js:63
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr ""
+
+#: components/performance/defaultText.js:67
+msgid "Cache cleared"
+msgstr ""
+
+#: components/performance/defaultText.js:68
+msgid "Clear Cache"
+msgstr ""
+
+#: components/performance/defaultText.js:69
+msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. "
+msgstr ""
+
+#: components/performance/defaultText.js:73
+msgid "Link prefetching setting saved"
+msgstr ""
+
+#: components/performance/defaultText.js:77
+msgid "Link Prefetch"
+msgstr ""
+
+#: components/performance/defaultText.js:78
+msgid "Enable link prefetching on desktop"
+msgstr ""
+
+#: components/performance/defaultText.js:82
+msgid "Activate on desktop"
+msgstr ""
+
+#: components/performance/defaultText.js:86
+msgid "Behavior of the prefetch"
+msgstr ""
+
+#: components/performance/defaultText.js:90
+msgid "Behavior"
+msgstr ""
+
+#: components/performance/defaultText.js:91
+msgid "Prefetch on Mouse down"
+msgstr ""
+
+#: components/performance/defaultText.js:95
+msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+msgstr ""
+
+#: components/performance/defaultText.js:99
+msgid "Prefetch on Mouse Hover (Recommended)"
+msgstr ""
+
+#: components/performance/defaultText.js:103
+msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
+msgstr ""
+
+#: components/performance/defaultText.js:107
+msgid "Enable link prefetching on Mobile"
+msgstr ""
+
+#: components/performance/defaultText.js:111
+msgid "Activate on mobile"
+msgstr ""
+
+#: components/performance/defaultText.js:115
+msgid "Prefetch on Touchstart (Recommended)"
+msgstr ""
+
+#: components/performance/defaultText.js:119
+msgid "Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
+msgstr ""
+
+#: components/performance/defaultText.js:123
+msgid "Prefetch Above the Fold"
+msgstr ""
+
+#: components/performance/defaultText.js:127
+msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+msgstr ""
+
+#: components/performance/defaultText.js:131
+msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
+msgstr ""
+
+#: components/performance/defaultText.js:135
+msgid "Exclude keywords"
+msgstr ""
+
+#: components/performance/defaultText.js:139
+msgid "Advanced settings"
+msgstr ""
+
+#: components/performance/defaultText.js:143
+msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+msgstr ""
+
+#: components/performance/defaultText.js:147
+msgid "Optimize Critical CSS Loading (manual)"
+msgstr ""
+
+#: components/performance/defaultText.js:151
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
+msgstr ""
+
+#: components/performance/defaultText.js:155
+msgid "Optimize Critical CSS Loading (UPGRADED)"
+msgstr ""
+
+#: components/performance/defaultText.js:159
+msgid "Generate Critical CSS Automatically"
+msgstr ""
+
+#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+#: components/performance/defaultText.js:165
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr ""
+
+#: components/performance/defaultText.js:173
+msgid "Defer Non-Essential JavaScript"
+msgstr ""
+
+#: components/performance/defaultText.js:177
+msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+msgstr ""
+
+#: components/performance/defaultText.js:181
+msgid "Concatenate JS"
+msgstr ""
+
+#: components/performance/defaultText.js:182
+msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr ""
+
+#: components/performance/defaultText.js:186
+msgid "Exclude JS Strings"
+msgstr ""
+
+#: components/performance/defaultText.js:190
+msgid "Concatenate CSS"
+msgstr ""
+
+#: components/performance/defaultText.js:194
+msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr ""
+
+#: components/performance/defaultText.js:198
+msgid "Exclude CSS Strings"
+msgstr ""
+
+#: components/performance/defaultText.js:202
+msgid "Show more"
+msgstr ""
+
+#: components/performance/defaultText.js:203
+msgid "Show less"
+msgstr ""
+
+#: components/performance/defaultText.js:204
+msgid "Discover More"
+msgstr ""
+
+#: components/performance/defaultText.js:205
+msgid "Install Jetpack Boost to unlock"
+msgstr ""
+
+#: components/performance/defaultText.js:209
+msgid "Installing Jetpack Boost…"
+msgstr ""
+
+#: components/performance/defaultText.js:213
+msgid "Jetpack Boost is now active"
+msgstr ""
+
+#: components/performance/defaultText.js:217
+msgid "Activation failed"
+msgstr ""
+
+#. translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
+#: components/performance/defaultText.js:222
+msgid "Discover more %1$shere%2$s"
+msgstr ""
+
+#: components/performance/defaultText.js:226
+msgid "Option saved correctly"
+msgstr ""
+
+#: components/performance/defaultText.js:227
+msgid "Error saving option"
+msgstr ""
+
+#: includes/CacheTypes/Skip404.php:51 includes/functions.php:64
+msgid "Skip WordPress 404 Handling For Static Files"
+msgstr "Omitir el manejo de error 404 de WordPress para archivos estáticos"
+
+#: includes/Performance.php:229 includes/Performance.php:267
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/RestApi/JetpackController.php:67
+msgid "The parameter 'field' is missing or invalid."
+msgstr ""
+
+#: includes/RestApi/JetpackController.php:79
+msgid "The fields 'id' and 'value' are required."
+msgstr ""
+
+#: includes/RestApi/JetpackController.php:103
+#: includes/RestApi/JetpackController.php:123
+msgid "An error occurred while updating the option."
+msgstr ""
+
+#: includes/Performance.php:274
+msgid "Purge All"
+msgstr "Limpiar todo"
+
+#: includes/Performance.php:284
+msgid "Purge This Page"
+msgstr "Purge This Page"
+
+#: includes/Performance.php:295
+msgid "Cache Settings"
+msgstr "Configuración de caché"
