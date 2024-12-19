@@ -82,28 +82,26 @@ class LazyLoader {
 	 * Enqueues the lazy loader script file and adds inline exclusion settings.
 	 */
 	public function enqueue_lazy_loader() {
-		$asset_file = NFD_PERFORMANCE_BUILD_DIR . '/lazy-load.min.asset.php';
+		$script_path = NFD_PERFORMANCE_BUILD_DIR . '/lazy-load.min.js';
+		$script_url  = NFD_PERFORMANCE_BUILD_URL . '/lazy-load.min.js';
 
-		if ( is_readable( $asset_file ) ) {
-			$asset = include $asset_file;
+		// Register the script with version based on file modification time.
+		wp_register_script(
+			'nfd-performance-lazy-loader',
+			$script_url,
+			array(),
+			file_exists( $script_path ) ? filemtime( $script_path ) : false,
+			true
+		);
 
-			wp_register_script(
-				'nfd-performance-lazy-loader',
-				NFD_PERFORMANCE_BUILD_URL . '/lazy-load.min.js',
-				$asset['dependencies'],
-				$asset['version'],
-				true
-			);
+		// Inject the exclusion settings into the script.
+		wp_add_inline_script(
+			'nfd-performance-lazy-loader',
+			$this->get_inline_script(),
+			'before'
+		);
 
-			// Inject the exclusion settings into the script.
-			wp_add_inline_script(
-				'nfd-performance-lazy-loader',
-				$this->get_inline_script(),
-				'before'
-			);
-
-			wp_enqueue_script( 'nfd-performance-lazy-loader' );
-		}
+		wp_enqueue_script( 'nfd-performance-lazy-loader' );
 	}
 
 	/**

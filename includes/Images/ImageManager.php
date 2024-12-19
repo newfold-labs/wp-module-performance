@@ -19,6 +19,7 @@ class ImageManager {
 		$this->maybe_initialize_lazy_loader();
 		$this->maybe_initialize_bulk_optimizer();
 		$this->maybe_initialize_rest_api();
+		$this->maybe_initialize_marker();
 	}
 
 	/**
@@ -62,6 +63,15 @@ class ImageManager {
 	private function maybe_initialize_rest_api() {
 		if ( Permissions::rest_is_authorized_admin() ) {
 			new RestApi();
+		}
+	}
+
+	/**
+	 * Conditionally initializes the ImageOptimizedMarker if image optimization is enabled.
+	 */
+	private function maybe_initialize_marker() {
+		if ( ImageSettings::is_optimization_enabled() ) {
+			new ImageOptimizedMarker();
 		}
 	}
 }
