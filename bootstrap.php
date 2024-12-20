@@ -12,3 +12,5 @@ if ( function_exists( 'add_filter' ) ) {
 }
 
 new PerformanceFeatureHooks();
+
+require_once __DIR__ . '/includes/BurstSafetyMode/init.php';

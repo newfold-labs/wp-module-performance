@@ -83,7 +83,7 @@ const SingleOption = ( { params, isChild, methods, constants } ) => {
 							! NewfoldRuntime.sdk.performance
 								.jetpack_boost_premium_is_active && (
 								<FeatureUpsell
-									cardText="Upgrade to Unlock"
+									cardText={constants.text.upgradeModule}
 									cardLink={ option.premiumUrl }
 								>
 									<ToggleField
