@@ -46,11 +46,7 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 
 		define( 'BURST_SAFETY_CACHE_LEVEL', 3 );
 
-		$skip_404_handling = (bool) get_option( 'newfold_skip_404_handling', true );
-
-		if ( ! $skip_404_handling && class_exists( BurstSkip404::class ) ) {
-			$skip404 = new BurstSkip404();
-		}
+		$skip404 = new BurstSkip404();
 
 		if ( BURST_SAFETY_CACHE_LEVEL !== $newfold_cache_level && class_exists( BurstBrowser::class ) ) {
 			$browser = new BurstBrowser();
