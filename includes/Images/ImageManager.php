@@ -2,24 +2,26 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\RestApi\RestApi;
+use NewfoldLabs\WP\Module\Performance\Images\ImageRewriteHandler;
 
 /**
  * Manages the initialization of image optimization settings and listeners.
  */
 class ImageManager {
+
 	/**
 	 * Constructor to initialize the ImageManager.
-	 * It registers settings and conditionally initializes services.
+	 *
+	 * Registers settings and conditionally initializes related services.
+	 *
+	 * @param Container $container Dependency injection container.
 	 */
-	public function __construct() {
+	public function __construct( Container $container ) {
 		$this->initialize_settings();
-		$this->maybe_initialize_upload_listener();
-		$this->maybe_initialize_lazy_loader();
-		$this->maybe_initialize_bulk_optimizer();
-		$this->maybe_initialize_rest_api();
-		$this->maybe_initialize_marker();
+		$this->initialize_services( $container );
 	}
 
 	/**
@@ -30,17 +32,30 @@ class ImageManager {
 	}
 
 	/**
-	 * Conditionally initializes the ImageUploadListener based on the settings.
+	 * Initializes conditional services based on settings and environment.
+	 *
+	 * @param Container $container Dependency injection container.
+	 */
+	private function initialize_services( Container $container ) {
+		$this->maybe_initialize_upload_listener();
+		$this->maybe_initialize_lazy_loader();
+		$this->maybe_initialize_bulk_optimizer();
+		$this->maybe_initialize_rest_api();
+		$this->maybe_initialize_marker();
+		$this->maybe_initialize_image_rewrite_handler( $container );
+	}
+
+	/**
+	 * Initializes the ImageUploadListener if auto-optimization is enabled.
 	 */
 	private function maybe_initialize_upload_listener() {
 		if ( ImageSettings::is_optimization_enabled() && ImageSettings::is_auto_optimization_enabled() ) {
-			$auto_delete_original_image = ImageSettings::is_auto_delete_enabled();
-			new ImageUploadListener( $auto_delete_original_image );
+			new ImageUploadListener( ImageSettings::is_auto_delete_enabled() );
 		}
 	}
 
 	/**
-	 * Conditionally initializes the LazyLoader based on settings.
+	 * Initializes the LazyLoader if lazy loading is enabled.
 	 */
 	private function maybe_initialize_lazy_loader() {
 		if ( ImageSettings::is_optimization_enabled() && ImageSettings::is_lazy_loading_enabled() ) {
@@ -49,7 +64,7 @@ class ImageManager {
 	}
 
 	/**
-	 * Conditionally initializes the ImageBulkOptimizer only within `wp-admin`.
+	 * Initializes the ImageBulkOptimizer if bulk optimization is enabled and user is an admin.
 	 */
 	private function maybe_initialize_bulk_optimizer() {
 		if ( Permissions::is_authorized_admin() && ImageSettings::is_bulk_optimization_enabled() ) {
@@ -58,7 +73,7 @@ class ImageManager {
 	}
 
 	/**
-	 * Conditionally initializes the REST API routes only when called via REST.
+	 * Initializes the REST API routes if accessed via REST and user is an admin.
 	 */
 	private function maybe_initialize_rest_api() {
 		if ( Permissions::rest_is_authorized_admin() ) {
@@ -67,11 +82,24 @@ class ImageManager {
 	}
 
 	/**
-	 * Conditionally initializes the ImageOptimizedMarker if image optimization is enabled.
+	 * Initializes the ImageOptimizedMarker if image optimization is enabled.
 	 */
 	private function maybe_initialize_marker() {
 		if ( ImageSettings::is_optimization_enabled() ) {
 			new ImageOptimizedMarker();
+		}
+	}
+
+	/**
+	 * Initializes the ImageRewriteHandler for managing WebP redirects if the server is Apache.
+	 *
+	 * @param Container $container Dependency injection container.
+	 */
+	private function maybe_initialize_image_rewrite_handler( Container $container ) {
+		if ( Permissions::rest_is_authorized_admin()
+		&& $container->has( 'isApache' )
+		&& $container->get( 'isApache' ) ) {
+			new ImageRewriteHandler();
 		}
 	}
 }

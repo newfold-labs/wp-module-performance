@@ -1,10 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
-import {
-	Alert,
-	Container,
-	ToggleField,
-	Button,
-} from '@newfold/ui-component-library';
+import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
 
 import defaultText from '../performance/defaultText';
 
@@ -69,6 +64,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 				updatedSettings.auto_optimized_uploaded_images.enabled = value;
 				updatedSettings.bulk_optimization = value;
 				updatedSettings.lazy_loading.enabled = value;
+				updatedSettings.prefer_optimized_image_when_exists = value;
 				break;
 
 			case 'autoOptimizeEnabled':
@@ -86,6 +82,10 @@ const ImageOptimizationSettings = ( { methods } ) => {
 			case 'autoDeleteOriginalImage':
 				updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
 					value;
+				break;
+
+			case 'preferOptimizedImageWhenExists':
+				updatedSettings.prefer_optimized_image_when_exists = value;
 				break;
 
 			default:
@@ -135,6 +135,8 @@ const ImageOptimizationSettings = ( { methods } ) => {
 
 	const {
 		enabled,
+		prefer_optimized_image_when_exists:
+			preferOptimizedImageWhenExists = true,
 		auto_optimized_uploaded_images: autoOptimizedUploadedImages,
 		lazy_loading: lazyLoading = { enabled: true },
 		bulk_optimization: bulkOptimization = false,
@@ -144,6 +146,11 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		enabled: autoOptimizeEnabled,
 		auto_delete_original_image: autoDeleteOriginalImage,
 	} = autoOptimizedUploadedImages || {};
+
+	const mediaLibraryLink = () => {
+		const basePath = window.location.pathname.split( '/wp-admin' )[ 0 ];
+		return `${ window.location.origin }${ basePath }/wp-admin/upload.php`;
+	};
 
 	return (
 		<Container.SettingsField
@@ -180,24 +187,54 @@ const ImageOptimizationSettings = ( { methods } ) => {
 				/>
 
 				<ToggleField
+					id="bulk-optimize-images"
+					label={ defaultText.imageOptimizationBulkOptimizeLabel }
+					description={
+						<>
+							<p>
+								{
+									defaultText.imageOptimizationBulkOptimizeDescription
+								}
+							</p>
+							<a
+								href={ mediaLibraryLink() }
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{
+									defaultText.imageOptimizationBulkOptimizeButtonLabel
+								}
+							</a>
+						</>
+					}
+					checked={ bulkOptimization }
+					onChange={ () =>
+						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
+					}
+					disabled={ ! enabled }
+				/>
+
+				<ToggleField
+					id="prefer-webp-when-exists"
+					label={ defaultText.imageOptimizationPreferWebPLabel }
+					description={
+						defaultText.imageOptimizationPreferWebPDescription
+					}
+					checked={ preferOptimizedImageWhenExists }
+					onChange={ () =>
+						handleToggleChange(
+							'preferOptimizedImageWhenExists',
+							! preferOptimizedImageWhenExists
+						)
+					}
+					disabled={ ! enabled }
+				/>
+
+				<ToggleField
 					id="auto-delete-original"
 					label={ defaultText.imageOptimizationAutoDeleteLabel }
 					description={
-						<>
-							{
-								defaultText.imageOptimizationAutoDeleteDescription
-							}
-							<p
-								style={ {
-									color: 'red',
-									marginTop: '8px',
-								} }
-							>
-								{
-									defaultText.imageOptimizationAutoDeleteCaution
-								}
-							</p>
-						</>
+						defaultText.imageOptimizationAutoDeleteDescription
 					}
 					checked={ autoDeleteOriginalImage }
 					onChange={ () =>
@@ -227,40 +264,6 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					}
 					disabled={ ! enabled }
 				/>
-
-				<ToggleField
-					id="bulk-optimize-images"
-					label={ defaultText.imageOptimizationBulkOptimizeLabel }
-					description={
-						defaultText.imageOptimizationBulkOptimizeDescription
-					}
-					checked={ bulkOptimization }
-					onChange={ () =>
-						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
-					}
-					disabled={ ! enabled }
-				/>
-
-				{ bulkOptimization && (
-					<div className="nfd-flex nfd-justify-end">
-						<Button
-							variant="primary"
-							size="small"
-							onClick={ () => {
-								const basePath =
-									window.location.pathname.split(
-										'/wp-admin'
-									)[ 0 ];
-								const adminUrl = `${ window.location.origin }${ basePath }/wp-admin/upload.php`;
-								window.open( adminUrl, '_blank' );
-							} }
-						>
-							{
-								defaultText.imageOptimizationBulkOptimizeButtonLabel
-							}
-						</Button>
-					</div>
-				) }
 			</div>
 		</Container.SettingsField>
 	);

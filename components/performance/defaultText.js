@@ -100,10 +100,6 @@ const defaultText = {
 		'When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.',
 		'wp-module-performance'
 	),
-	imageOptimizationAutoDeleteCaution: __(
-		'Caution: If the original image is being referenced elsewhere (e.g., in posts, pages, or custom templates), those references will break. You will need to manually update those references to use the optimized image.',
-		'wp-module-performance'
-	),
 	imageOptimizationNoSettings: __(
 		'No settings available.',
 		'wp-module-performance'
@@ -154,6 +150,14 @@ const defaultText = {
 	),
 	imageOptimizationUpdateErrorTitle: __(
 		'Error Updating Settings',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPLabel: __(
+		'Prefer Optimized Image When Exists',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPDescription: __(
+		'When enabled, optimized images will be served in place of original images when they exist, improving performance.',
 		'wp-module-performance'
 	),
 	imageOptimizationGenericErrorMessage: __(

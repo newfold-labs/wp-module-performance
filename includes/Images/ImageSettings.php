@@ -6,6 +6,7 @@ namespace NewfoldLabs\WP\Module\Performance\Images;
  * Manages the registration and sanitization of image optimization settings.
  */
 class ImageSettings {
+
 	/**
 	 * The setting key for image optimization.
 	 */
@@ -17,15 +18,16 @@ class ImageSettings {
 	 * @var array
 	 */
 	private const DEFAULT_SETTINGS = array(
-		'enabled'                        => true,
-		'auto_optimized_uploaded_images' => array(
+		'enabled'                            => true,
+		'prefer_optimized_image_when_exists' => true,
+		'auto_optimized_uploaded_images'     => array(
 			'enabled'                    => true,
 			'auto_delete_original_image' => true,
 		),
-		'lazy_loading'                   => array(
+		'lazy_loading'                       => array(
 			'enabled' => true,
 		),
-		'bulk_optimization'              => false, // Default value for bulk optimization
+		'bulk_optimization'                  => true,
 	);
 
 	/**
@@ -57,9 +59,14 @@ class ImageSettings {
 								'description' => __( 'Enable image optimization.', 'wp-module-performance' ),
 								'default'     => self::DEFAULT_SETTINGS['enabled'],
 							),
+							'prefer_optimized_image_when_exists' => array(
+								'type'        => 'boolean',
+								'description' => __( 'Prefer WebP format when it exists.', 'wp-module-performance' ),
+								'default'     => self::DEFAULT_SETTINGS['prefer_optimized_image_when_exists'],
+							),
 							'auto_optimized_uploaded_images' => array(
 								'type'        => 'object',
-								'description' => __( 'Settings for auto-optimized uploaded images.', 'wp-module-performance' ),
+								'description' => __( 'Auto-optimized uploaded images settings.', 'wp-module-performance' ),
 								'properties'  => array(
 									'enabled' => array(
 										'type'        => 'boolean',
@@ -68,7 +75,7 @@ class ImageSettings {
 									),
 									'auto_delete_original_image' => array(
 										'type'        => 'boolean',
-										'description' => __( 'Automatically delete original uploaded image.', 'wp-module-performance' ),
+										'description' => __( 'Delete the original uploaded image after optimization.', 'wp-module-performance' ),
 										'default'     => self::DEFAULT_SETTINGS['auto_optimized_uploaded_images']['auto_delete_original_image'],
 									),
 								),
@@ -79,7 +86,7 @@ class ImageSettings {
 								'properties'  => array(
 									'enabled' => array(
 										'type'        => 'boolean',
-										'description' => __( 'Enable lazy loading for images.', 'wp-module-performance' ),
+										'description' => __( 'Enable lazy loading.', 'wp-module-performance' ),
 										'default'     => self::DEFAULT_SETTINGS['lazy_loading']['enabled'],
 									),
 								),
@@ -90,7 +97,7 @@ class ImageSettings {
 								'default'     => self::DEFAULT_SETTINGS['bulk_optimization'],
 							),
 						),
-						'additionalProperties' => false, // Disallow undefined properties
+						'additionalProperties' => false,
 					),
 				),
 			)
@@ -117,15 +124,16 @@ class ImageSettings {
 	 */
 	public function sanitize_settings( $settings ) {
 		return array(
-			'enabled'                        => ! empty( $settings['enabled'] ),
-			'auto_optimized_uploaded_images' => array(
+			'enabled'                            => ! empty( $settings['enabled'] ),
+			'prefer_optimized_image_when_exists' => ! empty( $settings['prefer_optimized_image_when_exists'] ),
+			'auto_optimized_uploaded_images'     => array(
 				'enabled'                    => ! empty( $settings['auto_optimized_uploaded_images']['enabled'] ),
 				'auto_delete_original_image' => ! empty( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] ),
 			),
-			'lazy_loading'                   => array(
+			'lazy_loading'                       => array(
 				'enabled' => ! empty( $settings['lazy_loading']['enabled'] ),
 			),
-			'bulk_optimization'              => ! empty( $settings['bulk_optimization'] ),
+			'bulk_optimization'                  => ! empty( $settings['bulk_optimization'] ),
 		);
 	}
 
@@ -177,5 +185,15 @@ class ImageSettings {
 	public static function is_bulk_optimization_enabled() {
 		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		return ! empty( $settings['bulk_optimization'] );
+	}
+
+	/**
+	 * Checks if WebP preference is enabled.
+	 *
+	 * @return bool True if WebP preference is enabled, false otherwise.
+	 */
+	public static function is_webp_preference_enabled() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		return ! empty( $settings['prefer_optimized_image_when_exists'] );
 	}
 }
