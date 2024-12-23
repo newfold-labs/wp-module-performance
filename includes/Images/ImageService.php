@@ -155,4 +155,117 @@ class ImageService {
 
 		return null;
 	}
+
+	/**
+	 * Replaces the original file with the optimized WebP file in the Media Library.
+	 *
+	 * @param int|string $media_id_or_path Media ID or original file path.
+	 * @param string     $webp_file_path   The path to the optimized WebP file.
+	 * @return array|WP_Error The updated upload array or WP_Error on failure.
+	 */
+	public function replace_original_with_webp( $media_id_or_path, $webp_file_path ) {
+		$original_file_path = '';
+		$upload_dir         = wp_upload_dir();
+		$webp_file_url      = trailingslashit( $upload_dir['url'] ) . wp_basename( $webp_file_path );
+
+		// Determine if media_id_or_path is a media ID or file path
+		if ( is_numeric( $media_id_or_path ) ) {
+			$original_file_path = get_attached_file( $media_id_or_path );
+		} elseif ( is_string( $media_id_or_path ) && file_exists( $media_id_or_path ) ) {
+			$original_file_path = $media_id_or_path;
+		} else {
+			return new \WP_Error(
+				'nfd_performance_error',
+				__( 'Invalid media ID or file path provided.', 'wp-module-performance' )
+			);
+		}
+
+		// Ensure the WebP file exists
+		if ( ! file_exists( $webp_file_path ) || filesize( $webp_file_path ) === 0 ) {
+			return new \WP_Error(
+				'nfd_performance_error',
+				__( 'WebP file is missing or empty.', 'wp-module-performance' )
+			);
+		}
+
+		// Delete the original file from disk
+		if ( ! $this->delete_original_file( $original_file_path ) ) {
+			return new \WP_Error(
+				'nfd_performance_error',
+				__( 'Failed to delete the original file.', 'wp-module-performance' )
+			);
+		}
+
+		// Update the attachment metadata if a media ID was provided
+		if ( is_numeric( $media_id_or_path ) ) {
+			update_attached_file( $media_id_or_path, $webp_file_path );
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+			$metadata = wp_generate_attachment_metadata( $media_id_or_path, $webp_file_path );
+			if ( is_wp_error( $metadata ) || empty( $metadata ) ) {
+				return new \WP_Error(
+					'nfd_performance_error',
+					__( 'Failed to generate attachment metadata.', 'wp-module-performance' )
+				);
+			}
+
+			wp_update_attachment_metadata( $media_id_or_path, $metadata );
+
+			// Save metadata for optimized image
+			update_post_meta( $media_id_or_path, '_nfd_performance_image_optimized', 1 );
+		}
+
+		// Return the updated upload array
+		return array(
+			'file' => $webp_file_path,
+			'url'  => $webp_file_url,
+			'type' => 'image/webp',
+		);
+	}
+
+	/**
+	 * Registers the WebP file as a standalone media item in the Media Library.
+	 *
+	 * @param string $webp_file_path The path to the optimized WebP file.
+	 * @return int|WP_Error The attachment ID of the new media item, or WP_Error on failure.
+	 */
+	public function register_webp_as_new_media( $webp_file_path ) {
+		// Prepare the attachment data
+		$attachment_data = array(
+			'post_mime_type' => 'image/webp',
+			'post_title'     => wp_basename( $webp_file_path ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+		);
+
+		// Insert the WebP file as a new attachment
+		$attachment_id = wp_insert_attachment( $attachment_data, $webp_file_path );
+
+		if ( is_wp_error( $attachment_id ) ) {
+			return $attachment_id;
+		}
+
+		// Generate and update attachment metadata
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		$metadata = wp_generate_attachment_metadata( $attachment_id, $webp_file_path );
+		wp_update_attachment_metadata( $attachment_id, $metadata );
+
+		// Save metadata for optimized image
+		update_post_meta( $attachment_id, '_nfd_performance_image_optimized', 1 );
+
+		return $attachment_id;
+	}
+
+	/**
+	 * Deletes the original uploaded file from the filesystem.
+	 *
+	 * @param string $file_path The path to the original file.
+	 * @return bool True on success, false on failure.
+	 */
+	public function delete_original_file( $file_path ) {
+		if ( file_exists( $file_path ) ) {
+			return wp_delete_file( $file_path );
+		}
+
+		return false;
+	}
 }
