@@ -1,4 +1,6 @@
 document.addEventListener( 'DOMContentLoaded', () => {
+	const { __ } = wp.i18n;
+
 	const bulkOptimizeButtonId = 'nfd-bulk-optimize-btn';
 	let cancelRequested = false;
 
@@ -56,11 +58,17 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 		const modalTitle = document.createElement( 'h2' );
 		modalTitle.id = 'nfd-modal-title';
-		modalTitle.textContent = 'Optimizing Images...';
+		modalTitle.textContent = __(
+			'Optimizing Images…',
+			'wp-module-performance'
+		);
 
 		const currentFileName = document.createElement( 'p' );
 		currentFileName.id = 'nfd-current-file';
-		currentFileName.textContent = 'Preparing files...';
+		currentFileName.textContent = __(
+			'Preparing files…',
+			'wp-module-performance'
+		);
 
 		const progressContainer = document.createElement( 'div' );
 		progressContainer.style.cssText = `
@@ -83,7 +91,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         `;
 
 		const cancelButton = document.createElement( 'button' );
-		cancelButton.textContent = 'Cancel';
+		cancelButton.textContent = __( 'Cancel', 'wp-module-performance' );
 		cancelButton.className = 'button button-secondary';
 		cancelButton.style.marginTop = '1rem';
 		cancelButton.addEventListener( 'click', () => {
@@ -127,13 +135,14 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 	/**
 	 * Extracts the file name from the attachment element.
-	 *
-	 * @param attachment
 	 */
 	const getFileName = ( attachment ) => {
 		const mediaContent = attachment.closest( '.media-frame-content' );
 		const fileNameElement = mediaContent?.querySelector( '.filename' );
-		return fileNameElement?.textContent || 'Unknown File';
+		return (
+			fileNameElement?.textContent ||
+			__( 'Unknown File', 'wp-module-performance' )
+		);
 	};
 
 	/**
@@ -162,12 +171,17 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		try {
 			for ( let i = 0; i < selectedItems.length; i++ ) {
 				if ( cancelRequested ) {
-					modalTitle.textContent = 'Optimization Canceled';
+					modalTitle.textContent = __(
+						'Optimization Canceled',
+						'wp-module-performance'
+					);
 					break;
 				}
 
 				const { id: mediaId, name: fileName } = selectedItems[ i ];
-				currentFileName.textContent = `Optimizing: ${ fileName }`;
+				currentFileName.textContent =
+					__( 'Optimizing:', 'wp-module-performance' ) +
+					` ${ fileName }`;
 
 				try {
 					await wp.apiFetch( {
@@ -180,18 +194,27 @@ document.addEventListener( 'DOMContentLoaded', () => {
 					progressBar.style.width = `${ progress }%`;
 				} catch ( error ) {
 					console.error(
-						`Error optimizing media ID: ${ mediaId }`,
+						__(
+							'Error optimizing media ID:',
+							'wp-module-performance'
+						) + ` ${ mediaId }`,
 						error
 					);
 				}
 			}
 
 			if ( ! cancelRequested ) {
-				modalTitle.textContent = 'Optimization Complete!';
+				modalTitle.textContent = __(
+					'Optimization Complete!',
+					'wp-module-performance'
+				);
 				setTimeout( closeModal, 2000 );
 			}
 		} catch ( error ) {
-			modalTitle.textContent = 'An error occurred.';
+			modalTitle.textContent = __(
+				'An error occurred.',
+				'wp-module-performance'
+			);
 			setTimeout( closeModal, 3000 );
 		}
 	};
@@ -201,7 +224,10 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		bulkOptimizeButton.id = bulkOptimizeButtonId;
 		bulkOptimizeButton.className =
 			'button media-button button-large button-primary';
-		bulkOptimizeButton.textContent = 'Optimize';
+		bulkOptimizeButton.textContent = __(
+			'Optimize',
+			'wp-module-performance'
+		);
 		bulkOptimizeButton.disabled = true;
 		bulkOptimizeButton.addEventListener( 'click', handleBulkOptimize );
 		return bulkOptimizeButton;
