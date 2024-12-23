@@ -66,6 +66,8 @@ const defaultText = {
 	),
 	clearCacheNoticeTitle: __( 'Cache cleared', 'wp-module-performance' ),
 	clearCacheTitle: __( 'Clear Cache', 'wp-module-performance' ),
+
+	// Image Optimization
 	imageOptimizationSettingsTitle: __(
 		'Image Optimization',
 		'wp-module-performance'
@@ -91,7 +93,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	imageOptimizationAutoDeleteLabel: __(
-		'Auto Delete Original Image (Recommended)',
+		'Auto Delete Original Image',
 		'wp-module-performance'
 	),
 	imageOptimizationAutoDeleteDescription: __(
@@ -116,6 +118,50 @@ const defaultText = {
 	),
 	imageOptimizationUpdatedDescription: __(
 		'Your image optimization settings have been saved.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingLabel: __(
+		'Enable Lazy Loading',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingDescription: __(
+		'Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingNoticeText: __(
+		'Lazy loading has been updated.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingErrorMessage: __(
+		'Oops! There was an error updating the lazy loading settings.',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeLabel: __(
+		'Enable Bulk Optimization of Images',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeDescription: __(
+		'When enabled, allows bulk optimization of images in the media library.',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeButtonLabel: __(
+		'Go to Media Library',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdateErrorTitle: __(
+		'Error Updating Settings',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPLabel: __(
+		'Prefer Optimized Image When Exists',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPDescription: __(
+		'When enabled, optimized images will be served in place of original images when they exist, improving performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationGenericErrorMessage: __(
+		'Something went wrong while updating the settings. Please try again.',
 		'wp-module-performance'
 	),
 	linkPrefetchDescription: __(
