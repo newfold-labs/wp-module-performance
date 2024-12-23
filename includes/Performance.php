@@ -76,7 +76,7 @@ class Performance {
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 		new Constants( $container );
-		new ImageManager();
+		new ImageManager( $container );
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		new LinkPrefetch( $container );
