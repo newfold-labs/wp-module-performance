@@ -1,52 +1,71 @@
 <?php
+
 namespace NewfoldLabs\WP\Module\Performance;
 
 /**
- * Permissions and Authorization constants and utilities.
+ * Permissions and Authorization utility class.
  */
 final class Permissions {
+
 	/**
 	 * WordPress Admin capability string
 	 */
-	const ADMIN          = 'manage_options';
-	const INSTALL_THEMES = 'install_themes';
-	const EDIT_THEMES    = 'edit_themes';
+	const ADMIN                = 'manage_options';
+	const UPLOAD_FILES         = 'upload_files';
+	const EDIT_POSTS           = 'edit_posts';
+	const MANAGE_MEDIA_LIBRARY = 'manage_media_library';
 
 	/**
-	 * Confirm REST API caller has ADMIN user capabilities.
+	 * Checks if the REST API caller has admin capabilities.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function rest_is_authorized_admin() {
 		return \is_user_logged_in() && \current_user_can( self::ADMIN );
 	}
 
 	/**
-	 * Confirm logged-in user is in wp-admin and has ADMIN user capabilities.
+	 * Checks if the current user is logged in and is in the wp-admin with admin capabilities.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function is_authorized_admin() {
 		return \is_admin() && self::rest_is_authorized_admin();
 	}
 
 	/**
-	 * Confirm logged-in user can manage themes.
+	 * Checks if the current user has media upload permissions.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public static function rest_can_manage_themes() {
-		return \is_user_logged_in() &&
-			\current_user_can( self::INSTALL_THEMES ) &&
-			\current_user_can( self::EDIT_THEMES );
+	public static function rest_can_upload_media() {
+		return \is_user_logged_in() && \current_user_can( self::UPLOAD_FILES );
 	}
 
 	/**
-	 * Confirm whether user has ADMIN user and edit_post capabilities for creating pages.
+	 * Checks if the current user has permissions to manage media.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public static function custom_post_authorized_admin() {
-		return \current_user_can( 'edit_posts' ) && \current_user_can( self::ADMIN );
+	public static function can_manage_media_library() {
+		return \current_user_can( self::MANAGE_MEDIA_LIBRARY );
+	}
+
+	/**
+	 * Checks if the user has permissions to edit posts.
+	 *
+	 * @return bool
+	 */
+	public static function can_edit_posts() {
+		return \current_user_can( self::EDIT_POSTS );
+	}
+
+	/**
+	 * Validates permissions for optimizing images through REST API.
+	 *
+	 * @return bool
+	 */
+	public static function rest_can_optimize_images() {
+		return self::rest_can_upload_media() && self::can_manage_media_library();
 	}
 }
