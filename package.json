@@ -26,8 +26,6 @@
   },
   "scripts": {
     "build": "wp-scripts build",
-    "start": "wp-scripts start",
-    "build:watch": "wp-scripts build --watch",
-    "clean": "rimraf build"
+    "start": "wp-scripts start"
   }
 }
