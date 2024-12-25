@@ -55,11 +55,11 @@ class ImageManager {
 	}
 
 	/**
-	 * Initializes the LazyLoader if lazy loading is enabled.
+	 * Initializes the ImageLazyLoader if lazy loading is enabled.
 	 */
 	private function maybe_initialize_lazy_loader() {
 		if ( ImageSettings::is_optimization_enabled() && ImageSettings::is_lazy_loading_enabled() ) {
-			new LazyLoader();
+			new ImageLazyLoader();
 		}
 	}
 

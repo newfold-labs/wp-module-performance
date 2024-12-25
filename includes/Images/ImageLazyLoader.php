@@ -8,7 +8,7 @@ use Exception;
 /**
  * Manages the initialization and application of lazy loading for images.
  */
-class LazyLoader {
+class ImageLazyLoader {
 
 	/**
 	 * Exclusion rules for lazy loading.
@@ -82,8 +82,8 @@ class LazyLoader {
 	 * Enqueues the lazy loader script file and adds inline exclusion settings.
 	 */
 	public function enqueue_lazy_loader() {
-		$script_path = NFD_PERFORMANCE_BUILD_DIR . '/lazy-load.min.js';
-		$script_url  = NFD_PERFORMANCE_BUILD_URL . '/lazy-load.min.js';
+		$script_path = NFD_PERFORMANCE_BUILD_DIR . '/image-lazy-loader.min.js';
+		$script_url  = NFD_PERFORMANCE_BUILD_URL . '/image-lazy-loader.min.js';
 
 		// Register the script with version based on file modification time.
 		wp_register_script(
