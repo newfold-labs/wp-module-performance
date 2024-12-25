@@ -1,3 +1,5 @@
+import './image-bulk-optimizer.css';
+
 document.addEventListener( 'DOMContentLoaded', () => {
 	const { __ } = wp.i18n;
 
@@ -26,28 +28,10 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	const createModal = () => {
 		const modal = document.createElement( 'div' );
 		modal.id = 'nfd-bulk-modal';
-		modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        `;
+		modal.className = 'nfd-performance-image-modal';
 
 		const modalContent = document.createElement( 'div' );
-		modalContent.style.cssText = `
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            width: 400px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        `;
+		modalContent.className = 'nfd-performance-image-modal-content';
 
 		const modalTitle = document.createElement( 'h2' );
 		modalTitle.id = 'nfd-modal-title';
@@ -65,38 +49,21 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 		const progressContainer = document.createElement( 'div' );
 		progressContainer.id = 'nfd-progress-container';
-		progressContainer.style.cssText = `
-            width: 100%;
-            height: 20px;
-            background: #eee;
-            border-radius: 10px;
-            margin: 1rem 0;
-            overflow: hidden;
-            position: relative;
-        `;
+		progressContainer.className =
+			'nfd-performance-image-progress-container';
 
 		const progressBar = document.createElement( 'div' );
 		progressBar.id = 'nfd-progress-bar';
-		progressBar.style.cssText = `
-            height: 100%;
-            width: 0;
-            background: #007cba;
-            transition: width 0.3s ease;
-        `;
+		progressBar.className = 'nfd-performance-image-progress-bar';
 
 		const resultList = document.createElement( 'ul' );
 		resultList.id = 'nfd-result-list';
-		resultList.style.cssText = `
-            text-align: center;
-            margin: 1rem auto;
-            max-height: 200px;
-            overflow-y: auto;
-        `;
+		resultList.className = 'nfd-performance-image-result-list';
 
 		const doneButton = document.createElement( 'button' );
 		doneButton.textContent = __( 'Done', 'wp-module-performance' );
-		doneButton.className = 'button button-secondary';
-		doneButton.style.marginTop = '1rem';
+		doneButton.className =
+			'button button-secondary nfd-performance-image-done-button';
 		doneButton.style.display = 'none'; // Hidden initially
 		doneButton.addEventListener( 'click', () => {
 			modal.remove();
@@ -226,7 +193,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 				resultList.appendChild( listItem );
 			} );
 
-			resultList.style.textAlign = 'center';
 			doneButton.style.display = 'block';
 		} catch ( error ) {
 			modalTitle.textContent = __(

@@ -20,10 +20,17 @@ class ImageBulkOptimizer {
 	public function enqueue_bulk_optimizer_script() {
 		wp_register_script(
 			'nfd-performance-bulk-optimizer',
-			NFD_PERFORMANCE_BUILD_URL . '/bulk-optimizer.min.js',
+			NFD_PERFORMANCE_BUILD_URL . '/image-bulk-optimizer/image-bulk-optimizer.min.js',
 			array( 'wp-api-fetch', 'wp-element', 'wp-i18n' ),
-			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/bulk-optimizer.min.js' ),
+			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-bulk-optimizer/image-bulk-optimizer.min.js' ),
 			true
+		);
+
+		wp_enqueue_style(
+			'nfd-performance-bulk-optimizer-style',
+			NFD_PERFORMANCE_BUILD_URL . '/image-bulk-optimizer/image-bulk-optimizer.min.css',
+			array(),
+			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-bulk-optimizer/image-bulk-optimizer.min.css' )
 		);
 
 		wp_add_inline_script(
