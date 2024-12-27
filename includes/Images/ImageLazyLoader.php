@@ -134,8 +134,9 @@ class ImageLazyLoader {
 		libxml_use_internal_errors( true );
 
 		try {
-			// Attempt to parse the HTML content.
-			if ( ! $doc->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) ) ) {
+			// Attempt to parse the HTML content using htmlentities for encoding.
+			$content = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>' . $content . '</body></html>';
+			if ( ! $doc->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD ) ) {
 				return $content;
 			}
 		} catch ( Exception $e ) {
@@ -176,7 +177,8 @@ class ImageLazyLoader {
 			}
 		}
 
-		// Return the modified HTML content.
-		return $doc->saveHTML();
+		// Extract the body content and return it.
+		$body = $doc->getElementsByTagName( 'body' )->item( 0 );
+		return $body ? $doc->saveHTML( $body ) : $content;
 	}
 }
