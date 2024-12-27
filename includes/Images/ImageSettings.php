@@ -18,15 +18,15 @@ class ImageSettings {
 	 * @var array
 	 */
 	private const DEFAULT_SETTINGS = array(
-		'enabled'                            => true,
-		'bulk_optimization'                  => true,
-		'prefer_optimized_image_when_exists' => true,
+		'enabled'                            => false,
+		'bulk_optimization'                  => false,
+		'prefer_optimized_image_when_exists' => false,
 		'auto_optimized_uploaded_images'     => array(
-			'enabled'                    => true,
-			'auto_delete_original_image' => true,
+			'enabled'                    => false,
+			'auto_delete_original_image' => false,
 		),
 		'lazy_loading'                       => array(
-			'enabled' => true,
+			'enabled' => false,
 		),
 	);
 
