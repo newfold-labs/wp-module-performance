@@ -62,6 +62,8 @@ const ImageOptimizationSettings = ( { methods } ) => {
 			case 'enabled':
 				updatedSettings.enabled = value;
 				updatedSettings.auto_optimized_uploaded_images.enabled = value;
+				updatedSettings.auto_optimized_uploaded_images.auto_delete_original_image =
+					value;
 				updatedSettings.bulk_optimization = value;
 				updatedSettings.lazy_loading.enabled = value;
 				updatedSettings.prefer_optimized_image_when_exists = value;
