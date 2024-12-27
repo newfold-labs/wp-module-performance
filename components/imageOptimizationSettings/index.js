@@ -151,7 +151,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 
 	const mediaLibraryLink = () => {
 		const basePath = window.location.pathname.split( '/wp-admin' )[ 0 ];
-		return `${ window.location.origin }${ basePath }/wp-admin/upload.php`;
+		return `${ window.location.origin }${ basePath }/wp-admin/upload.php?autoSelectBulk=true`;
 	};
 
 	return (
@@ -198,15 +198,17 @@ const ImageOptimizationSettings = ( { methods } ) => {
 									defaultText.imageOptimizationBulkOptimizeDescription
 								}
 							</p>
-							<a
-								href={ mediaLibraryLink() }
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{
-									defaultText.imageOptimizationBulkOptimizeButtonLabel
-								}
-							</a>
+							{ bulkOptimization && (
+								<a
+									href={ mediaLibraryLink() }
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{
+										defaultText.imageOptimizationBulkOptimizeButtonLabel
+									}
+								</a>
+							) }
 						</>
 					}
 					checked={ bulkOptimization }
