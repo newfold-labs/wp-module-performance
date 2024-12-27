@@ -168,23 +168,42 @@ class ImageService {
 		$upload_dir         = wp_upload_dir();
 		$webp_file_url      = trailingslashit( $upload_dir['url'] ) . wp_basename( $webp_file_path );
 
-		// Determine if media_id_or_path is a media ID or file path
-		if ( is_numeric( $media_id_or_path ) ) {
-			$original_file_path = get_attached_file( $media_id_or_path );
-		} elseif ( is_string( $media_id_or_path ) && file_exists( $media_id_or_path ) ) {
-			$original_file_path = $media_id_or_path;
-		} else {
-			return new \WP_Error(
-				'nfd_performance_error',
-				__( 'Invalid media ID or file path provided.', 'wp-module-performance' )
-			);
-		}
-
 		// Ensure the WebP file exists
 		if ( ! file_exists( $webp_file_path ) || filesize( $webp_file_path ) === 0 ) {
 			return new \WP_Error(
 				'nfd_performance_error',
 				__( 'WebP file is missing or empty.', 'wp-module-performance' )
+			);
+		}
+
+		// Determine if $media_id_or_path is a Media ID or file path
+		if ( is_numeric( $media_id_or_path ) && (int) $media_id_or_path > 0 ) {
+			// Media ID provided
+			$original_file_path = get_attached_file( $media_id_or_path );
+			if ( ! $original_file_path ) {
+				return new \WP_Error(
+					'nfd_performance_error',
+					__( 'Invalid Media ID provided.', 'wp-module-performance' )
+				);
+			}
+		} elseif ( is_string( $media_id_or_path ) && file_exists( $media_id_or_path ) ) {
+			// File path provided
+			$original_file_path = $media_id_or_path;
+
+			// Store metadata in a transient for later use
+			$transient_key = 'nfd_webp_metadata_' . md5( $webp_file_path );
+			set_transient(
+				$transient_key,
+				array(
+					'webp_file_path'     => $webp_file_path,
+					'original_file_path' => $original_file_path,
+				),
+				HOUR_IN_SECONDS
+			);
+		} else {
+			return new \WP_Error(
+				'nfd_performance_error',
+				__( 'Invalid Media ID or file path provided.', 'wp-module-performance' )
 			);
 		}
 
@@ -196,11 +215,14 @@ class ImageService {
 			);
 		}
 
-		// Update the attachment metadata if a media ID was provided
-		if ( is_numeric( $media_id_or_path ) ) {
+		// If Media ID is available, update its metadata
+		if ( is_numeric( $media_id_or_path ) && $media_id_or_path > 0 ) {
 			update_attached_file( $media_id_or_path, $webp_file_path );
+
+			// Regenerate and update attachment metadata
 			require_once ABSPATH . 'wp-admin/includes/image.php';
 			$metadata = wp_generate_attachment_metadata( $media_id_or_path, $webp_file_path );
+
 			if ( is_wp_error( $metadata ) || empty( $metadata ) ) {
 				return new \WP_Error(
 					'nfd_performance_error',
