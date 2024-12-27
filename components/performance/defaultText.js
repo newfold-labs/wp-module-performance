@@ -89,7 +89,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	imageOptimizationAutoOptimizeDescription: __(
-		'When enabled, all your image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.',
+		'When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.',
 		'wp-module-performance'
 	),
 	imageOptimizationAutoDeleteLabel: __(
