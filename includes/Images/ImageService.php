@@ -217,6 +217,7 @@ class ImageService {
 
 		// If Media ID is available, update its metadata
 		if ( is_numeric( $media_id_or_path ) && $media_id_or_path > 0 ) {
+			// Update the file path in the Media Library
 			update_attached_file( $media_id_or_path, $webp_file_path );
 
 			// Regenerate and update attachment metadata
@@ -231,6 +232,13 @@ class ImageService {
 			}
 
 			wp_update_attachment_metadata( $media_id_or_path, $metadata );
+
+			// Update the MIME type to reflect WebP
+			$post_data = array(
+				'ID'             => $media_id_or_path,
+				'post_mime_type' => 'image/webp',
+			);
+			wp_update_post( $post_data );
 
 			// Save metadata for optimized image
 			update_post_meta( $media_id_or_path, '_nfd_performance_image_optimized', 1 );
