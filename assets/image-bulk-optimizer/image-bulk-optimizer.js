@@ -265,14 +265,39 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		element?.classList.length === classList.length &&
 		classList.every( ( cls ) => element.classList.contains( cls ) );
 
+	// Automatically select the Bulk Select button if the URL parameter is set
+	const urlParams = new URLSearchParams( window.location.search );
+	const autoSelect = urlParams.get( 'autoSelectBulk' );
+
+	if ( autoSelect === 'true' ) {
+		const observer = new MutationObserver( () => {
+			const bulkSelectButton = document.querySelector(
+				'.button.media-button.select-mode-toggle-button'
+			);
+
+			if ( bulkSelectButton ) {
+				bulkSelectButton.click();
+				observer.disconnect();
+			}
+		} );
+
+		observer.observe( document.body, { childList: true, subtree: true } );
+	}
+
 	const observer = new MutationObserver( () => {
 		const bulkSelectButton = document.querySelector(
 			'.button.media-button.select-mode-toggle-button'
 		);
 
-		hasExactClassList( bulkSelectButton, bulkSelectButtonClasses )
-			? removeBulkOptimizeButton()
-			: addBulkOptimizeButton();
+		const isBulkSelectButtonVisible = hasExactClassList(
+			bulkSelectButton,
+			bulkSelectButtonClasses
+		);
+		if ( isBulkSelectButtonVisible ) {
+			removeBulkOptimizeButton();
+		} else {
+			addBulkOptimizeButton();
+		}
 	} );
 
 	observer.observe( document.body, { childList: true, subtree: true } );
