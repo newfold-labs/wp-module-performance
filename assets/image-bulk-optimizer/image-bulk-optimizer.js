@@ -67,6 +67,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		doneButton.style.display = 'none'; // Hidden initially
 		doneButton.addEventListener( 'click', () => {
 			modal.remove();
+			window.location.reload();
 		} );
 
 		progressContainer.appendChild( progressBar );
