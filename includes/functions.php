@@ -17,12 +17,12 @@ function getCacheLevel() {
  * @return string[]
  */
 function getCacheLevels() {
-	return [
+	return array(
 		0 => 'Off',         // Disable caching
 		1 => 'Assets Only', // Cache assets only
 		2 => 'Normal',      // Cache pages and assets for a shorter time range
 		3 => 'Advanced',    // Cache pages and assets for a longer time range
-	];
+	);
 }
 
 /**
@@ -36,10 +36,10 @@ function getCacheLevelDropdown() {
 	$name  = Performance::OPTION_CACHE_LEVEL;
 	$label = __( 'Cache Level', 'newfold-performance-module' );
 	?>
-	<select name="<?= esc_attr( $name ) ?>" aria-label="<?= esc_attr( $label ) ?>">
-		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ): ?>
-			<option value="<?= absint( $cacheLevel ) ?>"<?php selected( $cacheLevel, $currentCacheLevel ) ?>>
-				<?= esc_html( $optionLabel ); ?>
+	<select name="<?php echo esc_attr( $name ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
+		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ) : ?>
+			<option value="<?php echo absint( $cacheLevel ); ?>"<?php selected( $cacheLevel, $currentCacheLevel ); ?>>
+				<?php echo esc_html( $optionLabel ); ?>
 			</option>
 		<?php endforeach; ?>
 	</select>
@@ -65,10 +65,10 @@ function getSkip404InputField() {
 	?>
 	<input
 		type="checkbox"
-		name="<?= esc_attr( $name ) ?>"
+		name="<?php echo esc_attr( $name ); ?>"
 		value="1"
-		aria-label="<?= esc_attr( $label ) ?>"
-		<?php checked( $value, true ) ?>
+		aria-label="<?php echo esc_attr( $label ); ?>"
+		<?php checked( $value, true ); ?>
 	/>
 	<?php
 }
@@ -133,4 +133,28 @@ function toSnakeCase( string $value, string $delimiter = '_' ) {
  */
 function toStudlyCase( $value ) {
 	return str_replace( ' ', '', ucwords( str_replace( array( '-', '_' ), ' ', $value ) ) );
+}
+
+/**
+ * Get styles path.
+ *
+ * return string
+ */
+function get_styles_path() {
+	return 'vendor/newfold-labs/wp-module-performance/styles/styles.css';
+}
+
+/**
+ * Get js script path.
+ *
+ * @param string $script_name script name.
+ * return string
+ */
+function get_scripts_path( $script_name = '' ) {
+	$basePath = 'vendor/newfold-labs/wp-module-performance/scripts/';
+	if ( empty( $script_name ) ) {
+		return $basePath;
+	}
+	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	return "vendor/newfold-labs/wp-module-performance/scripts/$script_name$suffix.js";
 }
