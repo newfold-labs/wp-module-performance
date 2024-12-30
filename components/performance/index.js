@@ -1,8 +1,13 @@
+// Newfold.
 import { Container } from '@newfold/ui-component-library';
+
+// Components.
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
 import { default as Skip404 } from '../skip404/';
+import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
+import { default as LinkPrefetch } from '../linkPrefetch/';
 
 /**
  * Performance Module
@@ -51,6 +56,12 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 					Components={ Components }
 				/>
 			</Container.Block>
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-clear-cache' }
+			>
+				<ClearCache methods={ methods } constants={ constants } />
+			</Container.Block>
 			<Container.Block separator={ true } className={ 'newfold-skip404' }>
 				<Skip404
 					className={ 'newfold-skip404' }
@@ -58,8 +69,17 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 					constants={ constants }
 				/>
 			</Container.Block>
-			<Container.Block className={ 'newfold-clear-cache' }>
-				<ClearCache methods={ methods } constants={ constants } />
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-performance-advanced-settings' }
+			>
+				<AdvancedSettings constants={ constants } methods={ methods } />
+			</Container.Block>
+			<Container.Block
+				className={ 'newfold-link-prefetch' }
+				separator={ true }
+			>
+				<LinkPrefetch methods={ methods } constants={ constants } />
 			</Container.Block>
 		</>
 	);
