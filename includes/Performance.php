@@ -2,10 +2,10 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 
 use Automattic\Jetpack\Current_Plan;
 
@@ -75,12 +75,9 @@ class Performance {
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		new LinkPrefetch( $container );
+		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
-		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		}
+		new LinkPrefetch( $container );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -120,8 +117,7 @@ class Performance {
 	 * Add hooks.
 	 */
 	public function hooks() {
-
-		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
+		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
@@ -151,6 +147,23 @@ class Performance {
 		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
+	}
+
+	/**
+	 * Remove EPC Settings if needed
+	 *
+	 * @return void
+	 */
+	public function remove_epc_settings() {
+		global $wp_settings_fields, $wp_settings_sections;
+		//phpcs:ignore
+		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unset( $wp_settings_sections['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'endurance_cache_level' );
+			unregister_setting( 'general', 'epc_skip_404_handling' );
+		}
 	}
 
 	/**
@@ -218,39 +231,6 @@ class Performance {
 	}
 
 	/**
-	 * Register settings
-	 */
-	public function registerSettings() {
-
-		global $wp_settings_fields;
-
-		$section_name = self::SETTINGS_SECTION;
-
-		add_settings_section(
-			$section_name,
-			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'newfold-performance-module' ) . '</span>',
-			'__return_false',
-			'general'
-		);
-
-		add_settings_field(
-			self::OPTION_CACHE_LEVEL,
-			__( 'Cache Level', 'newfold-performance-module' ),
-			__NAMESPACE__ . '\\getCacheLevelDropdown',
-			'general',
-			$section_name
-		);
-
-		register_setting( 'general', self::OPTION_CACHE_LEVEL );
-
-		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
-		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
-			unset( $wp_settings_fields['general']['epc_settings_section'] );
-			unregister_setting( 'general', 'endurance_cache_level' );
-		}
-	}
-
-	/**
 	 * Add options to the WordPress admin bar.
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
@@ -303,6 +283,21 @@ class Performance {
 	}
 
 	/**
+	 * Add performance menu in WP/Settings
+	 */
+	public function add_sub_menu_page() {
+		$brand = $this->container->get( 'plugin' )['id'];
+		add_management_page(
+			__( 'Performance', 'newfold-performance-module' ),
+			__( 'Performance', 'newfold-performance-module' ),
+			'manage_options',
+			admin_url( "admin.php?page=$brand#/performance" ),
+			null,
+			5
+		);
+	}
+
+		/*
 	 * Enqueue scripts and styles in admin
 	 */
 	public function enqueue_scripts() {
