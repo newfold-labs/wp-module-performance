@@ -5,9 +5,11 @@ namespace NewfoldLabs\WP\Module\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 
 use Automattic\Jetpack\Current_Plan;
+use NewfoldLabs\WP\Module\Performance\Data\Constants;
 
 /**
  * Performance Class
@@ -73,6 +75,8 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new Constants( $container );
+		new ImageManager( $container );
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
