@@ -12,7 +12,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	cacheLevel1Description: __(
-		'Cache static assets like images and the appearance of your site for 1 hour.',
+		'Cache static assets like images and the appearance of your site for 1 hour. ',
 		'wp-module-performance'
 	),
 	cacheLevel1Label: __( 'Assets Only', 'wp-module-performance' ),
@@ -25,7 +25,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	cacheLevel2Description: __(
-		'Cache static assets for 24 hours and web pages for 2 hours.',
+		'Cache static assets for 24 hours and web pages for 2 hours. ',
 		'wp-module-performance'
 	),
 	cacheLevel2Label: __( 'Assets & Web Pages', 'wp-module-performance' ),
@@ -38,7 +38,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	cacheLevel3Description: __(
-		'Cache static assets for 1 week and web pages for 8 hours.',
+		'Cache static assets for 1 week and web pages for 8 hours. ',
 		'wp-module-performance'
 	),
 	cacheLevel3Label: __(
@@ -66,6 +66,104 @@ const defaultText = {
 	),
 	clearCacheNoticeTitle: __( 'Cache cleared', 'wp-module-performance' ),
 	clearCacheTitle: __( 'Clear Cache', 'wp-module-performance' ),
+
+	// Image Optimization
+	imageOptimizationSettingsTitle: __(
+		'Image Optimization',
+		'wp-module-performance'
+	),
+	imageOptimizationSettingsDescription: __(
+		'We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.',
+		'wp-module-performance'
+	),
+	imageOptimizationEnabledLabel: __(
+		'Enable Image Optimization',
+		'wp-module-performance'
+	),
+	imageOptimizationEnabledDescription: __(
+		'Enable or disable image optimization globally.',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoOptimizeLabel: __(
+		'Automatically Optimize Uploaded Images',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoOptimizeDescription: __(
+		'When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoDeleteLabel: __(
+		'Auto Delete Original Image',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoDeleteDescription: __(
+		'When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.',
+		'wp-module-performance'
+	),
+	imageOptimizationNoSettings: __(
+		'No settings available.',
+		'wp-module-performance'
+	),
+	imageOptimizationErrorMessage: __(
+		'Oops! Something went wrong. Please try again.',
+		'wp-module-performance'
+	),
+	imageOptimizationLoadingMessage: __(
+		'Loading settings…',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdatedTitle: __(
+		'Settings updated successfully',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdatedDescription: __(
+		'Your image optimization settings have been saved.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingLabel: __(
+		'Enable Lazy Loading',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingDescription: __(
+		'Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingNoticeText: __(
+		'Lazy loading has been updated.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingErrorMessage: __(
+		'Oops! There was an error updating the lazy loading settings.',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeLabel: __(
+		'Enable Bulk Optimization of Images',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeDescription: __(
+		'When enabled, allows bulk optimization of images in the media library.',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeButtonLabel: __(
+		'Go to Media Library',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdateErrorTitle: __(
+		'Error Updating Settings',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPLabel: __(
+		'Prefer Optimized Image When Exists',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPDescription: __(
+		'When enabled, optimized images will be served in place of original images when they exist, improving performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationGenericErrorMessage: __(
+		'Something went wrong while updating the settings. Please try again.',
+		'wp-module-performance'
+	),
 	linkPrefetchDescription: __(
 		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ',
 		'wp-module-performance'
