@@ -7,8 +7,8 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404 as CacheSkip404;
 use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
 
 
-$newfold_burst_safety_mode = (bool) get_option( 'newfold_burst_safety_mode', false );
-$newfold_cache_level       = (int) get_option( 'newfold_cache_level', 0 );
+$newfold_burst_safety_mode = function_exists( 'get_option' ) ? (bool) get_option( 'newfold_burst_safety_mode', false ) : false;
+$newfold_cache_level       = function_exists( 'newfold_cache_level' ) ? (int) get_option( 'newfold_cache_level', 0 ) : 0;
 
 // Check if Performance feature is enabled and it's necessary reset the cache options
 if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' ) ) {
