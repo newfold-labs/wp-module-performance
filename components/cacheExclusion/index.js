@@ -53,7 +53,7 @@ const CacheExclusion = ({ methods, constants }) => {
         >
             <TextareaField
                 id="cache-exclusion"
-                name="cache-xxclusion"
+                name="cache-exclusion"
                 onChange={ handleCacheExclusionChange }
                 value={currentValue}
 				rows="1"
