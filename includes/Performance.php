@@ -123,7 +123,6 @@ class Performance {
 	 */
 	public function hooks() {
 
-		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
 		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
@@ -155,6 +154,8 @@ class Performance {
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
 	}
+
+	
 
 	/**
 	 * Remove EPC Settings if needed
