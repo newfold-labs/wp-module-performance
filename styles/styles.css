@@ -51,3 +51,11 @@
 .margin20{
 	margin: 20px 0;
 }
+
+.newfold-image-optimization .nfd-toggle-field__description {
+	opacity: 1 !important;
+}
+
+.newfold-image-optimization a {
+	color: #05c !important;
+}
