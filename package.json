@@ -11,10 +11,8 @@
     "William Earnhardt (https://wearnhardt.com)"
   ],
   "dependencies": {
-    "@heroicons/react": "^2.0.18",
     "@newfold/ui-component-library": "^1.1.0",
     "@newfold-labs/wp-module-runtime": "^1.0.12",
-	  "@tailwindcss/forms": "^0.5.8",
     "html-react-parser": "^5.1.18"
   },
   "devDependencies": {
