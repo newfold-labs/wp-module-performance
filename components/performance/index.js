@@ -57,12 +57,12 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 					Components={ Components }
 				/>
 			</Container.Block>
-			<Container.Block separator={true} className={'newfold-cache-exclusion'}>
-                <CacheExclusion
-                    methods={methods}
-                    constants={constants}
-                />
-            </Container.Block>
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-cache-exclusion' }
+			>
+				<CacheExclusion methods={ methods } constants={ constants } />
+			</Container.Block>
 			<Container.Block
 				separator={ true }
 				className={ 'newfold-clear-cache' }
