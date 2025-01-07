@@ -93,7 +93,7 @@ class Performance {
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );	
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
@@ -334,7 +334,7 @@ class Performance {
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
-			'skip404' => (bool) get_option( 'newfold_skip_404_handling', false ),
+			'skip404'                           => (bool) get_option( 'newfold_skip_404_handling', false ),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );
