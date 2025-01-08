@@ -1,66 +1,79 @@
-import { Container, RadioGroup } from "@newfold/ui-component-library";
+// Newfold
+import { Container, RadioGroup } from '@newfold/ui-component-library';
 
-const CacheSettings = ({ methods, constants, Components }) => {
-    const [ cacheLevel, setCacheLevel ] = methods.useState(constants.store.cacheLevel);
+const CacheSettings = ( { methods, constants, Components } ) => {
+	const [ cacheLevel, setCacheLevel ] = methods.useState(
+		constants.store.cacheLevel
+	);
 
-    const cacheOptions = [
-        {
-            label: constants.text.cacheLevel0Label,
-            description: constants.text.cacheLevel0Description + constants.text.cacheLevel0Recommendation,
-            value: 0,
-            notice: constants.text.cacheLevel0NoticeText,
-        },
-        {
-            label: constants.text.cacheLevel1Label,
-            description: constants.text.cacheLevel1Description + constants.text.cacheLevel1Recommendation,
-            value: 1,
-            notice: constants.text.cacheLevel1NoticeText,
-        },
-        {
-            label: constants.text.cacheLevel2Label,
-            description: constants.text.cacheLevel2Description + constants.text.cacheLevel2Recommendation,
-            value: 2,
-            notice: constants.text.cacheLevel2NoticeText,
-        },
-        {
-            label: constants.text.cacheLevel3Label,
-            description: constants.text.cacheLevel3Description + constants.text.cacheLevel3Recommendation,
-            value: 3,
-            notice: constants.text.cacheLevel3NoticeText,
-        },
-    ];
+	const cacheOptions = [
+		{
+			label: constants.text.cacheLevel0Label,
+			description:
+				constants.text.cacheLevel0Description +
+				constants.text.cacheLevel0Recommendation,
+			value: 0,
+			notice: constants.text.cacheLevel0NoticeText,
+		},
+		{
+			label: constants.text.cacheLevel1Label,
+			description:
+				constants.text.cacheLevel1Description +
+				constants.text.cacheLevel1Recommendation,
+			value: 1,
+			notice: constants.text.cacheLevel1NoticeText,
+		},
+		{
+			label: constants.text.cacheLevel2Label,
+			description:
+				constants.text.cacheLevel2Description +
+				constants.text.cacheLevel2Recommendation,
+			value: 2,
+			notice: constants.text.cacheLevel2NoticeText,
+		},
+		{
+			label: constants.text.cacheLevel3Label,
+			description:
+				constants.text.cacheLevel3Description +
+				constants.text.cacheLevel3Recommendation,
+			value: 3,
+			notice: constants.text.cacheLevel3NoticeText,
+		},
+	];
 
-    const getCacheLevelNoticeTitle = () => {
-        return constants.text.cacheLevelNoticeTitle;
-    };
+	const getCacheLevelNoticeTitle = () => {
+		return constants.text.cacheLevelNoticeTitle;
+	};
 
-    const getCacheLevelNoticeText = () => {
-        return cacheOptions[cacheLevel].notice;
-    };
+	const getCacheLevelNoticeText = () => {
+		return cacheOptions[ cacheLevel ].notice;
+	};
 
-    const handleCacheLevelChange = (e) => {
-        methods.newfoldSettingsApiFetch(
-            { cacheLevel: parseInt(e.target.value) }, 
-            methods.setError, (response) => {
-                setCacheLevel(parseInt(e.target.value));
-            }
-        );
-    };
+	const handleCacheLevelChange = ( e ) => {
+		methods.newfoldSettingsApiFetch(
+			{ cacheLevel: parseInt( e.target.value ) },
+			methods.setError,
+			() => {
+				setCacheLevel( parseInt( e.target.value ) );
+			}
+		);
+	};
 
-    methods.useUpdateEffect(() => {
-        methods.setStore({
-            ...constants.store,
-            cacheLevel,
-        });
+	methods.useUpdateEffect( () => {
+		methods.setStore( {
+			...constants.store,
+			cacheLevel,
+		} );
 
-        methods.makeNotice(
-            "cache-level-change-notice", 
-            getCacheLevelNoticeTitle(),
-            getCacheLevelNoticeText(),
-            "success",
-            5000
-        );
-    }, [cacheLevel]);
+		methods.makeNotice(
+			'cache-level-change-notice',
+			getCacheLevelNoticeTitle(),
+			getCacheLevelNoticeText(),
+			'success',
+			5000
+		);
+	}, [ cacheLevel ] );
+
 
     return (
       <>
@@ -96,5 +109,6 @@ const CacheSettings = ({ methods, constants, Components }) => {
       </>
     );
 }
+
 
 export default CacheSettings;

@@ -66,6 +66,15 @@ const defaultText = {
 	),
 	clearCacheNoticeTitle: __( 'Cache cleared', 'wp-module-performance' ),
 	clearCacheTitle: __( 'Clear Cache', 'wp-module-performance' ),
+    
+  // Skip 404
+	skip404Title: __( 'Skip 404', 'wp-module-performance' ),
+	skip404Description: __(
+		'When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.',
+		'wp-module-performance'
+	),
+	skip404NoticeTitle: __( 'Skip 404 saved', 'wp-module-performance' ),
+	skip404Notice: __( 'Skip 404 saved', 'wp-module-performance' ),  
 
 	// Image Optimization
 	imageOptimizationSettingsTitle: __(
@@ -164,6 +173,7 @@ const defaultText = {
 		'Something went wrong while updating the settings. Please try again.',
 		'wp-module-performance'
 	),
+
 	linkPrefetchDescription: __(
 		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ',
 		'wp-module-performance'
