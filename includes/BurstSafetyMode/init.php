@@ -23,8 +23,8 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 			$skip404::maybeAddRules( false );
 		}
 
-		$responseHeaderManager = new ResponseHeaderManager();
-		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', $newfold_cache_level );
+		$response_header_manager = new ResponseHeaderManager();
+		$response_header_manager->addHeader( 'X-Newfold-Cache-Level', $newfold_cache_level );
 
 		delete_option( 'newfold_burst_safety_mode' );
 	}
@@ -37,9 +37,9 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 			'response_header_manager' => BLUEHOST_PLUGIN_DIR . 'vendor/newfold-labs/wp-module-performance/includes/BurstSafetyMode/ResponseHeaderManager.php',
 		);
 
-		foreach ( $files_to_include as $path ) {
-			if ( file_exists( $path ) ) {
-				require_once $path;
+		foreach ( $files_to_include as $file_path ) {
+			if ( file_exists( $file_path ) ) {
+				require_once $file_path;
 			}
 		}
 
@@ -53,6 +53,3 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 
 		update_option( 'newfold_burst_safety_mode', true );
 }
-
-
-vendor / bin / phpcbf --standard = phpcs . xml - s 'bootstrap.php' 'includes/BurstSafetyMode/Browser.php' 'includes/BurstSafetyMode/ResponseHeaderManager.php' 'includes/BurstSafetyMode/Skip404.php' 'includes/BurstSafetyMode/init.php' 'includes/CacheExclusion.php' 'includes/CacheManager.php' 'includes/CacheTypes/Browser.php' 'includes/CacheTypes/File.php' 'includes/Performance.php' 'includes/RestApi/CacheExclusionController.php' 'includes/RestApi/RestApi.php' 'includes/RestApi/SettingsController.php' 'includes/burstSafetyModeFunctions.php' 'includes/functions.php'
