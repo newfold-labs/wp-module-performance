@@ -1,5 +1,4 @@
 <?php
-
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 /**
@@ -13,8 +12,10 @@ final class RestApi {
 	 * @var array
 	 */
 	protected $controllers = array(
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\SettingsController',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\CacheExclusionController',
 	);
 
 	/**

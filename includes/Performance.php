@@ -3,13 +3,18 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Performance\Permissions;
+
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+
+use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
+use NewfoldLabs\WP\Module\Performance\Data\Constants;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 
 use Automattic\Jetpack\Current_Plan;
-use NewfoldLabs\WP\Module\Performance\Data\Constants;
 
 /**
  * Performance Class
@@ -22,6 +27,7 @@ class Performance {
 	 * @var string
 	 */
 	const OPTION_CACHE_LEVEL = 'newfold_cache_level';
+
 
 	/**
 	 * The option name where the "Skip WordPress 404 Handling for Static Files" option is stored.
@@ -82,6 +88,7 @@ class Performance {
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		new LinkPrefetch( $container );
+		new CacheExclusion( $container );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -121,6 +128,7 @@ class Performance {
 	 * Add hooks.
 	 */
 	public function hooks() {
+
 		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
@@ -285,7 +293,6 @@ class Performance {
 			);
 		}
 	}
-
 	/**
 	 * Add performance menu in WP/Settings
 	 */
@@ -301,7 +308,7 @@ class Performance {
 		);
 	}
 
-		/*
+	/**
 	 * Enqueue scripts and styles in admin
 	 */
 	public function enqueue_scripts() {
@@ -310,7 +317,7 @@ class Performance {
 		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 
-	/*
+	/**
 	 * Add to Newfold SDK runtime.
 	 *
 	 * @param array $sdk SDK data.
@@ -327,6 +334,7 @@ class Performance {
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
+			'skip404'                           => (bool) get_option( 'newfold_skip_404_handling', false ),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );
