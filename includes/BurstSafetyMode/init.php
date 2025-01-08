@@ -34,7 +34,7 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 			'htaccess'                => BLUEHOST_PLUGIN_DIR . 'vendor/wp-forge/wp-htaccess-manager/includes/htaccess.php',
 			'htaccess_functions'      => BLUEHOST_PLUGIN_DIR . 'vendor/wp-forge/wp-htaccess-manager/includes/functions.php',
 			'skip404'                 => BLUEHOST_PLUGIN_DIR . 'vendor/newfold-labs/wp-module-performance/includes/BurstSafetyMode/Skip404.php',
-			'browser'                 => BLUEHOST_PLUGIN_DIR . 'vendor/newfold-labs/wp-module-performance/includes/BurstSafetyMode/browser.php',
+			'browser'                 => BLUEHOST_PLUGIN_DIR . 'vendor/newfold-labs/wp-module-performance/includes/BurstSafetyMode/Browser.php',
 			'response_header_manager' => BLUEHOST_PLUGIN_DIR . 'vendor/newfold-labs/wp-module-performance/includes/BurstSafetyMode/ResponseHeaderManager.php',
 		);
 
