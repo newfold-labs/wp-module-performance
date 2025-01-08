@@ -7,8 +7,8 @@ namespace NewfoldLabs\WP\Module\Performance;
  *
  * @return array
  */
-function getDefaultCacheExclusions() {
-	return join( ',', [ 'cart', 'checkout', 'wp-admin', rest_get_url_prefix() ] );
+function get_default_cache_exclusions() {
+	return join( ',', array( 'cart', 'checkout', 'wp-admin', rest_get_url_prefix() ) );
 }
 
 /**

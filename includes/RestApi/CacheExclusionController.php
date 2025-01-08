@@ -5,7 +5,7 @@ namespace NewfoldLabs\WP\Module\Performance\RestApi;
 use NewfoldLabs\WP\Module\ECommerce\Permissions;
 use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 
-use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
+use function NewfoldLabs\WP\Module\Performance\get_default_cache_exclusions;
 
 /**
  * Class CacheExclusionController
@@ -63,7 +63,7 @@ class CacheExclusionController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'cacheExclusion' => get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, getDefaultCacheExclusions() ),
+				'cacheExclusion' => get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() ),
 			),
 			200
 		);

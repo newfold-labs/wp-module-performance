@@ -3,9 +3,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
-use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
-
-use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
+use function NewfoldLabs\WP\Module\Performance\get_default_cache_exclusions;
 
 /**
  * Cache Exclusion Class
@@ -43,6 +41,6 @@ class CacheExclusion {
 	 * @return array
 	 */
 	public function add_to_runtime( $sdk ) {
-		return array_merge( $sdk, array( 'cacheExclusion' => get_option( self::OPTION_CACHE_EXCLUSION, getDefaultCacheExclusions() ) ) );
+		return array_merge( $sdk, array( 'cacheExclusion' => get_option( self::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() ) ) );
 	}
 }

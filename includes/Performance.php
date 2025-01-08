@@ -308,7 +308,7 @@ class Performance {
 		);
 	}
 
-	/*
+	/**
 	 * Enqueue scripts and styles in admin
 	 */
 	public function enqueue_scripts() {
@@ -317,8 +317,7 @@ class Performance {
 		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 
-	/*
-
+	/**
 	 * Add to Newfold SDK runtime.
 	 *
 	 * @param array $sdk SDK data.

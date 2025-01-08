@@ -50,7 +50,7 @@ class File extends CacheBase implements Purgeable {
 	public function __construct() {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
-		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
+		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
 		add_action( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
