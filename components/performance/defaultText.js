@@ -333,6 +333,7 @@ const defaultText = {
 	),
 	optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
 	optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
+	upgradeModule: __( 'Upgrade to unlock', 'wp-module-performance' ),
 };
 
 export default defaultText;

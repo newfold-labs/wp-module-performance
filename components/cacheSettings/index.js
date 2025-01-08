@@ -74,41 +74,42 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 		);
 	}, [ cacheLevel ] );
 
-
-    return (
-      <>
-        <Container.SettingsField
-            title={constants.text.cacheLevelTitle}
-            description={constants.text.cacheLevelDescription}
-        >
-        <RadioGroup
-            className="cache-options"
-            id="cache-type"
-            name="cache-level"
-            value=""
-        >
-            {cacheOptions.map((option) => {
-                return (
-                    <Components.Fragment key={option.value}>
-                        <RadioGroup.Radio
-                            defaultChecked={option.value === constants.store.cacheLevel}
-                            id={'cache-level-' + option.value}
-                            label={option.label}
-                            value={option.value}
-                            name="cache-level"
-                            onChange={handleCacheLevelChange}
-                        />
-                        <div className="nfd-radio__description">
-                            {option.description}
-                        </div>
-                    </Components.Fragment>
-                );
-            })}
-        </RadioGroup>
-        </Container.SettingsField>
-      </>
-    );
-}
-
+	return (
+		<>
+			<Container.SettingsField
+				title={ constants.text.cacheLevelTitle }
+				description={ constants.text.cacheLevelDescription }
+			>
+				<RadioGroup
+					className="cache-options"
+					id="cache-type"
+					name="cache-level"
+					value=""
+				>
+					{ cacheOptions.map( ( option ) => {
+						return (
+							<Components.Fragment key={ option.value }>
+								<RadioGroup.Radio
+									defaultChecked={
+										option.value ===
+										constants.store.cacheLevel
+									}
+									id={ 'cache-level-' + option.value }
+									label={ option.label }
+									value={ option.value }
+									name="cache-level"
+									onChange={ handleCacheLevelChange }
+								/>
+								<div className="nfd-radio__description">
+									{ option.description }
+								</div>
+							</Components.Fragment>
+						);
+					} ) }
+				</RadioGroup>
+			</Container.SettingsField>
+		</>
+	);
+};
 
 export default CacheSettings;
