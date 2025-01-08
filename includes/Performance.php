@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 
 use Automattic\Jetpack\Current_Plan;
+use Automattic\Jetpack\Status\Cache;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 
 /**
@@ -83,6 +84,7 @@ class Performance {
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		new LinkPrefetch( $container );
+		new CacheExclusion( $container );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -154,8 +156,6 @@ class Performance {
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
 	}
-
-	
 
 	/**
 	 * Remove EPC Settings if needed

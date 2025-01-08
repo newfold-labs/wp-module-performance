@@ -6,7 +6,7 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
-use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
@@ -40,7 +40,7 @@ class Browser extends CacheBase {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
-		new OptionListener( CacheExclusionController::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
+		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
 	}
@@ -100,7 +100,7 @@ class Browser extends CacheBase {
 		}
 		$rules[] = '</IfModule>';
 
-		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
+		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
 
 		// Add the cache exclusion rules.
 		$rules[] = '<IfModule mod_rewrite.c>';

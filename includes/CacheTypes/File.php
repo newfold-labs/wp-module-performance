@@ -6,7 +6,7 @@ use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Performance\RestApi\CacheExclusionController;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
@@ -257,7 +257,7 @@ HTACCESS;
 	 */
 	protected function exclusions() {
 		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
-		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusionController::OPTION_CACHE_EXCLUSION ) ) );
+		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
 		return array_merge( $default, $cache_exclusion_option );
 	}
 

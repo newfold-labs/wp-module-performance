@@ -15,7 +15,7 @@ const CacheExclusion = ( { methods, constants } ) => {
 		methods.NewfoldRuntime.sdk.cacheExclusion
 	);
 	const apiUrl = methods.NewfoldRuntime.createApiUrl(
-		'/newfold-ecommerce/v1/cacheexclusion/update'
+		'/newfold-performance/v1/cache-exclusion/update'
 	);
 
 	const handleCacheExclusionChange = ( e ) => {

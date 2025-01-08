@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 use NewfoldLabs\WP\Module\ECommerce\Permissions;
-use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 
 use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
 
@@ -11,45 +11,19 @@ use function NewfoldLabs\WP\Module\Performance\getDefaultCacheExclusions;
  * Class CacheExclusionController
  */
 class CacheExclusionController {
-
-
-
 	/**
 	 * REST namespace
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'newfold-ecommerce/v1';
+	protected $namespace = 'newfold-performance/v1';
 
 	/**
 	 * REST base
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/cacheexclusion';
-
-	/**
-	 * Container loaded from the brand plugin.
-	 *
-	 * @var Container
-	 */
-	protected $container;
-
-	/**
-	 * Option used to store all pages should be excluded from cache.
-	 *
-	 * @var string
-	 */
-	const OPTION_CACHE_EXCLUSION = 'newfold_cache_exclusion';
-
-	/**
-	 * Constructor
-	 *
-	 * @param Container $container the container.
-	 */
-	public function __construct( Container $container ) {
-		$this->container = $container;
-	}
+	protected $rest_base = '/cache-exclusion';
 
 	/**
 	 * Registers rest routes for PluginsController class.
@@ -89,7 +63,7 @@ class CacheExclusionController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'cacheExclusion' => get_option( self::OPTION_CACHE_EXCLUSION, getDefaultCacheExclusions() ),
+				'cacheExclusion' => get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, getDefaultCacheExclusions() ),
 			),
 			200
 		);
@@ -103,7 +77,7 @@ class CacheExclusionController {
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
 		$cache_exclusion = $request->get_param( 'cacheExclusion' );
-		if ( update_option( self::OPTION_CACHE_EXCLUSION, $cache_exclusion ) ) {
+		if ( update_option( CacheExclusion::OPTION_CACHE_EXCLUSION, $cache_exclusion ) ) {
 			return new \WP_REST_Response(
 				array(
 					'result' => true,
