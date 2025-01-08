@@ -3,14 +3,18 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Performance\Permissions;
+
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+
+use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
+use NewfoldLabs\WP\Module\Performance\Data\Constants;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 
 use Automattic\Jetpack\Current_Plan;
-use Automattic\Jetpack\Status\Cache;
-use NewfoldLabs\WP\Module\Performance\Data\Constants;
 
 /**
  * Performance Class
@@ -314,6 +318,7 @@ class Performance {
 	}
 
 	/*
+
 	 * Add to Newfold SDK runtime.
 	 *
 	 * @param array $sdk SDK data.
@@ -330,6 +335,7 @@ class Performance {
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
+			'skip404'                           => (bool) get_option( 'newfold_skip_404_handling', false ),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );
