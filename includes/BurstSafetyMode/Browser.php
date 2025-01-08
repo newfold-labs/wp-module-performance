@@ -1,5 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\BurstSafetyMode;
+
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\ResponseHeaderManager;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 

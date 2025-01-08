@@ -28,8 +28,7 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 
 		delete_option( 'newfold_burst_safety_mode' );
 	}
-} else {
-	if ( ! $newfold_burst_safety_mode ) {
+} elseif ( ! $newfold_burst_safety_mode ) {
 		$files_to_include = array(
 			'htaccess'                => BLUEHOST_PLUGIN_DIR . 'vendor/wp-forge/wp-htaccess-manager/includes/htaccess.php',
 			'htaccess_functions'      => BLUEHOST_PLUGIN_DIR . 'vendor/wp-forge/wp-htaccess-manager/includes/functions.php',
@@ -53,5 +52,7 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' )
 		}
 
 		update_option( 'newfold_burst_safety_mode', true );
-	}
 }
+
+
+vendor / bin / phpcbf --standard = phpcs . xml - s 'bootstrap.php' 'includes/BurstSafetyMode/Browser.php' 'includes/BurstSafetyMode/ResponseHeaderManager.php' 'includes/BurstSafetyMode/Skip404.php' 'includes/BurstSafetyMode/init.php' 'includes/CacheExclusion.php' 'includes/CacheManager.php' 'includes/CacheTypes/Browser.php' 'includes/CacheTypes/File.php' 'includes/Performance.php' 'includes/RestApi/CacheExclusionController.php' 'includes/RestApi/RestApi.php' 'includes/RestApi/SettingsController.php' 'includes/burstSafetyModeFunctions.php' 'includes/functions.php'

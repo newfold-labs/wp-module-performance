@@ -1,5 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\BurstSafetyMode;
+
 use function WP_Forge\WP_Htaccess_Manager\addContent;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
@@ -10,8 +11,8 @@ class Skip404 {
 	const MARKER = 'Newfold Skip 404 Handling for Static Files';
 
 		/**
-	 * Constructor.
-	 */
+		 * Constructor.
+		 */
 	public function __construct() {
 
 		$this->addRules();
@@ -19,8 +20,8 @@ class Skip404 {
 
 
 		/**
-	 * Add our rules to the .htacces file.
-	 */
+		 * Add our rules to the .htacces file.
+		 */
 	public static function addRules() {
 		$content = <<<HTACCESS
 <IfModule mod_rewrite.c>

@@ -1,5 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance;
+
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
