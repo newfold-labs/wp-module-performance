@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Performance-Module">
-   <!--<rule ref="Newfold"/>--> 
+   <rule ref="Newfold"/>
     <config name="testVersion" value="7.3-"/>
     <config name="minimum_supported_wp_version" value="6.3"/>
     <rule ref="WordPress-Core">

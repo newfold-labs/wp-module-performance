@@ -3,6 +3,15 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 /**
+ * Return defaul exclusions.
+ *
+ * @return array
+ */
+function get_default_cache_exclusions() {
+	return join( ',', array( 'cart', 'checkout', 'wp-admin', rest_get_url_prefix() ) );
+}
+
+/**
  * Get the current cache level.
  *
  * @return int

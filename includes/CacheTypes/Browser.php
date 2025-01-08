@@ -6,12 +6,15 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
+/**
+ * Browser cache class
+ */
 class Browser extends CacheBase {
-
 	/**
 	 * The file marker name.
 	 *
@@ -22,7 +25,7 @@ class Browser extends CacheBase {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container
+	 * @param Container $container the container.
 	 *
 	 * @return bool
 	 */
@@ -35,15 +38,24 @@ class Browser extends CacheBase {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_CACHE_LEVEL, [ __CLASS__, 'maybeAddRules' ] );
+		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
-		add_filter( 'newfold_update_htaccess', [ $this, 'onRewrite' ] );
+		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
+
+		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
 	}
 
 	/**
 	 * When updating .htaccess, also update our rules as appropriate.
 	 */
 	public function onRewrite() {
+		self::maybeAddRules( getCacheLevel() );
+	}
+
+	/**
+	 * Manage on exlcusion option change.
+	 */
+	public static function exclusionChange() {
 		self::maybeAddRules( getCacheLevel() );
 	}
 
@@ -79,20 +91,32 @@ class Browser extends CacheBase {
 		$rules[] = '<IfModule mod_expires.c>';
 		$rules[] = "{$tab}ExpiresActive On";
 
-		foreach ( $fileTypeExpirations as $fileType => $expiration ) {
-			if ( 'default' === $fileType ) {
+		foreach ( $fileTypeExpirations as $file_type => $expiration ) {
+			if ( 'default' === $file_type ) {
 				$rules[] = "{$tab}ExpiresDefault \"access plus {$expiration}\"";
 			} else {
-				$rules[] = "{$tab}ExpiresByType {$fileType} \"access plus {$expiration}\"";
+				$rules[] = "{$tab}ExpiresByType {$file_type} \"access plus {$expiration}\"";
 			}
 		}
+		$rules[] = '</IfModule>';
 
-		$rules [] = '</IfModule>';
+		$cache_exclusion_parameters = array_map( 'trim', explode( ',', get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
+
+		// Add the cache exclusion rules.
+		$rules[] = '<IfModule mod_rewrite.c>';
+		$rules[] = 'RewriteEngine On';
+		foreach ( $cache_exclusion_parameters as $param ) {
+			if ( ! empty( $param ) ) {
+				$rules[] = "RewriteCond %{REQUEST_URI} !{$param} [NC]";
+			}
+		}
+		$rules[] = 'RewriteRule .* - [E=Cache-Control:no-cache]';
+		$rules[] = '</IfModule>';
+		// Add the end of the rules about cache exclusion.
 
 		$htaccess = new htaccess( self::MARKER );
 
 		return $htaccess->addContent( $rules );
-
 	}
 
 	/**
@@ -106,7 +130,7 @@ class Browser extends CacheBase {
 
 		switch ( $cacheLevel ) {
 			case 3:
-				return [
+				return array(
 					'default'         => '1 week',
 					'text/html'       => '8 hours',
 					'image/jpg'       => '1 week',
@@ -117,10 +141,10 @@ class Browser extends CacheBase {
 					'text/javascript' => '1 week',
 					'application/pdf' => '1 month',
 					'image/x-icon'    => '1 year',
-				];
+				);
 
 			case 2:
-				return [
+				return array(
 					'default'         => '24 hours',
 					'text/html'       => '2 hours',
 					'image/jpg'       => '24 hours',
@@ -131,10 +155,10 @@ class Browser extends CacheBase {
 					'text/javascript' => '24 hours',
 					'application/pdf' => '1 week',
 					'image/x-icon'    => '1 year',
-				];
+				);
 
 			case 1:
-				return [
+				return array(
 					'default'         => '5 minutes',
 					'text/html'       => '0 seconds',
 					'image/jpg'       => '1 hour',
@@ -145,10 +169,10 @@ class Browser extends CacheBase {
 					'text/javascript' => '1 hour',
 					'application/pdf' => '6 hours',
 					'image/x-icon'    => '1 year',
-				];
+				);
 
 			default:
-				return [];
+				return array();
 		}
 	}
 
@@ -165,5 +189,4 @@ class Browser extends CacheBase {
 	public static function onDeactivation() {
 		self::removeRules();
 	}
-
 }

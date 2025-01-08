@@ -4,6 +4,7 @@ import { Container } from '@newfold/ui-component-library';
 // Components.
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import { default as CacheExclusion } from '../cacheExclusion/';
 import { default as Skip404 } from '../skip404/';
 import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
@@ -56,6 +57,12 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 					constants={ constants }
 					Components={ Components }
 				/>
+			</Container.Block>
+			<Container.Block
+				separator={ true }
+				className={ 'newfold-cache-exclusion' }
+			>
+				<CacheExclusion methods={ methods } constants={ constants } />
 			</Container.Block>
 			<Container.Block
 				separator={ true }

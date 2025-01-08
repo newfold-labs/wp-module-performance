@@ -15,6 +15,7 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\SettingsController',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
+		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\CacheExclusionController',
 	);
 
 	/**

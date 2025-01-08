@@ -16,7 +16,6 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 
 use Automattic\Jetpack\Current_Plan;
 
-
 /**
  * Performance Class
  */
@@ -28,6 +27,7 @@ class Performance {
 	 * @var string
 	 */
 	const OPTION_CACHE_LEVEL = 'newfold_cache_level';
+
 
 	/**
 	 * The option name where the "Skip WordPress 404 Handling for Static Files" option is stored.
@@ -88,6 +88,7 @@ class Performance {
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		new LinkPrefetch( $container );
+		new CacheExclusion( $container );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -127,6 +128,7 @@ class Performance {
 	 * Add hooks.
 	 */
 	public function hooks() {
+
 		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
@@ -291,7 +293,6 @@ class Performance {
 			);
 		}
 	}
-
 	/**
 	 * Add performance menu in WP/Settings
 	 */
@@ -307,7 +308,7 @@ class Performance {
 		);
 	}
 
-		/*
+	/**
 	 * Enqueue scripts and styles in admin
 	 */
 	public function enqueue_scripts() {
@@ -316,8 +317,7 @@ class Performance {
 		wp_enqueue_style( 'wp-module-performance-styles' );
 	}
 
-	/*
-
+	/**
 	 * Add to Newfold SDK runtime.
 	 *
 	 * @param array $sdk SDK data.
