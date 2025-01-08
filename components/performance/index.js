@@ -4,8 +4,10 @@ import { Container } from '@newfold/ui-component-library';
 // Components.
 import { default as CacheSettings } from '../cacheSettings/';
 import { default as ClearCache } from '../clearCache/';
+import { default as Skip404 } from '../skip404/';
 import { default as AdvancedSettings } from '../advancedSettings';
 import { default as defaultText } from './defaultText';
+import ImageOptimizationSettings from '../imageOptimizationSettings';
 import { default as LinkPrefetch } from '../linkPrefetch/';
 
 /**
@@ -61,6 +63,13 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 			>
 				<ClearCache methods={ methods } constants={ constants } />
 			</Container.Block>
+			<Container.Block separator={ true } className={ 'newfold-skip404' }>
+				<Skip404
+					className={ 'newfold-skip404' }
+					methods={ methods }
+					constants={ constants }
+				/>
+			</Container.Block>
 			<Container.Block
 				separator={ true }
 				className={ 'newfold-performance-advanced-settings' }
@@ -72,6 +81,12 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 				separator={ true }
 			>
 				<LinkPrefetch methods={ methods } constants={ constants } />
+			</Container.Block>
+			<Container.Block className={ 'newfold-image-optimization' }>
+				<ImageOptimizationSettings
+					methods={ methods }
+					constants={ constants }
+				/>
 			</Container.Block>
 		</>
 	);

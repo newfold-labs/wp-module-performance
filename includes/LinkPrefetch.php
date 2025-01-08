@@ -47,8 +47,7 @@ class LinkPrefetch {
 	 * return void
 	 */
 	public function enqueueScripts() {
-		$plugin_url = $this->container->plugin()->url . get_scripts_path( 'linkPrefetch' );
-		$settings   = get_option( 'nfd_link_prefetch_settings', static::getDefaultSettings() );
+		$settings = get_option( 'nfd_link_prefetch_settings', static::getDefaultSettings() );
 
 		if ( ! $settings['activeOnDesktop'] && ! $settings['activeOnMobile'] ) {
 			return;
@@ -56,7 +55,13 @@ class LinkPrefetch {
 
 		$settings['isMobile'] = wp_is_mobile();
 
-		wp_enqueue_script( 'linkprefetcher', $plugin_url, array(), $this->container->plugin()->version, true );
+		wp_enqueue_script(
+			'linkprefetcher',
+			NFD_PERFORMANCE_BUILD_URL . '/link-prefetch.min.js',
+			array(),
+			$this->container->plugin()->version,
+			true
+		);
 		wp_add_inline_script( 'linkprefetcher', 'window.LP_CONFIG = ' . wp_json_encode( $settings ), 'before' );
 	}
 

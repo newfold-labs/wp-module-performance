@@ -1,3 +1,4 @@
+// Newfold
 import { Container, RadioGroup } from '@newfold/ui-component-library';
 
 const CacheSettings = ( { methods, constants, Components } ) => {
@@ -52,7 +53,7 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 		methods.newfoldSettingsApiFetch(
 			{ cacheLevel: parseInt( e.target.value ) },
 			methods.setError,
-			( response ) => {
+			() => {
 				setCacheLevel( parseInt( e.target.value ) );
 			}
 		);

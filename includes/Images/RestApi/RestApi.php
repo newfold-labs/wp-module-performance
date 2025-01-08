@@ -1,5 +1,6 @@
 <?php
-namespace NewfoldLabs\WP\Module\Performance\RestApi;
+
+namespace NewfoldLabs\WP\Module\Performance\Images\RestApi;
 
 /**
  * Instantiate controllers and register routes.
@@ -12,10 +13,9 @@ final class RestApi {
 	 * @var array
 	 */
 	protected $controllers = array(
-		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\SettingsController',
-		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
-		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
+		'NewfoldLabs\\WP\\Module\\Performance\\Images\\RestApi\\ImagesController',
 	);
+
 
 	/**
 	 * Setup the custom REST API
