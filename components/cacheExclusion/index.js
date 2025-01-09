@@ -89,7 +89,7 @@ const CacheExclusion = ( { methods, constants } ) => {
 				onChange={ handleExcludedUrlsChange }
 				value={ excludedUrls }
 				rows="1"
-				label={ constants.text.excludedUrlsLabel }
+				label={ constants.text.cacheExclusionTitle }
 			/>
 			<Checkbox
 				id="do-not-cache-error-pages"
