@@ -1,0 +1,10 @@
+
+
+    {
+        "localAppURL": "http://perset.local/sample-page/",
+        "statusCode": 200,
+        "mouseDownToBeSelected": "Prefetch on Mouse down",
+        "requestCount": 0,
+        "mouseHoverToBeSelected": "Prefetch on Mouse Hover (Recommended)"
+      }
+
