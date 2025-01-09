@@ -206,7 +206,7 @@ const defaultText = {
 	),
 	linkPrefetchBehaviorLabel: __( 'Behavior', 'wp-module-performance' ),
 	linkPrefetchBehaviorMouseDownLabel: __(
-		'Prefetch on Mouse down',
+		'Prefetch on Mouse Down',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMouseDownDescription: __(
@@ -222,7 +222,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileDescription: __(
-		'Enable link prefetching on Mobile',
+		'Enable link prefetching on mobile',
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileLabel: __(
@@ -234,7 +234,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileTouchstartDescription: __(
-		'Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
+		'Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileViewportLabel: __(

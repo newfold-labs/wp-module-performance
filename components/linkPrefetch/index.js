@@ -37,6 +37,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 
 	const handleChangeOptionIgnoreKeywords = ( value ) => {
 		clearTimeout( ignoreKeywordsTimer );
+		value = value.substring( 0, 1000 );
 		setIgnoreKeywords( value );
 		ignoreKeywordsTimer = setTimeout( function () {
 			handleChangeOption( 'ignoreKeywords', value );
