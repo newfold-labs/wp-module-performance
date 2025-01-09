@@ -44,7 +44,7 @@ class CacheExclusion {
 	public function add_to_runtime( $sdk ) {
 		$cache_exclusion = get_option( self::OPTION_CACHE_EXCLUSION, $this->get_default_cache_exclusion() );
 
-		return array_merge( $sdk, $cache_exclusion );
+		return array_merge( $sdk, array( 'cacheExclusion' => $cache_exclusion ) );
 	}
 
 	/**

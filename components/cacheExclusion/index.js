@@ -12,10 +12,10 @@ const CacheExclusion = ( { methods, constants } ) => {
 
 	// Separate states for excluded URLs and error page exclusion
 	const [ excludedUrls, setExcludedUrls ] = methods.useState(
-		methods.NewfoldRuntime.sdk.performance.excludedUrls || ''
+		methods.NewfoldRuntime.sdk.cacheExclusion.excludedUrls || ''
 	);
 	const [ doNotCacheErrorPages, setDoNotCacheErrorPages ] = methods.useState(
-		methods.NewfoldRuntime.sdk.performance.doNotCacheErrorPages || false
+		methods.NewfoldRuntime.sdk.cacheExclusion.doNotCacheErrorPages || false
 	);
 
 	const apiUrl = methods.NewfoldRuntime.createApiUrl(
@@ -26,6 +26,7 @@ const CacheExclusion = ( { methods, constants } ) => {
 	const handleExcludedUrlsChange = ( e ) => {
 		if ( e.target.value !== excludedUrls ) {
 			setIsEdited( true );
+			setIsSaved( false );
 		} else {
 			setIsEdited( false );
 		}
@@ -37,6 +38,7 @@ const CacheExclusion = ( { methods, constants } ) => {
 		const newValue = ! doNotCacheErrorPages;
 		setDoNotCacheErrorPages( newValue );
 		setIsEdited( true );
+		setIsSaved( false );
 	};
 
 	// Save settings to the API
@@ -63,7 +65,7 @@ const CacheExclusion = ( { methods, constants } ) => {
 	methods.useUpdateEffect( () => {
 		methods.setStore( {
 			...constants.store,
-			performance: {
+			cacheExclusion: {
 				excludedUrls,
 				doNotCacheErrorPages,
 			},
