@@ -100,18 +100,21 @@ class Browser extends CacheBase {
 		}
 		$rules[] = '</IfModule>';
 
-		$cache_exclusion_parameters = array_map( 'trim', explode( ',', sanitize_text_field( get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) ) );
-		$cache_exclusion_parameters = implode( '|', $cache_exclusion_parameters );
+		$cache_exclusion = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
+		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
+			$cache_exclusion_parameters = array_map( 'trim', explode( ',', sanitize_text_field( get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' ) ) ) );
+			$cache_exclusion_parameters = implode( '|', $cache_exclusion_parameters );
 
-		// Add the cache exclusion rules.
-		$rules[] = '<IfModule mod_rewrite.c>';
-		$rules[] = 'RewriteEngine On';
-		$rules[] = "RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
-		$rules[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
-		$rules[] = 'Header set Pragma "no-cache"';
-		$rules[] = 'Header set Expires 0';
-		$rules[] = '</IfModule>';
-		// Add the end of the rules about cache exclusion.
+			// Add the cache exclusion rules.
+			$rules[] = '<IfModule mod_rewrite.c>';
+			$rules[] = 'RewriteEngine On';
+			$rules[] = "RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
+			$rules[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
+			$rules[] = 'Header set Pragma "no-cache"';
+			$rules[] = 'Header set Expires 0';
+			$rules[] = '</IfModule>';
+			// Add the end of the rules about cache exclusion.
+		}
 
 		$htaccess = new htaccess( self::MARKER );
 
