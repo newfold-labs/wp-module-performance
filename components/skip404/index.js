@@ -59,10 +59,7 @@ const Skip404 = ( { methods, constants } ) => {
 				onChange={ handleSkip404Change }
 				value={ skip404 }
 				checked={ skip404 }
-				label={ __(
-					'Skip 404 Handling For Static Files',
-					'wp-module-performance'
-				) }
+				label={ constants.text.skip404OptionLabel }
 			/>
 		</Container.SettingsField>
 	);
