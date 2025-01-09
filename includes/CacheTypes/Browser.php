@@ -37,9 +37,7 @@ class Browser extends CacheBase {
 	 * Constructor.
 	 */
 	public function __construct() {
-
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
-
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
@@ -53,7 +51,7 @@ class Browser extends CacheBase {
 	}
 
 	/**
-	 * Manage on exlcusion option change.
+	 * Manage on exclusion option change.
 	 */
 	public static function exclusionChange() {
 		self::maybeAddRules( getCacheLevel() );
@@ -83,7 +81,6 @@ class Browser extends CacheBase {
 	 * @return bool
 	 */
 	public static function addRules( $cacheLevel ) {
-
 		$fileTypeExpirations = self::getFileTypeExpirations( $cacheLevel );
 
 		$tab = "\t";
@@ -100,22 +97,45 @@ class Browser extends CacheBase {
 		}
 		$rules[] = '</IfModule>';
 
-		$cache_exclusion = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
-		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
-			$cache_exclusion_parameters = array_map( 'trim', explode( ',', sanitize_text_field( get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' ) ) ) );
+		$cache_exclusion = get_option(
+			CacheExclusion::OPTION_CACHE_EXCLUSION,
+			array(
+				'excludedUrls'         => '',
+				'doNotCacheErrorPages' => false,
+			)
+		);
+
+		if ( ! empty( $cache_exclusion['excludedUrls'] ) ) {
+			$cache_exclusion_parameters = array_map( 'trim', explode( ',', sanitize_text_field( $cache_exclusion['excludedUrls'] ) ) );
 			$cache_exclusion_parameters = implode( '|', $cache_exclusion_parameters );
 
 			// Add the cache exclusion rules.
 			$rules[] = '<IfModule mod_rewrite.c>';
-			$rules[] = 'RewriteEngine On';
-			$rules[] = "RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
-			$rules[] = '<IfModule mod_headers.c>';
-			$rules[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
-			$rules[] = 'Header set Pragma "no-cache"';
-			$rules[] = 'Header set Expires 0';
+			$rules[] = "{$tab}RewriteEngine On";
+			$rules[] = "{$tab}RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
+			$rules[] = "{$tab}<IfModule mod_headers.c>";
+			$rules[] = "{$tab}{$tab}Header set Cache-Control \"no-cache, no-store, must-revalidate\"";
+			$rules[] = "{$tab}{$tab}Header set Pragma \"no-cache\"";
+			$rules[] = "{$tab}{$tab}Header set Expires 0";
+			$rules[] = "{$tab}</IfModule>";
 			$rules[] = '</IfModule>';
-			$rules[] = '</IfModule>';
-			// Add the end of the rules about cache exclusion.
+
+		}
+
+		// Handle "Do Not Cache Error Pages"
+		if ( ! empty( $cache_exclusion['doNotCacheErrorPages'] ) ) {
+			$expr_condition = '"expr=%{REQUEST_STATUS} >= 400 && %{REQUEST_STATUS} < 600"';
+			$rules          = array_merge(
+				$rules,
+				array(
+					"{$tab}# Set Cache-Control headers for 400 and 500 status codes",
+					'<IfModule mod_headers.c>',
+					"{$tab}Header always set Cache-Control \"no-store, no-cache, must-revalidate\" {$expr_condition}",
+					"{$tab}Header always set Pragma \"no-cache\" {$expr_condition}",
+					"{$tab}Header always set Expires 0 {$expr_condition}",
+					'</IfModule>',
+				)
+			);
 		}
 
 		$htaccess = new htaccess( self::MARKER );

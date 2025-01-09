@@ -17,7 +17,7 @@ class CacheExclusion {
 	protected $container;
 
 	/**
-	 * Option used to store all pages should be excluded from cache.
+	 * Option used to store cache exclusion settings.
 	 *
 	 * @var string
 	 */
@@ -33,6 +33,7 @@ class CacheExclusion {
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
 	}
+
 	/**
 	 * Add values to the runtime object.
 	 *
@@ -41,6 +42,20 @@ class CacheExclusion {
 	 * @return array
 	 */
 	public function add_to_runtime( $sdk ) {
-		return array_merge( $sdk, array( 'cacheExclusion' => get_option( self::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() ) ) );
+		$cache_exclusion = get_option( self::OPTION_CACHE_EXCLUSION, $this->get_default_cache_exclusion() );
+
+		return array_merge( $sdk, $cache_exclusion );
+	}
+
+	/**
+	 * Get default cache exclusion settings.
+	 *
+	 * @return array
+	 */
+	private function get_default_cache_exclusion() {
+		return array(
+			'excludedUrls'         => get_default_cache_exclusions(),
+			'doNotCacheErrorPages' => false,
+		);
 	}
 }
