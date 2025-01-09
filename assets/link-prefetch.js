@@ -78,7 +78,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
 				entries.forEach( ( entry ) => {
 					if ( entry.isIntersecting ) {
 						observer.unobserve( entry.target );
-						this.prefetchIfEligible( entry.target.href );
+						this.prefetchIfEligible( entry.target.href ) &&
+							this.prefetchIt( entry.target.href );
 					}
 				} );
 			} );

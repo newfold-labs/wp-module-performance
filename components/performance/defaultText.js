@@ -12,7 +12,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	cacheLevel1Description: __(
-		'Cache static assets like images and the appearance of your site for 1 hour. ',
+		'Cache static assets like images and the appearance of your site for 1 hour.',
 		'wp-module-performance'
 	),
 	cacheLevel1Label: __( 'Assets Only', 'wp-module-performance' ),
@@ -25,7 +25,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	cacheLevel2Description: __(
-		'Cache static assets for 24 hours and web pages for 2 hours. ',
+		'Cache static assets for 24 hours and web pages for 2 hours.',
 		'wp-module-performance'
 	),
 	cacheLevel2Label: __( 'Assets & Web Pages', 'wp-module-performance' ),
@@ -38,7 +38,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	cacheLevel3Description: __(
-		'Cache static assets for 1 week and web pages for 8 hours. ',
+		'Cache static assets for 1 week and web pages for 8 hours.',
 		'wp-module-performance'
 	),
 	cacheLevel3Label: __(
@@ -81,6 +81,10 @@ const defaultText = {
 	skip404Title: __( 'Skip 404', 'wp-module-performance' ),
 	skip404Description: __(
 		'When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.',
+		'wp-module-performance'
+	),
+	skip404OptionLabel: __(
+		'Skip 404 Handling For Static Files',
 		'wp-module-performance'
 	),
 	skip404NoticeTitle: __( 'Skip 404 saved', 'wp-module-performance' ),
@@ -184,7 +188,7 @@ const defaultText = {
 	),
 
 	linkPrefetchDescription: __(
-		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ',
+		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.',
 		'wp-module-performance'
 	),
 	linkPrefetchNoticeTitle: __(
@@ -206,7 +210,7 @@ const defaultText = {
 	),
 	linkPrefetchBehaviorLabel: __( 'Behavior', 'wp-module-performance' ),
 	linkPrefetchBehaviorMouseDownLabel: __(
-		'Prefetch on Mouse down',
+		'Prefetch on Mouse Down',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMouseDownDescription: __(
@@ -222,7 +226,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileDescription: __(
-		'Enable link prefetching on Mobile',
+		'Enable link prefetching on mobile',
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileLabel: __(
@@ -234,7 +238,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileTouchstartDescription: __(
-		'Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
+		'Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileViewportLabel: __(
