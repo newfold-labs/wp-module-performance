@@ -73,14 +73,14 @@ const defaultText = {
 	),
 	cacheExclusionSaved: __( 'Cache Exclusion saved', 'wp-module-performance' ),
 	cacheExclusionSaveButton: __( 'Save', 'wp-module-performance' ),
-  // Skip 404
+	// Skip 404
 	skip404Title: __( 'Skip 404', 'wp-module-performance' ),
 	skip404Description: __(
 		'When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.',
 		'wp-module-performance'
 	),
 	skip404NoticeTitle: __( 'Skip 404 saved', 'wp-module-performance' ),
-	skip404Notice: __( 'Skip 404 saved', 'wp-module-performance' ),  
+	skip404Notice: __( 'Skip 404 saved', 'wp-module-performance' ),
 	// Image Optimization
 	imageOptimizationSettingsTitle: __(
 		'Image Optimization',
@@ -202,7 +202,7 @@ const defaultText = {
 	),
 	linkPrefetchBehaviorLabel: __( 'Behavior', 'wp-module-performance' ),
 	linkPrefetchBehaviorMouseDownLabel: __(
-		'Prefetch on Mouse down',
+		'Prefetch on Mouse Down',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMouseDownDescription: __(
@@ -218,7 +218,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileDescription: __(
-		'Enable link prefetching on Mobile',
+		'Enable link prefetching on mobile',
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileLabel: __(
@@ -230,7 +230,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileTouchstartDescription: __(
-		'Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
+		'Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileViewportLabel: __(
