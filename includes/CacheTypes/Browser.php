@@ -109,9 +109,11 @@ class Browser extends CacheBase {
 			$rules[] = '<IfModule mod_rewrite.c>';
 			$rules[] = 'RewriteEngine On';
 			$rules[] = "RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
+			$rules[] = '<IfModule mod_headers.c>';
 			$rules[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
 			$rules[] = 'Header set Pragma "no-cache"';
 			$rules[] = 'Header set Expires 0';
+			$rules[] = '</IfModule>';
 			$rules[] = '</IfModule>';
 			// Add the end of the rules about cache exclusion.
 		}
