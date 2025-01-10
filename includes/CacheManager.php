@@ -5,9 +5,10 @@ namespace NewfoldLabs\WP\Module\Performance;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
-
+/**
+ * Cache Manager Class
+ */
 class CacheManager {
-
 	/**
 	 * Dependency injection container.
 	 *
@@ -18,7 +19,7 @@ class CacheManager {
 	/**
 	 * Constructor.
 	 *
-	 * @param  string[]  $supportedCacheTypes  Cache types supported by the plugin
+	 * @param Container $container the container
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
@@ -30,14 +31,14 @@ class CacheManager {
 	 * @return string[]
 	 */
 	protected function classMap() {
-		return [
+		return array(
 			'browser'    => __NAMESPACE__ . '\\CacheTypes\\Browser',
 			'cloudflare' => __NAMESPACE__ . '\\CacheTypes\\Cloudflare',
 			'file'       => __NAMESPACE__ . '\\CacheTypes\\File',
 			'nginx'      => __NAMESPACE__ . '\\CacheTypes\\Nginx',
 			'sitelock'   => __NAMESPACE__ . '\\CacheTypes\\Sitelock',
 			'skip404'    => __NAMESPACE__ . '\\CacheTypes\\Skip404',
-		];
+		);
 	}
 
 	/**
@@ -55,7 +56,7 @@ class CacheManager {
 	 * @return array
 	 */
 	public function enabledCacheTypes() {
-		$cacheTypes = [];
+		$cacheTypes = array();
 		if ( $this->container->has( 'cache_types' ) ) {
 			$providedTypes = $this->container->get( 'cache_types' );
 			if ( is_array( $providedTypes ) ) {
@@ -75,11 +76,13 @@ class CacheManager {
 	 * @return CacheBase[]
 	 */
 	public function getInstances() {
-		$instances  = [];
+		$instances  = array();
 		$collection = new Collection( $this->classMap() );
 		$map        = $collection->only( $this->enabledCacheTypes() );
 		foreach ( $map as $type => $class ) {
 			/**
+			 * CacheBase instance.
+			 *
 			 * @var CacheBase $class
 			 */
 			if ( $class::shouldEnable( $this->container ) ) {
@@ -90,5 +93,4 @@ class CacheManager {
 
 		return $instances;
 	}
-
 }

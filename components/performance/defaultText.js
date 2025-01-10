@@ -66,8 +66,125 @@ const defaultText = {
 	),
 	clearCacheNoticeTitle: __( 'Cache cleared', 'wp-module-performance' ),
 	clearCacheTitle: __( 'Clear Cache', 'wp-module-performance' ),
+	cacheExclusionTitle: __( 'Exclude from cache', 'wp-module-performance' ),
+	cacheExclusionDescription: __(
+		'This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used.',
+		'wp-module-performance'
+	),
+	cacheExclusionSaved: __( 'Cache Exclusion saved', 'wp-module-performance' ),
+	cacheExclusionSaveButton: __( 'Save', 'wp-module-performance' ),
+	// Skip 404
+	skip404Title: __( 'Skip 404', 'wp-module-performance' ),
+	skip404Description: __(
+		'When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.',
+		'wp-module-performance'
+	),
+	skip404OptionLabel: __(
+		'Skip 404 Handling For Static Files',
+		'wp-module-performance'
+	),
+	skip404NoticeTitle: __( 'Skip 404 saved', 'wp-module-performance' ),
+	skip404Notice: __( 'Skip 404 saved', 'wp-module-performance' ),
+	// Image Optimization
+	imageOptimizationSettingsTitle: __(
+		'Image Optimization',
+		'wp-module-performance'
+	),
+	imageOptimizationSettingsDescription: __(
+		'We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.',
+		'wp-module-performance'
+	),
+	imageOptimizationEnabledLabel: __(
+		'Enable Image Optimization',
+		'wp-module-performance'
+	),
+	imageOptimizationEnabledDescription: __(
+		'Enable or disable image optimization globally.',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoOptimizeLabel: __(
+		'Automatically Optimize Uploaded Images',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoOptimizeDescription: __(
+		'When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoDeleteLabel: __(
+		'Auto Delete Original Image',
+		'wp-module-performance'
+	),
+	imageOptimizationAutoDeleteDescription: __(
+		'When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.',
+		'wp-module-performance'
+	),
+	imageOptimizationNoSettings: __(
+		'No settings available.',
+		'wp-module-performance'
+	),
+	imageOptimizationErrorMessage: __(
+		'Oops! Something went wrong. Please try again.',
+		'wp-module-performance'
+	),
+	imageOptimizationLoadingMessage: __(
+		'Loading settings…',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdatedTitle: __(
+		'Settings updated successfully',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdatedDescription: __(
+		'Your image optimization settings have been saved.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingLabel: __(
+		'Enable Lazy Loading',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingDescription: __(
+		'Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingNoticeText: __(
+		'Lazy loading has been updated.',
+		'wp-module-performance'
+	),
+	imageOptimizationLazyLoadingErrorMessage: __(
+		'Oops! There was an error updating the lazy loading settings.',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeLabel: __(
+		'Enable Bulk Optimization of Images',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeDescription: __(
+		'When enabled, allows bulk optimization of images in the media library.',
+		'wp-module-performance'
+	),
+	imageOptimizationBulkOptimizeButtonLabel: __(
+		'Go to Media Library',
+		'wp-module-performance'
+	),
+	imageOptimizationUpdateErrorTitle: __(
+		'Error Updating Settings',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPLabel: __(
+		'Prefer Optimized Image When Exists',
+		'wp-module-performance'
+	),
+	imageOptimizationPreferWebPDescription: __(
+		'When enabled, optimized images will be served in place of original images when they exist, improving performance.',
+		'wp-module-performance'
+	),
+	imageOptimizationGenericErrorMessage: __(
+		'Something went wrong while updating the settings. Please try again.',
+		'wp-module-performance'
+	),
+
 	linkPrefetchDescription: __(
-		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ',
+		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.',
 		'wp-module-performance'
 	),
 	linkPrefetchNoticeTitle: __(
@@ -89,7 +206,7 @@ const defaultText = {
 	),
 	linkPrefetchBehaviorLabel: __( 'Behavior', 'wp-module-performance' ),
 	linkPrefetchBehaviorMouseDownLabel: __(
-		'Prefetch on Mouse down',
+		'Prefetch on Mouse Down',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMouseDownDescription: __(
@@ -105,7 +222,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileDescription: __(
-		'Enable link prefetching on Mobile',
+		'Enable link prefetching on mobile',
 		'wp-module-performance'
 	),
 	linkPrefetchActivateOnMobileLabel: __(
@@ -117,7 +234,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileTouchstartDescription: __(
-		'Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
+		'Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.',
 		'wp-module-performance'
 	),
 	linkPrefetchBehaviorMobileViewportLabel: __(
@@ -225,6 +342,7 @@ const defaultText = {
 	),
 	optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
 	optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
+	upgradeModule: __( 'Upgrade to unlock', 'wp-module-performance' ),
 };
 
 export default defaultText;
