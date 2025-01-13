@@ -152,18 +152,3 @@ function toStudlyCase( $value ) {
 function get_styles_path() {
 	return 'vendor/newfold-labs/wp-module-performance/styles/styles.css';
 }
-
-/**
- * Get js script path.
- *
- * @param string $script_name script name.
- * return string
- */
-function get_scripts_path( $script_name = '' ) {
-	$basePath = 'vendor/newfold-labs/wp-module-performance/scripts/';
-	if ( empty( $script_name ) ) {
-		return $basePath;
-	}
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-	return "vendor/newfold-labs/wp-module-performance/scripts/$script_name$suffix.js";
-}

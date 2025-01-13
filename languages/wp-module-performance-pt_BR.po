@@ -2,19 +2,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-10 12:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2025-01-13 10:54+0000\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Domain: wp-module-performance\n"
 
 #: includes/functions.php:46
+#: components/performance/defaultText.js:61
 msgid "Cache Level"
 msgstr "Nível de cache"
 
@@ -154,6 +155,410 @@ msgstr ""
 msgid "Image successfully optimized."
 msgstr ""
 
-#: includes/Performance.php:305 includes/Performance.php:306
+#: includes/Performance.php:305
+#: includes/Performance.php:306
 msgid "Performance"
 msgstr "Desempenho"
+
+#: components/advancedSettings/JetpackBoost/index.js:108
+msgid "Installing"
+msgstr ""
+
+#: components/performance/defaultText.js:4
+msgid "No cache enabled. Every page load is fresh."
+msgstr ""
+
+#: components/performance/defaultText.js:8
+msgid "Disabled"
+msgstr ""
+
+#: components/performance/defaultText.js:9
+msgid "Caching disabled."
+msgstr ""
+
+#: components/performance/defaultText.js:10
+msgid "Not recommended."
+msgstr ""
+
+#: components/performance/defaultText.js:14
+msgid "Cache static assets like images and the appearance of your site for 1 hour."
+msgstr ""
+
+#: components/performance/defaultText.js:18
+msgid "Assets Only"
+msgstr ""
+
+#: components/performance/defaultText.js:19
+msgid "Cache enabled for assets only."
+msgstr ""
+
+#: components/performance/defaultText.js:23
+msgid "Tuned for online stores and member sites that need to be fresh."
+msgstr ""
+
+#: components/performance/defaultText.js:27
+msgid "Cache static assets for 24 hours and web pages for 2 hours."
+msgstr ""
+
+#: components/performance/defaultText.js:31
+msgid "Assets & Web Pages"
+msgstr ""
+
+#: components/performance/defaultText.js:32
+msgid "Cache enabled for assets and pages."
+msgstr ""
+
+#: components/performance/defaultText.js:36
+msgid "Tuned for sites that change at least weekly."
+msgstr ""
+
+#: components/performance/defaultText.js:40
+msgid "Cache static assets for 1 week and web pages for 8 hours."
+msgstr ""
+
+#: components/performance/defaultText.js:44
+msgid "Assets & Web Pages - Extended"
+msgstr ""
+
+#: components/performance/defaultText.js:48
+msgid "Cache enabled for assets and pages (extended)."
+msgstr ""
+
+#: components/performance/defaultText.js:52
+msgid "Tuned for sites that update a few times a month or less."
+msgstr ""
+
+#: components/performance/defaultText.js:56
+msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+msgstr ""
+
+#: components/performance/defaultText.js:60
+msgid "Cache setting saved"
+msgstr ""
+
+#: components/performance/defaultText.js:62
+msgid "Clear All Cache Now"
+msgstr ""
+
+#: components/performance/defaultText.js:63
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr ""
+
+#: components/performance/defaultText.js:67
+msgid "Cache cleared"
+msgstr ""
+
+#: components/performance/defaultText.js:68
+msgid "Clear Cache"
+msgstr ""
+
+#: components/performance/defaultText.js:69
+msgid "Exclude from cache"
+msgstr "From brasil"
+
+#: components/performance/defaultText.js:70
+msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
+msgstr ""
+
+#: components/performance/defaultText.js:74
+msgid "Cache Exclusion saved"
+msgstr ""
+
+#: components/performance/defaultText.js:75
+msgid "Save"
+msgstr ""
+
+#: components/performance/defaultText.js:77
+msgid "Skip 404"
+msgstr ""
+
+#: components/performance/defaultText.js:78
+msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing."
+msgstr ""
+
+#: components/performance/defaultText.js:82
+msgid "Skip 404 Handling For Static Files"
+msgstr ""
+
+#: components/performance/defaultText.js:86
+#: components/performance/defaultText.js:87
+msgid "Skip 404 saved"
+msgstr ""
+
+#: components/performance/defaultText.js:89
+msgid "Image Optimization"
+msgstr ""
+
+#: components/performance/defaultText.js:93
+msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+msgstr ""
+
+#: components/performance/defaultText.js:97
+msgid "Enable Image Optimization"
+msgstr ""
+
+#: components/performance/defaultText.js:101
+msgid "Enable or disable image optimization globally."
+msgstr ""
+
+#: components/performance/defaultText.js:105
+msgid "Automatically Optimize Uploaded Images"
+msgstr ""
+
+#: components/performance/defaultText.js:109
+msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
+msgstr ""
+
+#: components/performance/defaultText.js:113
+msgid "Auto Delete Original Image"
+msgstr ""
+
+#: components/performance/defaultText.js:117
+msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
+msgstr ""
+
+#: components/performance/defaultText.js:121
+msgid "No settings available."
+msgstr ""
+
+#: components/performance/defaultText.js:125
+msgid "Oops! Something went wrong. Please try again."
+msgstr ""
+
+#: components/performance/defaultText.js:129
+msgid "Loading settings…"
+msgstr ""
+
+#: components/performance/defaultText.js:133
+msgid "Settings updated successfully"
+msgstr ""
+
+#: components/performance/defaultText.js:137
+msgid "Your image optimization settings have been saved."
+msgstr ""
+
+#: components/performance/defaultText.js:141
+msgid "Enable Lazy Loading"
+msgstr ""
+
+#: components/performance/defaultText.js:145
+msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
+msgstr ""
+
+#: components/performance/defaultText.js:149
+msgid "Lazy loading has been updated."
+msgstr ""
+
+#: components/performance/defaultText.js:153
+msgid "Oops! There was an error updating the lazy loading settings."
+msgstr ""
+
+#: components/performance/defaultText.js:157
+msgid "Enable Bulk Optimization of Images"
+msgstr ""
+
+#: components/performance/defaultText.js:161
+msgid "When enabled, allows bulk optimization of images in the media library."
+msgstr ""
+
+#: components/performance/defaultText.js:165
+msgid "Go to Media Library"
+msgstr ""
+
+#: components/performance/defaultText.js:169
+msgid "Error Updating Settings"
+msgstr ""
+
+#: components/performance/defaultText.js:173
+msgid "Prefer Optimized Image When Exists"
+msgstr ""
+
+#: components/performance/defaultText.js:177
+msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
+msgstr ""
+
+#: components/performance/defaultText.js:181
+msgid "Something went wrong while updating the settings. Please try again."
+msgstr ""
+
+#: components/performance/defaultText.js:186
+msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+msgstr ""
+
+#: components/performance/defaultText.js:190
+msgid "Link prefetching setting saved"
+msgstr ""
+
+#: components/performance/defaultText.js:194
+msgid "Link Prefetch"
+msgstr ""
+
+#: components/performance/defaultText.js:195
+msgid "Enable link prefetching on desktop"
+msgstr ""
+
+#: components/performance/defaultText.js:199
+msgid "Activate on desktop"
+msgstr ""
+
+#: components/performance/defaultText.js:203
+msgid "Behavior of the prefetch"
+msgstr ""
+
+#: components/performance/defaultText.js:207
+msgid "Behavior"
+msgstr ""
+
+#: components/performance/defaultText.js:208
+msgid "Prefetch on Mouse Down"
+msgstr ""
+
+#: components/performance/defaultText.js:212
+msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+msgstr ""
+
+#: components/performance/defaultText.js:216
+msgid "Prefetch on Mouse Hover (Recommended)"
+msgstr ""
+
+#: components/performance/defaultText.js:220
+msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
+msgstr ""
+
+#: components/performance/defaultText.js:224
+msgid "Enable link prefetching on mobile"
+msgstr ""
+
+#: components/performance/defaultText.js:228
+msgid "Activate on mobile"
+msgstr ""
+
+#: components/performance/defaultText.js:232
+msgid "Prefetch on Touchstart (Recommended)"
+msgstr ""
+
+#: components/performance/defaultText.js:236
+msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
+msgstr ""
+
+#: components/performance/defaultText.js:240
+msgid "Prefetch Above the Fold"
+msgstr ""
+
+#: components/performance/defaultText.js:244
+msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+msgstr ""
+
+#: components/performance/defaultText.js:248
+msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
+msgstr ""
+
+#: components/performance/defaultText.js:252
+msgid "Exclude keywords"
+msgstr ""
+
+#: components/performance/defaultText.js:256
+msgid "Advanced settings"
+msgstr ""
+
+#: components/performance/defaultText.js:260
+msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+msgstr ""
+
+#: components/performance/defaultText.js:264
+msgid "Optimize Critical CSS Loading (manual)"
+msgstr ""
+
+#: components/performance/defaultText.js:268
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
+msgstr ""
+
+#: components/performance/defaultText.js:272
+msgid "Optimize Critical CSS Loading (UPGRADED)"
+msgstr ""
+
+#: components/performance/defaultText.js:276
+msgid "Generate Critical CSS Automatically"
+msgstr ""
+
+#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+#: components/performance/defaultText.js:282
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr ""
+
+#: components/performance/defaultText.js:290
+msgid "Defer Non-Essential JavaScript"
+msgstr ""
+
+#: components/performance/defaultText.js:294
+msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+msgstr ""
+
+#: components/performance/defaultText.js:298
+msgid "Concatenate JS"
+msgstr ""
+
+#: components/performance/defaultText.js:299
+msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr ""
+
+#: components/performance/defaultText.js:303
+msgid "Exclude JS Strings"
+msgstr ""
+
+#: components/performance/defaultText.js:307
+msgid "Concatenate CSS"
+msgstr ""
+
+#: components/performance/defaultText.js:311
+msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr ""
+
+#: components/performance/defaultText.js:315
+msgid "Exclude CSS Strings"
+msgstr ""
+
+#: components/performance/defaultText.js:319
+msgid "Show more"
+msgstr ""
+
+#: components/performance/defaultText.js:320
+msgid "Show less"
+msgstr ""
+
+#: components/performance/defaultText.js:321
+msgid "Discover More"
+msgstr ""
+
+#: components/performance/defaultText.js:322
+msgid "Install Jetpack Boost to unlock"
+msgstr ""
+
+#: components/performance/defaultText.js:326
+msgid "Installing Jetpack Boost…"
+msgstr ""
+
+#: components/performance/defaultText.js:330
+msgid "Jetpack Boost is now active"
+msgstr ""
+
+#: components/performance/defaultText.js:334
+msgid "Activation failed"
+msgstr ""
+
+#. translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
+#: components/performance/defaultText.js:339
+msgid "Discover more %1$shere%2$s"
+msgstr ""
+
+#: components/performance/defaultText.js:343
+msgid "Option saved correctly"
+msgstr ""
+
+#: components/performance/defaultText.js:344
+msgid "Error saving option"
+msgstr ""
+
+#: components/performance/defaultText.js:345
+msgid "Upgrade to unlock"
+msgstr ""
