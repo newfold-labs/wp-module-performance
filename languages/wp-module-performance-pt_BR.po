@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-13 10:54+0000\n"
+"PO-Revision-Date: 2025-01-13 15:01+0000\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
@@ -162,176 +162,176 @@ msgstr "Desempenho"
 
 #: components/performance/defaultText.js:4
 msgid "No cache enabled. Every page load is fresh."
-msgstr ""
+msgstr "Nenhum cache ativado. Cada carregamento de página é novo."
 
 #: components/performance/defaultText.js:8
 msgid "Disabled"
-msgstr ""
+msgstr "Desativado"
 
 #: components/performance/defaultText.js:9
 msgid "Caching disabled."
-msgstr ""
+msgstr "Cache desativada."
 
 #: components/performance/defaultText.js:10
 msgid "Not recommended."
-msgstr ""
+msgstr "Não recomendado."
 
 #: components/performance/defaultText.js:14
 msgid "Cache static assets like images and the appearance of your site for 1 hour."
-msgstr ""
+msgstr "Recurso de caches estáticos, como imagens e a aparência do seu site, por 1 hora."
 
 #: components/performance/defaultText.js:18
 msgid "Assets Only"
-msgstr ""
+msgstr "Somente Recursos"
 
 #: components/performance/defaultText.js:19
 msgid "Cache enabled for assets only."
-msgstr ""
+msgstr "Cache ativado apenas para recursos."
 
 #: components/performance/defaultText.js:23
 msgid "Tuned for online stores and member sites that need to be fresh."
-msgstr ""
+msgstr "Ajustado para lojas online e sites de membros que precisam ser atualizados com frequência."
 
 #: components/performance/defaultText.js:27
 msgid "Cache static assets for 24 hours and web pages for 2 hours."
-msgstr ""
+msgstr "Recurso de caches estáticos por 24 horas e páginas da web por 2 horas."
 
 #: components/performance/defaultText.js:31
 msgid "Assets & Web Pages"
-msgstr ""
+msgstr "Recursos & Páginas da Web"
 
 #: components/performance/defaultText.js:32
 msgid "Cache enabled for assets and pages."
-msgstr ""
+msgstr "Cache ativado para ativos e páginas."
 
 #: components/performance/defaultText.js:36
 msgid "Tuned for sites that change at least weekly."
-msgstr ""
+msgstr "Ajustado para sites que mudam pelo menos semanalmente."
 
 #: components/performance/defaultText.js:40
 msgid "Cache static assets for 1 week and web pages for 8 hours."
-msgstr ""
+msgstr "Recurso de caches estáticos por 1 semana e páginas da web por 8 horas."
 
 #: components/performance/defaultText.js:44
 msgid "Assets & Web Pages - Extended"
-msgstr ""
+msgstr "Recursos & Páginas da Web - Estendido"
 
 #: components/performance/defaultText.js:48
 msgid "Cache enabled for assets and pages (extended)."
-msgstr ""
+msgstr "Cache ativado para recursos e páginas (estendido)."
 
 #: components/performance/defaultText.js:52
 msgid "Tuned for sites that update a few times a month or less."
-msgstr ""
+msgstr "Ajustado para sites que atualizam poucas vezes por mês ou menos."
 
 #: components/performance/defaultText.js:56
 msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
-msgstr ""
+msgstr "Aumente a velocidade e o desempenho armazenando uma cópia do conteúdo, arquivos e imagens do seu site on-line para que as páginas do seu site sejam carregadas mais rapidamente para seus visitantes."
 
 #: components/performance/defaultText.js:60
 msgid "Cache setting saved"
-msgstr ""
+msgstr "Configuração de cache salva"
 
 #: components/performance/defaultText.js:62
 msgid "Clear All Cache Now"
-msgstr ""
+msgstr "Limpar Todo o Cache Agora"
 
 #: components/performance/defaultText.js:63
 msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
-msgstr ""
+msgstr "Nós limpamos seu cache automaticamente conforme você trabalha (criando conteúdo, alterando configurações, instalando plugins e mais). Mas você pode limpá-lo manualmente aqui para ter certeza de que ele está atualizado."
 
 #: components/performance/defaultText.js:67
 msgid "Cache cleared"
-msgstr ""
+msgstr "Cache limpo"
 
 #: components/performance/defaultText.js:68
 msgid "Clear Cache"
-msgstr ""
+msgstr "Limpar Cache"
 
 #: components/performance/defaultText.js:69
 msgid "Exclude from cache"
-msgstr "From brasil"
+msgstr "Excluir do cache"
 
 #: components/performance/defaultText.js:70
 msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr ""
+msgstr "Esta configuração determina quais páginas recebem o cabeçalho ‘no-cache’, evitando assim o uso de cache de página e de navegador."
 
 #: components/performance/defaultText.js:74
 msgid "Cache Exclusion saved"
-msgstr ""
+msgstr "Configuração de exclusão de cache salva"
 
 #: components/performance/defaultText.js:75
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: components/performance/defaultText.js:77
 msgid "Skip 404"
-msgstr ""
+msgstr "Ignorar 404"
 
 #: components/performance/defaultText.js:78
 msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing."
-msgstr ""
+msgstr "Quando ativado, recursos estáticos como imagens e fontes usarão uma página 404 padrão do servidor e não as páginas 404 do WordPress. Páginas e posts continuarão usando o WordPress para páginas 404. Isso pode acelerar consideravelmente o seu site se um recurso estático, como uma imagem ou fonte, estiver ausente."
 
 #: components/performance/defaultText.js:82
 msgid "Skip 404 Handling For Static Files"
-msgstr ""
+msgstr "Ignorar Tratamento 404 para Arquivos Estáticos"
 
 #: components/performance/defaultText.js:86
 #: components/performance/defaultText.js:87
 msgid "Skip 404 saved"
-msgstr ""
+msgstr "Ignorar 404 guardado"
 
 #: components/performance/defaultText.js:89
 msgid "Image Optimization"
-msgstr ""
+msgstr "Otimização de Imagens"
 
 #: components/performance/defaultText.js:93
 msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
-msgstr ""
+msgstr "Otimizamos automaticamente suas imagens carregadas para o formato WebP para melhor desempenho e redução do tamanho dos arquivos. Você também pode optar por excluir as imagens originais para economizar espaço de armazenamento."
 
 #: components/performance/defaultText.js:97
 msgid "Enable Image Optimization"
-msgstr ""
+msgstr "Habilitar otimização de imagens"
 
 #: components/performance/defaultText.js:101
 msgid "Enable or disable image optimization globally."
-msgstr ""
+msgstr "Ativar ou desativar a otimização de imagens globalmente."
 
 #: components/performance/defaultText.js:105
 msgid "Automatically Optimize Uploaded Images"
-msgstr ""
+msgstr "Otimizar automaticamente imagens carregadas"
 
 #: components/performance/defaultText.js:109
 msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
-msgstr ""
+msgstr "Quando ativado, todas as suas novas imagens carregadas serão automaticamente otimizadas para o formato WebP, garantindo carregamento de página mais rápido e redução do tamanho dos arquivos."
 
 #: components/performance/defaultText.js:113
 msgid "Auto Delete Original Image"
-msgstr ""
+msgstr "Deletar automaticamente a imagem original"
 
 #: components/performance/defaultText.js:117
 msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
-msgstr ""
+msgstr "Quando ativado, a imagem original carregada é excluída e substituída pela versão otimizada, ajudando a economizar espaço de armazenamento. Se desativado, a imagem otimizada é salva como um arquivo separado, mantendo a original."
 
 #: components/performance/defaultText.js:121
 msgid "No settings available."
-msgstr ""
+msgstr "Nenhuma configuração disponível."
 
 #: components/performance/defaultText.js:125
 msgid "Oops! Something went wrong. Please try again."
-msgstr ""
+msgstr "Oops! Algo deu errado. Tente novamente."
 
 #: components/performance/defaultText.js:129
 msgid "Loading settings…"
-msgstr ""
+msgstr "Carregando configurações…"
 
 #: components/performance/defaultText.js:133
 msgid "Settings updated successfully"
-msgstr ""
+msgstr "Configurações atualizadas com sucesso"
 
 #: components/performance/defaultText.js:137
 msgid "Your image optimization settings have been saved."
-msgstr ""
+msgstr "Suas configurações de otimização de imagem foram salvas."
 
 #: components/performance/defaultText.js:141
 msgid "Enable Lazy Loading"
@@ -383,178 +383,178 @@ msgstr ""
 
 #: components/performance/defaultText.js:190
 msgid "Link prefetching setting saved"
-msgstr ""
+msgstr "Configurações de pré-carregamento de links salvas"
 
 #: components/performance/defaultText.js:194
 msgid "Link Prefetch"
-msgstr ""
+msgstr "Pré-carregamento de links"
 
 #: components/performance/defaultText.js:195
 msgid "Enable link prefetching on desktop"
-msgstr ""
+msgstr "Ativar o pré-carregamento de links no desktop"
 
 #: components/performance/defaultText.js:199
 msgid "Activate on desktop"
-msgstr ""
+msgstr "Ativar no desktop"
 
 #: components/performance/defaultText.js:203
 msgid "Behavior of the prefetch"
-msgstr ""
+msgstr "Comportamento do pré-carregamento"
 
 #: components/performance/defaultText.js:207
 msgid "Behavior"
-msgstr ""
+msgstr "Comportamento"
 
 #: components/performance/defaultText.js:208
 msgid "Prefetch on Mouse Down"
-msgstr ""
+msgstr "Pré-carregar ao pressionar o mouse"
 
 #: components/performance/defaultText.js:212
 msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
-msgstr ""
+msgstr "Pré-carregar ao Clicar: Inicia o carregamento da página assim que você clica, para uma resposta mais rápida quando soltar o clique."
 
 #: components/performance/defaultText.js:216
 msgid "Prefetch on Mouse Hover (Recommended)"
-msgstr ""
+msgstr "Pré-carregar ao passar o mouse (Recomendado)"
 
 #: components/performance/defaultText.js:220
 msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
-msgstr ""
+msgstr "Pré-carregar ao passar o mouse: começa a carregar a página no momento em que o cursor passa sobre um link"
 
 #: components/performance/defaultText.js:224
 msgid "Enable link prefetching on mobile"
-msgstr ""
+msgstr "Ativar o pré-carregamento de links no mobile"
 
 #: components/performance/defaultText.js:228
 msgid "Activate on mobile"
-msgstr ""
+msgstr "Ativar no mobile"
 
 #: components/performance/defaultText.js:232
 msgid "Prefetch on Touchstart (Recommended)"
-msgstr ""
+msgstr "Pré-carregar ao tocar (Recomendado)"
 
 #: components/performance/defaultText.js:236
 msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
-msgstr ""
+msgstr "Pré-carregar ao tocar na tela: começa a carregar a página instantaneamente assim que você toca na tela, garantindo uma resposta mais rápida quando você levantar o dedo."
 
 #: components/performance/defaultText.js:240
 msgid "Prefetch Above the Fold"
-msgstr ""
+msgstr "Pré-carregar acima da dobra"
 
 #: components/performance/defaultText.js:244
 msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
-msgstr ""
+msgstr "Pré-carregar acima da dobra: carrega os links na sua visão atual instantaneamente, garantindo que eles estejam prontos quando você precisar."
 
 #: components/performance/defaultText.js:248
 msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
-msgstr ""
+msgstr "Excluir palavras-chave: uma lista separada por vírgulas de palavras ou cadeias de caracteres que excluirão um link de ser pré-carregado. Por exemplo, excluir ‘app’ impedirá que https://example.com/apple seja pré-carregado."
 
 #: components/performance/defaultText.js:252
 msgid "Exclude keywords"
-msgstr ""
+msgstr "Excluir palavras-chave"
 
 #: components/performance/defaultText.js:256
 msgid "Advanced settings"
-msgstr ""
+msgstr "Configurações avançadas"
 
 #: components/performance/defaultText.js:260
 msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
-msgstr ""
+msgstr "Recursos adicionais de velocidade e escalabilidade impulsionados pelo Jetpack Boost para tornar o seu site o mais rápido possível."
 
 #: components/performance/defaultText.js:264
 msgid "Optimize Critical CSS Loading (manual)"
-msgstr ""
+msgstr "Otimizar o carregamento de CSS crítico (manual)"
 
 #: components/performance/defaultText.js:268
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr ""
+msgstr "Mova as informações de estilo importantes para o início da página, o que ajuda as páginas a exibir seu conteúdo mais rapidamente, para que seus usuários não precisem esperar o carregamento de toda a página."
 
 #: components/performance/defaultText.js:272
 msgid "Optimize Critical CSS Loading (UPGRADED)"
-msgstr ""
+msgstr "Otimizar o carregamento de CSS crítico (ATUALIZADO)"
 
 #: components/performance/defaultText.js:276
 msgid "Generate Critical CSS Automatically"
-msgstr ""
+msgstr "Gerar CSS crítico automaticamente"
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: components/performance/defaultText.js:282
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr ""
+msgstr "Mova informações de estilo importantes para o início da página, o que ajuda as páginas a exibir seu conteúdo mais rapidamente, para que seus usuários não precisem esperar o carregamento completo da página.%1$s %2$sO Boost gerará automaticamente seu CSS Crítico%3$s sempre que você fizer alterações na estrutura HTML ou CSS do seu site."
 
 #: components/performance/defaultText.js:290
 msgid "Defer Non-Essential JavaScript"
-msgstr ""
+msgstr "Atrasar o carregamento de JavaScript não essencial"
 
 #: components/performance/defaultText.js:294
 msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
-msgstr ""
+msgstr "Executar JavaScript não essencial após o carregamento da página, para que os estilos e as imagens possam carregar mais rapidamente."
 
 #: components/performance/defaultText.js:298
 msgid "Concatenate JS"
-msgstr ""
+msgstr "Concatenar JS"
 
 #: components/performance/defaultText.js:299
 msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr ""
+msgstr "Os scripts são agrupados conforme sua colocação original, concatenados e minificados para reduzir o tempo de carregamento do site e diminuir o número de requisições."
 
 #: components/performance/defaultText.js:303
 msgid "Exclude JS Strings"
-msgstr ""
+msgstr "Excluir strings de JS"
 
 #: components/performance/defaultText.js:307
 msgid "Concatenate CSS"
-msgstr ""
+msgstr "Concatenar CSS"
 
 #: components/performance/defaultText.js:311
 msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr ""
+msgstr "Os estilos são agrupados conforme sua colocação original, concatenados e minificados para reduzir o tempo de carregamento do site e diminuir o número de requisições."
 
 #: components/performance/defaultText.js:315
 msgid "Exclude CSS Strings"
-msgstr ""
+msgstr "Excluir strings de CSS"
 
 #: components/performance/defaultText.js:319
 msgid "Show more"
-msgstr ""
+msgstr "Mostrar mais"
 
 #: components/performance/defaultText.js:320
 msgid "Show less"
-msgstr ""
+msgstr "Mostrar menos"
 
 #: components/performance/defaultText.js:321
 msgid "Discover More"
-msgstr ""
+msgstr "Descubra mais"
 
 #: components/performance/defaultText.js:322
 msgid "Install Jetpack Boost to unlock"
-msgstr ""
+msgstr "Instale o Jetpack Boost para desbloquear"
 
 #: components/performance/defaultText.js:326
 msgid "Installing Jetpack Boost…"
-msgstr ""
+msgstr "Instalando o Jetpack Boost…"
 
 #: components/performance/defaultText.js:330
 msgid "Jetpack Boost is now active"
-msgstr ""
+msgstr "O Jetpack Boost está agora ativo"
 
 #: components/performance/defaultText.js:334
 msgid "Activation failed"
-msgstr ""
+msgstr "Ativação falhou"
 
 #. translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
 #: components/performance/defaultText.js:339
 msgid "Discover more %1$shere%2$s"
-msgstr ""
+msgstr "Descubra mais %1$saqui%2$s"
 
 #: components/performance/defaultText.js:343
 msgid "Option saved correctly"
-msgstr ""
+msgstr "Opção salva corretamente"
 
 #: components/performance/defaultText.js:344
 msgid "Error saving option"
-msgstr ""
+msgstr "Erro ao salvar opção"
 
 #: components/performance/defaultText.js:345
 msgid "Upgrade to unlock"
-msgstr ""
+msgstr "Faça um upgrade para ter acesso"

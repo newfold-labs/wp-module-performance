@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2024-12-19 13:10+0000",
+    "translation-revision-date": "2025-01-10 10:34+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "components\/performance\/defaultText.js",
     "domain": "messages",
@@ -7,9 +7,12 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "pt_BR",
-                "plural-forms": "nplurals=2; plural=(n > 1);"
+                "lang": "es_MX",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
             },
+            "Cache Level": [
+                "Nivel de cach\u00e9"
+            ],
             "No cache enabled. Every page load is fresh.": [
                 ""
             ],
@@ -59,12 +62,9 @@
                 ""
             ],
             "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors.": [
-                "Aumente a velocidade e o desempenho armazenando uma c\u00f3pia do conte\u00fado, arquivos e imagens do seu site on-line para que as p\u00e1ginas do seu site sejam carregadas mais rapidamente para seus visitantes."
-            ],
-            "Cache setting saved": [
                 ""
             ],
-            "Cache Level": [
+            "Cache setting saved": [
                 ""
             ],
             "Clear All Cache Now": [
@@ -79,7 +79,103 @@
             "Clear Cache": [
                 ""
             ],
-            "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly. ": [
+            "Exclude from cache": [
+                ""
+            ],
+            "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
+                ""
+            ],
+            "Cache Exclusion saved": [
+                ""
+            ],
+            "Save": [
+                ""
+            ],
+            "Skip 404": [
+                ""
+            ],
+            "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.": [
+                ""
+            ],
+            "Skip 404 Handling For Static Files": [
+                ""
+            ],
+            "Skip 404 saved": [
+                ""
+            ],
+            "Image Optimization": [
+                ""
+            ],
+            "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.": [
+                ""
+            ],
+            "Enable Image Optimization": [
+                ""
+            ],
+            "Enable or disable image optimization globally.": [
+                ""
+            ],
+            "Automatically Optimize Uploaded Images": [
+                ""
+            ],
+            "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.": [
+                ""
+            ],
+            "Auto Delete Original Image": [
+                ""
+            ],
+            "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.": [
+                ""
+            ],
+            "No settings available.": [
+                ""
+            ],
+            "Oops! Something went wrong. Please try again.": [
+                ""
+            ],
+            "Loading settings\u2026": [
+                ""
+            ],
+            "Settings updated successfully": [
+                ""
+            ],
+            "Your image optimization settings have been saved.": [
+                ""
+            ],
+            "Enable Lazy Loading": [
+                ""
+            ],
+            "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance.": [
+                ""
+            ],
+            "Lazy loading has been updated.": [
+                ""
+            ],
+            "Oops! There was an error updating the lazy loading settings.": [
+                ""
+            ],
+            "Enable Bulk Optimization of Images": [
+                ""
+            ],
+            "When enabled, allows bulk optimization of images in the media library.": [
+                ""
+            ],
+            "Go to Media Library": [
+                ""
+            ],
+            "Error Updating Settings": [
+                ""
+            ],
+            "Prefer Optimized Image When Exists": [
+                ""
+            ],
+            "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
+                ""
+            ],
+            "Something went wrong while updating the settings. Please try again.": [
+                ""
+            ],
+            "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.": [
                 ""
             ],
             "Link prefetching setting saved": [
@@ -100,7 +196,7 @@
             "Behavior": [
                 ""
             ],
-            "Prefetch on Mouse down": [
+            "Prefetch on Mouse Down": [
                 ""
             ],
             "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click.": [
@@ -112,7 +208,7 @@
             "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link": [
                 ""
             ],
-            "Enable link prefetching on Mobile": [
+            "Enable link prefetching on mobile": [
                 ""
             ],
             "Activate on mobile": [
@@ -121,7 +217,7 @@
             "Prefetch on Touchstart (Recommended)": [
                 ""
             ],
-            "Prefetch on Touch Start: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.": [
+            "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.": [
                 ""
             ],
             "Prefetch Above the Fold": [
@@ -209,6 +305,9 @@
                 ""
             ],
             "Error saving option": [
+                ""
+            ],
+            "Upgrade to unlock": [
                 ""
             ]
         }
