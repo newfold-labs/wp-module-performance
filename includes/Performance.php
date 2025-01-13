@@ -10,9 +10,7 @@ use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
 use Automattic\Jetpack\Current_Plan;
 
@@ -235,7 +233,7 @@ class Performance {
 		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
 		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
 
-		// Remove the old option from EPC, if it exists
+		// Remove the old option from EPC, if it exists.
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
 			update_option( 'endurance_cache_level', 0 );
 			delete_option( 'endurance_cache_level' );
@@ -245,7 +243,7 @@ class Performance {
 	/**
 	 * Add options to the WordPress admin bar.
 	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
+	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar.
 	 */
 	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
 
@@ -314,7 +312,10 @@ class Performance {
 	public function enqueue_scripts() {
 		$plugin_url = $this->container->plugin()->url . get_styles_path();
 		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
-		wp_enqueue_style( 'wp-module-performance-styles' );
+
+		if ( is_settings_page() ) {
+			wp_enqueue_style( 'wp-module-performance-styles' );
+		}
 	}
 
 	/**

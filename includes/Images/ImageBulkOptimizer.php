@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use function NewfoldLabs\WP\Module\Performance\is_bulk_image_optimizer_page;
+
 /**
  * Manages bulk optimization functionality for the Media Library.
  */
@@ -12,6 +14,15 @@ class ImageBulkOptimizer {
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_bulk_optimizer_script' ) );
+	}
+
+	/**
+	 * Detect if the current page is the bulk image optimizer page.
+	 *
+	 * @return boolean
+	 */
+	private function is_bulk_optimizer_page() {
+		return isset( $_GET['autoSelectBulk'] ) && 'true' === $_GET['autoSelectBulk'];
 	}
 
 	/**
@@ -26,20 +37,22 @@ class ImageBulkOptimizer {
 			true
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'nfd-performance-bulk-optimizer-style',
 			NFD_PERFORMANCE_BUILD_URL . '/image-bulk-optimizer/image-bulk-optimizer.min.css',
 			array(),
 			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-bulk-optimizer/image-bulk-optimizer.min.css' )
 		);
 
-		wp_add_inline_script(
-			'nfd-performance-bulk-optimizer',
-			$this->get_inline_script(),
-			'before'
-		);
-
-		wp_enqueue_script( 'nfd-performance-bulk-optimizer' );
+		if ( $this->is_bulk_optimizer_page() ) {
+			wp_enqueue_style( 'nfd-performance-bulk-optimizer-style' );
+			wp_enqueue_script( 'nfd-performance-bulk-optimizer' );
+			wp_add_inline_script(
+				'nfd-performance-bulk-optimizer',
+				$this->get_inline_script(),
+				'before'
+			);
+		}
 	}
 
 	/**
