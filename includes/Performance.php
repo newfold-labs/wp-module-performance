@@ -102,8 +102,8 @@ class Performance {
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		add_action( 'load-toplevel_page_' . $container->plugin()->id, array( $this, 'register_assets' ), 1 );
-		
-		add_action( 'init', array( $this, 'load_text_domain') );
+
+		add_action( 'init', array( $this, 'load_text_domain' ) );
 	}
 
 	/**
@@ -322,7 +322,7 @@ class Performance {
 		wp_register_script(
 			'wp-module-performance-translations',
 			NFD_PERFORMANCE_BUILD_URL . '/test.min.js',
-			array('lodash', 'react', 'react-dom', 'wp-api-fetch', 'wp-components', 'wp-compose', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-html-entities', 'wp-i18n', 'wp-notices', 'wp-url'),
+			array( 'lodash', 'react', 'react-dom', 'wp-api-fetch', 'wp-components', 'wp-compose', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-html-entities', 'wp-i18n', 'wp-notices', 'wp-url' ),
 			$this->container->plugin()->version,
 			true
 		);

@@ -160,10 +160,6 @@ msgstr ""
 msgid "Performance"
 msgstr "Rendimiento"
 
-#: components/advancedSettings/JetpackBoost/index.js:108
-msgid "Installing"
-msgstr ""
-
 #: components/performance/defaultText.js:4
 msgid "No cache enabled. Every page load is fresh."
 msgstr ""
