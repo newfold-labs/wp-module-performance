@@ -147,7 +147,7 @@ function toStudlyCase( $value ) {
 /**
  * Get styles path.
  *
- * return string 
+ * return string
  */
 function get_styles_path() {
 	return 'vendor/newfold-labs/wp-module-performance/styles/styles.css';
@@ -176,7 +176,7 @@ function get_scripts_path( $script_name = '' ) {
 function is_settings_page() {
 
 	$current_url = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) .
-	'://' . 
+	'://' .
 	( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' ) .
 	( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
 
@@ -188,7 +188,7 @@ function is_settings_page() {
 
 	parse_str( $parsedUrl['query'], $queryParams );
 
-	if ( ! isset( $queryParams['page'] ) || 'bluehost' !== $queryParams['page'] ) {
+	if ( ! isset( $queryParams['page'] ) || ! in_array( $queryParams['page'], array( 'bluehost', 'hostgator' ) ) ) {
 		return false;
 	}
 
