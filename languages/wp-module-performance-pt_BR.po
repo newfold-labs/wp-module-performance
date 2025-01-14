@@ -2,20 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2025-01-14 11:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-13 15:01+0000\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Domain: wp-module-performance\n"
 
-#: includes/functions.php:46
-#: components/performance/defaultText.js:61
+#: includes/functions.php:46 components/performance/defaultText.js:61
 msgid "Cache Level"
 msgstr "Nível de cache"
 
@@ -29,16 +28,16 @@ msgstr "Cache"
 
 #: includes/RestApi/JetpackController.php:67
 msgid "The parameter 'field' is missing or invalid."
-msgstr ""
+msgstr "O parâmetro ‘field’ está ausente ou é inválido."
 
 #: includes/RestApi/JetpackController.php:79
 msgid "The fields 'id' and 'value' are required."
-msgstr ""
+msgstr "Os campos ‘id’ e ‘value’ são obrigatórios."
 
 #: includes/RestApi/JetpackController.php:103
 #: includes/RestApi/JetpackController.php:123
 msgid "An error occurred while updating the option."
-msgstr ""
+msgstr "Ocorreu um erro ao atualizar a opção."
 
 #: includes/Performance.php:271
 msgid "Purge All"
@@ -54,109 +53,108 @@ msgstr "Configurações de cache"
 
 #: includes/Images/ImageService.php:27
 msgid "The provided image URL is invalid."
-msgstr ""
+msgstr "A URL da imagem fornecida é inválida."
 
 #. translators: %s: Error message
 #: includes/Images/ImageService.php:46
 msgid "Error connecting to Cloudflare Worker: %s"
-msgstr ""
+msgstr "Erro ao conectar ao Cloudflare Worker: %s"
 
 #. translators: %s: Error message
 #: includes/Images/ImageService.php:60
 msgid "Client error from Cloudflare Worker: %s"
-msgstr ""
+msgstr "Erro do cliente do Cloudflare Worker: %s"
 
 #: includes/Images/ImageService.php:67
 msgid "Server error from Cloudflare Worker. Please try again later."
-msgstr ""
+msgstr "Erro no servidor do Cloudflare Worker. Tente novamente mais tarde."
 
 #: includes/Images/ImageService.php:74
 msgid "Invalid response from Cloudflare Worker."
-msgstr ""
+msgstr "Resposta inválida do Cloudflare Worker."
 
 #: includes/Images/ImageService.php:89
 msgid "Failed to save the optimized WebP image."
-msgstr ""
+msgstr "Falha ao salvar a imagem WebP otimizada."
 
 #: includes/Images/ImageService.php:108
 msgid "Invalid file path for generating WebP."
-msgstr ""
+msgstr "Caminho de arquivo inválido para gerar WebP."
 
 #. translators: 1: HTTP response code, 2: Response message
 #: includes/Images/ImageService.php:150
 msgid "HTTP %1$d: %2$s"
-msgstr ""
+msgstr "HTTP %1$d: %2$s"
 
 #: includes/Images/ImageService.php:175
 msgid "WebP file is missing or empty."
-msgstr ""
+msgstr "Arquivo WebP está ausente ou vazio."
 
 #: includes/Images/ImageService.php:186
 msgid "Invalid Media ID provided."
-msgstr ""
+msgstr "ID de mídia inválido fornecido."
 
 #: includes/Images/ImageService.php:206
 msgid "Invalid Media ID or file path provided."
-msgstr ""
+msgstr "ID de mídia ou caminho do arquivo inválido fornecido."
 
 #: includes/Images/ImageService.php:214
 msgid "Failed to delete the original file."
-msgstr ""
+msgstr "Falha ao excluir o arquivo original."
 
 #: includes/Images/ImageService.php:230
 msgid "Failed to generate attachment metadata."
-msgstr ""
+msgstr "Falha ao gerar metadados do anexo."
 
 #: includes/Images/ImageSettings.php:50
 msgid "Settings for NFD Image Optimization."
-msgstr ""
+msgstr "Configurações de Otimização de Imagem NFD."
 
 #: includes/Images/ImageSettings.php:59
 msgid "Enable image optimization."
-msgstr ""
+msgstr "Ativar otimização de imagem."
 
 #: includes/Images/ImageSettings.php:64
 msgid "Prefer WebP format when it exists."
-msgstr ""
+msgstr "Preferir formato WebP quando existir."
 
 #: includes/Images/ImageSettings.php:69
 msgid "Auto-optimized uploaded images settings."
-msgstr ""
+msgstr "Configurações de imagens carregadas otimizadas automaticamente."
 
 #: includes/Images/ImageSettings.php:73
 msgid "Automatically optimize uploaded images."
-msgstr ""
+msgstr "Otimizar automaticamente imagens carregadas."
 
 #: includes/Images/ImageSettings.php:78
 msgid "Delete the original uploaded image after optimization."
-msgstr ""
+msgstr "Excluir a imagem carregada original após a otimização."
 
 #: includes/Images/ImageSettings.php:85
 msgid "Settings for lazy loading."
-msgstr ""
+msgstr "Configurações de carregamento lento."
 
 #: includes/Images/ImageSettings.php:89
 msgid "Enable lazy loading."
-msgstr ""
+msgstr "Ativar carregamento lento."
 
 #: includes/Images/ImageSettings.php:96
 msgid "Enable bulk optimization of images."
-msgstr ""
+msgstr "Ativar otimização em massa de imagens."
 
 #: includes/Images/RestApi/ImagesController.php:45
 msgid "The ID of the media item to optimize."
-msgstr ""
+msgstr "O ID do item de mídia a ser otimizado."
 
 #: includes/Images/RestApi/ImagesController.php:71
 msgid "Invalid media ID or media item not found."
-msgstr ""
+msgstr "ID de mídia inválido ou item de mídia não encontrado."
 
 #: includes/Images/RestApi/ImagesController.php:110
 msgid "Image successfully optimized."
-msgstr ""
+msgstr "Imagem otimizada com sucesso."
 
-#: includes/Performance.php:305
-#: includes/Performance.php:306
+#: includes/Performance.php:305 includes/Performance.php:306
 msgid "Performance"
 msgstr "Desempenho"
 
@@ -335,51 +333,51 @@ msgstr "Suas configurações de otimização de imagem foram salvas."
 
 #: components/performance/defaultText.js:141
 msgid "Enable Lazy Loading"
-msgstr ""
+msgstr "Ativar Carregamento Preguiçoso"
 
 #: components/performance/defaultText.js:145
 msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
-msgstr ""
+msgstr "O carregamento preguiçoso adia o carregamento das imagens até que elas fiquem visíveis na tela, melhorando a velocidade de carregamento da página e o desempenho."
 
 #: components/performance/defaultText.js:149
 msgid "Lazy loading has been updated."
-msgstr ""
+msgstr "O carregamento preguiçoso foi atualizado."
 
 #: components/performance/defaultText.js:153
 msgid "Oops! There was an error updating the lazy loading settings."
-msgstr ""
+msgstr "Oops! Ocorreu um erro ao atualizar as configurações de carregamento preguiçoso."
 
 #: components/performance/defaultText.js:157
 msgid "Enable Bulk Optimization of Images"
-msgstr ""
+msgstr "Ativar Otimização em Massa de Imagens"
 
 #: components/performance/defaultText.js:161
 msgid "When enabled, allows bulk optimization of images in the media library."
-msgstr ""
+msgstr "Quando ativado, permite a otimização em massa de imagens na biblioteca de mídia."
 
 #: components/performance/defaultText.js:165
 msgid "Go to Media Library"
-msgstr ""
+msgstr "Ir para a Biblioteca de Mídia"
 
 #: components/performance/defaultText.js:169
 msgid "Error Updating Settings"
-msgstr ""
+msgstr "Erro ao Atualizar Configurações"
 
 #: components/performance/defaultText.js:173
 msgid "Prefer Optimized Image When Exists"
-msgstr ""
+msgstr "Preferir Imagem Otimizada Quando Existir"
 
 #: components/performance/defaultText.js:177
 msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
-msgstr ""
+msgstr "Quando ativado, as imagens otimizadas serão servidas no lugar das imagens originais quando existirem, melhorando o desempenho."
 
 #: components/performance/defaultText.js:181
 msgid "Something went wrong while updating the settings. Please try again."
-msgstr ""
+msgstr "Algo deu errado durante a atualização das configurações. Por favor, tente novamente."
 
 #: components/performance/defaultText.js:186
 msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
-msgstr ""
+msgstr "Solicita ao navegador que baixe e armazene em cache os links na página antes de serem clicados, para que, quando clicados, eles carreguem quase instantaneamente."
 
 #: components/performance/defaultText.js:190
 msgid "Link prefetching setting saved"
