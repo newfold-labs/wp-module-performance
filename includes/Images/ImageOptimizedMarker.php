@@ -21,7 +21,8 @@ class ImageOptimizedMarker {
 	 * @return boolean
 	 */
 	private function is_enqueue_allowed() {
-		$allowed        = true;
+		global $pagenow;
+
 		$excluded_pages = array(
 			'admin.php',
 			'themes.php',
@@ -36,18 +37,10 @@ class ImageOptimizedMarker {
 			'theme-editor.php',
 			'plugin-editor.php',
 		);
-		$currentUrl     = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) .
-		'://' .
-		( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' ) .
-		( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
 
-		foreach ( $excluded_pages as $page ) {
-			if ( strpos( $currentUrl, $page ) !== false ) {
-				$allowed = false;
-				break;
-			}
-		}
-		return $allowed;
+		$is_excluded = in_array( $pagenow, $excluded_pages, true );
+
+		return apply_filters( 'newfold_performance_optimized_image_marker_enqueue_allowed', ! $is_excluded );
 	}
 
 	/**

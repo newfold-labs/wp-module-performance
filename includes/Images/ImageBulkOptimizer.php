@@ -17,14 +17,32 @@ class ImageBulkOptimizer {
 	}
 
 	/**
-	 * Detect if the current page is the bulk image optimizer page.
+	 * Establish whether the current page allows scripts to be enqueued.
 	 *
 	 * @return boolean
 	 */
-	private function is_bulk_optimizer_page() {
-		return isset( $_GET['autoSelectBulk'] ) && 'true' === $_GET['autoSelectBulk'];
-	}
+	private function is_enqueue_allowed() {
+		global $pagenow;
 
+		$excluded_pages = array(
+			'admin.php',
+			'themes.php',
+			'plugins.php',
+			'users.php',
+			'tools.php',
+			'import.php',
+			'export.php',
+			'site-health.php',
+			'export-personal-data.php',
+			'erase-personal-data.php',
+			'theme-editor.php',
+			'plugin-editor.php',
+		);
+
+		$is_excluded = in_array( $pagenow, $excluded_pages, true );
+
+		return apply_filters( 'newfold_performance_image_bulk_optimizer_enqueue_allowed', ! $is_excluded );
+	}
 	/**
 	 * Enqueues the bulk optimizer script.
 	 */
@@ -44,7 +62,7 @@ class ImageBulkOptimizer {
 			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-bulk-optimizer/image-bulk-optimizer.min.css' )
 		);
 
-		if ( $this->is_bulk_optimizer_page() ) {
+		if ( $this->is_enqueue_allowed() ) {
 			wp_enqueue_style( 'nfd-performance-bulk-optimizer-style' );
 			wp_enqueue_script( 'nfd-performance-bulk-optimizer' );
 			wp_add_inline_script(
