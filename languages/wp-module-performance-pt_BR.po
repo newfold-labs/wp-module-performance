@@ -2,19 +2,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-14 11:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2025-01-14 11:12+0000\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Domain: wp-module-performance\n"
 
-#: includes/functions.php:46 components/performance/defaultText.js:61
+#: includes/functions.php:46
+#: components/performance/defaultText.js:61
 msgid "Cache Level"
 msgstr "Nível de cache"
 
@@ -154,7 +155,8 @@ msgstr "ID de mídia inválido ou item de mídia não encontrado."
 msgid "Image successfully optimized."
 msgstr "Imagem otimizada com sucesso."
 
-#: includes/Performance.php:305 includes/Performance.php:306
+#: includes/Performance.php:305
+#: includes/Performance.php:306
 msgid "Performance"
 msgstr "Desempenho"
 

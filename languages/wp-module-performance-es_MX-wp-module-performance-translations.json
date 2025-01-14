@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-01-10 10:34+0000",
+    "translation-revision-date": "2025-01-14 13:01+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "components\/performance\/defaultText.js",
     "domain": "messages",
@@ -14,70 +14,70 @@
                 "Nivel de cach\u00e9"
             ],
             "No cache enabled. Every page load is fresh.": [
-                ""
+                "Sin cach\u00e9 habilitado. Cada carga de p\u00e1gina es nueva."
             ],
             "Disabled": [
-                ""
+                "Deshabilitado"
             ],
             "Caching disabled.": [
                 ""
             ],
             "Not recommended.": [
-                ""
+                "No recomendado."
             ],
             "Cache static assets like images and the appearance of your site for 1 hour.": [
-                ""
+                "Almacena en cach\u00e9 los recursos est\u00e1ticos, como im\u00e1genes y la apariencia de su sitio, durante 1 hora."
             ],
             "Assets Only": [
-                ""
+                "S\u00f3lo Recursos"
             ],
             "Cache enabled for assets only.": [
-                ""
+                "Cach\u00e9 habilitado solo para recursos."
             ],
             "Tuned for online stores and member sites that need to be fresh.": [
                 ""
             ],
             "Cache static assets for 24 hours and web pages for 2 hours.": [
-                ""
+                "Almacenar en cach\u00e9 recursos est\u00e1ticos durante 24 horas y p\u00e1ginas web durante 2 horas."
             ],
             "Assets & Web Pages": [
-                ""
+                "Recursos y P\u00e1ginas Web"
             ],
             "Cache enabled for assets and pages.": [
-                ""
+                "Cach\u00e9 habilitada para recursos y p\u00e1ginas."
             ],
             "Tuned for sites that change at least weekly.": [
                 ""
             ],
             "Cache static assets for 1 week and web pages for 8 hours.": [
-                ""
+                "Almacena en cach\u00e9 recursos est\u00e1ticos durante 1 semana y p\u00e1ginas web durante 8 horas. "
             ],
             "Assets & Web Pages - Extended": [
-                ""
+                "Activos y P\u00e1ginas Web - Extendidos"
             ],
             "Cache enabled for assets and pages (extended).": [
-                ""
+                "Cach\u00e9 habilitada para recursos y p\u00e1ginas (extendido)."
             ],
             "Tuned for sites that update a few times a month or less.": [
                 ""
             ],
             "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors.": [
-                ""
+                "Aumenta la velocidad y el rendimiento almacenando una copia del contenido, archivos e im\u00e1genes de su sitio web en l\u00ednea para que las p\u00e1ginas de tu sitio web se carguen m\u00e1s r\u00e1pido para tus visitantes."
             ],
             "Cache setting saved": [
-                ""
+                "Configuraci\u00f3n de cach\u00e9 guardada"
             ],
             "Clear All Cache Now": [
-                ""
+                "Limpiar todo el Cach\u00e9 ahora"
             ],
             "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
-                ""
+                "Limpiamos autom\u00e1ticamente tu cach\u00e9 mientras trabajas (creando contenido, cambiando configuraciones, instalando complementos y m\u00e1s). Pero puedes borrarlo manualmente aqu\u00ed para estar seguro de que est\u00e1 actualizado."
             ],
             "Cache cleared": [
-                ""
+                "Cach\u00e9 Borrado"
             ],
             "Clear Cache": [
-                ""
+                "Limpiar Cach\u00e9"
             ],
             "Exclude from cache": [
                 ""
@@ -179,49 +179,49 @@
                 ""
             ],
             "Link prefetching setting saved": [
-                ""
+                "Configuraci\u00f3n de precarga de enlaces guardada"
             ],
             "Link Prefetch": [
-                ""
+                "Precarga de enlaces"
             ],
             "Enable link prefetching on desktop": [
-                ""
+                "Activar la precarga de enlaces en el escritorio"
             ],
             "Activate on desktop": [
-                ""
+                "Activar en escritorio"
             ],
             "Behavior of the prefetch": [
-                ""
+                "Comportamiento de la precarga"
             ],
             "Behavior": [
-                ""
+                "Comportamiento"
             ],
             "Prefetch on Mouse Down": [
-                ""
+                "Precarga al hacer clic en el bot\u00f3n"
             ],
             "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click.": [
                 ""
             ],
             "Prefetch on Mouse Hover (Recommended)": [
-                ""
+                "Precarga al pasar el cursor (recomendado)"
             ],
             "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link": [
-                ""
+                "Precarga al pasar el cursor: comienza a cargar la p\u00e1gina en el momento en que el cursor pasa por encima de un enlace"
             ],
             "Enable link prefetching on mobile": [
-                ""
+                "Activar la precarga de enlaces en m\u00f3viles"
             ],
             "Activate on mobile": [
-                ""
+                "Activar en m\u00f3vil"
             ],
             "Prefetch on Touchstart (Recommended)": [
-                ""
+                "Precarga al tocar la pantalla t\u00e1ctil (recomendado)"
             ],
             "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.": [
                 ""
             ],
             "Prefetch Above the Fold": [
-                ""
+                "Precarga en vista actual"
             ],
             "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them.": [
                 ""
@@ -230,85 +230,85 @@
                 ""
             ],
             "Exclude keywords": [
-                ""
+                "Excluir palabras clave"
             ],
             "Advanced settings": [
-                ""
+                "Configuraci\u00f3n avanzada"
             ],
             "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be.": [
-                ""
+                "Funciones adicionales de velocidad y escalabilidad con Jetpack Boost para que tu sitio sea lo m\u00e1s r\u00e1pido posible."
             ],
             "Optimize Critical CSS Loading (manual)": [
-                ""
+                "Optimizar la carga cr\u00edtica de CSS (manual)"
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                ""
+                "Mueve la informaci\u00f3n de estilo importante al principio de la p\u00e1gina, lo que ayuda a que las p\u00e1ginas muestren su contenido antes, para que tus usuarios no tengan que esperar a que se cargue toda la p\u00e1gina. %1$s %2$sBoost generar\u00e1 autom\u00e1ticamente tu CSS cr\u00edtico%3$s siempre que realices cambios en la estructura HTML o CSS de tu sitio."
             ],
             "Optimize Critical CSS Loading (UPGRADED)": [
-                ""
+                "Optimizar la carga de CSS cr\u00edtico (ACTUALIZADO)"
             ],
             "Generate Critical CSS Automatically": [
-                ""
+                "Generar CSS cr\u00edtico autom\u00e1ticamente"
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                ""
+                "Mueve la informaci\u00f3n de estilo importante al principio de la p\u00e1gina, lo que ayuda a que las p\u00e1ginas muestren su contenido antes, para que tus usuarios no tengan que esperar a que se cargue toda la p\u00e1gina. %1$s %2$sBoost generar\u00e1 autom\u00e1ticamente tu CSS cr\u00edtico%3$s siempre que realices cambios en la estructura HTML o CSS de tu sitio."
             ],
             "Defer Non-Essential JavaScript": [
-                ""
+                "Aplazar JavaScript no esencial"
             ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
-                ""
+                "Ejecuta JavaScript no esencial despu\u00e9s de que la p\u00e1gina se haya cargado para que los estilos y las im\u00e1genes puedan cargarse m\u00e1s r\u00e1pidamente."
             ],
             "Concatenate JS": [
-                ""
+                "Concatenar JS"
             ],
             "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                ""
+                "Los scripts se agrupan por su ubicaci\u00f3n original, se concatenan y se minifican para reducir el tiempo de carga del sitio y reducir el n\u00famero de peticiones."
             ],
             "Exclude JS Strings": [
-                ""
+                "Excluir cadenas JS"
             ],
             "Concatenate CSS": [
-                ""
+                "Concatenar CSS"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                ""
+                "Los estilos se agrupan por su ubicaci\u00f3n original, se concatenan y se minifican para reducir el tiempo de carga del sitio y el n\u00famero de solicitudes."
             ],
             "Exclude CSS Strings": [
-                ""
+                "Excluir cadenas CSS"
             ],
             "Show more": [
-                ""
+                "Mostrar m\u00e1s"
             ],
             "Show less": [
-                ""
+                "Mostrar menos"
             ],
             "Discover More": [
-                ""
+                "Descubrir m\u00e1s"
             ],
             "Install Jetpack Boost to unlock": [
-                ""
+                "Instalar Jetpack Boost para desbloquear"
             ],
             "Installing Jetpack Boost\u2026": [
-                ""
+                "Instalando Jetpack Boost\u2026"
             ],
             "Jetpack Boost is now active": [
-                ""
+                "Jetpack Boost ya est\u00e1 activo"
             ],
             "Activation failed": [
-                ""
+                "Activaci\u00f3n fallida"
             ],
             "Discover more %1$shere%2$s": [
-                ""
+                "Descubra m\u00e1s %1$saqu\u00ed%2$s"
             ],
             "Option saved correctly": [
-                ""
+                "Opci\u00f3n guardada correctamente"
             ],
             "Error saving option": [
-                ""
+                "Error al guardar la opci\u00f3n"
             ],
             "Upgrade to unlock": [
-                ""
+                "Haz un upgrade para tener acceso"
             ]
         }
     }
