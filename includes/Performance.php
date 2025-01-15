@@ -327,8 +327,8 @@ class Performance {
 	public function load_translations() {
 		wp_register_script(
 			'wp-module-performance-translations',
-			NFD_PERFORMANCE_BUILD_URL . '/test.min.js',
-			array( 'lodash', 'react', 'react-dom', 'wp-api-fetch', 'wp-components', 'wp-compose', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-html-entities', 'wp-i18n', 'wp-notices', 'wp-url' ),
+			NFD_PERFORMANCE_BUILD_URL . '/translations.min.js',
+			array( 'lodash', 'react', 'react-dom', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-html-entities', 'wp-i18n' ),
 			$this->container->plugin()->version,
 			true
 		);

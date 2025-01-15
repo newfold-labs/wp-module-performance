@@ -15,6 +15,8 @@ const ERROR   = chalk.reset.inverse.bold.red( ' ERROR ' );
 
 const slugsMap = {
 	'components/performance/defaultText.js': 'wp-module-performance-translations',
+	'assets/image-bulk-optimizer/image-bulk-optimizer.js': 'nfd-performance-bulk-optimizer',
+	'assets/image-optimized-marker/image-optimized-marker.js': 'nfd-performance-optimizer-marker'
 };
 
 const regex = /-(?:[a-f0-9]{32})\.json$/i;
