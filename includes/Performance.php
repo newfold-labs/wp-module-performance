@@ -315,7 +315,7 @@ class Performance {
 	 */
 	public function register_assets() {
 		$validscreen = 'toplevel_page_' . $this->container->plugin()->id;
-		if ( $validscreen === get_current_screen()->id ) {
+		if ( get_current_screen()->id === $validscreen ) {
 			$plugin_url = $this->container->plugin()->url . get_styles_path();
 			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
 			wp_enqueue_style( 'wp-module-performance-styles' );
