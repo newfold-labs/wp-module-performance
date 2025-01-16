@@ -3,7 +3,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 // Newfold
 import { Checkbox, Container } from '@newfold/ui-component-library';
-import { NewfoldRuntime } from '@newfold-labs/wp-module-runtime';
+import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 const Skip404 = ( { methods, constants } ) => {
 	const [ skip404, setSkip404 ] = methods.useState(
