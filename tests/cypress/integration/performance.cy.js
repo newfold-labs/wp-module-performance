@@ -1,13 +1,14 @@
 // <reference types="Cypress" />
 
-describe( 'Performance Page', function () {
+describe( 'Performance Page', { testIsolation: true }, () => {
 	const appClass = '.' + Cypress.env( 'appId' );
 
-	before( () => {
+	beforeEach( () => {
+		cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
 		cy.visit(
 			'/wp-admin/admin.php?page=' +
-				Cypress.env( 'pluginId' ) +
-				'#/performance'
+			Cypress.env( 'pluginId' ) +
+			'#/performance'
 		);
 		cy.injectAxe();
 	} );
