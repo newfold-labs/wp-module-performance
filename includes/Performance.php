@@ -10,11 +10,10 @@ use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 
 use Automattic\Jetpack\Current_Plan;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Performance Class
@@ -101,6 +100,9 @@ class Performance {
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
+
+		// Set default values for JetPack Boost on fresh installation.
+		add_action( 'admin_init', array( $this, 'set_default_values_for_jetpack_boost' ) );
 	}
 
 	/**
@@ -329,9 +331,9 @@ class Performance {
 			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostActive(),
 			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
 			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
-			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
+			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', true ),
 			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array( 'jquery', 'jquery-core', 'underscore', 'backbone' ) ) ),
-			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
+			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', true ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
 			'skip404'                           => (bool) get_option( 'newfold_skip_404_handling', false ),
@@ -359,5 +361,18 @@ class Performance {
 		}
 
 		return $exists;
+	}
+
+	/**
+	 * Set default values for JetPack Boost.
+	 *
+	 * @return void
+	 */
+	public function set_default_values_for_jetpack_boost(){
+		$isFreshInstall = container()->get('isFreshInstallation');
+		if( $isFreshInstall && defined( 'JETPACK_BOOST_VERSION' ) ){
+			update_option( 'jetpack_boost_status_minify-js', true );
+			update_option( 'jetpack_boost_status_minify-css', true );
+		}
 	}
 }
