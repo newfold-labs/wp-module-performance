@@ -18,7 +18,7 @@ class ImageSettings {
 	 * @var array
 	 */
 	private const DEFAULT_SETTINGS = array(
-		'enabled'                            => false,
+		'enabled'                            => true,
 		'bulk_optimization'                  => false,
 		'prefer_optimized_image_when_exists' => false,
 		'auto_optimized_uploaded_images'     => array(
@@ -26,7 +26,7 @@ class ImageSettings {
 			'auto_delete_original_image' => false,
 		),
 		'lazy_loading'                       => array(
-			'enabled' => false,
+			'enabled' => true,
 		),
 	);
 
