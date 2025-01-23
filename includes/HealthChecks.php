@@ -130,7 +130,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'     => function () {
+				'test'    => function () {
 					return ( get_option( 'newfold_cache_level' ) >= 2 );
 				},
 			)
@@ -169,8 +169,8 @@ class HealthChecks {
 					'text'    => __( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-module-performance' ),
 					'actions' => array(
 						array(
-							'label' => __( 'Learn more about Bluehost Cloud Hosting.', 'newfold-module-performance' ),
-							'url'   => 'https://www.bluehost.com/hosting/cloud',
+							'label'    => __( 'Learn more about Bluehost Cloud Hosting.', 'newfold-module-performance' ),
+							'url'      => 'https://www.bluehost.com/hosting/cloud',
 							'external' => true,
 						),
 					),
