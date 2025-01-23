@@ -94,7 +94,7 @@ class HealthCheckManager {
 	 * @return string Concatenated actions.
 	 */
 	public function concat_actions_text_and_link( $actions ) {
-		 $actions_string = '';
+		$actions_string = '';
 
 		foreach ( $actions as $action ) {
 			$action = wp_parse_args(
@@ -118,7 +118,7 @@ class HealthCheckManager {
 			);
 		}
 
-		 return $actions_string;
+		return $actions_string;
 	}
 
 	/**
