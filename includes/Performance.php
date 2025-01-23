@@ -87,8 +87,8 @@ class Performance {
 		new Constants( $container );
 		new ImageManager( $container );
 
-    $container->set( 'healthCheckManager', $healthCheckManager );
-    $healthChecks->addHealthChecks();
+		$container->set( 'healthCheckManager', $healthCheckManager );
+		$healthChecks->addHealthChecks();
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
