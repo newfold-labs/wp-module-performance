@@ -18,11 +18,23 @@ describe( 'Enable Image Optimization Test', function () {
 		cy.checkA11y( appClass + '-app-body' );
 	} );
 
-	it( 'Verify Enable Image Optimization', () => {
-		cy.get( '[data-id="image-optimization-enabled"]', {
-			timeout: customCommandTimeout,
-		} ).click();
+	it( 'should enable image optimization if not already enabled', () => {
+		cy.get(
+			'button.nfd-toggle[data-id="image-optimization-enabled"]'
+		).then( ( $button ) => {
+			const isEnabled = $button.attr( 'aria-checked' ) === 'true';
+
+			if ( isEnabled ) {
+				cy.log( 'Image Optimization is already enabled' );
+			} else {
+				cy.wrap( $button ).click();
+				cy.log(
+					'Image Optimization was not enabled, so it was enabled now.'
+				);
+			}
+		} );
 	} );
+
 	it( 'Uploading images to upload.php', () => {
 		cy.visit( '/wp-admin//upload.php' );
 		cy.get( '.page-title-action', {
@@ -119,6 +131,7 @@ describe( 'Enable Image Optimization Test', function () {
 		cy.get( '[data-id="image-optimization-enabled"]', {
 			timeout: customCommandTimeout,
 		} )
+			.scrollIntoView()
 			.should( 'be.visible' )
 			.click();
 	} );
