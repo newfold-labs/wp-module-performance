@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
@@ -14,7 +15,6 @@ use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
  * Browser cache type.
  */
 class Browser extends CacheBase {
-
 	/**
 	 * The file marker name.
 	 *
@@ -40,6 +40,8 @@ class Browser extends CacheBase {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
+		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
+
 		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
 	}
 
@@ -47,6 +49,13 @@ class Browser extends CacheBase {
 	 * When updating .htaccess, also update our rules as appropriate.
 	 */
 	public function onRewrite() {
+		self::maybeAddRules( getCacheLevel() );
+	}
+
+	/**
+	 * Manage on exlcusion option change.
+	 */
+	public static function exclusionChange() {
 		self::maybeAddRules( getCacheLevel() );
 	}
 
@@ -89,8 +98,25 @@ class Browser extends CacheBase {
 				$rules[] = "{$tab}ExpiresByType {$file_type} \"access plus {$expiration}\"";
 			}
 		}
+		$rules[] = '</IfModule>';
 
-		$rules [] = '</IfModule>';
+		$cache_exclusion = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
+		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
+			$cache_exclusion_parameters = array_map( 'trim', explode( ',', sanitize_text_field( get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' ) ) ) );
+			$cache_exclusion_parameters = implode( '|', $cache_exclusion_parameters );
+
+			// Add the cache exclusion rules.
+			$rules[] = '<IfModule mod_rewrite.c>';
+			$rules[] = 'RewriteEngine On';
+			$rules[] = "RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
+			$rules[] = '<IfModule mod_headers.c>';
+			$rules[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
+			$rules[] = 'Header set Pragma "no-cache"';
+			$rules[] = 'Header set Expires 0';
+			$rules[] = '</IfModule>';
+			$rules[] = '</IfModule>';
+			// Add the end of the rules about cache exclusion.
+		}
 
 		$htaccess = new htaccess( self::MARKER );
 

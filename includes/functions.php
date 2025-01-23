@@ -3,6 +3,15 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 /**
+ * Return defaul exclusions.
+ *
+ * @return array
+ */
+function get_default_cache_exclusions() {
+	return join( ',', array( 'cart', 'checkout', 'wp-admin', rest_get_url_prefix() ) );
+}
+
+/**
  * Get the current cache level.
  *
  * @return int Cache level.
@@ -16,7 +25,7 @@ function getCacheLevel() { // phpcs:ignore WordPress.NamingConventions.ValidFunc
  *
  * @return string[] Cache levels.
  */
-function getCacheLevels() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+function getCacheLevels() {
 	return array(
 		0 => 'Off',         // Disable caching
 		1 => 'Assets Only', // Cache assets only
@@ -133,4 +142,28 @@ function toSnakeCase( string $value, string $delimiter = '_' ) { // phpcs:ignore
  */
 function toStudlyCase( $value ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	return str_replace( ' ', '', ucwords( str_replace( array( '-', '_' ), ' ', $value ) ) );
+}
+
+/**
+ * Get styles path.
+ *
+ * return string
+ */
+function get_styles_path() {
+	return 'vendor/newfold-labs/wp-module-performance/styles/styles.css';
+}
+
+/**
+ * Get js script path.
+ *
+ * @param string $script_name script name.
+ * return string
+ */
+function get_scripts_path( $script_name = '' ) {
+	$basePath = 'vendor/newfold-labs/wp-module-performance/scripts/';
+	if ( empty( $script_name ) ) {
+		return $basePath;
+	}
+	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	return "vendor/newfold-labs/wp-module-performance/scripts/$script_name$suffix.js";
 }

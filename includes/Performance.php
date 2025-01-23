@@ -4,6 +4,18 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+
+use NewfoldLabs\WP\Module\Performance\Permissions;
+use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
+use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
+use NewfoldLabs\WP\Module\Performance\Data\Constants;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+
+use Automattic\Jetpack\Current_Plan;
+
 /**
  * Main class for the performance module.
  */
@@ -15,6 +27,7 @@ class Performance {
 	 * @var string
 	 */
 	const OPTION_CACHE_LEVEL = 'newfold_cache_level';
+
 
 	/**
 	 * The option name where the "Skip WordPress 404 Handling for Static Files" option is stored.
@@ -68,21 +81,32 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new Constants( $container );
+		new ImageManager( $container );
 
-		// Ensure that purgeable cache types are enabled before showing the UI.
-		if ( $cachePurger->canPurge() ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		}
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
+
+		new LinkPrefetch( $container );
+		new CacheExclusion( $container );
 
 		$container->set( 'cachePurger', $cachePurger );
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
+			new RestAPI();
+		}
+
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Container $container the container
+	 * @param Container $container the container.
 	 */
 	public function configureContainer( Container $container ) {
 
@@ -105,7 +129,7 @@ class Performance {
 	 */
 	public function hooks() {
 
-		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
+		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
 		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
@@ -135,6 +159,23 @@ class Performance {
 		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
+	}
+
+	/**
+	 * Remove EPC Settings if needed
+	 *
+	 * @return void
+	 */
+	public function remove_epc_settings() {
+		global $wp_settings_fields, $wp_settings_sections;
+		//phpcs:ignore
+		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
+		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
+			unset( $wp_settings_fields['general']['epc_settings_section'] );
+			unset( $wp_settings_sections['general']['epc_settings_section'] );
+			unregister_setting( 'general', 'endurance_cache_level' );
+			unregister_setting( 'general', 'epc_skip_404_handling' );
+		}
 	}
 
 	/**
@@ -202,39 +243,6 @@ class Performance {
 	}
 
 	/**
-	 * Register settings
-	 */
-	public function registerSettings() {
-
-		global $wp_settings_fields;
-
-		$section_name = self::SETTINGS_SECTION;
-
-		add_settings_section(
-			$section_name,
-			'<span id="' . self::SETTINGS_ID . '">' . esc_html__( 'Caching', 'newfold-performance-module' ) . '</span>',
-			'__return_false',
-			'general'
-		);
-
-		add_settings_field(
-			self::OPTION_CACHE_LEVEL,
-			__( 'Cache Level', 'newfold-performance-module' ),
-			__NAMESPACE__ . '\\getCacheLevelDropdown',
-			'general',
-			$section_name
-		);
-
-		register_setting( 'general', self::OPTION_CACHE_LEVEL );
-
-		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
-		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
-			unset( $wp_settings_fields['general']['epc_settings_section'] );
-			unregister_setting( 'general', 'endurance_cache_level' );
-		}
-	}
-
-	/**
 	 * Add options to the WordPress admin bar.
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
@@ -247,7 +255,6 @@ class Performance {
 		}
 
 		if ( current_user_can( 'manage_options' ) ) {
-
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
@@ -275,14 +282,82 @@ class Performance {
 				);
 			}
 
+			$brand = $this->container->get( 'plugin' )['id'];
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( 'options-general.php#' . Performance::SETTINGS_ID ),
+					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
 			);
 		}
+	}
+	/**
+	 * Add performance menu in WP/Settings
+	 */
+	public function add_sub_menu_page() {
+		$brand = $this->container->get( 'plugin' )['id'];
+		add_management_page(
+			__( 'Performance', 'newfold-performance-module' ),
+			__( 'Performance', 'newfold-performance-module' ),
+			'manage_options',
+			admin_url( "admin.php?page=$brand#/performance" ),
+			null,
+			5
+		);
+	}
+
+	/**
+	 * Enqueue scripts and styles in admin
+	 */
+	public function enqueue_scripts() {
+		$plugin_url = $this->container->plugin()->url . get_styles_path();
+		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
+		wp_enqueue_style( 'wp-module-performance-styles' );
+	}
+
+	/**
+	 * Add to Newfold SDK runtime.
+	 *
+	 * @param array $sdk SDK data.
+	 * @return array SDK data.
+	 */
+	public function add_to_runtime( $sdk ) {
+		$values = array(
+			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
+			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostActive(),
+			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
+			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
+			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
+			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array( 'jquery', 'jquery-core', 'underscore', 'backbone' ) ) ),
+			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
+			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
+			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
+			'skip404'                           => getSkip404Option(),
+		);
+
+		return array_merge( $sdk, array( 'performance' => $values ) );
+	}
+
+
+	/**
+	 * Check if Jetpack Boost premium is active.
+	 *
+	 * @return boolean
+	 */
+	public function isJetPackBoostActive() {
+		$exists = false;
+		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
+			$products = Current_Plan::get_products();
+			foreach ( $products as $product ) {
+				if ( isset( $product['product_slug'] ) && strpos( $product['product_slug'], 'jetpack-boost' ) !== false ) {
+					$exists = true;
+					break;
+				}
+			}
+		}
+
+		return $exists;
 	}
 }

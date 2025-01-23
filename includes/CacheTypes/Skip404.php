@@ -39,31 +39,6 @@ class Skip404 extends CacheBase {
 		new OptionListener( Performance::OPTION_SKIP_404, array( __CLASS__, 'maybeAddRules' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'onUpdateHtaccess' ) );
-		add_action( 'admin_init', array( $this, 'registerSettings' ), 11 );
-	}
-
-	/**
-	 * Register our setting to the main performance settings section.
-	 */
-	public function registerSettings() {
-
-		global $wp_settings_fields;
-
-		add_settings_field(
-			Performance::OPTION_SKIP_404,
-			__( 'Skip WordPress 404 Handling For Static Files', 'newfold-performance-module' ),
-			'NewfoldLabs\\WP\\Module\\Performance\\getSkip404InputField',
-			'general',
-			Performance::SETTINGS_SECTION
-		);
-
-		register_setting( 'general', Performance::OPTION_SKIP_404 );
-
-		// Remove the setting from EPC if it exists - TODO: Remove when no longer using EPC
-		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
-			unset( $wp_settings_fields['general']['epc_settings_section'] );
-			unregister_setting( 'general', 'epc_skip_404_handling' );
-		}
 	}
 
 	/**
@@ -82,7 +57,7 @@ class Skip404 extends CacheBase {
 	/**
 	 * Conditionally add or remove .htaccess rules based on option value.
 	 *
-	 * @param bool|null $shouldSkip404Handling Whether to skip 404 handling for static files.
+	 * @param bool|null $shouldSkip404Handling if should skip 404 handling.
 	 */
 	public static function maybeAddRules( $shouldSkip404Handling ) {
 		(bool) $shouldSkip404Handling ? self::addRules() : self::removeRules();

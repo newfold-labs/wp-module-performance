@@ -10,7 +10,6 @@ use WP_Forge\Collection\Collection;
  * Cache manager.
  */
 class CacheManager {
-
 	/**
 	 * Dependency injection container.
 	 *
@@ -21,7 +20,7 @@ class CacheManager {
 	/**
 	 * Constructor.
 	 *
-	 * @param Container $container Dependency injection container.
+	 * @param Container $container the container
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
@@ -82,6 +81,11 @@ class CacheManager {
 		$collection = new Collection( $this->classMap() );
 		$map        = $collection->only( $this->enabledCacheTypes() );
 		foreach ( $map as $type => $class ) {
+			/**
+			 * CacheBase instance.
+			 *
+			 * @var CacheBase $class
+			 */
 			if ( $class::shouldEnable( $this->container ) ) {
 				$instances[ $type ] = new $class();
 				$instances[ $type ]->setContainer( $this->container );

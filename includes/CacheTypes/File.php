@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
@@ -18,7 +19,6 @@ use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
  * File cache type.
  */
 class File extends CacheBase implements Purgeable {
-
 	/**
 	 * The directory where cached files live.
 	 *
@@ -50,9 +50,17 @@ class File extends CacheBase implements Purgeable {
 	public function __construct() {
 
 		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
 		add_action( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
+	}
+
+	/**
+	 * Manage on exlcusion option change.
+	 */
+	public static function exclusionChange() {
+		self::maybeAddRules( getCacheLevel() );
 	}
 
 	/**
@@ -153,7 +161,6 @@ HTACCESS;
 	 * @return bool
 	 */
 	public function isCacheable() {
-
 		// The request URI should never be empty – even for the homepage it should be '/'
 		if ( empty( $_SERVER['REQUEST_URI'] ) ) {
 			return false;
@@ -223,11 +230,14 @@ HTACCESS;
 			return false;
 		}
 
-		// Don't cache if any string exclusions are present in the URL
-		$exclusions = $this->exclusions();
-		foreach ( $exclusions as $exclude ) {
-			if ( false !== strpos( $_SERVER['REQUEST_URI'], $exclude ) ) {
-				return false;
+		// Check cache exclusion.
+		$cache_exclusion_parameters = $this->exclusions();
+
+		if ( ! empty( $cache_exclusion_parameters ) ) {
+			foreach ( $cache_exclusion_parameters as $param ) {
+				if ( stripos( $_SERVER['REQUEST_URI'], $param ) !== false ) {
+					return false;
+				}
 			}
 		}
 
@@ -246,7 +256,9 @@ HTACCESS;
 	 * @return array
 	 */
 	protected function exclusions() {
-		return array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
+		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
+		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
+		return array_merge( $default, $cache_exclusion_option );
 	}
 
 	/**
@@ -275,7 +287,7 @@ HTACCESS;
 	/**
 	 * Purge a specific URL from the cache.
 	 *
-	 * @param string $url The URL to purge.
+	 * @param string $url the url to purge.
 	 */
 	public function purgeUrl( $url ) {
 		$path = $this->getStoragePathForRequest();
