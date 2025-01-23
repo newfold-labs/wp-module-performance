@@ -59,7 +59,7 @@ class HealthCheckManager {
 	 */
 	public function add_health_check( $options ) {
 		$options = /* Explain keys and their impact */
-        wp_parse_args(
+		wp_parse_args(
 			$options,
 			array(
 				'id'          => '',
