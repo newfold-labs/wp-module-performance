@@ -62,11 +62,11 @@ class HealthChecks {
 		// PRESS7-110: Empty Trash Days.
 		$manager->add_health_check(
 			array(
-				'id'    => 'empty-trash-days',
-				'title' => __( 'Empty Trash Days', 'newfold-module-performance' ),
-				'pass'  => __( 'Trash is emptied every 30 days or less', 'newfold-module-performance' ),
-				'fail'  => __( 'Trash is emptied less frequently than every 30 days', 'newfold-module-performance' ),
-				'text'  => __( 'Emptying the trash more frequently can reduce database bloat.', 'newfold-module-performance' ),
+				'id'      => 'empty-trash-days',
+				'title'   => __( 'Empty Trash Days', 'newfold-module-performance' ),
+				'pass'    => __( 'Trash is emptied every 30 days or less', 'newfold-module-performance' ),
+				'fail'    => __( 'Trash is emptied less frequently than every 30 days', 'newfold-module-performance' ),
+				'text'    => __( 'Emptying the trash more frequently can reduce database bloat.', 'newfold-module-performance' ),
 				'actions' => array(
 					array(
 						'label'    => __( 'Configure trash settings.', 'newfold-module-performance' ),
@@ -74,7 +74,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					return ( defined( 'EMPTY_TRASH_DAYS' ) && EMPTY_TRASH_DAYS <= 30 );
 				},
 			)
@@ -97,11 +97,11 @@ class HealthChecks {
 		// PRESS7-118: Permalinks.
 		$manager->add_health_check(
 			array(
-				'id'    => 'permalinks',
-				'title' => __( 'Permalinks', 'newfold-module-performance' ),
-				'pass'  => __( 'Permalinks are pretty', 'newfold-module-performance' ),
-				'fail'  => __( 'Permalinks are not set up', 'newfold-module-performance' ),
-				'text'  => __( 'Setting permalinks to anything other than plain can improve performance and SEO.', 'newfold-module-performance' ),
+				'id'      => 'permalinks',
+				'title'   => __( 'Permalinks', 'newfold-module-performance' ),
+				'pass'    => __( 'Permalinks are pretty', 'newfold-module-performance' ),
+				'fail'    => __( 'Permalinks are not set up', 'newfold-module-performance' ),
+				'text'    => __( 'Setting permalinks to anything other than plain can improve performance and SEO.', 'newfold-module-performance' ),
 				'actions' => array(
 					array(
 						'label'    => __( 'Set up permalinks.', 'newfold-module-performance' ),
@@ -109,7 +109,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					return empty( get_option( 'permalink_structure' ) );
 				},
 			)
@@ -130,7 +130,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'     => function () {
 					return ( get_option( 'newfold_cache_level' ) >= 2 );
 				},
 			)
@@ -211,7 +211,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					$enabled = get_option( 'nfd_image_optimization', array() );
 					return ( isset( $enabled['lazy_loading'], $enabled['lazy_loading']['enabled'] ) && $enabled['lazy_loading']['enabled'] );
 				},
@@ -233,7 +233,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					$enabled = get_option( 'nfd_link_prefetch_settings', array() );
 					return ( isset( $enabled['activeOnDesktop'] ) && $enabled['activeOnDesktop'] );
 				},
@@ -255,7 +255,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					return get_option( 'jetpack_boost_status_critical-css', false );
 				},
 			)
@@ -276,7 +276,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					return get_option( 'jetpack_boost_status_render-blocking-js', false );
 				},
 			)
@@ -297,7 +297,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-js', array() ) ) );
 				},
 			)
@@ -318,7 +318,7 @@ class HealthChecks {
 						'external' => false,
 					),
 				),
-				'test'  => function () {
+				'test'    => function () {
 					return ( ! empty( get_option( 'jetpack_boost_status_minify-css', array() ) ) );
 				},
 			)
