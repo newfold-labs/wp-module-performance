@@ -60,14 +60,14 @@ class File extends CacheBase implements Purgeable {
 	 * Manage on exlcusion option change.
 	 */
 	public static function exclusionChange() {
-		self::maybeAddRules( get_cache_level() );
+		self::maybeAddRules( getCacheLevel() );
 	}
 
 	/**
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
 	 */
 	public function onRewrite() {
-		self::maybeAddRules( get_cache_level() );
+		self::maybeAddRules( getCacheLevel() );
 	}
 
 	/**
@@ -266,7 +266,7 @@ HTACCESS;
 	 * @return int
 	 */
 	protected function getExpirationTimeframe() {
-		switch ( get_cache_level() ) {
+		switch ( getCacheLevel() ) {
 			case 2:
 				return 2 * HOUR_IN_SECONDS;
 			case 3:
@@ -332,7 +332,7 @@ HTACCESS;
 	 * Handle activation logic.
 	 */
 	public static function onActivation() {
-		self::maybeAddRules( get_cache_level() );
+		self::maybeAddRules( getCacheLevel() );
 	}
 
 	/**
