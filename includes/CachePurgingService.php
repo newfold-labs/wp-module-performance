@@ -16,7 +16,7 @@ class CachePurgingService {
 	 *
 	 * @var CacheBase[] $cacheTypes Cache types.
 	 */
-	public $cacheTypes = array();
+	public $cacheTypes = array(); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 
 	/**
 	 * Constructor.
@@ -25,7 +25,7 @@ class CachePurgingService {
 	 */
 	public function __construct( array $cacheTypes ) {
 
-		$this->cacheTypes = $cacheTypes;
+		$this->cacheTypes = $cacheTypes; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		if ( $this->canPurge() ) {
 
@@ -48,7 +48,7 @@ class CachePurgingService {
 	 * @return bool
 	 */
 	public function canPurge() {
-		foreach ( $this->cacheTypes as $instance ) {
+		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				return true;
 			}
@@ -89,7 +89,7 @@ class CachePurgingService {
 	 * Purge everything.
 	 */
 	public function purgeAll() {
-		foreach ( $this->cacheTypes as $instance ) {
+		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
 				 * Purgeable instance.
@@ -107,7 +107,7 @@ class CachePurgingService {
 	 * @param  string $url  The URL to be purged.
 	 */
 	public function purgeUrl( $url ) {
-		foreach ( $this->cacheTypes as $instance ) {
+		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
 				 * Purgeable instance.

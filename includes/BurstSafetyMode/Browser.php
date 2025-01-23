@@ -4,6 +4,9 @@ namespace NewfoldLabs\WP\Module\Performance\BurstSafetyMode;
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\ResponseHeaderManager;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 
+/**
+ * Browser cache.
+ */
 class Browser {
 		/**
 	 * The file marker name.
@@ -12,6 +15,9 @@ class Browser {
 	 */
 	const MARKER = 'Newfold Browser Cache';
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		$responseHeaderManager = new ResponseHeaderManager();
 		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', BURST_SAFETY_CACHE_LEVEL );
@@ -20,8 +26,6 @@ class Browser {
 
 	/**
 	 * Add htaccess rules.
-	 *
-	 * @return void
 	 */
 	public static function addRules() {
 

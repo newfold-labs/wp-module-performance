@@ -25,7 +25,7 @@ function getCacheLevel() { // phpcs:ignore WordPress.NamingConventions.ValidFunc
  *
  * @return string[] Cache levels.
  */
-function getCacheLevels() {
+function getCacheLevels() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	return array(
 		0 => 'Off',         // Disable caching
 		1 => 'Assets Only', // Cache assets only

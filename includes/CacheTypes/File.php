@@ -10,7 +10,7 @@ use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
-use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
+use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 use function NewfoldLabs\WP\Module\Performance\removeDirectory;
 use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
@@ -60,14 +60,14 @@ class File extends CacheBase implements Purgeable {
 	 * Manage on exlcusion option change.
 	 */
 	public static function exclusionChange() {
-		self::maybeAddRules( getCacheLevel() );
+		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
 	 */
 	public function onRewrite() {
-		self::maybeAddRules( getCacheLevel() );
+		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
@@ -85,7 +85,6 @@ class File extends CacheBase implements Purgeable {
 	 * @return bool
 	 */
 	public static function addRules() {
-
 		$base = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$path = str_replace( get_home_path(), '/', self::CACHE_DIR );
 
@@ -267,7 +266,7 @@ HTACCESS;
 	 * @return int
 	 */
 	protected function getExpirationTimeframe() {
-		switch ( getCacheLevel() ) {
+		switch ( get_cache_level() ) {
 			case 2:
 				return 2 * HOUR_IN_SECONDS;
 			case 3:
@@ -333,7 +332,7 @@ HTACCESS;
 	 * Handle activation logic.
 	 */
 	public static function onActivation() {
-		self::maybeAddRules( getCacheLevel() );
+		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**

@@ -39,11 +39,11 @@
     "newfold-labs/wp-php-standards": "^1.2.4"
   },
   "scripts": {
-    "fix": [
-      "vendor/bin/phpcbf --standard=phpcs.xml ."
+    "cs-fix": [
+      "phpcbf --standard=phpcs.xml ."
     ],
-    "lint": [
-      "vendor/bin/phpcs --standard=phpcs.xml -s ."
+    "cs-lint": [
+      "phpcs --standard=phpcs.xml -s ."
     ]
   },
   "scripts-descriptions": {
