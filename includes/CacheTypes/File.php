@@ -10,7 +10,7 @@ use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
-use function NewfoldLabs\WP\Module\Performance\get_cache_level;
+use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function NewfoldLabs\WP\Module\Performance\removeDirectory;
 use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
