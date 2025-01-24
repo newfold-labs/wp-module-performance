@@ -93,7 +93,7 @@ class performancePageLocators {
             cy.go('back');
         });
     }
-
+    
     interceptCallForMouseDownWithExclude(selectedDropDown, url, requestCount) {
         const forceReload = true;
         Cypress.config('defaultCommandTimeout', 4000);
