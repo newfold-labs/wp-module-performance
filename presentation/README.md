@@ -58,4 +58,4 @@ By implementing the Page Object Model (POM), we have significantly improved the 
 - **Speed up updates** by modifying locators or data in a single place.
 - **Scale the framework** to accommodate new pages and tests as the project grows.
 
-With these improvements, our framework is more robust, adaptable, and easier to maintain, supporting the long-term success of the project.
+With these improvements, our framework is more robust, adaptable, and easier to maintain, supporting the long-term success of the project
