@@ -56,6 +56,6 @@ Centralizing the management of locators and static data reduces the risk of erro
 By implementing the Page Object Model (POM), we have significantly improved the efficiency, maintainability, and scalability of our automation framework. The benefits of centralized locators, reusable data, and clear modularization are evident. This new approach will enable the team to:
 - **Reduce errors** by managing locators and data centrally.
 - **Speed up updates** by modifying locators or data in a single place.
-- **Scale the framework** to accommodate new pages and tests as the project grows
+- **Scale the framework** to accommodate new pages and tests as the project grows.
 
 With these improvements, our framework is more robust, adaptable, and easier to maintain, supporting the long-term success of the project

@@ -92,7 +92,7 @@ describe( 'Performance Page', function () {
         );
     } );
 
-    //case-4
+    //case 4
     it( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();

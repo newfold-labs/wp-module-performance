@@ -154,7 +154,6 @@ class performancePageLocators {
                     });
             });
         };
-
         handleDropdownSelection(); // Call the refactored function
     }
 
