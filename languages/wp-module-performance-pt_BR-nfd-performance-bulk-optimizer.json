@@ -11,34 +11,34 @@
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
             "Optimizing Images\u2026": [
-                "Otimizando Imagens..."
+                ""
             ],
             "Preparing files\u2026": [
-                "Preparando arquivos..."
+                ""
             ],
             "Done": [
-                "Concluído"
+                ""
             ],
             "Optimization Canceled": [
-                "Otimização Cancelada"
+                ""
             ],
             "Optimizing:": [
-                "Otimizando:"
+                ""
             ],
             "Optimization Complete!": [
-                "Otimização Concluída!"
+                ""
             ],
             "Passed": [
-                "Aprovado"
+                ""
             ],
             "Failed": [
-                "Falhou"
+                ""
             ],
             "An error occurred.": [
-                "Ocorreu um erro."
+                ""
             ],
             "Optimize": [
-                "Otimizar"
+                ""
             ]
         }
     }
