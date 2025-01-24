@@ -43,7 +43,7 @@ function getCacheLevelDropdown() {
 	$currentCacheLevel = getCacheLevel();
 
 	$name  = Performance::OPTION_CACHE_LEVEL;
-	$label = __( 'Cache Level', 'newfold-performance-module' );
+	$label = __( 'Cache Level', 'wp-module-performance' );
 	?>
 	<select name="<?php echo esc_attr( $name ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
 		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ) : ?>
@@ -70,7 +70,7 @@ function getSkip404Option() {
 function getSkip404InputField() {
 	$name  = Performance::OPTION_SKIP_404;
 	$value = getSkip404Option();
-	$label = __( 'Skip WordPress 404 Handling for Static Files', 'newfold-performance-module' );
+	$label = __( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' );
 	?>
 	<input
 		type="checkbox"
@@ -151,19 +151,4 @@ function toStudlyCase( $value ) {
  */
 function get_styles_path() {
 	return 'vendor/newfold-labs/wp-module-performance/styles/styles.css';
-}
-
-/**
- * Get js script path.
- *
- * @param string $script_name script name.
- * return string
- */
-function get_scripts_path( $script_name = '' ) {
-	$basePath = 'vendor/newfold-labs/wp-module-performance/scripts/';
-	if ( empty( $script_name ) ) {
-		return $basePath;
-	}
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-	return "vendor/newfold-labs/wp-module-performance/scripts/$script_name$suffix.js";
 }
