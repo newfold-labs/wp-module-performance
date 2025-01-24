@@ -4,8 +4,8 @@
         "localAppURL": "https://bjo.kax.mybluehost.me/website_db5da506/sample-page/",
         "statusCode": 200,
         "mouseDownToBeSelected": "Prefetch on Mouse Down",
-        "mouseHoverToBeSelected": "Prefetch on Mouse Hover (Recommended)",
         "requestCount": 0,
+        "mouseHoverToBeSelected": "Prefetch on Mouse Hover (Recommended)",
         "forceReload": true
       }
 

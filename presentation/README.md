@@ -15,7 +15,7 @@ The **Page Object Model (POM)** is a design pattern that centralizes locators an
 - **Centralized management** of page interactions to improve readability and scalability.
 
 ## Implementing POM
-We introduced the Page Object Model design pattern to centralize locators and methods, reducing duplication and improving maintainability. With POM, locators can be updated in a single place, minimizing errors and making the framework easier to scale.
+We introduced the Page Object Model design pattern to centralize locators and methods, reducing duplication and improving maintainability. With POM, locators can be updated in a single place, minimizing errors and making the framework easier to scale
 
 ### How POM Works:
 - **POM is a design pattern where locators and methods for a specific page are centralized into a class.** 

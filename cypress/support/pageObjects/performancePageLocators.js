@@ -117,7 +117,6 @@ class performancePageLocators {
             cy.get(this._visitSiteButton)
                 .invoke('removeAttr', 'target')
                 .click({ force: true });
-
             cy.reload(forceReload);
             cy.get(this._samplePageButton).click();
             cy.wrap(requestCount).should('equal', 0);
