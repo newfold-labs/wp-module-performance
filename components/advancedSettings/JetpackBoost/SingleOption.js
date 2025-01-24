@@ -8,7 +8,7 @@ import {
 	Textarea,
 	FeatureUpsell,
 } from '@newfold/ui-component-library';
-import { NewfoldRuntime } from '@newfold-labs/wp-module-runtime';
+import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 // Third-parts
 import parse from 'html-react-parser';
