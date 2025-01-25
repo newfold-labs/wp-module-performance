@@ -1,6 +1,6 @@
 import performancePageLocators from '../../../../../../vendor/newfold-labs/wp-module-performance/cypress/support/pageObjects/performancePageLocators';
 
-describe( 'Performance Page', { testIsolation: true }, () => {
+describe( 'Performance Page', { testIsolation: false }, () => {
     const appClass = '.' + Cypress.env( 'appId' );
     const fixturePath = require( '../../../../../../vendor/newfold-labs/wp-module-performance/cypress/fixtures/performanceModule.json' );
     let performanceLocators;

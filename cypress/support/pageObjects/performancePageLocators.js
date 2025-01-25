@@ -7,7 +7,7 @@ class performancePageLocators {
     _mouseHoverElement = 'ul.nfd-select__options > li:nth-child(1)';
     _mouseDownElement = 'ul.nfd-select__options > li:nth-child(2)';
     _excludeKeywordInputField = '#link-prefetch-ignore-keywords';
-    _isToggleEnabled = '.nfd-toggle--checked';
+    _isToggleEnabled = 'button[data-id="link-prefetch-active-desktop"]';
 
     //All the methods related to performance page.
     verifyIfLinkPreFectchIsDisplayed() {
