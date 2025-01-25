@@ -1,7 +1,7 @@
 
 
     {
-        "localAppURL": "https://bjo.kax.mybluehost.me/website_db5da506/sample-page/",
+        "localAppURL": "http://localhost:8882/?page_id=2/sample-page/",
         "statusCode": 200,
         "mouseDownToBeSelected": "Prefetch on Mouse Down",
         "mouseHoverToBeSelected": "Prefetch on Mouse Hover (Recommended)",
