@@ -107,4 +107,5 @@ describe( 'Performance Page', { testIsolation: true }, () => {
             data.requestCount
         );
     } );
+
 } );

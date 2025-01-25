@@ -1,0 +1,61 @@
+.nfd-container__block.newfold-link-prefetch .nfd-toggle-field.nfd-mb-6 {
+	display: flex;
+	flex-direction: row;
+  }
+.nfd-performance-jetpack-boost-upsell{
+	position: relative;
+}
+
+.nfd-performance-jetpack-boost-upsell:before {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255,255,0,0.1);
+	position: absolute;
+}
+
+
+.nfd-performance-jetpack-boost-container-install-activate-button{
+	position: absolute;
+	width: 300px;
+	left: calc(50% - 150px);
+	top: calc(50% - 20px);
+	z-index: 10;
+}
+
+.nfd-performance-jetpack-boost-container-install-activate-button svg{
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.nfd-performance-jetpack-boost-container-install-activate-button button{
+	padding: 10px;
+	border-radius: 6px;
+	width: 100%;
+}
+
+.nfd-performance-jetpack-boost-single-option .nfd-toggle-field__header {
+	justify-content: left;
+}
+
+.nfd-performance-jetpack-boost-single-option .child-field .wrap-button button{
+	text-decoration: underline;
+    margin: 10px 0 0 0;
+}
+
+.nfd-performance-jetpack-boost-single-option-container{
+	 margin-bottom: 20px;
+}
+
+.margin20{
+	margin: 20px 0;
+}
+
+.newfold-image-optimization .nfd-toggle-field__description {
+	opacity: 1 !important;
+}
+
+.newfold-image-optimization a {
+	color: #05c !important;
+}
