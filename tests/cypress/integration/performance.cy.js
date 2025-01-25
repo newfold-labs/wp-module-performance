@@ -1,12 +1,13 @@
-// <reference types="Cypress" />;
 import performancePageLocators from '../../../../../../vendor/newfold-labs/wp-module-performance/cypress/support/pageObjects/performancePageLocators';
 
 describe( 'Performance Page', { testIsolation: true }, () => {
     const appClass = '.' + Cypress.env( 'appId' );
     const fixturePath = require( '../../../../../../vendor/newfold-labs/wp-module-performance/cypress/fixtures/performanceModule.json' );
     let performanceLocators;
+    let data;
 
     beforeEach( () => {
+        data = fixturePath;
         cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
         cy.visit(
             '/wp-admin/admin.php?page=' +
@@ -14,12 +15,13 @@ describe( 'Performance Page', { testIsolation: true }, () => {
             '#/performance'
         );
         cy.injectAxe();
-        this.data = fixturePath;
         performanceLocators = new performancePageLocators();
     });
 
+    
+
     it( 'Is Accessible', () => {
-        cy.wait( 2000 );
+        cy.wait( 500 );
         cy.checkA11y( appClass + '-app-body' );
     } );
 
@@ -37,12 +39,15 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 
     it( 'Clear Cache Disabled when Cache is Disabled', () => {
         cy.get( 'input[type="radio"]#cache-level-0' ).check();
+
         cy.wait( 500 );
+
         cy.get( '.clear-cache-button' )
             .scrollIntoView()
             .should( 'have.attr', 'disabled' );
 
         cy.get( 'input[type="radio"]#cache-level-1' ).check();
+
         cy.get( '.clear-cache-button' )
             .scrollIntoView()
             .should( 'not.have.attr', 'disabled' );
@@ -54,6 +59,7 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 
     it( 'Clear Cache Button Functions', () => {
         cy.get( '.clear-cache-button' ).click();
+
         cy.get( '.nfd-notifications' )
             .contains( 'p', 'Cache cleared' )
             .should( 'be.visible' );
@@ -64,9 +70,9 @@ describe( 'Performance Page', { testIsolation: true }, () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseHoverWithoutExclude(
-            this.data.mouseHoverToBeSelected,
-            this.data.localAppURL,
-            this.data.statusCode
+            data.mouseHoverToBeSelected,
+            data.localAppURL,
+            data.statusCode
         );
     } );
 
@@ -75,20 +81,19 @@ describe( 'Performance Page', { testIsolation: true }, () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseDownWithoutExclude(
-            this.data.mouseDownToBeSelected,
-            this.data.localAppURL,
-            this.data.statusCode
+            data.mouseDownToBeSelected,
+            data.localAppURL,
+            data.statusCode
         );
     } );
-
     //case 3
-    it( 'Mouse Down-> with exclude: Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+    it( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseDownWithExclude(
-            this.data.mouseDownToBeSelected,
-            this.data.localAppURL,
-            this.data.requestCount
+            data.mouseDownToBeSelected,
+            data.localAppURL,
+            data.requestCount
         );
     } );
 
@@ -97,9 +102,9 @@ describe( 'Performance Page', { testIsolation: true }, () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseHoverWithExclude(
-            this.data.mouseHoverToBeSelected,
-            this.data.localAppURL,
-            this.data.requestCount
+            data.mouseHoverToBeSelected,
+            data.localAppURL,
+            data.requestCount
         );
     } );
-});
+} );
