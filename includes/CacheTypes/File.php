@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
@@ -14,8 +15,10 @@ use function NewfoldLabs\WP\Module\Performance\removeDirectory;
 use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
+/**
+ * Page cache class
+ */
 class File extends CacheBase implements Purgeable {
-
 	/**
 	 * The directory where cached files live.
 	 *
@@ -33,7 +36,7 @@ class File extends CacheBase implements Purgeable {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param  Container  $container
+	 * @param  Container $container the container.
 	 *
 	 * @return bool
 	 */
@@ -46,10 +49,18 @@ class File extends CacheBase implements Purgeable {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_CACHE_LEVEL, [ __CLASS__, 'maybeAddRules' ] );
+		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
-		add_action( 'init', [ $this, 'maybeGeneratePageCache' ] );
-		add_action( 'newfold_update_htaccess', [ $this, 'onRewrite' ] );
+		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
+		add_action( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
+	}
+
+	/**
+	 * Manage on exlcusion option change.
+	 */
+	public static function exclusionChange() {
+		self::maybeAddRules( getCacheLevel() );
 	}
 
 	/**
@@ -62,7 +73,7 @@ class File extends CacheBase implements Purgeable {
 	/**
 	 * Determine whether to add or remove rules based on caching level.
 	 *
-	 * @param  int  $cacheLevel  The caching level.
+	 * @param  int $cacheLevel  The caching level.
 	 */
 	public static function maybeAddRules( $cacheLevel ) {
 		absint( $cacheLevel ) > 1 ? self::addRules() : self::removeRules();
@@ -110,7 +121,7 @@ HTACCESS;
 	public function maybeGeneratePageCache() {
 		if ( $this->isCacheable() ) {
 			if ( $this->shouldCache() ) {
-				ob_start( [ $this, 'write' ] );
+				ob_start( array( $this, 'write' ) );
 			}
 		} else {
 			nocache_headers();
@@ -120,7 +131,7 @@ HTACCESS;
 	/**
 	 * Write page content to cache.
 	 *
-	 * @param  string  $content  Page content to be cached.
+	 * @param  string $content  Page content to be cached.
 	 *
 	 * @return string
 	 */
@@ -150,7 +161,6 @@ HTACCESS;
 	 * @return bool
 	 */
 	public function isCacheable() {
-
 		// The request URI should never be empty – even for the homepage it should be '/'
 		if ( empty( $_SERVER['REQUEST_URI'] ) ) {
 			return false;
@@ -198,7 +208,6 @@ HTACCESS;
 			if ( is_404() || is_feed() ) {
 				return false;
 			}
-
 		}
 
 		// Don't cache private pages
@@ -221,11 +230,14 @@ HTACCESS;
 			return false;
 		}
 
-		// Don't cache if any string exclusions are present in the URL
-		$exclusions = $this->exclusions();
-		foreach ( $exclusions as $exclude ) {
-			if ( false !== strpos( $_SERVER['REQUEST_URI'], $exclude ) ) {
-				return false;
+		// Check cache exclusion.
+		$cache_exclusion_parameters = $this->exclusions();
+
+		if ( ! empty( $cache_exclusion_parameters ) ) {
+			foreach ( $cache_exclusion_parameters as $param ) {
+				if ( stripos( $_SERVER['REQUEST_URI'], $param ) !== false ) {
+					return false;
+				}
 			}
 		}
 
@@ -244,7 +256,9 @@ HTACCESS;
 	 * @return array
 	 */
 	protected function exclusions() {
-		return [ 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() ];
+		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
+		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
+		return array_merge( $default, $cache_exclusion_option );
 	}
 
 	/**
@@ -273,7 +287,7 @@ HTACCESS;
 	/**
 	 * Purge a specific URL from the cache.
 	 *
-	 * @param  string  $url
+	 * @param string $url the url to purge.
 	 */
 	public function purgeUrl( $url ) {
 		$path = $this->getStoragePathForRequest();
@@ -299,7 +313,7 @@ HTACCESS;
 
 		if ( ! isset( $path ) ) {
 			$url      = new Url();
-			$basePath = wp_parse_url( home_url('/'), PHP_URL_PATH );
+			$basePath = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 			$path     = trailingslashit( self::CACHE_DIR . str_replace( $basePath, '', esc_url( $url->path ) ) );
 		}
 
@@ -332,7 +346,5 @@ HTACCESS;
 
 		// Remove all statically cached files
 		removeDirectory( self::CACHE_DIR );
-
 	}
-
 }
