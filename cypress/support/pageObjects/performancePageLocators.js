@@ -79,6 +79,11 @@ class performancePageLocators {
             // Optionally, reload the page if necessary (only if you want to reset the state)
             cy.reload(forceReload);
 
+            cy.get('a.wp-block-pages-list__item__link.wp-block-navigation-item__content') // Adjust the selector as needed
+    .invoke('attr', 'href') // Extract the href attribute (the URL)
+    .then((url) => {
+      // Log the URL for debugging
+      cy.log(url);});
             // Navigate to the sample page and wait for the API request to complete
             cy.get(this._samplePageButton).click();
             cy.wait('@apiRequest');
