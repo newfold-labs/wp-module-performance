@@ -169,6 +169,11 @@ class performancePageLocators {
                 .invoke('removeAttr', 'target')
                 .click();
             cy.reload(forceReload);
+            cy.get('a.wp-block-pages-list__item__link.wp-block-navigation-item__content') // Adjust the selector as needed
+    .invoke('attr', 'href') // Extract the href attribute (the URL)
+    .then((url) => {
+      // Log the URL for debugging
+      cy.log(url);
             cy.get(this._samplePageButton).trigger('mouseover');
             //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
             cy.wait('@apiRequest');
