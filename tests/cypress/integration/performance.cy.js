@@ -71,7 +71,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseHoverWithoutExclude(
             data.mouseHoverToBeSelected,
-            data.localAppURL,
+            data.localAppURLHover,
             data.statusCode
         );
     } );
