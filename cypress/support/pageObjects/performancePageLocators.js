@@ -173,7 +173,7 @@ class performancePageLocators {
     .invoke('attr', 'href') // Extract the href attribute (the URL)
     .then((url) => {
       // Log the URL for debugging
-      cy.log(url);
+      cy.log(url);});
             cy.get(this._samplePageButton).trigger('mouseover');
             //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
             cy.wait('@apiRequest');
