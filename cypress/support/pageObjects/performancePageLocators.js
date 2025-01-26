@@ -179,7 +179,9 @@ class performancePageLocators {
     .then((url) => {
       // Log the URL for debugging
       cy.log(url);});
+            cy.wait(5000);
             cy.get(this._samplePageButton).trigger('mouseover');
+            cy.wait(5000);
             //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
             cy.wait('@apiRequest');
             cy.get('@apiRequest')
