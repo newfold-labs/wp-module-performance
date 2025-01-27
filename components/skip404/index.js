@@ -2,7 +2,7 @@
 import apiFetch from '@wordpress/api-fetch';
 
 // Newfold
-import { Checkbox, Container } from '@newfold/ui-component-library';
+import { ToggleField, Container } from '@newfold/ui-component-library';
 import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 const Skip404 = ( { methods, constants } ) => {
@@ -53,13 +53,11 @@ const Skip404 = ( { methods, constants } ) => {
 			title={ constants.text.skip404Title }
 			description={ constants.text.skip404Description }
 		>
-			<Checkbox
+			<ToggleField
 				id="skip-404"
-				name="skip-404"
-				onChange={ handleSkip404Change }
-				value={ skip404 }
-				checked={ skip404 }
 				label={ constants.text.skip404OptionLabel }
+				checked={ skip404 }
+				onChange={ () => handleSkip404Change( skip404, setSkip404 ) }
 			/>
 		</Container.SettingsField>
 	);
