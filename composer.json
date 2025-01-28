@@ -38,6 +38,18 @@
   "require-dev": {
     "newfold-labs/wp-php-standards": "^1.2.4"
   },
+  "scripts": {
+    "cs-fix": [
+      "phpcbf --standard=phpcs.xml ."
+    ],
+    "cs-lint": [
+      "phpcs --standard=phpcs.xml -s ."
+    ]
+  },
+  "scripts-descriptions": {
+    "fix": "Automatically fix coding standards issues where possible.",
+    "lint": "Check files against coding standards."
+  },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true

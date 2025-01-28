@@ -17,7 +17,7 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use Automattic\Jetpack\Current_Plan;
 
 /**
- * Performance Class
+ * Main class for the performance module.
  */
 class Performance {
 
