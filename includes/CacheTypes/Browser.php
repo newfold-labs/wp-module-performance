@@ -12,7 +12,7 @@ use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 /**
- * Browser cache class
+ * Browser cache type.
  */
 class Browser extends CacheBase {
 	/**
@@ -25,7 +25,7 @@ class Browser extends CacheBase {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container the container.
+	 * @param Container $container Dependency injection container.
 	 *
 	 * @return bool
 	 */

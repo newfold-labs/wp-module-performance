@@ -15,7 +15,7 @@ use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 use Automattic\Jetpack\Current_Plan;
 
 /**
- * Performance Class
+ * Main class for the performance module.
  */
 class Performance {
 
