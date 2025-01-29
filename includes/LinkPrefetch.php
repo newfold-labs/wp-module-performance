@@ -25,7 +25,9 @@ class LinkPrefetch {
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
-		add_filter( 'script_loader_tag', array( $this, 'addDefer' ), 10, 2 );
+		if ( ! is_admin() ) {
+			add_filter( 'script_loader_tag', array( $this, 'addDefer' ), 10, 2 );
+		}
 	}
 
 	/**

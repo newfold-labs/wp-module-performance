@@ -27,10 +27,10 @@ function getCacheLevel() { // phpcs:ignore WordPress.NamingConventions.ValidFunc
  */
 function getCacheLevels() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	return array(
-		0 => 'Off',         // Disable caching
-		1 => 'Assets Only', // Cache assets only
-		2 => 'Normal',      // Cache pages and assets for a shorter time range
-		3 => 'Advanced',    // Cache pages and assets for a longer time range
+		0 => 'Off',         // Disable caching.
+		1 => 'Assets Only', // Cache assets only.
+		2 => 'Normal',      // Cache pages and assets for a shorter time range.
+		3 => 'Advanced',    // Cache pages and assets for a longer time range.
 	);
 }
 
@@ -156,7 +156,7 @@ function get_styles_path() {
 /**
  * Get js script path.
  *
- * @param string $script_name script name.
+ * @param string $script_name Script name.
  * return string
  */
 function get_scripts_path( $script_name = '' ) {
@@ -166,4 +166,31 @@ function get_scripts_path( $script_name = '' ) {
 	}
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	return "vendor/newfold-labs/wp-module-performance/scripts/$script_name$suffix.js";
+}
+
+/**
+ * Detect if the current page is Bluehost settings.
+ *
+ * @return boolean
+ */
+function is_settings_page() {
+
+	$current_url = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) .
+	'://' .
+	( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' ) .
+	( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
+
+	$parsedUrl = wp_parse_url( $current_url );
+
+	if ( ! isset( $parsedUrl['query'] ) ) {
+		return false;
+	}
+
+	parse_str( $parsedUrl['query'], $queryParams );
+
+	if ( ! isset( $queryParams['page'] ) || ! in_array( $queryParams['page'], array( 'bluehost', 'hostgator' ) ) ) {
+		return false;
+	}
+
+	return true;
 }
