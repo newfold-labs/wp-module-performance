@@ -4,7 +4,7 @@ import { sprintf, __ } from '@wordpress/i18n';
 
 // Newfold
 import { FeatureUpsell } from '@newfold/ui-component-library';
-import { NewfoldRuntime } from '@newfold-labs/wp-module-runtime';
+import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 // Component
 import SingleOption from './SingleOption';

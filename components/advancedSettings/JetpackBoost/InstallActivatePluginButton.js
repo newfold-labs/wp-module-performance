@@ -3,7 +3,7 @@ import { useState } from '@wordpress/element';
 
 // Newfold
 import { Spinner } from '@newfold/ui-component-library';
-import { NewfoldRuntime } from '@newfold-labs/wp-module-runtime';
+import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 const InstallActivatePluginButton = ( {
 	methods,
