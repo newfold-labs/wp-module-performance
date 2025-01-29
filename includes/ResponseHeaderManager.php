@@ -6,6 +6,9 @@ use WP_Forge\WP_Htaccess_Manager\htaccess;
 
 use function WP_Forge\WP_Htaccess_Manager\convertContentToLines;
 
+/**
+ * Manage response headers.
+ */
 class ResponseHeaderManager {
 
 	/**
@@ -15,6 +18,11 @@ class ResponseHeaderManager {
 	 */
 	const MARKER = 'Newfold Headers';
 
+	/**
+	 * The htaccess manager.
+	 *
+	 * @var htaccess
+	 */
 	public $htaccess;
 
 	/**
@@ -31,7 +39,7 @@ class ResponseHeaderManager {
 	 */
 	public function parseHeaders() {
 
-		$headers = [];
+		$headers = array();
 
 		$content = $this->htaccess->readContent();
 		$lines   = array_map( 'trim', convertContentToLines( $content ) );
@@ -60,7 +68,7 @@ class ResponseHeaderManager {
 		$this->setHeaders(
 			array_merge(
 				$this->parseHeaders(),
-				[ $name => $value ]
+				array( $name => $value )
 			)
 		);
 	}
@@ -68,7 +76,7 @@ class ResponseHeaderManager {
 	/**
 	 * Add multiple headers at once.
 	 *
-	 * @param string[] $headers
+	 * @param string[] $headers Headers to add.
 	 */
 	public function addHeaders( array $headers ) {
 		$headers = array_merge( $this->parseHeaders(), $headers );
@@ -90,13 +98,13 @@ class ResponseHeaderManager {
 	 * Remove all headers.
 	 */
 	public function removeAllHeaders() {
-		$this->setHeaders( [] );
+		$this->setHeaders( array() );
 	}
 
 	/**
 	 * Set headers.
 	 *
-	 * @param array $headers
+	 * @param array $headers Headers to set.
 	 */
 	public function setHeaders( array $headers ) {
 
@@ -108,11 +116,10 @@ class ResponseHeaderManager {
 
 		$content = '<IfModule mod_headers.c>' . PHP_EOL;
 		foreach ( $headers as $key => $value ) {
-			$content .= "\t" . "Header set {$key} \"{$value}\"" . PHP_EOL;
+			$content .= "\tHeader set {$key} \"{$value}\"" . PHP_EOL;
 		}
 		$content .= '</IfModule>';
 
 		$this->htaccess->addContent( $content );
 	}
-
 }

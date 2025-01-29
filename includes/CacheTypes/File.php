@@ -16,7 +16,7 @@ use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 /**
- * Page cache class
+ * File cache type.
  */
 class File extends CacheBase implements Purgeable {
 	/**
@@ -36,7 +36,7 @@ class File extends CacheBase implements Purgeable {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param  Container $container the container.
+	 * @param Container $container Dependency injection container.
 	 *
 	 * @return bool
 	 */
@@ -85,7 +85,6 @@ class File extends CacheBase implements Purgeable {
 	 * @return bool
 	 */
 	public static function addRules() {
-
 		$base = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$path = str_replace( get_home_path(), '/', self::CACHE_DIR );
 
