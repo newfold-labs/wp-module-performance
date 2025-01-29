@@ -311,10 +311,10 @@ class Performance {
 	 * Enqueue scripts and styles in admin
 	 */
 	public function enqueue_scripts() {
-		$plugin_url = $this->container->plugin()->url . get_styles_path();
-		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
-
-		if ( is_settings_page() ) {
+		$brand = $this->container->plugin()->brand;
+		if ( is_settings_page( $brand ) ) {
+			$plugin_url = $this->container->plugin()->url . get_styles_path();
+			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
 			wp_enqueue_style( 'wp-module-performance-styles' );
 		}
 	}
