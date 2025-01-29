@@ -169,9 +169,10 @@ function get_scripts_path( $script_name = '' ) {
 }
 
 /**
- * Detect if the current page is Bluehost settings.
+ * Detect if the current page is a Brand Plugin settings page.
  *
- * @return boolean
+ * @param string $brand The expected settings page identifier.
+ * @return boolean True if the current page matches the brand settings page, false otherwise.
  */
 function is_settings_page( $brand ) {
 
