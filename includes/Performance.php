@@ -369,7 +369,7 @@ class Performance {
 	 * @return void
 	 */
 	public function set_default_values_for_jetpack_boost() {
-		if ( container()->has( 'isFreshInstallation' ) && defined( 'JETPACK_BOOST_VERSION' ) ) {
+		if ( container()->has( 'isFreshInstallation' ) && is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) ) {
 			update_option( 'jetpack_boost_status_minify-js', true );
 			update_option( 'jetpack_boost_status_minify-css', true );
 		}
