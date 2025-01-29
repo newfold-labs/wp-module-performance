@@ -173,22 +173,22 @@ function get_scripts_path( $script_name = '' ) {
  *
  * @return boolean
  */
-function is_settings_page() {
+function is_settings_page( $brand ) {
 
 	$current_url = ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http' ) .
 	'://' .
 	( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' ) .
 	( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
 
-	$parsedUrl = wp_parse_url( $current_url );
+	$parsed_url = wp_parse_url( $current_url );
 
-	if ( ! isset( $parsedUrl['query'] ) ) {
+	if ( ! isset( $parsed_url['query'] ) ) {
 		return false;
 	}
 
-	parse_str( $parsedUrl['query'], $queryParams );
+	parse_str( $parsed_url['query'], $query_params );
 
-	if ( ! isset( $queryParams['page'] ) || ! in_array( $queryParams['page'], array( 'bluehost', 'hostgator' ) ) ) {
+	if ( ! isset( $query_params['page'] ) || $query_params['page'] !== $brand ) {
 		return false;
 	}
 
