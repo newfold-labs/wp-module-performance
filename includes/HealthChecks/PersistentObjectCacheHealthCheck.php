@@ -11,14 +11,14 @@ class PersistentObjectCacheHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'persistent_object_cache'; // Same as the core ID so that we can override the core health check.
-		$this->title        = esc_html__( 'Object Caching', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Object caching is enabled', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Object caching is disabled', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Object Caching', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Object caching is enabled', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Object caching is disabled', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'wp-module-performance' );
 		$this->actions      = sprintf(
 			'<a href="%1$s" target="_blank" rel="noopener">%2$s</a><span class="screen-reader-text"> (%3$s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
 			'https://www.bluehost.com/help/article/object-caching',
-			esc_html__( 'Learn more about object caching', 'newfold-performance-module' ),
+			esc_html__( 'Learn more about object caching', 'wp-module-performance' ),
 			__( 'opens in a new tab', 'newfold-module-performance' )
 		);
 	}

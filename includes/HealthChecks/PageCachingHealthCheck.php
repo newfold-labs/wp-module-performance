@@ -11,10 +11,10 @@ class PageCachingHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-page-caching';
-		$this->title        = esc_html__( 'Page Caching', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Page caching is enabled', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Page caching is disabled', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Page caching can improve performance by bypassing PHP and database queries for faster page loads.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Page Caching', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Page caching is enabled', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Page caching is disabled', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Page caching can improve performance by bypassing PHP and database queries for faster page loads.', 'wp-module-performance' );
 	}
 
 	/**

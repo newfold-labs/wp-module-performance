@@ -11,10 +11,10 @@ class BrowserCachingHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-browser-caching';
-		$this->title        = esc_html__( 'Browser Caching', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Browser caching is enabled', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Browser caching is disabled', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Enabling browser caching can improve performance by storing static assets in the browser for faster page loads.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Browser Caching', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Browser caching is enabled', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Browser caching is disabled', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Enabling browser caching can improve performance by storing static assets in the browser for faster page loads.', 'wp-module-performance' );
 	}
 
 	/**

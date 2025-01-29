@@ -11,10 +11,10 @@ class LazyLoadingHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-lazy-loading';
-		$this->title        = esc_html__( 'Lazy Loading', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Lazy loading is enabled', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Lazy loading is disabled', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Lazy loading can improve performance by only loading images when they are in view.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Lazy Loading', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Lazy loading is enabled', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Lazy loading is disabled', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Lazy loading can improve performance by only loading images when they are in view.', 'wp-module-performance' );
 	}
 
 	/**

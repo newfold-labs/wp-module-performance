@@ -11,10 +11,10 @@ class CronLockTimeoutHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'wp-cron-lock-timeout';
-		$this->title        = esc_html__( 'WP Cron Lock Timeout', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Cron lock timeout is set to 60 seconds or less.', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Cron lock timeout is set to a high number.', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'WP Cron Lock Timeout', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Cron lock timeout is set to 60 seconds or less.', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Cron lock timeout is set to a high number.', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance.', 'wp-module-performance' );
 	}
 
 	/**

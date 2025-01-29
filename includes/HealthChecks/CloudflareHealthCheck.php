@@ -11,10 +11,10 @@ class CloudflareHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-cloudflare';
-		$this->title        = esc_html__( 'Cloudflare enabled', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Cloudflare integration is enabled', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Cloudflare integration is disabled', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Cloudflare integration can improve performance and security.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Cloudflare enabled', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Cloudflare integration is enabled', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Cloudflare integration is disabled', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Cloudflare integration can improve performance and security.', 'wp-module-performance' );
 	}
 
 	/**

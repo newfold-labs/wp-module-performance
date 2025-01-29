@@ -11,10 +11,10 @@ class DeferNonEssentialJsHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-defer-non-essential-js';
-		$this->title        = esc_html__( 'Defer Non-Essential JavaScript', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Non-essential JavaScript is deferred', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Non-essential JavaScript is not deferred', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'JavaScript can be deferred to improve performance by loading it after the page has loaded.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Defer Non-Essential JavaScript', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Non-essential JavaScript is deferred', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Non-essential JavaScript is not deferred', 'wp-module-performance' );
+		$this->description  = esc_html__( 'JavaScript can be deferred to improve performance by loading it after the page has loaded.', 'wp-module-performance' );
 	}
 
 	/**

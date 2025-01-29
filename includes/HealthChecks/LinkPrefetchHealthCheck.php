@@ -11,10 +11,10 @@ class LinkPrefetchHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-link-prefetch';
-		$this->title        = esc_html__( 'Link Prefetching', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'Link prefetching is enabled', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'Link prefetching is disabled', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Link prefetching can improve performance by loading pages immediately before they are requested.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Link Prefetching', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'Link prefetching is enabled', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'Link prefetching is disabled', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Link prefetching can improve performance by loading pages immediately before they are requested.', 'wp-module-performance' );
 	}
 
 	/**

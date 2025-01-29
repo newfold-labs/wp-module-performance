@@ -11,10 +11,10 @@ class ConcatenateCSSHealthCheck extends HealthCheck {
 	 */
 	public function __construct() {
 		$this->id           = 'newfold-concatenate-css';
-		$this->title        = esc_html__( 'Concatenate CSS', 'newfold-performance-module' );
-		$this->passing_text = esc_html__( 'CSS files are concatenated', 'newfold-performance-module' );
-		$this->failing_text = esc_html__( 'CSS files are not concatenated', 'newfold-performance-module' );
-		$this->description  = esc_html__( 'Concatenating CSS can improve performance by reducing the number of requests.', 'newfold-performance-module' );
+		$this->title        = esc_html__( 'Concatenate CSS', 'wp-module-performance' );
+		$this->passing_text = esc_html__( 'CSS files are concatenated', 'wp-module-performance' );
+		$this->failing_text = esc_html__( 'CSS files are not concatenated', 'wp-module-performance' );
+		$this->description  = esc_html__( 'Concatenating CSS can improve performance by reducing the number of requests.', 'wp-module-performance' );
 	}
 
 	/**
