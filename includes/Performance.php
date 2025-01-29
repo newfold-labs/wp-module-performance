@@ -10,9 +10,7 @@ use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\HealthChecks;
 
 use Automattic\Jetpack\Current_Plan;
 
@@ -83,12 +81,13 @@ class Performance {
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
 		new Constants( $container );
 		new ImageManager( $container );
-
-		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
+		new HealthChecks( $container );
 
 		new LinkPrefetch( $container );
 		new CacheExclusion( $container );
+
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		$container->set( 'cachePurger', $cachePurger );
 
