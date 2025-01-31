@@ -300,11 +300,11 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
-    interceptCallForMouseHoverWithoutExclude(selectedDropDown, statusCode) {
+interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
     const forceReload = true;
-    Cypress.config('defaultCommandTimeout', 8000); // Increase timeout
+    Cypress.config('defaultCommandTimeout', 8000);
 
-    // Function to visit site, extract base URL dynamically, and check API response
+    // Function to visit site and check API response
     const visitSiteAndCheckStatusCode = () => {
         cy.get(this._excludeKeywordInputField).clear();
 
@@ -312,27 +312,25 @@ class performancePageLocators {
             .invoke('removeAttr', 'target')
             .click();
 
-        // Get the current dynamic base URL
-        cy.url().then((currentUrl) => {
-            const baseUrl = new URL(currentUrl).origin; // Extracts "http://localhost:888X"
-            cy.log('Dynamic Base URL:', baseUrl);
+        cy.reload(forceReload);
 
-            // Intercept API requests dynamically based on the extracted base URL
-            cy.intercept('GET', `${baseUrl}/*`).as('apiRequest');
+        // Intercept API call for the given URL
+        cy.intercept('GET', url).as('apiRequest');
 
-            cy.reload(forceReload);
+        // Trigger mouse hover to initiate API request
+        cy.get(this._samplePageButton).trigger('mouseover');
 
-            // Trigger mouse hover to initiate API request
-            cy.get(this._samplePageButton).trigger('mouseover');
+        // Wait for the intercepted request and validate the response
+        cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
+            cy.log('Intercepted API Request URL:', interception.request.url);
+            cy.log('Expected Status Code:', statusCode);
+            cy.log('Actual Status Code:', interception.response.statusCode);
 
-            // Wait for the request to be intercepted
-            cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
-                cy.log('Intercepted API Request:', interception);
-                expect(interception.response.statusCode).to.eq(statusCode);
-            });
-
-            cy.go('back');
+            // ✅ Compare the actual response status code with the expected one
+            expect(interception.response.statusCode).to.eq(statusCode);
         });
+
+        cy.go('back');
     };
 
     // Function for dropdown interaction logic
@@ -357,7 +355,6 @@ class performancePageLocators {
 
     handleDropdownSelection(); // Call the refactored function
 }
-
 
     }
 export default performancePageLocators;
