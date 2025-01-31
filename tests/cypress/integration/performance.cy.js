@@ -64,11 +64,8 @@ describe( 'Performance Page', { testIsolation: false }, () => {
             .contains( 'p', 'Cache cleared' )
             .should( 'be.visible' );
     } );
-
-    //case 1
     
-
-    //case 2
+    //case 1
     it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
@@ -77,7 +74,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
         );
     } );
     
-    //case 3
+    //case 2
     it( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
@@ -86,7 +83,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
         );
     } );
 
-    //case 4
+    //case 3
     it( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
