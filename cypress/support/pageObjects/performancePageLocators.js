@@ -301,36 +301,25 @@ class performancePageLocators {
         handleDropdownSelection(); // Call the refactored function
     }
 
-    interceptCallForMouseHoverWithExclude(selectedDropDown, url, requestCount) {
+     interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
         const forceReload = true;
         Cypress.config('defaultCommandTimeout', 4000);
         cy.intercept('GET', url).as('apiRequest');
 
-        // Extract page name function
-        const extractPageName = (url) => {
-            const pageName = url.split('/').filter(Boolean).pop();
-            cy.log('Extracted page name:', pageName);
-            expect(pageName).to.not.be.empty;
-            return pageName;
-        };
-
-        // Action to visit site and check request count
-        const visitSiteAndCheckRequestCount = (url, pageName) => {
-            cy.get(this._excludeKeywordInputField)
-                .clear()
-                .type(pageName);
-
-            cy.intercept('GET', url).as('apiRequest');
+        // Action to visit site, trigger mouseover, and check the status code
+        const visitSiteAndCheckStatusCode = () => {
+            cy.get(this._excludeKeywordInputField).clear();
             cy.get(this._visitSiteButton)
                 .invoke('removeAttr', 'target')
-                .click({ force: true });
-
+                .click();
             cy.reload(forceReload);
             cy.get(this._samplePageButton).trigger('mouseover');
-            cy.wrap(requestCount).should('equal', 0);
-            cy.go('back').then(() => {
-                cy.go('back');
-            });
+            //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
+            cy.wait('@apiRequest');
+            cy.get('@apiRequest')
+                .its('response.statusCode')
+                .should('eq', statusCode);
+            cy.go('back');
         };
 
         // Function for dropdown interaction logic
@@ -348,19 +337,8 @@ class performancePageLocators {
                     cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
                 }
 
-                // Interact with the sample page and extract URL
-                cy.get(this._visitSiteButton)
-                    .invoke('removeAttr', 'target')
-                    .click();
-
-                cy.get(this._samplePageButton)
-                    .invoke('prop', 'href')
-                    .then((url) => {
-                        const pageName = extractPageName(url);
-                        cy.go('back');
-
-                        visitSiteAndCheckRequestCount(url, pageName);
-                    });
+                // Visit site and check API response
+                visitSiteAndCheckStatusCode();
             });
         };
 
