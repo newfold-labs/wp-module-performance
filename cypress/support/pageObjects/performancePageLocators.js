@@ -168,11 +168,11 @@ class performancePageLocators {
         handleDropdownSelection(); // Call the refactored function
     }
     
-    interceptCallForMouseHoverWithoutExcludeRunTimeURL(selectedDropDown, statusCode) {
+     interceptCallForMouseHoverWithoutExcludeRunTimeURL(selectedDropDown, statusCode) {
         const forceReload = true;
         Cypress.config('defaultCommandTimeout', 4000);
     
-        // Function to visit the site, extract URL, trigger mouse hover, and check status code
+        // Function to visit site, hover over link, extract URL, and check status code
         const visitSiteAndCheckStatusCode = () => {
             cy.get(this._excludeKeywordInputField).clear();
             
@@ -180,23 +180,28 @@ class performancePageLocators {
                 .invoke('removeAttr', 'target')
                 .click();
     
-            // Wait for the sample page link to appear and extract its URL
+            // Wait for the sample page link to appear
             cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content', { timeout: 6000 })
                 .should('be.visible')
-                .invoke('attr', 'href')
+                .trigger('mouseover')  // Trigger hover action
+                .invoke('attr', 'href') // Extract URL after hover
                 .then((url) => {
-                    // Intercept the API request with the extracted URL
+                    // Intercept API request using extracted URL
                     cy.intercept('GET', url).as('apiRequest');
     
                     cy.reload(forceReload);
-                    cy.get(this._samplePageButton).trigger('mouseover'); // Trigger mouse hover
+                    
+                    // Hover again to trigger the API request
+                    cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content')
+                        .trigger('mouseover'); 
+    
                     cy.wait('@apiRequest');
                     
                     // Validate API response status code
                     cy.get('@apiRequest')
                         .its('response.statusCode')
                         .should('eq', statusCode);
-                    
+    
                     cy.go('back');
                 });
         };
@@ -223,7 +228,7 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
-
+    
     interceptCallForMouseHoverWithExcludeRunTimeURL(selectedDropDown, requestCount) {
         const forceReload = true;
         Cypress.config('defaultCommandTimeout', 4000);
