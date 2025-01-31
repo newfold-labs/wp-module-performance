@@ -167,67 +167,72 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
-    
-     interceptCallForMouseHoverWithoutExcludeRunTimeURL(selectedDropDown, statusCode) {
-        const forceReload = true;
-        Cypress.config('defaultCommandTimeout', 4000);
-    
-        // Function to visit site, hover over link, extract URL, and check status code
-        const visitSiteAndCheckStatusCode = () => {
-            cy.get(this._excludeKeywordInputField).clear();
-            
-            cy.get(this._visitSiteButton)
-                .invoke('removeAttr', 'target')
-                .click();
-    
-            // Wait for the sample page link to appear
-            cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content', { timeout: 6000 })
-                .should('be.visible')
-                .trigger('mouseover')  // Trigger hover action
-                .invoke('attr', 'href') // Extract URL after hover
-                .then((url) => {
-                    // Intercept API request using extracted URL
-                    cy.intercept('GET', url).as('apiRequest');
-    
-                    cy.reload(forceReload);
-                    
-                    // Hover again to trigger the API request
-                    cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content')
-                        .trigger('mouseover'); 
-    
-                    cy.wait('@apiRequest');
-                    
-                    // Validate API response status code
-                    cy.get('@apiRequest')
-                        .its('response.statusCode')
-                        .should('eq', statusCode);
-    
-                    cy.go('back');
+    interceptCallForMouseHoverWithoutExcludeRunTimeURL(selectedDropDown, statusCode) {
+    const forceReload = true;
+    Cypress.config('defaultCommandTimeout', 8000); // Increased timeout for stability
+
+    // Function to visit site, hover over link, extract URL, and check status code
+    const visitSiteAndCheckStatusCode = () => {
+        cy.get(this._excludeKeywordInputField).clear();
+        
+        cy.get(this._visitSiteButton)
+            .invoke('removeAttr', 'target')
+            .click();
+
+        // Ensure the page loads before proceeding
+        cy.location('href').should('include', 'website_2da3810a'); 
+
+        // Wait for the sample page link to appear
+        cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content', { timeout: 10000 })
+            .should('be.visible')
+            .invoke('attr', 'href') // Extract URL dynamically
+            .then((url) => {
+                cy.log('Extracted URL:', url);
+
+                // Set up API interception with the extracted URL
+                cy.intercept('GET', url).as('apiRequest');
+
+                cy.reload(forceReload);
+
+                // Wait a bit to ensure the page is stable before hover
+                cy.wait(1000);
+
+                // Hover to trigger the request
+                cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content')
+                    .trigger('mouseover'); 
+
+                // Wait for the intercepted API request
+                cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
+                    expect(interception.response.statusCode).to.eq(statusCode);
                 });
-        };
-    
-        // Function for dropdown interaction logic
-        const handleDropdownSelection = () => {
-            cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
-                const selectedText = $buttonLabel.text().trim();
-    
-                if (selectedText === selectedDropDown) {
-                    cy.log('First option is already selected. Proceeding with the test...');
-                    cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
-                } else {
-                    cy.log('First option is not selected. Selecting the first option...');
-                    cy.get(this._dropDownForLinkPrefetch).click();
-                    cy.get(this._mouseHoverElement).click();
-                    cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
-                }
-    
-                // Visit site and check API response
-                visitSiteAndCheckStatusCode();
+
+                cy.go('back');
             });
-        };
-    
-        handleDropdownSelection(); // Call the refactored function
-    }
+    };
+
+    // Function for dropdown interaction logic
+    const handleDropdownSelection = () => {
+        cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
+            const selectedText = $buttonLabel.text().trim();
+
+            if (selectedText === selectedDropDown) {
+                cy.log('First option is already selected. Proceeding with the test...');
+                cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+            } else {
+                cy.log('First option is not selected. Selecting the first option...');
+                cy.get(this._dropDownForLinkPrefetch).click();
+                cy.get(this._mouseHoverElement).click();
+                cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+            }
+
+            // Visit site and check API response
+            visitSiteAndCheckStatusCode();
+        });
+    };
+
+    handleDropdownSelection(); // Call the refactored function
+}
+
     
     interceptCallForMouseHoverWithExcludeRunTimeURL(selectedDropDown, requestCount) {
         const forceReload = true;
