@@ -300,5 +300,48 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
+    interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
+        const forceReload = true;
+        Cypress.config('defaultCommandTimeout', 4000);
+        cy.intercept('GET', url).as('apiRequest');
+
+        // Action to visit site, trigger mouseover, and check the status code
+        const visitSiteAndCheckStatusCode = () => {
+            cy.get(this._excludeKeywordInputField).clear();
+            cy.get(this._visitSiteButton)
+                .invoke('removeAttr', 'target')
+                .click();
+            cy.reload(forceReload);
+            cy.get(this._samplePageButton).trigger('mouseover');
+            //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
+            cy.wait('@apiRequest');
+            cy.get('@apiRequest')
+                .its('response.statusCode')
+                .should('eq', statusCode);
+            cy.go('back');
+        };
+
+        // Function for dropdown interaction logic
+        const handleDropdownSelection = () => {
+            cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
+                const selectedText = $buttonLabel.text().trim();
+
+                if (selectedText === selectedDropDown) {
+                    cy.log('First option is already selected. Proceeding with the test...');
+                    cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+                } else {
+                    cy.log('First option is not selected. Selecting the first option...');
+                    cy.get(this._dropDownForLinkPrefetch).click();
+                    cy.get(this._mouseHoverElement).click();
+                    cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+                }
+
+                // Visit site and check API response
+                visitSiteAndCheckStatusCode();
+            });
+        };
+
+        handleDropdownSelection(); // Call the refactored function
+    }
 }
 export default performancePageLocators;
