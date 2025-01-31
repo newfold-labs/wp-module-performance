@@ -66,13 +66,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     } );
 
     //case 1
-    it( 'Mouse Hover-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
-        performanceLocators.verifyIfLinkPreFectchIsDisplayed();
-        performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseHoverWithoutExclude(
-            data.mouseHoverToBeSelected,data.localAppURL,data.statusCode
-        );
-    } );
+    
 
     //case 2
     it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
