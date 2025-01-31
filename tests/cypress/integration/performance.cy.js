@@ -69,8 +69,8 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     it( 'Mouse Hover-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseHoverWithoutExcludeRunTimeURL(
-            data.mouseHoverToBeSelected,data.statusCode
+        performanceLocators.interceptCallForMouseHoverWithoutExclude(
+            data.mouseHoverToBeSelected,data.localAppURL,data.statusCode
         );
     } );
 
