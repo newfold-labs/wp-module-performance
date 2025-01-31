@@ -300,43 +300,33 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
-interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
+
+    interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
         const forceReload = true;
         Cypress.config('defaultCommandTimeout', 4000);
-    
-        // Intercept API call dynamically based on URL
         cy.intercept('GET', url).as('apiRequest');
-    
+
         // Action to visit site, trigger mouseover, and check the status code
         const visitSiteAndCheckStatusCode = () => {
             cy.get(this._excludeKeywordInputField).clear();
             cy.get(this._visitSiteButton)
                 .invoke('removeAttr', 'target')
                 .click();
-    
-            // Reload with force to ensure fresh data
             cy.reload(forceReload);
-    
-            // Trigger mouse hover to initiate API request
             cy.get(this._samplePageButton).trigger('mouseover');
-    
-            // Wait for the intercepted request and validate the response
-            cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
-                cy.log('Intercepted API Request URL:', interception.request.url);
-                cy.log('Intercepted API Response Status Code:', interception.response.statusCode);
-    
-                // ✅ Ensure we're comparing only status code
-                expect(interception.response.statusCode).to.eq(statusCode);
-            });
-    
+            //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
+            cy.wait('@apiRequest');
+            cy.get('@apiRequest')
+                .its('response.statusCode')
+                .should('eq', statusCode);
             cy.go('back');
         };
-    
+
         // Function for dropdown interaction logic
         const handleDropdownSelection = () => {
             cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
                 const selectedText = $buttonLabel.text().trim();
-    
+
                 if (selectedText === selectedDropDown) {
                     cy.log('First option is already selected. Proceeding with the test...');
                     cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
@@ -346,12 +336,12 @@ interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
                     cy.get(this._mouseHoverElement).click();
                     cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
                 }
-    
+
                 // Visit site and check API response
                 visitSiteAndCheckStatusCode();
             });
         };
-    
+
         handleDropdownSelection(); // Call the refactored function
     }
     }
