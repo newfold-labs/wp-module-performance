@@ -299,7 +299,8 @@ class performancePageLocators {
         };
     
         handleDropdownSelection(); // Call the refactored function
-    }interceptCallForMouseHoverWithoutExclude(selectedDropDown, statusCode) {
+    }
+    interceptCallForMouseHoverWithoutExclude(selectedDropDown, statusCode) {
     const forceReload = true;
     Cypress.config('defaultCommandTimeout', 8000); // Increase timeout
 
@@ -356,6 +357,7 @@ class performancePageLocators {
 
     handleDropdownSelection(); // Call the refactored function
 }
+
 
     }
 export default performancePageLocators;
