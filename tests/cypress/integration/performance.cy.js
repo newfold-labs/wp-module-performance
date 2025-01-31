@@ -69,10 +69,8 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     it( 'Mouse Hover-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseHoverWithoutExclude(
-            data.mouseHoverToBeSelected,
-            data.localAppURLHover,
-            data.statusCode
+        performanceLocators.interceptCallForMouseHoverWithoutExcludeRunTimeURL(
+            data.mouseHoverToBeSelected,data.statusCode
         );
     } );
 
@@ -80,20 +78,17 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseDownWithoutExclude(
-            data.mouseDownToBeSelected,
-            data.localAppURL,
-            data.statusCode
+        performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
+            data.mouseDownToBeSelected,data.statusCode
         );
     } );
+    
     //case 3
     it( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseDownWithExclude(
-            data.mouseDownToBeSelected,
-            data.localAppURL,
-            data.requestCount
+        performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
+            data.mouseDownToBeSelected,data.requestCount
         );
     } );
 
@@ -101,10 +96,8 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     it( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
         performanceLocators.verifyIfLinkPreFectchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseHoverWithExclude(
-            data.mouseHoverToBeSelected,
-            data.localAppURL,
-            data.requestCount
+        performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
+            data.mouseHoverToBeSelected,data.requestCount
         );
     } );
 
