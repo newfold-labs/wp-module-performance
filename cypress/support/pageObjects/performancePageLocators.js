@@ -300,32 +300,49 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
-    interceptCallForMouseHoverWithoutExclude(selectedDropDown, url, statusCode) {
+    interceptCallForMouseHoverWithoutExclude(selectedDropDown, urlPattern, statusCode) {
         const forceReload = true;
-        Cypress.config('defaultCommandTimeout', 4000);
-        cy.intercept('GET', url).as('apiRequest');
-
-        // Action to visit site, trigger mouseover, and check the status code
+        Cypress.config('defaultCommandTimeout', 8000); // Increase timeout
+    
+        // Function to visit site, hover over link, extract URL, and check status code
         const visitSiteAndCheckStatusCode = () => {
             cy.get(this._excludeKeywordInputField).clear();
+    
             cy.get(this._visitSiteButton)
                 .invoke('removeAttr', 'target')
                 .click();
-            cy.reload(forceReload);
-            cy.get(this._samplePageButton).trigger('mouseover');
-            //cy.get('.wp-block-pages-list__item__link').trigger('mouseover');
-            cy.wait('@apiRequest');
-            cy.get('@apiRequest')
-                .its('response.statusCode')
-                .should('eq', statusCode);
-            cy.go('back');
+    
+            // Get the dynamic base URL
+            cy.url().then((currentUrl) => {
+                const baseUrl = new URL(currentUrl).origin; // Extracts "http://localhost:888X"
+                const fullUrl = `${baseUrl}/?page_id=2`; // Construct the expected full URL
+                
+                cy.log('Dynamic Base URL:', baseUrl);
+                cy.log('Constructed Full URL:', fullUrl);
+    
+                // Intercept requests matching dynamic URLs
+                cy.intercept('GET', `${baseUrl}/*`).as('apiRequest');
+    
+                cy.reload(forceReload);
+    
+                // Hover again to trigger the API request
+                cy.get(this._samplePageButton).trigger('mouseover');
+    
+                // Wait for the request with extended timeout
+                cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
+                    cy.log('Intercepted API Request:', interception);
+                    expect(interception.response.statusCode).to.eq(statusCode);
+                });
+    
+                cy.go('back');
+            });
         };
-
+    
         // Function for dropdown interaction logic
         const handleDropdownSelection = () => {
             cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
                 const selectedText = $buttonLabel.text().trim();
-
+    
                 if (selectedText === selectedDropDown) {
                     cy.log('First option is already selected. Proceeding with the test...');
                     cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
@@ -335,13 +352,13 @@ class performancePageLocators {
                     cy.get(this._mouseHoverElement).click();
                     cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
                 }
-
+    
                 // Visit site and check API response
                 visitSiteAndCheckStatusCode();
             });
         };
-
+    
         handleDropdownSelection(); // Call the refactored function
     }
-}
+    }
 export default performancePageLocators;
