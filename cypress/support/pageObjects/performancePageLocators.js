@@ -274,5 +274,62 @@ class performancePageLocators {
 
         handleDropdownSelection(); // Call the refactored function
     }
+
+    interceptCallForMouseHoverWithExcludeRunTimeURL(selectedDropDown, requestCount) {
+        const forceReload = true;
+        Cypress.config('defaultCommandTimeout', 4000);
+        // Function to extract page name from URL
+        const extractPageName = (url) => {
+            const pageName = url.split('/').filter(Boolean).pop();
+            cy.log('Extracted page name:', pageName);
+            expect(pageName).to.not.be.empty;
+            return pageName;
+        };
+        // Function to visit site, set exclude keyword, and check request count
+        const visitSiteAndCheckRequestCount = (url, pageName) => {
+            cy.get(this._excludeKeywordInputField)
+                .clear()
+                .type(pageName);
+            cy.intercept('GET', url).as('apiRequest');
+            cy.get(this._visitSiteButton)
+                .invoke('removeAttr', 'target')
+                .click({ force: true });
+            cy.reload(forceReload);
+            cy.get(this._samplePageButton).trigger('mouseover');
+            cy.wrap(requestCount).should('equal', 0);
+            cy.go('back').then(() => {
+                cy.go('back');
+            });
+        };
+        // Function for dropdown interaction logic
+        const handleDropdownSelection = () => {
+            cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
+                const selectedText = $buttonLabel.text().trim();
+                if (selectedText === selectedDropDown) {
+                    cy.log('First option is already selected. Proceeding with the test...');
+                    cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+                } else {
+                    cy.log('First option is not selected. Selecting the first option...');
+                    cy.get(this._dropDownForLinkPrefetch).click();
+                    cy.get(this._mouseHoverElement).click();
+                    cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+                }
+                // Visit site first to make the sample page link visible
+                cy.get(this._visitSiteButton)
+                    .invoke('removeAttr', 'target')
+                    .click();
+                // Wait for the sample page link to appear and extract its URL
+                cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content', { timeout: 6000 })
+                    .should('be.visible')
+                    .invoke('attr', 'href')
+                    .then((url) => {
+                        const pageName = extractPageName(url);
+                        cy.go('back'); // Go back after extracting the URL
+                        visitSiteAndCheckRequestCount(url, pageName);
+                    });
+            });
+        };
+        handleDropdownSelection(); // Call the refactored function
+    }
     }
 export default performancePageLocators;
