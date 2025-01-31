@@ -167,41 +167,70 @@ class performancePageLocators {
     
         handleDropdownSelection(); // Call the refactored function
     }
+    interceptCallForMouseHoverWithoutExcludeRunTimeURL(selectedDropDown, statusCode) {
+    const forceReload = true;
+    Cypress.config('defaultCommandTimeout', 8000); // Increase timeout
+
+    // Function to visit site, hover over link, extract URL, and check status code
     const visitSiteAndCheckStatusCode = () => {
-    cy.get(this._excludeKeywordInputField).clear();
-    
-    cy.get(this._visitSiteButton)
-        .invoke('removeAttr', 'target')
-        .click();
+        cy.get(this._excludeKeywordInputField).clear();
 
-    // Extract the expected URL dynamically
-    cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content', { timeout: 10000 })
-        .should('be.visible')
-        .invoke('attr', 'href')
-        .then((expectedUrl) => {
-            cy.log('Extracted Expected URL:', expectedUrl);
-            expect(expectedUrl).to.not.be.empty; // Ensure URL is valid
+        cy.get(this._visitSiteButton)
+            .invoke('removeAttr', 'target')
+            .click();
 
-            // Wait until Cypress URL matches the expected domain dynamically
-            cy.url().should('include', new URL(expectedUrl).hostname);
+        // Wait for the sample page link to appear and extract the URL
+        cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content', { timeout: 10000 })
+            .should('be.visible')
+            .invoke('attr', 'href')
+            .then((url) => {
+                cy.log('Extracted URL:', url); // Log extracted URL for debugging
+                expect(url).to.not.be.empty; // Ensure URL is valid
 
-            cy.intercept('GET', expectedUrl).as('apiRequest');
+                // Wait until Cypress navigates to the correct domain dynamically
+                cy.url().should('include', new URL(url).hostname);
 
-            cy.reload(true);
-            cy.wait(1000);
+                cy.intercept('GET', url).as('apiRequest');
 
-            // Hover to trigger request
-            cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content')
-                .trigger('mouseover'); 
+                cy.reload(forceReload);
 
-            cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
-                cy.log('Intercepted API Request:', interception);
-                expect(interception.response.statusCode).to.eq(statusCode);
+                // Hover again to trigger the API request
+                cy.get('.wp-block-pages-list__item__link.wp-block-navigation-item__content')
+                    .trigger('mouseover');
+
+                // Wait for the request with extended timeout
+                cy.wait('@apiRequest', { timeout: 10000 }).then((interception) => {
+                    cy.log('Intercepted API Request:', interception);
+                    expect(interception.response.statusCode).to.eq(statusCode);
+                });
+
+                cy.go('back');
             });
+    };
 
-            cy.go('back');
+    // Function for dropdown interaction logic
+    const handleDropdownSelection = () => {
+        cy.get(this._dropDownForLinkPrefetch).then(($buttonLabel) => {
+            const selectedText = $buttonLabel.text().trim();
+
+            if (selectedText === selectedDropDown) {
+                cy.log('First option is already selected. Proceeding with the test...');
+                cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+            } else {
+                cy.log('First option is not selected. Selecting the first option...');
+                cy.get(this._dropDownForLinkPrefetch).click();
+                cy.get(this._mouseHoverElement).click();
+                cy.get(this._dropDownForLinkPrefetch).should('have.text', selectedDropDown);
+            }
+
+            // Visit site and check API response
+            visitSiteAndCheckStatusCode();
         });
-};
+    };
+
+    handleDropdownSelection(); // Call the refactored function
+}
+
 
     
     interceptCallForMouseHoverWithExcludeRunTimeURL(selectedDropDown, requestCount) {
