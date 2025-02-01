@@ -186,9 +186,9 @@ class ImageCommandHandler {
 
 		ImageSettings::update( $settings );
 
-		/* translators: 1: the setting key, 2: the on/off status */
 		NFD_WPCLI::success(
 			sprintf(
+				/* translators: 1: the setting key, 2: the on/off status */
 				__( "Setting '%1\$s' has been turned %2\$s.", 'wp-module-performance' ),
 				$setting,
 				$status
