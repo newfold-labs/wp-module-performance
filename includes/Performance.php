@@ -79,6 +79,7 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
 		new HealthChecks( $container );

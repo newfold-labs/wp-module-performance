@@ -2,8 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
-use function NewfoldLabs\WP\Module\Performance\is_bulk_image_optimizer_page;
-
 /**
  * Manages bulk optimization functionality for the Media Library.
  */
