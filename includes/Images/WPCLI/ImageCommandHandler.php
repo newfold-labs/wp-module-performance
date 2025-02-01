@@ -173,8 +173,19 @@ class ImageCommandHandler {
 			$settings['enabled'] = true;
 		}
 
+		// Update the specified setting.
 		$this->set_nested_value( $settings, $setting, $enabled );
+
+		// If both auto_optimize and bulk_optimization are turned off,
+		// then force auto_delete (auto_delete_original_image) to be off.
+		$auto_optimize     = ! empty( $settings['auto_optimized_uploaded_images']['enabled'] );
+		$bulk_optimization = ! empty( $settings['bulk_optimization'] );
+		if ( ! $auto_optimize && ! $bulk_optimization ) {
+			$settings['auto_optimized_uploaded_images']['auto_delete_original_image'] = false;
+		}
+
 		ImageSettings::update( $settings );
+
 		/* translators: 1: the setting key, 2: the on/off status */
 		NFD_WPCLI::success(
 			sprintf(
@@ -184,6 +195,7 @@ class ImageCommandHandler {
 			)
 		);
 	}
+
 
 	/**
 	 * Updates a nested setting value using dot notation.
