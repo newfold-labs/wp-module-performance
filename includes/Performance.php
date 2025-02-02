@@ -11,6 +11,7 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 
 use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
