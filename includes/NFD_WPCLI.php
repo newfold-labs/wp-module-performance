@@ -148,4 +148,13 @@ class NFD_WPCLI {
 	public static function success( $message ) {
 		WP_CLI::success( 'Newfold CLI: ' . $message );
 	}
+
+	/**
+	 * Checks if the current execution context is WP-CLI.
+	 *
+	 * @return bool True if running inside WP-CLI, false otherwise.
+	 */
+	public static function is_executing_wp_cli() {
+		return defined( 'WP_CLI' ) && WP_CLI;
+	}
 }
