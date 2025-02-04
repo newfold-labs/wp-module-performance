@@ -3,6 +3,7 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\Images\WPCLI\ImageCommandHandler;
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch\WPCLI\LinkPrefetchCommandHandler;
 
 /**
  * Manages all "wp nfd performance" WP-CLI commands.
@@ -21,7 +22,8 @@ class PerformanceWPCLI {
 	 * @var array
 	 */
 	private static $commands = array(
-		'images' => ImageCommandHandler::class,
+		'images'        => ImageCommandHandler::class,
+		'link_prefetch' => LinkPrefetchCommandHandler::class,
 	);
 
 	/**
