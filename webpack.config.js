@@ -8,7 +8,7 @@ module.exports = {
 	mode: 'production', // Automatically sets minification
 	entry: glob.sync( './assets/**/*.js' ).reduce( ( entries, file ) => {
 		const name = path.relative( './assets', file ).replace( /\.js$/, '' );
-		entries[ name ] = file;
+		entries[ name ] = file.replace(/^assets\//, './assets/');
 		return entries;
 	}, {} ),
 	output: {
