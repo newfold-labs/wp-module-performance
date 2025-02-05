@@ -10,6 +10,21 @@ use WP_Forge\Collection\Collection;
  * Cache manager.
  */
 class CacheManager {
+
+	/**
+	 * The option name where the cache level is stored.
+	 *
+	 * @var string
+	 */
+	public const OPTION_CACHE_LEVEL = 'newfold_cache_level';
+
+	/**
+	 * Allowed cache level values.
+	 *
+	 * @var array
+	 */
+	public const VALID_CACHE_LEVELS = array( 0, 1, 2, 3 );
+
 	/**
 	 * Dependency injection container.
 	 *
@@ -57,19 +72,19 @@ class CacheManager {
 	 * @return array
 	 */
 	public function enabledCacheTypes() {
-		$cacheTypes = array();
+		$default_cache_types = array( 'browser', 'skip404' );
+
 		if ( $this->container->has( 'cache_types' ) ) {
-			$providedTypes = $this->container->get( 'cache_types' );
-			if ( is_array( $providedTypes ) ) {
-				$cacheTypes = array_intersect(
-					array_map( 'strtolower', $providedTypes ),
-					$this->registeredCacheTypes()
-				);
-			}
+			$provided_types = $this->container->get( 'cache_types' );
+		} else {
+			$provided_types = $default_cache_types;
 		}
 
-		return $cacheTypes;
+		return is_array( $provided_types )
+		? array_intersect( array_map( 'strtolower', $provided_types ), $this->registeredCacheTypes() )
+		: $default_cache_types;
 	}
+
 
 	/**
 	 * Get an array of page cache type instances based on the enabled cache types.

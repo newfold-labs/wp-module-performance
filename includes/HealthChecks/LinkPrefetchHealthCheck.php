@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\HealthChecks;
 
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
+
 /**
  * Health check for link prefetching.
  */
@@ -23,7 +25,7 @@ class LinkPrefetchHealthCheck extends HealthCheck {
 	 * @return bool
 	 */
 	public function test() {
-		$enabled = get_option( 'nfd_link_prefetch_settings', array() );
+		$enabled = get_option( LinkPrefetch::$option_name, array() );
 		return isset( $enabled['activeOnDesktop'] ) && $enabled['activeOnDesktop'];
 	}
 }
