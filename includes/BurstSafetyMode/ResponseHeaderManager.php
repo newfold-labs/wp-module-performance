@@ -5,6 +5,9 @@ namespace NewfoldLabs\WP\Module\Performance\BurstSafetyMode;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use function WP_Forge\WP_Htaccess_Manager\convertContentToLines;
 
+/**
+ * Response header manager.
+ */
 class ResponseHeaderManager {
 
 	/**
@@ -14,6 +17,11 @@ class ResponseHeaderManager {
 	 */
 	const MARKER = 'Newfold Headers';
 
+	/**
+	 * Htaccess instance.
+	 *
+	 * @var htaccess
+	 */
 	public $htaccess;
 
 	/**
@@ -67,7 +75,7 @@ class ResponseHeaderManager {
 	/**
 	 * Add multiple headers at once.
 	 *
-	 * @param string[] $headers
+	 * @param string[] $headers Headers to add.
 	 */
 	public function addHeaders( array $headers ) {
 		$headers = array_merge( $this->parseHeaders(), $headers );
@@ -95,7 +103,7 @@ class ResponseHeaderManager {
 	/**
 	 * Set headers.
 	 *
-	 * @param array $headers
+	 * @param array $headers Headers to set.
 	 */
 	public function setHeaders( array $headers ) {
 
@@ -107,7 +115,7 @@ class ResponseHeaderManager {
 
 		$content = '<IfModule mod_headers.c>' . PHP_EOL;
 		foreach ( $headers as $key => $value ) {
-			$content .= "\t" . "Header set {$key} \"{$value}\"" . PHP_EOL;
+			$content .= "\tHeader set {$key} \"{$value}\"" . PHP_EOL;
 		}
 		$content .= '</IfModule>';
 

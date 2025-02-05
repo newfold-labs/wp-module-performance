@@ -5,8 +5,9 @@ namespace NewfoldLabs\WP\Module\Performance;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
+
 /**
- * Cache Manager Class
+ * Cache manager.
  */
 class CacheManager {
 	/**
@@ -73,7 +74,7 @@ class CacheManager {
 	/**
 	 * Get an array of page cache type instances based on the enabled cache types.
 	 *
-	 * @return CacheBase[]
+	 * @return CacheBase[] An array of cache type instances.
 	 */
 	public function getInstances() {
 		$instances  = array();

@@ -16,6 +16,34 @@ class ImageOptimizedMarker {
 	}
 
 	/**
+	 * Establish whether the current page allows scripts to be enqueued.
+	 *
+	 * @return boolean
+	 */
+	private function is_enqueue_allowed() {
+		global $pagenow;
+
+		$excluded_pages = array(
+			'admin.php',
+			'themes.php',
+			'plugins.php',
+			'users.php',
+			'tools.php',
+			'import.php',
+			'export.php',
+			'site-health.php',
+			'export-personal-data.php',
+			'erase-personal-data.php',
+			'theme-editor.php',
+			'plugin-editor.php',
+		);
+
+		$is_excluded = in_array( $pagenow, $excluded_pages, true );
+
+		return apply_filters( 'newfold_performance_optimized_image_marker_enqueue_allowed', ! $is_excluded );
+	}
+
+	/**
 	 * Enqueues JS and CSS files for marking optimized images.
 	 */
 	public function enqueue_marker_assets() {
@@ -33,14 +61,17 @@ class ImageOptimizedMarker {
 			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
 
-		wp_enqueue_script( 'nfd-performance-optimizer-marker' );
-
-		wp_enqueue_style(
+		wp_register_style(
 			'nfd-performance-optimizer-marker-style',
 			NFD_PERFORMANCE_BUILD_URL . '/image-optimized-marker/image-optimized-marker.min.css',
 			array(),
 			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-optimized-marker/image-optimized-marker.min.css' )
 		);
+
+		if ( $this->is_enqueue_allowed() ) {
+			wp_enqueue_style( 'nfd-performance-optimizer-marker-style' );
+			wp_enqueue_script( 'nfd-performance-optimizer-marker' );
+		}
 	}
 
 	/**
