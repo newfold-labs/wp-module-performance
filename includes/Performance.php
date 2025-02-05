@@ -102,7 +102,6 @@ class Performance {
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		add_action( 'load-toplevel_page_' . $container->plugin()->id, array( $this, 'load_translations' ), 1 );
 		add_action( 'init', array( $this, 'load_text_domain' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ) );
 	}
 
 	/**
