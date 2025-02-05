@@ -43,7 +43,7 @@ function getCacheLevelDropdown() { // phpcs:ignore WordPress.NamingConventions.V
 	$currentCacheLevel = getCacheLevel();
 
 	$name  = Performance::OPTION_CACHE_LEVEL;
-	$label = __( 'Cache Level', 'newfold-performance-module' );
+	$label = __( 'Cache Level', 'wp-module-performance' );
 	?>
 	<select name="<?php echo esc_attr( $name ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
 		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ) : ?>
@@ -70,7 +70,7 @@ function getSkip404Option() { // phpcs:ignore WordPress.NamingConventions.ValidF
 function getSkip404InputField() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	$name  = Performance::OPTION_SKIP_404;
 	$value = getSkip404Option();
-	$label = __( 'Skip WordPress 404 Handling for Static Files', 'newfold-performance-module' );
+	$label = __( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' );
 	?>
 	<input
 		type="checkbox"

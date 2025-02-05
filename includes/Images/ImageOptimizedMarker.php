@@ -47,13 +47,18 @@ class ImageOptimizedMarker {
 	 * Enqueues JS and CSS files for marking optimized images.
 	 */
 	public function enqueue_marker_assets() {
-
 		wp_register_script(
 			'nfd-performance-optimizer-marker',
 			NFD_PERFORMANCE_BUILD_URL . '/image-optimized-marker/image-optimized-marker.min.js',
-			array( 'wp-i18n' ),
+			array( 'wp-api-fetch', 'wp-element', 'wp-i18n' ),
 			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-optimized-marker/image-optimized-marker.min.js' ),
 			true
+		);
+
+		wp_set_script_translations(
+			'nfd-performance-optimizer-marker',
+			'wp-module-performance',
+			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
 
 		wp_register_style(

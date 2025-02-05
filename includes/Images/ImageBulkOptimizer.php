@@ -55,6 +55,12 @@ class ImageBulkOptimizer {
 			true
 		);
 
+		wp_set_script_translations(
+			'nfd-performance-bulk-optimizer',
+			'wp-module-performance',
+			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
+		);
+
 		wp_register_style(
 			'nfd-performance-bulk-optimizer-style',
 			NFD_PERFORMANCE_BUILD_URL . '/image-bulk-optimizer/image-bulk-optimizer.min.css',

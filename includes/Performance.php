@@ -93,13 +93,15 @@ class Performance {
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
+
+		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
+		add_action( 'load-toplevel_page_' . $container->plugin()->id, array( $this, 'load_translations' ), 1 );
+		add_action( 'init', array( $this, 'load_text_domain' ) );
 	}
 
 	/**
@@ -257,14 +259,14 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
-					'title' => __( 'Caching', 'newfold-module-performance' ),
+					'title' => __( 'Caching', 'wp-module-performance' ),
 				)
 			);
 
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'newfold-module-performance' ),
+					'title'  => __( 'Purge All', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 				)
@@ -274,7 +276,7 @@ class Performance {
 				$wp_admin_bar->add_node(
 					array(
 						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+						'title'  => __( 'Purge This Page', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
 						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
 					)
@@ -285,7 +287,7 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
-					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
+					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
@@ -298,15 +300,14 @@ class Performance {
 	public function add_sub_menu_page() {
 		$brand = $this->container->get( 'plugin' )['id'];
 		add_management_page(
-			__( 'Performance', 'newfold-performance-module' ),
-			__( 'Performance', 'newfold-performance-module' ),
+			__( 'Performance', 'wp-module-performance' ),
+			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
 			admin_url( "admin.php?page=$brand#/performance" ),
 			null,
 			5
 		);
 	}
-
 	/**
 	 * Enqueue scripts and styles in admin
 	 */
@@ -317,6 +318,24 @@ class Performance {
 			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
 			wp_enqueue_style( 'wp-module-performance-styles' );
 		}
+	}
+	/**
+	 * Enqueue script for translations of the performance panel settings
+	 */
+	public function load_translations() {
+		wp_register_script(
+			'wp-module-performance-translations',
+			NFD_PERFORMANCE_BUILD_URL . '/translations.min.js',
+			array( 'lodash', 'react', 'react-dom', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-html-entities', 'wp-i18n' ),
+			$this->container->plugin()->version,
+			true
+		);
+		wp_set_script_translations(
+			'wp-module-performance-translations',
+			'wp-module-performance',
+			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
+		);
+		wp_enqueue_script( 'wp-module-performance-translations' );
 	}
 
 	/**
@@ -361,5 +380,21 @@ class Performance {
 		}
 
 		return $exists;
+	}
+
+	/**
+	 * Load module text domain
+	 *
+	 * @return void
+	 */
+	public function load_text_domain() {
+		load_script_textdomain(
+			'wp-module-performance-translations',
+			'wp-module-performance',
+			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
+		);
+
+		$current_language = get_locale();
+		load_textdomain( 'wp-module-performance', NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR . '/wp-module-performance-' . $current_language . '.mo' );
 	}
 }
