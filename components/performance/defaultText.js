@@ -265,12 +265,26 @@ const defaultText = {
 		'Optimize Critical CSS Loading (manual)',
 		'wp-module-performance'
 	),
-	jetpackBoostCriticalCssDescription: __(
-		'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.',
-		'wp-module-performance'
+	jetpackBoostCriticalCssDescription: sprintf(
+		// translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+		__(
+			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sYou should regenerate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.',
+			'wp-module-performance'
+		),
+		'<br><br>',
+		'<strong>',
+		'</strong>'
 	),
 	jetpackBoostCriticalCssPremiumTitle: __(
 		'Optimize Critical CSS Loading (UPGRADED)',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssButton: __(
+		'Generate CSS',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssGenerationIssue: __(
+		'Error during generation:',
 		'wp-module-performance'
 	),
 	jetpackBoostCriticalCssUpgradeTitle: __(
@@ -283,9 +297,26 @@ const defaultText = {
 			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.',
 			'wp-module-performance'
 		),
-		'<br>',
+		'<br><br>',
 		'<strong>',
 		'</strong>'
+	),
+	jetpackBoostCriticalCssModalDescription: sprintf(
+		// translators: %1$s is a line break (<p>), %2$s is the opening </p> tag.
+		__(
+			"%1$sThe manual generation of your Critical CSS will be launched now and you'll be redirected to Jetpack Boost page to track the progress.%2$s%1$sDo you want proceed?%2$s",
+			'wp-module-performance'
+		),
+		'<p>',
+		'</p>',
+	),
+	jetpackBoostCriticalCssModalConfirm: __(
+		'Yes',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssModalReject: __(
+		'No',
+		'wp-module-performance'
 	),
 	jetpackBoostRenderBlockingTitle: __(
 		'Defer Non-Essential JavaScript',
@@ -340,6 +371,7 @@ const defaultText = {
 		'Discover more %1$shere%2$s',
 		'wp-module-performance'
 	),
+	lockedBadgeText : __( 'Locked', 'wp-module-performance' ),
 	optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
 	optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
 	upgradeModule: __( 'Upgrade to unlock', 'wp-module-performance' ),

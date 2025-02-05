@@ -38,13 +38,14 @@ const InstallActivatePluginButton = ( {
 			setMessage( constants.text.jetpackBoostActivationFailed );
 		} finally {
 			setIsLoading( false );
+			window.location.reload();
 		}
 	};
 
 	return (
 		<div className="nfd-performance-jetpack-boost-container-install-activate-button">
 			<button
-				className="nfd-button--upsell"
+				className="nfd-button--upsell nfd-shadow-lg nfd-shadow-amber-700/30"
 				onClick={ handleInstallActivate }
 			>
 				{ isLoading ? (

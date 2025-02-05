@@ -1,6 +1,10 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
+use Automattic\Jetpack_Boost\Lib\Critical_CSS\Data_Sync_Actions\Regenerate_CSS;
+use Automattic\Jetpack_Boost\Jetpack_Boost;
+use Automattic\Jetpack_Boost\Lib\Critical_CSS\Regenerate;
+
 /**
  * Class JetpackController
  *
@@ -48,6 +52,19 @@ class JetpackController {
 				),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/regenerate_critical_css',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'regenerate_critical_css' ),
+					'permission_callback' => function () {
+						return current_user_can( 'manage_options' );
+					},
+				),
+			)
+		);
 	}
 
 	/**
@@ -82,9 +99,13 @@ class JetpackController {
 				);
 			}
 
-			if ( 'critical-css-premium' === $field['id'] ) {
+			if( 'critical-css' === $field['id'] && 1 === (int) $field['value'] ) {
+				//$jetpack_boost = new Jetpack_Boost();
+                $css = new Regenerate_CSS();
+                $css->handle( null, null );
+            }elseif ( 'critical-css-premium' === $field['id'] ) {
 				$field['id'] = 'critical-css';
-			}
+			}			
 
 			$option_key   = 'jetpack_boost_status_' . $field['id'];
 			$option_value = $field['value'];
@@ -123,6 +144,46 @@ class JetpackController {
 					'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ) . $e->getMessage(),
 				),
 				500
+			);
+		}
+	}
+
+	/**
+	 * Regenerate Critical CSS.
+	 *
+	 * @return void
+	 */
+	public function regenerate_critical_css( $request ) {
+		try {
+			$css = new Regenerate_CSS();
+			$result = $css->handle(null, null);
+	
+			if (!empty($result['success']) && $result['success']) {
+				// Success response.
+				return new \WP_REST_Response(
+					array(
+						'success' => true,
+					),
+					200
+				);
+			} else {
+				// Case where the process did not throw an exception but failed.
+				return new \WP_REST_Response(
+					array(
+						'success' => false,
+						'error'   => __('Failed to regenerate critical CSS.', 'newfold-performance-module'),
+					),
+					400 // Bad Request
+				);
+			}
+		} catch (\Exception $e) {
+			// Exception handling.
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __('An error occurred while regenerating critical CSS.', 'newfold-performance-module') . $e->getMessage(),
+				),
+				500 // Internal Server Error
 			);
 		}
 	}
