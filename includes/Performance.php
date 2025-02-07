@@ -11,6 +11,7 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
+use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 
 use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
@@ -330,11 +331,13 @@ class Performance {
 			$this->container->plugin()->version,
 			true
 		);
-		wp_set_script_translations(
-			'wp-module-performance-translations',
+
+		I18nService::load_js_translations(
 			'wp-module-performance',
+			'wp-module-performance-translations',
 			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
+
 		wp_enqueue_script( 'wp-module-performance-translations' );
 	}
 
@@ -388,13 +391,9 @@ class Performance {
 	 * @return void
 	 */
 	public function load_text_domain() {
-		load_script_textdomain(
-			'wp-module-performance-translations',
+		I18nService::load_php_translations(
 			'wp-module-performance',
 			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
-
-		$current_language = get_locale();
-		load_textdomain( 'wp-module-performance', NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR . '/wp-module-performance-' . $current_language . '.mo' );
 	}
 }

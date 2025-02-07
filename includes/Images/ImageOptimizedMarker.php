@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\Module\Performance\Services\I18nService;
+
 /**
  * Marks optimized images in the WordPress Media Library.
  */
@@ -55,9 +57,9 @@ class ImageOptimizedMarker {
 			true
 		);
 
-		wp_set_script_translations(
-			'nfd-performance-optimizer-marker',
+		I18nService::load_js_translations(
 			'wp-module-performance',
+			'nfd-performance-optimizer-marker',
 			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
 

@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 use function NewfoldLabs\WP\Module\Performance\is_bulk_image_optimizer_page;
 
 /**
@@ -55,9 +56,9 @@ class ImageBulkOptimizer {
 			true
 		);
 
-		wp_set_script_translations(
-			'nfd-performance-bulk-optimizer',
+		I18nService::load_js_translations(
 			'wp-module-performance',
+			'nfd-performance-bulk-optimizer',
 			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
 
