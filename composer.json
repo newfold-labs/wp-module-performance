@@ -41,21 +41,10 @@
 	  "wp-cli/i18n-command": "^2.6",
 	  "10up/wp_mock": "^1.0"
 	},
-	"config": {
-	  "allow-plugins": {
-		"dealerdirect/phpcodesniffer-composer-installer": true
-	  }
-	},
 	"scripts": {
-		"test": [
-			"phpunit --bootstrap tests/phpunit/bootstrap.php"
-	  	],
-		"cs-fix": [
-			"phpcbf --standard=phpcs.xml ."
-		],
-		"cs-lint": [
-			"phpcs --standard=phpcs.xml -s ."
-		],
+		"test": "phpunit --bootstrap tests/phpunit/bootstrap.php",
+		"cs-fix": "phpcbf --standard=phpcs.xml .",
+		"cs-lint": "phpcs --standard=phpcs.xml -s .",
 	 	"i18n-pot": "vendor/bin/wp i18n make-pot . ./languages/wp-module-performance.pot --domain=wp-module-performance --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-performance/issues\",\"POT-Creation-Date\":null}' --exclude=build,node_modules,src,tests",
 	   	"i18n-po": "vendor/bin/wp i18n update-po ./languages/wp-module-performance.pot ./languages",
 	   	"i18n-mo": "vendor/bin/wp i18n make-mo ./languages",
@@ -74,6 +63,11 @@
 		"i18n": "Generate files for translation.",
 		"fix": "Automatically fix coding standards issues where possible.",
 		"lint": "Check files against coding standards."
+	},
+	"config": {
+		"allow-plugins": {
+		  "dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
   

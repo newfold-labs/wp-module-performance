@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+
 /**
  * Return defaul exclusions.
  *
@@ -17,7 +19,7 @@ function get_default_cache_exclusions() {
  * @return int Cache level.
  */
 function getCacheLevel() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return absint( get_option( Performance::OPTION_CACHE_LEVEL, 2 ) );
+	return absint( get_option( CacheManager::OPTION_CACHE_LEVEL, 2 ) );
 }
 
 /**
@@ -42,7 +44,7 @@ function getCacheLevelDropdown() { // phpcs:ignore WordPress.NamingConventions.V
 	$cacheLevels       = getCacheLevels();
 	$currentCacheLevel = getCacheLevel();
 
-	$name  = Performance::OPTION_CACHE_LEVEL;
+	$name  = CacheManager::OPTION_CACHE_LEVEL;
 	$label = __( 'Cache Level', 'wp-module-performance' );
 	?>
 	<select name="<?php echo esc_attr( $name ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
@@ -61,14 +63,14 @@ function getCacheLevelDropdown() { // phpcs:ignore WordPress.NamingConventions.V
  * @return bool Whether to skip 404 handling for static files.
  */
 function getSkip404Option() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return (bool) get_option( Performance::OPTION_SKIP_404, true );
+	return (bool) get_option( Skip404::OPTION_SKIP_404, true );
 }
 
 /**
  * Output the "Skip WordPress 404 Handling for Static Files" input field.
  */
 function getSkip404InputField() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	$name  = Performance::OPTION_SKIP_404;
+	$name  = Skip404::OPTION_SKIP_404;
 	$value = getSkip404Option();
 	$label = __( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' );
 	?>
