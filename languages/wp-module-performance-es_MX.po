@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-14 13:17+0000\n"
+"PO-Revision-Date: 2025-02-07 13:40+0000\n"
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.2.2\n"
@@ -23,7 +23,7 @@ msgstr "Nivel de caché"
 msgid "Skip WordPress 404 Handling For Static Files"
 msgstr "Omitir el manejo de error 404 de WordPress para archivos estáticos"
 
-#: includes/Performance.php:264
+#: includes/Performance.php:262
 msgid "Caching"
 msgstr "Caché"
 
@@ -40,15 +40,15 @@ msgstr "Los campos ‘id’ y ‘value’ son requeridos."
 msgid "An error occurred while updating the option."
 msgstr "Ocurrió un error al actualizar la opción."
 
-#: includes/Performance.php:271
+#: includes/Performance.php:269
 msgid "Purge All"
 msgstr "Limpiar todo"
 
-#: includes/Performance.php:281
+#: includes/Performance.php:279
 msgid "Purge This Page"
 msgstr "Purge This Page"
 
-#: includes/Performance.php:292
+#: includes/Performance.php:290
 msgid "Cache Settings"
 msgstr "Configuración de caché"
 
@@ -59,7 +59,7 @@ msgstr "La URL de la imagen proporcionada es inválida."
 #. translators: %s: Error message
 #: includes/Images/ImageService.php:46
 msgid "Error connecting to Cloudflare Worker: %s"
-msgstr "Error al conectar con Cloudflare Worker: %s"
+msgstr "Error connecting to Cloudflare Worker: %s"
 
 #. translators: %s: Error message
 #: includes/Images/ImageService.php:60
@@ -155,8 +155,8 @@ msgstr "ID de medio inválido o elemento multimedia no encontrado."
 msgid "Image successfully optimized."
 msgstr "Imagen optimizada correctamente."
 
-#: includes/Performance.php:305
-#: includes/Performance.php:306
+#: includes/Performance.php:303
+#: includes/Performance.php:304
 msgid "Performance"
 msgstr "Rendimiento"
 
@@ -271,10 +271,6 @@ msgstr "Saltar 404"
 #: components/performance/defaultText.js:78
 msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing."
 msgstr "Cuando está habilitado, los recursos estáticos como imágenes y fuentes usarán una página 404 predeterminada del servidor y no las páginas 404 de WordPress. Las páginas y publicaciones seguirán usando WordPress para las páginas 404. Esto puede acelerar considerablemente tu sitio web si falta un recurso estático como una imagen o una fuente."
-
-#: components/performance/defaultText.js:82
-msgid "Skip 404 Handling For Static Files"
-msgstr "Saltar manejo 404 para archivos estáticos"
 
 #: components/performance/defaultText.js:86
 #: components/performance/defaultText.js:87
@@ -482,6 +478,7 @@ msgstr "Generar CSS crítico automáticamente"
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
 msgstr "Mueve la información de estilo importante al principio de la página, lo que ayuda a que las páginas muestren su contenido antes, para que tus usuarios no tengan que esperar a que se cargue toda la página. %1$s %2$sBoost generará automáticamente tu CSS crítico%3$s siempre que realices cambios en la estructura HTML o CSS de tu sitio."
 
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14
 #: components/performance/defaultText.js:290
 msgid "Defer Non-Essential JavaScript"
 msgstr "Aplazar JavaScript no esencial"
@@ -502,6 +499,7 @@ msgstr "Los scripts se agrupan por su ubicación original, se concatenan y se mi
 msgid "Exclude JS Strings"
 msgstr "Excluir cadenas JS"
 
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
 #: components/performance/defaultText.js:307
 msgid "Concatenate CSS"
 msgstr "Concatenar CSS"
@@ -559,6 +557,246 @@ msgstr "Error al guardar la opción"
 msgid "Upgrade to unlock"
 msgstr "Haz un upgrade para tener acceso"
 
+#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
+msgid "Autosave Interval"
+msgstr ""
+
+#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:15
+msgid "Autosaving is set to happen every 30 seconds or more"
+msgstr ""
+
+#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:16
+msgid "Autosaving is set to be frequent, less than every 30 seconds"
+msgstr ""
+
+#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:17
+msgid "Setting the autosave interval to a longer period can reduce server load. It is recommended to set it to 30 seconds or more."
+msgstr ""
+
+#: includes/HealthChecks/BrowserCachingHealthCheck.php:14
+msgid "Browser Caching"
+msgstr ""
+
+#: includes/HealthChecks/BrowserCachingHealthCheck.php:15
+msgid "Browser caching is enabled"
+msgstr ""
+
+#: includes/HealthChecks/BrowserCachingHealthCheck.php:16
+msgid "Browser caching is disabled"
+msgstr ""
+
+#: includes/HealthChecks/BrowserCachingHealthCheck.php:17
+msgid "Enabling browser caching can improve performance by storing static assets in the browser for faster page loads."
+msgstr ""
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:14
+msgid "Cloudflare enabled"
+msgstr ""
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:15
+msgid "Cloudflare integration is enabled"
+msgstr ""
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:16
+msgid "Cloudflare integration is disabled"
+msgstr ""
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:17
+msgid "Cloudflare integration can improve performance and security."
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:15
+msgid "CSS files are concatenated"
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:16
+msgid "CSS files are not concatenated"
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:17
+msgid "Concatenating CSS can improve performance by reducing the number of requests."
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateJsHealthCheck.php:14
+msgid "Concatenate JavaScript"
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateJsHealthCheck.php:15
+msgid "JavaScript files are concatenated"
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateJsHealthCheck.php:16
+msgid "JavaScript files are not concatenated"
+msgstr ""
+
+#: includes/HealthChecks/ConcatenateJsHealthCheck.php:17
+msgid "Concatenating JavaScript can improve performance by reducing the number of requests."
+msgstr ""
+
+#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:14
+msgid "WP Cron Lock Timeout"
+msgstr ""
+
+#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:15
+msgid "Cron lock timeout is set to 60 seconds or less."
+msgstr ""
+
+#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:16
+msgid "Cron lock timeout is set to a high number."
+msgstr ""
+
+#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:17
+msgid "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
+msgstr ""
+
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:15
+msgid "Non-essential JavaScript is deferred"
+msgstr ""
+
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:16
+msgid "Non-essential JavaScript is not deferred"
+msgstr ""
+
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:17
+msgid "JavaScript can be deferred to improve performance by loading it after the page has loaded."
+msgstr ""
+
+#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:14
+msgid "Empty Trash Days"
+msgstr ""
+
+#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:15
+msgid "Trash is emptied every 30 days or less"
+msgstr ""
+
+#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:16
+msgid "Trash is emptied less frequently than every 30 days."
+msgstr ""
+
+#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:17
+msgid "Emptying the trash more frequently can reduce database bloat."
+msgstr ""
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:14
+msgid "Lazy Loading"
+msgstr ""
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:15
+msgid "Lazy loading is enabled"
+msgstr ""
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:16
+msgid "Lazy loading is disabled"
+msgstr ""
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:17
+msgid "Lazy loading can improve performance by only loading images when they are in view."
+msgstr ""
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:14
+msgid "Link Prefetching"
+msgstr ""
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:15
+msgid "Link prefetching is enabled"
+msgstr ""
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
+msgid "Link prefetching is disabled"
+msgstr ""
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
+msgid "Link prefetching can improve performance by loading pages immediately before they are requested."
+msgstr ""
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:14
+msgid "Page Caching"
+msgstr ""
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:15
+msgid "Page caching is enabled"
+msgstr ""
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:16
+msgid "Page caching is disabled"
+msgstr ""
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:17
+msgid "Page caching can improve performance by bypassing PHP and database queries for faster page loads."
+msgstr ""
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:14
+msgid "Permalinks"
+msgstr ""
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:15
+msgid "Permalinks are pretty"
+msgstr ""
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:16
+msgid "Permalinks are not set up"
+msgstr ""
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:17
+msgid "Setting permalinks to anything other than plain can improve performance and SEO."
+msgstr ""
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
+msgid "Object Caching"
+msgstr ""
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:15
+msgid "Object caching is enabled"
+msgstr ""
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:16
+msgid "Object caching is disabled"
+msgstr ""
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:17
+msgid "Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud."
+msgstr ""
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:21
+msgid "Learn more about object caching"
+msgstr ""
+
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:14
+msgid "Post Revisions"
+msgstr ""
+
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:15
+msgid "Number of post revisions is limited to 5 or less"
+msgstr ""
+
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:16
+msgid "Number of post revisions is set to a high number"
+msgstr ""
+
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:17
+msgid "Setting the number of post revisions to a lower number can reduce database bloat."
+msgstr ""
+
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:14
+msgid "Prioritize Critical CSS"
+msgstr ""
+
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:15
+msgid "Critical CSS is prioritized"
+msgstr ""
+
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:16
+msgid "Critical CSS is not prioritized"
+msgstr ""
+
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
+msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
+msgstr ""
+
+#: components/performance/defaultText.js:82
+msgid "Enable Skip 404 Handling For Static Files"
+msgstr ""
+
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
 msgid "Optimizing Images…"
 msgstr ""
@@ -581,7 +819,7 @@ msgstr ""
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
 msgid "Optimization Complete!"
-msgstr ""
+msgstr "¡Optimización finalizada!"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
 msgid "Passed"

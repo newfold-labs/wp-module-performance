@@ -97,9 +97,6 @@
             "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.": [
                 "Quando ativado, recursos est\u00e1ticos como imagens e fontes usar\u00e3o uma p\u00e1gina 404 padr\u00e3o do servidor e n\u00e3o as p\u00e1ginas 404 do WordPress. P\u00e1ginas e posts continuar\u00e3o usando o WordPress para p\u00e1ginas 404. Isso pode acelerar consideravelmente o seu site se um recurso est\u00e1tico, como uma imagem ou fonte, estiver ausente."
             ],
-            "Skip 404 Handling For Static Files": [
-                "Ignorar Tratamento 404 para Arquivos Est\u00e1ticos"
-            ],
             "Skip 404 saved": [
                 "Ignorar 404 guardado"
             ],
@@ -309,6 +306,9 @@
             ],
             "Upgrade to unlock": [
                 "Fa\u00e7a um upgrade para ter acesso"
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                ""
             ]
         }
     }

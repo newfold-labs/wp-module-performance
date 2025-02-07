@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-01-14 13:17+0000",
+    "translation-revision-date": "2025-02-07 13:40+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "components\/performance\/defaultText.js",
     "domain": "messages",
@@ -96,9 +96,6 @@
             ],
             "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages. This can considerably speed up your website if a static resource like an image or font is missing.": [
                 "Cuando est\u00e1 habilitado, los recursos est\u00e1ticos como im\u00e1genes y fuentes usar\u00e1n una p\u00e1gina 404 predeterminada del servidor y no las p\u00e1ginas 404 de WordPress. Las p\u00e1ginas y publicaciones seguir\u00e1n usando WordPress para las p\u00e1ginas 404. Esto puede acelerar considerablemente tu sitio web si falta un recurso est\u00e1tico como una imagen o una fuente."
-            ],
-            "Skip 404 Handling For Static Files": [
-                "Saltar manejo 404 para archivos est\u00e1ticos"
             ],
             "Skip 404 saved": [
                 "Saltar 404 guardado"
@@ -309,6 +306,9 @@
             ],
             "Upgrade to unlock": [
                 "Haz un upgrade para tener acceso"
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                ""
             ]
         }
     }
