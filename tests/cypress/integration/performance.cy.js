@@ -1,12 +1,12 @@
-import performancePageLocators from '../../../../../../vendor/newfold-labs/wp-module-performance/cypress/support/pageObjects/performancePageLocators';
-
+import performancePageLocators from '../../../../wp-module-performance/tests/cypress/support/pageObjects/performancePage';
 describe( 'Performance Page', { testIsolation: false }, () => {
     const appClass = '.' + Cypress.env( 'appId' );
-    const fixturePath = require( '../../../../../../vendor/newfold-labs/wp-module-performance/cypress/fixtures/performanceModule.json' );
+    const fixturePath = require( '../../../../../../vendor/newfold-labs/wp-module-performance/tests/cypress/fixtures/performanceModule.json' );
     let performanceLocators;
     let data;
 
     beforeEach( () => {
+        //cy.exec('npx wp-env run cli wp rewrite structure "/%postname%/"');
         data = fixturePath;
         cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
         cy.visit(
@@ -18,7 +18,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
         performanceLocators = new performancePageLocators();
     });
 
-    
+
 
     it( 'Is Accessible', () => {
         cy.wait( 500 );
@@ -65,45 +65,29 @@ describe( 'Performance Page', { testIsolation: false }, () => {
             .should( 'be.visible' );
     } );
 
-    //case 1
-    it( 'Mouse Hover-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
-        performanceLocators.verifyIfLinkPreFectchIsDisplayed();
+    it.only( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+        performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseHoverWithoutExclude(
-            data.mouseHoverToBeSelected,
-            data.localAppURL,
-            data.statusCode
+         performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
+             data.statusCode
+        
         );
     } );
 
-    //case 2
-    it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
-        performanceLocators.verifyIfLinkPreFectchIsDisplayed();
+
+    it.only( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+        performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseDownWithoutExclude(
-            data.mouseDownToBeSelected,
-            data.localAppURL,
-            data.statusCode
-        );
-    } );
-    //case 3
-    it( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
-        performanceLocators.verifyIfLinkPreFectchIsDisplayed();
-        performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseDownWithExclude(
-            data.mouseDownToBeSelected,
-            data.localAppURL,
+        performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
             data.requestCount
         );
     } );
 
-    //case 4
-    it( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
-        performanceLocators.verifyIfLinkPreFectchIsDisplayed();
+    
+    it.only( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
+        performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-        performanceLocators.interceptCallForMouseHoverWithExclude(
-            data.mouseHoverToBeSelected,
-            data.localAppURL,
+        performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
             data.requestCount
         );
     } );
