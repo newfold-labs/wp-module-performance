@@ -65,7 +65,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
             .should( 'be.visible' );
     } );
 
-    it.only( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+    it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
          performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
@@ -75,7 +75,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     } );
 
 
-    it.only( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+    it( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
@@ -84,7 +84,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     } );
 
     
-    it.only( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
+    it( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
