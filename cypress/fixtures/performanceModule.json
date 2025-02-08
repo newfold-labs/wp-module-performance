@@ -1,7 +1,8 @@
 
 
     {
-        "localAppURL": "http://localhost:8882/?page_id=2/sample-page/",
+        "localAppURL": "http://localhost:8882/?page_id=2",
+        "localAppURLHover": "http://localhost:8882/",
         "statusCode": 200,
         "mouseDownToBeSelected": "Prefetch on Mouse Down",
         "mouseHoverToBeSelected": "Prefetch on Mouse Hover (Recommended)",
