@@ -323,4 +323,5 @@ interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
     });
 }
 }
+
 export default performancePage;
