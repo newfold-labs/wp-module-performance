@@ -91,5 +91,4 @@ describe( 'Performance Page', { testIsolation: false }, () => {
             data.requestCount
         );
     } );
-} 
-);
+} );
