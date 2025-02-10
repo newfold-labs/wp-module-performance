@@ -75,7 +75,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     } );
 
 
-    it( 'Mouse Down-> with exclude:Extract RunTime Link value>> Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+    it( 'Mouse Down-> with exclude:Extract RunTime Link value>>Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
