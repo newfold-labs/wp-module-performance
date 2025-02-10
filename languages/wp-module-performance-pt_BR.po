@@ -8,18 +8,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-14 11:12+0000\n"
+"PO-Revision-Date: 2025-02-10 13:02+0000\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Domain: wp-module-performance\n"
 
-#: includes/functions.php:46
+#: includes/functions.php:48
 #: components/performance/defaultText.js:61
 msgid "Cache Level"
 msgstr "Nível de cache"
 
-#: includes/functions.php:73
+#: includes/functions.php:75
 msgid "Skip WordPress 404 Handling For Static Files"
 msgstr "Ignorar o tratamento de erro 404 do WordPress para arquivos estáticos"
 
@@ -343,7 +343,7 @@ msgstr "O carregamento preguiçoso foi atualizado."
 
 #: components/performance/defaultText.js:153
 msgid "Oops! There was an error updating the lazy loading settings."
-msgstr "Oops! Ocorreu um erro ao atualizar as configurações de carregamento preguiçoso."
+msgstr "Oops! Ocorreu um erro ao atualizar as configurações de carregamento lento."
 
 #: components/performance/defaultText.js:157
 msgid "Enable Bulk Optimization of Images"
@@ -559,284 +559,404 @@ msgstr "Faça um upgrade para ter acesso"
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
-msgstr ""
+msgstr "Intervalo de Salvamento Automático"
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:15
 msgid "Autosaving is set to happen every 30 seconds or more"
-msgstr ""
+msgstr "O salvamento automático está configurado para ocorrer a cada 30 segundos ou mais"
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:16
 msgid "Autosaving is set to be frequent, less than every 30 seconds"
-msgstr ""
+msgstr "O salvamento automático está configurado para ser frequente, menos de 30 segundos"
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:17
 msgid "Setting the autosave interval to a longer period can reduce server load. It is recommended to set it to 30 seconds or more."
-msgstr ""
+msgstr "Definir o intervalo de salvamento automático para um período mais longo pode reduzir a carga do servidor. Recomenda-se defini-lo para 30 segundos ou mais."
 
 #: includes/HealthChecks/BrowserCachingHealthCheck.php:14
 msgid "Browser Caching"
-msgstr ""
+msgstr "Cache do Navegador"
 
 #: includes/HealthChecks/BrowserCachingHealthCheck.php:15
 msgid "Browser caching is enabled"
-msgstr ""
+msgstr "O cache do navegador está ativado"
 
 #: includes/HealthChecks/BrowserCachingHealthCheck.php:16
 msgid "Browser caching is disabled"
-msgstr ""
+msgstr "O cache do navegador está desativado"
 
 #: includes/HealthChecks/BrowserCachingHealthCheck.php:17
 msgid "Enabling browser caching can improve performance by storing static assets in the browser for faster page loads."
-msgstr ""
+msgstr "Ativar o cache do navegador pode melhorar o desempenho armazenando ativos estáticos no navegador para carregamentos de página mais rápidos."
 
 #: includes/HealthChecks/CloudflareHealthCheck.php:14
 msgid "Cloudflare enabled"
-msgstr ""
+msgstr "Cloudflare ativado"
 
 #: includes/HealthChecks/CloudflareHealthCheck.php:15
 msgid "Cloudflare integration is enabled"
-msgstr ""
+msgstr "A integração com o Cloudflare está ativada"
 
 #: includes/HealthChecks/CloudflareHealthCheck.php:16
 msgid "Cloudflare integration is disabled"
-msgstr ""
+msgstr "A integração com o Cloudflare está desativada"
 
 #: includes/HealthChecks/CloudflareHealthCheck.php:17
 msgid "Cloudflare integration can improve performance and security."
-msgstr ""
+msgstr "A integração com o Cloudflare pode melhorar o desempenho e a segurança."
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:15
 msgid "CSS files are concatenated"
-msgstr ""
+msgstr "Arquivos CSS estão concatenados"
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:16
 msgid "CSS files are not concatenated"
-msgstr ""
+msgstr "Arquivos CSS não estão concatenados"
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:17
 msgid "Concatenating CSS can improve performance by reducing the number of requests."
-msgstr ""
+msgstr "Concatenar CSS pode melhorar o desempenho, reduzindo o número de solicitações."
 
 #: includes/HealthChecks/ConcatenateJsHealthCheck.php:14
 msgid "Concatenate JavaScript"
-msgstr ""
+msgstr "Concatenar JavaScript"
 
 #: includes/HealthChecks/ConcatenateJsHealthCheck.php:15
 msgid "JavaScript files are concatenated"
-msgstr ""
+msgstr "Arquivos JavaScript estão concatenados"
 
 #: includes/HealthChecks/ConcatenateJsHealthCheck.php:16
 msgid "JavaScript files are not concatenated"
-msgstr ""
+msgstr "Arquivos JavaScript não estão concatenados"
 
 #: includes/HealthChecks/ConcatenateJsHealthCheck.php:17
 msgid "Concatenating JavaScript can improve performance by reducing the number of requests."
-msgstr ""
+msgstr "Concatenar JavaScript pode melhorar o desempenho, reduzindo o número de solicitações."
 
 #: includes/HealthChecks/CronLockTimeoutHealthCheck.php:14
 msgid "WP Cron Lock Timeout"
-msgstr ""
+msgstr "Tempo Limite de Bloqueio do WP Cron"
 
 #: includes/HealthChecks/CronLockTimeoutHealthCheck.php:15
 msgid "Cron lock timeout is set to 60 seconds or less."
-msgstr ""
+msgstr "O tempo limite de bloqueio do Cron está definido para 60 segundos ou menos."
 
 #: includes/HealthChecks/CronLockTimeoutHealthCheck.php:16
 msgid "Cron lock timeout is set to a high number."
-msgstr ""
+msgstr "O tempo limite de bloqueio do Cron está definido para um número alto."
 
 #: includes/HealthChecks/CronLockTimeoutHealthCheck.php:17
 msgid "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
-msgstr ""
+msgstr "O tempo limite de bloqueio do Cron afeta por quanto tempo um trabalho cron pode ser executado. Definir para um número menor pode melhorar o desempenho."
 
 #: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:15
 msgid "Non-essential JavaScript is deferred"
-msgstr ""
+msgstr "JavaScript não essencial está adiado"
 
 #: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:16
 msgid "Non-essential JavaScript is not deferred"
-msgstr ""
+msgstr "JavaScript não essencial não está adiado"
 
 #: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:17
 msgid "JavaScript can be deferred to improve performance by loading it after the page has loaded."
-msgstr ""
+msgstr "O JavaScript pode ser adiado para melhorar o desempenho, carregando-o depois que a página for carregada."
 
 #: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:14
 msgid "Empty Trash Days"
-msgstr ""
+msgstr "Dias para Esvaziar a Lixeira"
 
 #: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:15
 msgid "Trash is emptied every 30 days or less"
-msgstr ""
+msgstr "A lixeira é esvaziada a cada 30 dias ou menos"
 
 #: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:16
 msgid "Trash is emptied less frequently than every 30 days."
-msgstr ""
+msgstr "A lixeira é esvaziada com menos frequência do que a cada 30 dias."
 
 #: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:17
 msgid "Emptying the trash more frequently can reduce database bloat."
-msgstr ""
+msgstr "Esvaziar a lixeira com mais frequência pode reduzir o inchaço do banco de dados."
 
 #: includes/HealthChecks/LazyLoadingHealthCheck.php:14
 msgid "Lazy Loading"
-msgstr ""
+msgstr "Carregamento Lento"
 
 #: includes/HealthChecks/LazyLoadingHealthCheck.php:15
 msgid "Lazy loading is enabled"
-msgstr ""
+msgstr "Carregamento lento está ativado"
 
 #: includes/HealthChecks/LazyLoadingHealthCheck.php:16
 msgid "Lazy loading is disabled"
-msgstr ""
+msgstr "Carregamento lento está desativado"
 
 #: includes/HealthChecks/LazyLoadingHealthCheck.php:17
 msgid "Lazy loading can improve performance by only loading images when they are in view."
-msgstr ""
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:14
-msgid "Link Prefetching"
-msgstr ""
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:15
-msgid "Link prefetching is enabled"
-msgstr ""
+msgstr "O carregamento lento pode melhorar o desempenho carregando imagens apenas quando elas estão visíveis."
 
 #: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
-msgid "Link prefetching is disabled"
-msgstr ""
+msgid "Link Prefetching"
+msgstr "Pré-busca de Links"
 
 #: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
+msgid "Link prefetching is enabled"
+msgstr "Pré-busca de links está ativada"
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:18
+msgid "Link prefetching is disabled"
+msgstr "Pré-busca de links está desativada"
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:19
 msgid "Link prefetching can improve performance by loading pages immediately before they are requested."
-msgstr ""
+msgstr "A pré-busca de links pode melhorar o desempenho carregando páginas imediatamente antes de serem solicitadas."
 
 #: includes/HealthChecks/PageCachingHealthCheck.php:14
 msgid "Page Caching"
-msgstr ""
+msgstr "Cache de Página"
 
 #: includes/HealthChecks/PageCachingHealthCheck.php:15
 msgid "Page caching is enabled"
-msgstr ""
+msgstr "Cache de página está ativado"
 
 #: includes/HealthChecks/PageCachingHealthCheck.php:16
 msgid "Page caching is disabled"
-msgstr ""
+msgstr "Cache de página está desativado"
 
 #: includes/HealthChecks/PageCachingHealthCheck.php:17
 msgid "Page caching can improve performance by bypassing PHP and database queries for faster page loads."
-msgstr ""
+msgstr "O cache de página pode melhorar o desempenho, ignorando as consultas de PHP e do banco de dados para carregamentos de página mais rápidos."
 
 #: includes/HealthChecks/PermalinksHealthCheck.php:14
 msgid "Permalinks"
-msgstr ""
+msgstr "Links Permanentes"
 
 #: includes/HealthChecks/PermalinksHealthCheck.php:15
 msgid "Permalinks are pretty"
-msgstr ""
+msgstr "Links permanentes estão otimizados"
 
 #: includes/HealthChecks/PermalinksHealthCheck.php:16
 msgid "Permalinks are not set up"
-msgstr ""
+msgstr "Links permanentes não estão configurados"
 
 #: includes/HealthChecks/PermalinksHealthCheck.php:17
 msgid "Setting permalinks to anything other than plain can improve performance and SEO."
-msgstr ""
+msgstr "Definir links permanentes para qualquer coisa diferente de “simples” pode melhorar o desempenho e o SEO."
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
 msgid "Object Caching"
-msgstr ""
+msgstr "Cache de Objetos"
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:15
 msgid "Object caching is enabled"
-msgstr ""
+msgstr "Cache de objetos está ativado"
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:16
 msgid "Object caching is disabled"
-msgstr ""
+msgstr "Cache de objetos está desativado"
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:17
 msgid "Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud."
-msgstr ""
+msgstr "O cache de objetos salva os resultados de consultas frequentes ao banco de dados, reduzindo os tempos de carregamento, evitando o processamento repetitivo de consultas. O cache de objetos está disponível em todos os níveis do Bluehost Cloud."
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:21
 msgid "Learn more about object caching"
-msgstr ""
+msgstr "Saiba mais sobre o cache de objetos"
 
 #: includes/HealthChecks/PostRevisionsHealthCheck.php:14
 msgid "Post Revisions"
-msgstr ""
+msgstr "Revisões de Posts"
 
 #: includes/HealthChecks/PostRevisionsHealthCheck.php:15
 msgid "Number of post revisions is limited to 5 or less"
-msgstr ""
+msgstr "O número de revisões de posts é limitado a 5 ou menos"
 
 #: includes/HealthChecks/PostRevisionsHealthCheck.php:16
 msgid "Number of post revisions is set to a high number"
-msgstr ""
+msgstr "O número de revisões de posts está definido para um número alto"
 
 #: includes/HealthChecks/PostRevisionsHealthCheck.php:17
 msgid "Setting the number of post revisions to a lower number can reduce database bloat."
-msgstr ""
+msgstr "Definir o número de revisões de posts para um número menor pode reduzir o inchaço do banco de dados."
 
 #: includes/HealthChecks/PrioritizeCssHealthCheck.php:14
 msgid "Prioritize Critical CSS"
-msgstr ""
+msgstr "Priorizar CSS Crítico"
 
 #: includes/HealthChecks/PrioritizeCssHealthCheck.php:15
 msgid "Critical CSS is prioritized"
-msgstr ""
+msgstr "CSS crítico é priorizado"
 
 #: includes/HealthChecks/PrioritizeCssHealthCheck.php:16
 msgid "Critical CSS is not prioritized"
-msgstr ""
+msgstr "CSS crítico não é priorizado"
 
 #: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
-msgstr ""
+msgstr "Priorizar o CSS crítico pode melhorar o desempenho carregando o CSS mais importante primeiro."
 
 #: components/performance/defaultText.js:82
 msgid "Enable Skip 404 Handling For Static Files"
-msgstr ""
+msgstr "Ativar Ignorar Tratamento de Erro 404 para Arquivos Estáticos"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
 msgid "Optimizing Images…"
-msgstr ""
+msgstr "Otimizando Imagens…"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
 msgid "Preparing files…"
-msgstr ""
+msgstr "Preparando arquivos…"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
 msgid "Done"
-msgstr ""
+msgstr "Concluído"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
 msgid "Optimization Canceled"
-msgstr ""
+msgstr "Otimização Cancelada"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
 msgid "Optimizing:"
-msgstr ""
+msgstr "Otimizando:"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
 msgid "Optimization Complete!"
-msgstr ""
+msgstr "Otimização Concluída!"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
 msgid "Passed"
-msgstr ""
+msgstr "Aprovado"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
 msgid "Failed"
-msgstr ""
+msgstr "Falhou"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
 msgid "An error occurred."
-msgstr ""
+msgstr "Ocorreu um erro."
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
 msgid "Optimize"
-msgstr ""
+msgstr "Otimizar"
 
 #: assets/image-optimized-marker/image-optimized-marker.js:23
 msgid "Optimized"
-msgstr ""
+msgstr "Otimizado"
+
+#. translators: %s is the list of valid cache levels.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:27
+msgid "Invalid cache level. Use one of the following: %s."
+msgstr "Nível de cache inválido. Use um dos seguintes: %s."
+
+#. translators: %s is the list of valid cache levels.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:56
+msgid "A value for cache level is required. Use one of the following: %s."
+msgstr "Um valor para o nível de cache é obrigatório. Use um dos seguintes: %s."
+
+#. translators: %s is the new cache level.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:66
+msgid "Setting 'newfold_cache_level' has been set to '%s'."
+msgstr "A configuração ‘newfold_cache_level’ foi definida como ‘%s’."
+
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:91
+msgid "Invalid value. Use 'true' or 'false' for skip_404 handling."
+msgstr "Valor inválido. Use ‘verdadeiro’ ou ‘falso’ para o tratamento de erro 404."
+
+#. translators: %s is the new boolean status.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:98
+msgid "Setting 'newfold_skip_404_handling' has been set to '%s'."
+msgstr "A configuração ‘newfold_skip_404_handling’ foi definida como ‘%s’."
+
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:122
+msgid "A value for cache exclusion is required."
+msgstr "Um valor para exclusão de cache é obrigatório."
+
+#. translators: %s is the new cache exclusion list.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:136
+msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
+msgstr "A configuração ‘newfold_cache_exclusion’ foi atualizada para: ‘%s’."
+
+#. translators: %s is the on/off status.
+#: includes/Images/WPCLI/ImageCommandHandler.php:156
+msgid "All image optimization settings have been turned %s."
+msgstr "Todas as configurações de otimização de imagem foram %s."
+
+#. translators: 1: the setting key, 2: the on/off status
+#: includes/Images/WPCLI/ImageCommandHandler.php:192
+msgid "Setting '%1$s' has been turned %2$s."
+msgstr "A configuração ‘%1$s’ foi %2$s."
+
+#: includes/Images/WPCLI/ImageCommandHandler.php:247
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
+msgid "A status ('on' or 'off') is required."
+msgstr "Um status (‘ligado’ ou ‘desligado’) é obrigatório."
+
+#: includes/Images/WPCLI/ImageCommandHandler.php:251
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
+msgid "Invalid status: Use 'on' or 'off'."
+msgstr "Status inválido: Use ‘ligado’ ou ‘desligado’."
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:75
+msgid "Setting 'activeOnDesktop' has been turned %s."
+msgstr "A configuração ‘activeOnDesktop’ foi %s."
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:104
+msgid "Setting 'activeOnMobile' has been turned %s."
+msgstr "A configuração ‘activeOnMobile’ foi %s."
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:133
+msgid "Setting 'instantClick' has been turned %s."
+msgstr "A configuração ‘ignoreKeywords’ foi definida como ‘%s’."
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:160
+msgid "A behavior value is required."
+msgstr "Um valor de comportamento é obrigatório."
+
+#. translators: %s is the list of valid mobile behaviors.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
+msgid "Invalid behavior: Use one of the following - %s."
+msgstr "Comportamento inválido: Use um dos seguintes - %s."
+
+#. translators: %s is the new behavior value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:176
+msgid "Setting 'behavior' has been set to '%s'."
+msgstr "A configuração ‘behavior’ foi definida como ‘%s’."
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:200
+msgid "A numeric value for hoverDelay is required."
+msgstr "Um valor numérico para hoverDelay (atraso ao passar o mouse) é obrigatório."
+
+#. translators: %s is the numeric value for hoverDelay.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:207
+msgid "Setting 'hoverDelay' has been set to '%s'."
+msgstr "A configuração ‘hoverDelay’ foi definida como ‘%s’."
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:231
+msgid "A mobile behavior value is required."
+msgstr "Um valor de comportamento para dispositivos móveis é obrigatório."
+
+#. translators: %s is the new mobile behavior value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:247
+msgid "Setting 'mobileBehavior' has been set to '%s'."
+msgstr "A configuração ‘mobileBehavior’ foi definida como ‘%s’."
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:271
+msgid "A value for ignoreKeywords is required."
+msgstr "Um valor para ignorar palavras-chave é obrigatório."
+
+#. translators: %s is the new ignoreKeywords value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:286
+msgid "Setting 'ignoreKeywords' has been set to '%s'."
+msgstr "A configuração ‘ignoreKeywords’ foi definida como ‘%s’."
+
+#. translators: %s is the name of the field that is invalid (e.g., 'namespace', 'command', or 'handler').
+#: includes/NFD_WPCLI.php:49
+msgid "Newfold CLI: Invalid %s provided to NFD_WPCLI::add_command()."
+msgstr "Newfold CLI: %s inválido fornecido para NFD_WPCLI::add_command()."
+
+#. translators: %s is the name of the handler class.
+#: includes/NFD_WPCLI.php:87
+msgid "Newfold CLI: The handler class %s does not exist."
+msgstr "Newfold CLI: A classe de manipulador %s não existe."

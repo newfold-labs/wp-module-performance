@@ -22,8 +22,8 @@ class I18nService {
 			$languages_dir
 		);
 
-		$loaded_td = $current_language = get_locale();
-		load_textdomain( 'wp-module-performance', $languages_dir . '/' . $domain . '-' . $current_language . '.mo' );
+		$current_language = get_locale();
+		$loaded_td        = load_textdomain( 'wp-module-performance', $languages_dir . '/' . $domain . '-' . $current_language . '.mo' );
 
 		return $loaded_ptd && $loaded_td;
 	}
