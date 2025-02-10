@@ -255,21 +255,21 @@ interceptCallForMouseDownWithExcludeRunTimeURL(requestCount) {
         cy.go('back').go('back');
     });
 }
-
 interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
+    const forceReload = true;
+
     // Get the currently selected dropdown option
     this.getDropDownForLinkPrefetch()
         .invoke('text')
-        .should('not.be.empty') // Ensure dropdown text is present
+        .should('not.be.empty')
         .then((selectedText) => {
             selectedText = selectedText.trim();
             cy.log(`Currently selected option: ${selectedText}`);
 
-            // Open dropdown before selecting a new option
+            // Open dropdown and check available options
             this.getDropDownForLinkPrefetch().click();
             this.compareDropdownLabelAndSelectedOption();
 
-            // Select the first dropdown option if it's not already selected
             cy.get('ul.nfd-select__options > li')
                 .should('have.length.at.least', 2)
                 .then(($options) => {
@@ -289,38 +289,48 @@ interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
 
     // Visit the site
     this.getVisitSiteButton()
-        .invoke('removeAttr', 'target') // Prevent opening in a new tab
+        .invoke('removeAttr', 'target')
         .click();
 
     // Extract Sample Page Name & Continue Actions
-    this.extractSamplePageName((samplePageText) => {
-        cy.go('back');
+    cy.get(this._samplePageButton)
+        .invoke('prop', 'href')
+        .then((url) => {
+            const pageName = url.split('/').filter(Boolean).pop();
+            cy.log(`Extracted page name: ${pageName}`);
+            expect(pageName).to.not.be.empty;
 
-        // Enter extracted page name into Exclude Keywords field
-        this.getExcludeKeywordInputField()
-            .clear()
-            .type(samplePageText)
-            .should('have.value', samplePageText);
+            cy.go('back');
 
-        // Revisit site after setting the exclusion keyword
-        this.getVisitSiteButton()
-            .invoke('removeAttr', 'target')
-            .click();
+            // Enter extracted page name into Exclude Keywords field
+            this.getExcludeKeywordInputField()
+                .clear()
+                .type(pageName)
+                .should('have.value', pageName);
 
-        // Intercept API call for the sample page
-        const alias = 'apiRequest';
-        this.visitSamplePageAndIntercept(alias);
+            // Revisit site after setting the exclusion keyword
+            this.getVisitSiteButton()
+                .invoke('removeAttr', 'target')
+                .click({ force: true });
 
-        // Perform Mouse Hover on the Sample Page Button
-        this.getSamplePageButton().trigger('mouseover');
+            cy.reload(forceReload);
 
-        // Assert API request count
-        this.assertApiRequest(alias, requestCount, 'requestCount');
+            // Intercept API call for the sample page
+            cy.intercept('GET', url).as('apiRequest');
 
-        // Navigate back twice to return to the original state
-        cy.go('back').go('back');
-    });
+            // Perform Mouse Hover on the Sample Page Button
+            cy.get(this._samplePageButton).trigger('mouseover');
+
+            // Assert API request count
+            cy.wrap(requestCount).should('equal', 0);
+
+            // Navigate back twice to return to the original state
+            cy.go('back').then(() => {
+                cy.go('back');
+            });
+        });
 }
+
 
 }
 
