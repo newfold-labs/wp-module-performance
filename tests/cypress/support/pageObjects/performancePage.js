@@ -257,7 +257,6 @@ interceptCallForMouseDownWithExcludeRunTimeURL(requestCount) {
 }
 
 interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
-
     // Get the currently selected dropdown option
     this.getDropDownForLinkPrefetch()
         .invoke('text')
@@ -270,48 +269,47 @@ interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
             this.getDropDownForLinkPrefetch().click();
             this.compareDropdownLabelAndSelectedOption();
 
-            // Find and select the **first** dropdown option
-            cy.get('ul.nfd-select__options > li') // Get all options dynamically
-                .should('have.length.at.least', 2) // Ensure at least two options exist
+            // Select the first dropdown option if it's not already selected
+            cy.get('ul.nfd-select__options > li')
+                .should('have.length.at.least', 2)
                 .then(($options) => {
-                    const optionsText = $options.map((i, el) => Cypress.$(el).text().trim()).get();
-                    cy.log(`Available options: ${optionsText}`);
+                    const firstOption = Cypress.$($options[0]).text().trim();
+                    cy.log(`First dropdown option: ${firstOption}`);
 
-                    // Select the **first** option (if it's not already selected)
-                    if (selectedText !== optionsText[0]) {
-                        cy.wrap($options[0]).click(); // Click the first option
-                        // Verify the selection update
+                    if (selectedText !== firstOption) {
+                        cy.wrap($options[0]).click();
                         this.getDropDownForLinkPrefetch()
                             .invoke('text')
-                            .should('eq', optionsText[0]);
-                           
+                            .should('eq', firstOption);
                     } else {
                         cy.log('First option is already selected.');
                     }
                 });
         });
 
-    // Proceed with test actions
+    // Visit the site
     this.getVisitSiteButton()
         .invoke('removeAttr', 'target') // Prevent opening in a new tab
         .click();
 
-    // Use the reusable function to extract the Sample Page Name
+    // Extract Sample Page Name & Continue Actions
     this.extractSamplePageName((samplePageText) => {
         cy.go('back');
 
+        // Enter extracted page name into Exclude Keywords field
         this.getExcludeKeywordInputField()
             .clear()
             .type(samplePageText)
             .should('have.value', samplePageText);
 
+        // Revisit site after setting the exclusion keyword
         this.getVisitSiteButton()
-            .invoke('removeAttr', 'target') // Prevent opening in a new tab
+            .invoke('removeAttr', 'target')
             .click();
 
-        // Intercept the API call related to the sample page
+        // Intercept API call for the sample page
         const alias = 'apiRequest';
-        this.visitSamplePageAndIntercept(alias); // Using your existing method for intercepting the request
+        this.visitSamplePageAndIntercept(alias);
 
         // Perform Mouse Hover on the Sample Page Button
         this.getSamplePageButton().trigger('mouseover');
@@ -319,9 +317,11 @@ interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
         // Assert API request count
         this.assertApiRequest(alias, requestCount, 'requestCount');
 
+        // Navigate back twice to return to the original state
         cy.go('back').go('back');
     });
 }
+
 }
 
 export default performancePage;
