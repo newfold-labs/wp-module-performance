@@ -12,12 +12,45 @@ msgstr ""
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-performance\n"
 
-#: includes/functions.php:46
+#. translators: %s is the list of valid cache levels.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:27
+msgid "Invalid cache level. Use one of the following: %s."
+msgstr ""
+
+#. translators: %s is the list of valid cache levels.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:56
+msgid "A value for cache level is required. Use one of the following: %s."
+msgstr ""
+
+#. translators: %s is the new cache level.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:66
+msgid "Setting 'newfold_cache_level' has been set to '%s'."
+msgstr ""
+
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:91
+msgid "Invalid value. Use 'true' or 'false' for skip_404 handling."
+msgstr ""
+
+#. translators: %s is the new boolean status.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:98
+msgid "Setting 'newfold_skip_404_handling' has been set to '%s'."
+msgstr ""
+
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:122
+msgid "A value for cache exclusion is required."
+msgstr ""
+
+#. translators: %s is the new cache exclusion list.
+#: includes/CacheTypes/WPCLI/CacheTypesCommandHandler.php:136
+msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
+msgstr ""
+
+#: includes/functions.php:48
 #: components/performance/defaultText.js:61
 msgid "Cache Level"
 msgstr ""
 
-#: includes/functions.php:73
+#: includes/functions.php:75
 msgid "Skip WordPress 404 Handling For Static Files"
 msgstr ""
 
@@ -167,19 +200,19 @@ msgstr ""
 msgid "Lazy loading can improve performance by only loading images when they are in view."
 msgstr ""
 
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:14
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
 msgid "Link Prefetching"
 msgstr ""
 
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:15
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
 msgid "Link prefetching is enabled"
 msgstr ""
 
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:18
 msgid "Link prefetching is disabled"
 msgstr ""
 
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:19
 msgid "Link prefetching can improve performance by loading pages immediately before they are requested."
 msgstr ""
 
@@ -368,6 +401,93 @@ msgstr ""
 
 #: includes/Images/RestApi/ImagesController.php:110
 msgid "Image successfully optimized."
+msgstr ""
+
+#. translators: %s is the on/off status.
+#: includes/Images/WPCLI/ImageCommandHandler.php:156
+msgid "All image optimization settings have been turned %s."
+msgstr ""
+
+#. translators: 1: the setting key, 2: the on/off status
+#: includes/Images/WPCLI/ImageCommandHandler.php:192
+msgid "Setting '%1$s' has been turned %2$s."
+msgstr ""
+
+#: includes/Images/WPCLI/ImageCommandHandler.php:247
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
+msgid "A status ('on' or 'off') is required."
+msgstr ""
+
+#: includes/Images/WPCLI/ImageCommandHandler.php:251
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
+msgid "Invalid status: Use 'on' or 'off'."
+msgstr ""
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:75
+msgid "Setting 'activeOnDesktop' has been turned %s."
+msgstr ""
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:104
+msgid "Setting 'activeOnMobile' has been turned %s."
+msgstr ""
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:133
+msgid "Setting 'instantClick' has been turned %s."
+msgstr ""
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:160
+msgid "A behavior value is required."
+msgstr ""
+
+#. translators: %s is the list of valid mobile behaviors.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
+msgid "Invalid behavior: Use one of the following - %s."
+msgstr ""
+
+#. translators: %s is the new behavior value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:176
+msgid "Setting 'behavior' has been set to '%s'."
+msgstr ""
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:200
+msgid "A numeric value for hoverDelay is required."
+msgstr ""
+
+#. translators: %s is the numeric value for hoverDelay.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:207
+msgid "Setting 'hoverDelay' has been set to '%s'."
+msgstr ""
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:231
+msgid "A mobile behavior value is required."
+msgstr ""
+
+#. translators: %s is the new mobile behavior value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:247
+msgid "Setting 'mobileBehavior' has been set to '%s'."
+msgstr ""
+
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:271
+msgid "A value for ignoreKeywords is required."
+msgstr ""
+
+#. translators: %s is the new ignoreKeywords value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:286
+msgid "Setting 'ignoreKeywords' has been set to '%s'."
+msgstr ""
+
+#. translators: %s is the name of the field that is invalid (e.g., 'namespace', 'command', or 'handler').
+#: includes/NFD_WPCLI.php:49
+msgid "Newfold CLI: Invalid %s provided to NFD_WPCLI::add_command()."
+msgstr ""
+
+#. translators: %s is the name of the handler class.
+#: includes/NFD_WPCLI.php:87
+msgid "Newfold CLI: The handler class %s does not exist."
 msgstr ""
 
 #: includes/Performance.php:262

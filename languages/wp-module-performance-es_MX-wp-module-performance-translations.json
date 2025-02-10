@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-07 13:40+0000",
+    "translation-revision-date": "2025-02-10 11:55+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "components\/performance\/defaultText.js",
     "domain": "messages",
@@ -155,7 +155,7 @@
                 "Habilitar optimizaci\u00f3n masiva de im\u00e1genes"
             ],
             "When enabled, allows bulk optimization of images in the media library.": [
-                "Cuando est\u00e1 habilitado, permite la optimizaci\u00f3n masiva de im\u00e1genes en la biblioteca de medios."
+                "When enabled, allows bulk optimization of images in the media library."
             ],
             "Go to Media Library": [
                 "Ir a la biblioteca de medios"
@@ -308,7 +308,7 @@
                 "Haz un upgrade para tener acceso"
             ],
             "Enable Skip 404 Handling For Static Files": [
-                ""
+                "Activar la opci\u00f3n de no procesar los errores 404 para archivos est\u00e1ticos"
             ]
         }
     }
