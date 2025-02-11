@@ -109,4 +109,13 @@ class CacheManager {
 
 		return $instances;
 	}
+
+	/**
+	 * Retrieves the cache level setting from the database.
+	 *
+	 * @return int The cache level value, ensuring an integer is returned.
+	 */
+	public static function get_cache_level() {
+		return (int) get_option( Performance::OPTION_CACHE_LEVEL, 0 );
+	}
 }
