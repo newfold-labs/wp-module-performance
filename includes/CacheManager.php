@@ -116,6 +116,6 @@ class CacheManager {
 	 * @return int The cache level value, ensuring an integer is returned.
 	 */
 	public static function get_cache_level() {
-		return (int) get_option( Performance::OPTION_CACHE_LEVEL, 0 );
+		return (int) get_option( self::OPTION_CACHE_LEVEL, 0 );
 	}
 }
