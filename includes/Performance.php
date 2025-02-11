@@ -252,7 +252,7 @@ class Performance {
 			$wp_admin_bar->remove_node( 'epc_purge_menu' );
 		}
 
-		if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) && CacheManager::get_cache_level() > 0 ) {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
