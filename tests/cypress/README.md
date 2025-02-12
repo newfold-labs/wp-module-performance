@@ -10,7 +10,6 @@ height="42" />
 A module for managing caching functionality.
 
 ## Module Responsibilities
-
 - The performance module handles the following types of performance improvements:
     - **Browser caching** - Sets the appropriate browser caching rules in the `.htaccess` file based on the cache level the user selects.
     - **Cloudflare cache clearing** - If Cloudflare is enabled, send a cache clear request when a programmatic or user-initiated cache purge is requested.

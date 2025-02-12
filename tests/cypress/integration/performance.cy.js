@@ -5,7 +5,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     let performanceLocators;
     let data;
 
-    beforeEach( () => {
+    before( () => {
         //cy.exec('npx wp-env run cli wp rewrite structure "/%postname%/"');
         data = fixturePath;
         cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
@@ -84,7 +84,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     } );
 
     
-    it( 'Mouse Hover-> with exclude: Verify if "Link Prefetch" is displayed and intercept network call', () => {
+    it( 'Mouse Hover-> with exclude:Verify if "Link Prefetch" is displayed and intercept network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(

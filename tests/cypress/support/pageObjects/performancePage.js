@@ -324,8 +324,8 @@ interceptCallForMouseHoverWithExcludeRunTimeURL(requestCount) {
             // Assert API request count
             cy.wrap(requestCount).should('equal', 0);
 
-            // Navigate back twice to return to the original state
-            cy.go('back').then(() =>{
+            // Navigate back twice to return to the original page
+            cy.go('back').then(() => {
                 cy.go('back');
             });
         });
