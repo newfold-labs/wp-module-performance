@@ -5,7 +5,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
     let performanceLocators;
     let data;
 
-    before( () => {
+    beforeEach( () => {
         //cy.exec('npx wp-env run cli wp rewrite structure "/%postname%/"');
         data = fixturePath;
         cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
@@ -91,5 +91,5 @@ describe( 'Performance Page', { testIsolation: false }, () => {
             data.requestCount
         );
     } );
-
+    
 } );
