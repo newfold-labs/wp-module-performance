@@ -2,6 +2,10 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+if ( ! defined( 'NFD_PERFORMANCE_DIR' ) ) {
+	define( 'NFD_PERFORMANCE_DIR', __DIR__ );
+}
+
 if ( function_exists( 'add_filter' ) ) {
 	add_filter(
 		'newfold/features/filter/register',

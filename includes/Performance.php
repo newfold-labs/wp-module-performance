@@ -83,6 +83,8 @@ class Performance {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
+		\add_action( 'init', array( __CLASS__, 'load_text_domain' ), 100 );
+
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
 		}
@@ -256,14 +258,14 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
-					'title' => __( 'Caching', 'newfold-module-performance' ),
+					'title' => __( 'Caching', 'wp-module-performance' ),
 				)
 			);
 
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'newfold-module-performance' ),
+					'title'  => __( 'Purge All', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 				)
@@ -273,7 +275,7 @@ class Performance {
 				$wp_admin_bar->add_node(
 					array(
 						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+						'title'  => __( 'Purge This Page', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
 						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
 					)
@@ -284,7 +286,7 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
-					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
+					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
@@ -297,8 +299,8 @@ class Performance {
 	public function add_sub_menu_page() {
 		$brand = $this->container->get( 'plugin' )['id'];
 		add_management_page(
-			__( 'Performance', 'newfold-performance-module' ),
-			__( 'Performance', 'newfold-performance-module' ),
+			__( 'Performance', 'wp-module-performance' ),
+			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
 			admin_url( "admin.php?page=$brand#/performance" ),
 			null,
@@ -360,5 +362,19 @@ class Performance {
 		}
 
 		return $exists;
+	}
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function load_text_domain() {
+
+		\load_plugin_textdomain(
+			'wp-module-performance',
+			false,
+			NFD_PERFORMANCE_DIR . '/languages'
+		);
 	}
 }
