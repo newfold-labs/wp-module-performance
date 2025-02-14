@@ -266,14 +266,12 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	jetpackBoostCriticalCssDescription: sprintf(
-		// translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+		// translators: %1$s is a line break (<br>) tag.
 		__(
-			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sYou should regenerate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.',
+			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s You should regenerate your Critical CSS whenever you make changes to the HTML or CSS structure of your site.',
 			'wp-module-performance'
 		),
 		'<br><br>',
-		'<strong>',
-		'</strong>'
 	),
 	jetpackBoostCriticalCssPremiumTitle: __(
 		'Optimize Critical CSS Loading (UPGRADED)',
@@ -283,8 +281,16 @@ const defaultText = {
 		'Generate CSS',
 		'wp-module-performance'
 	),
+	jetpackBoostCriticalCssGenerattionSuccess: __(
+		'Critical CSS generated successfully.',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssGenerationText: __(
+		"Keep this page opened until the process finish",
+		'wp-module-performance'
+	),
 	jetpackBoostCriticalCssGenerationIssue: __(
-		'Error during generation:',
+		"Error generating Critical CSS, try again",
 		'wp-module-performance'
 	),
 	jetpackBoostCriticalCssUpgradeTitle: __(
@@ -309,14 +315,6 @@ const defaultText = {
 		),
 		'<p>',
 		'</p>',
-	),
-	jetpackBoostCriticalCssModalConfirm: __(
-		'Yes',
-		'wp-module-performance'
-	),
-	jetpackBoostCriticalCssModalReject: __(
-		'No',
-		'wp-module-performance'
 	),
 	jetpackBoostRenderBlockingTitle: __(
 		'Defer Non-Essential JavaScript',

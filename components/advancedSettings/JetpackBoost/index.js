@@ -5,11 +5,11 @@ import { useRef, useState } from '@wordpress/element';
 // Newfold
 import {
 	Button,
-	Modal,
 	ToggleField,
 	Textarea,
 	FeatureUpsell,
 	Spinner,
+	ProgressBar,
 } from '@newfold/ui-component-library';
 import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
@@ -32,9 +32,9 @@ const JetpackBoost = ( { methods, constants } ) => {
 
 	const [ isLoading, setIsLoading ] = useState( false );
 
-	const [ isLoadingModal, setIsLoadingModal ] = useState( false );
-	const [ messageModal, setMessageModal ] = useState( null );
-	const [ isOpenModal, setIsOpenModal ] = useState( false );
+	const [ cssIsGenerating, setCssIsGenerating ] = useState( false );
+
+	const [ progressBarValue, setProgeassBarValue ] = useState( null );
 
 	const [ settings, setSettings ] = useState( {
 		'critical-css': performance.jetpack_boost_critical_css || false,
@@ -51,7 +51,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 	const debounceTimeout = useRef( null ); // Mantiene il timeout tra i render
 
 	const handleOnChangeOption = ( value, id ) => {
-		! isOpenModal && setIsLoading( true );
+		setIsLoading( true );
 		if ( typeof value === 'object' ) {
 			value = value.target.value;
 		}
@@ -100,31 +100,98 @@ const JetpackBoost = ( { methods, constants } ) => {
 	};
 
 	const handleRegenerateClick = async () => {
-		setIsLoadingModal( true );
-		setMessageModal( null );
+		setCssIsGenerating( true );
 
 		try {
-			if ( !settings['critical-css']) {
-				handleOnChangeOption(true, 'critical-css');
+			if ( ! settings[ 'critical-css' ] ) {
+				handleOnChangeOption( true, 'critical-css' );
 			}
-		
-			// Aspetta 3 secondi prima di eseguire apiFetch
-			await new Promise(resolve => setTimeout(resolve, 1000));
-		
-			await apiFetch({
+
+			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
+			await apiFetch( {
 				path: 'newfold-performance/v1/jetpack/regenerate_critical_css',
 				method: 'POST',
-			});
-		
-			// Apri la nuova scheda dopo la chiamata API
-			window.open(siteUrl + '/wp-admin/admin.php?page=jetpack-boost', '_blank');
-		} catch (error) {
-			setMessageModal(
-				constants.text.jetpackBoostCriticalCssGenerationIssue + ' ' + error.message
-			);
+			} );
+
+			const adminUrl = siteUrl + '/wp-admin/admin.php?page=jetpack-boost';
+
+			const iframe = document.createElement( 'iframe' );
+			iframe.src = adminUrl;
+
+			document.body.appendChild( iframe );
+
+			iframe.onload = function () {
+				try {
+					const iframeDocument =
+						iframe.contentDocument || iframe.contentWindow.document;
+
+					const progressBar = iframeDocument.querySelector(
+						'div[role="progressbar"]'
+					);
+
+					if ( ! progressBar ) {
+						return;
+					}
+					setCssIsGenerating( false );
+
+					function checkProgress() {
+						const progressValue = parseInt(
+							progressBar.getAttribute( 'aria-valuenow' ),
+							10
+						);
+						setProgeassBarValue( progressValue );
+
+						if ( progressValue === 100 ) {
+							setTimeout( () => {
+								setProgeassBarValue( null );
+								iframe.remove();
+								methods.makeNotice(
+									'cache-level-change-notice',
+									constants.text
+										.jetpackBoostCriticalCssGenerattionSuccess,
+									'',
+									'success',
+									5000
+								);
+							}, 1000 );
+							if ( typeof observer !== 'undefined' ) {
+								observer.disconnect();
+							}
+						}
+					}
+
+					if ( typeof MutationObserver !== 'undefined' ) {
+						const observer = new MutationObserver( checkProgress );
+						observer.observe( progressBar, {
+							attributes: true,
+							attributeFilter: [ 'aria-valuenow' ],
+						} );
+
+						checkProgress();
+					} else {
+						methods.makeNotice(
+							'cache-level-change-notice',
+							constants.text
+								.jetpackBoostCriticalCssGenerationIssue,
+							'',
+							'error',
+							5000
+						);
+						console.log(
+							'Error showing progress bar: MutationObserver not supported.'
+						);
+						checkProgress = () => null;
+					}
+				} catch ( error ) {
+					console.error(
+						'Error occurred while accessing the iFrame',
+						error
+					);
+				}
+			};
+		} catch ( error ) {
+			console.log( error );
 		}
-		setIsOpenModal( false );
-		setIsLoadingModal( false );
 	};
 
 	const cssPremiumField = (
@@ -183,68 +250,46 @@ const JetpackBoost = ( { methods, constants } ) => {
 						) }
 						checked={ !! settings[ 'critical-css' ] }
 						onChange={ ( value ) => {
-							if ( value === true ) {
-								setIsOpenModal( true )
-							} else {
-								handleOnChangeOption( value, 'critical-css' );
-							}
+							handleOnChangeOption( value, 'critical-css' );
 						} }
 					/>
 					<div>
-						{ settings[ 'critical-css' ] && (
-							<button
-								onClick={ () => setIsOpenModal( true ) }
-								disabled={ isLoadingModal }
-								type="button"
-								aria-disabled="false"
-								className="nfd-performance-jetpack-boost-regenerate-critical-css"
-							>
-								<svg
-									className="gridicon gridicons-refresh"
-									height="15"
-									width="15"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24"
+						{ settings[ 'critical-css' ] &&
+							progressBarValue === null && (
+								<Button
+									size="small"
+									variant="secondary"
+									onClick={ handleRegenerateClick }
+									disabled={
+										progressBarValue > 0 ? true : false
+									}
+									type="button"
+									aria-disabled="false"
+									className="nfd-performance-jetpack-boost-regenerate-critical-css"
+									isLoading={ cssIsGenerating }
 								>
-									<g>
-										<path d="M17.91 14c-.478 2.833-2.943 5-5.91 5-3.308 0-6-2.692-6-6s2.692-6 6-6h2.172l-2.086 2.086L13.5 10.5 18 6l-4.5-4.5-1.414 1.414L14.172 5H12c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.08 0 7.438-3.055 7.93-7h-2.02z"></path>
-									</g>
-								</svg>
-								{ constants.text.jetpackBoostCriticalCssButton }
-							</button>
+									{
+										constants.text
+											.jetpackBoostCriticalCssButton
+									}
+								</Button>
+							) }
+
+						{ progressBarValue > 0 && (
+							<>
+								<ProgressBar
+									max={ 100 }
+									min={ 0 }
+									progress={ progressBarValue }
+								/>
+								<p>
+									{
+										constants.text
+											.jetpackBoostCriticalCssGenerationText
+									}
+								</p>
+							</>
 						) }
-						<Modal
-							isOpen={ isOpenModal }
-							onClose={ () => setIsOpenModal( false ) }
-							className="nfd-performance-jetpack-boost-critical-css-modal"
-						>
-							<Modal.Panel>
-								{ parse(
-									constants.text
-										.jetpackBoostCriticalCssModalDescription
-								) }
-								<div className="nfd-performance-jetpack-boost-action-buttons-container">
-									<Button onClick={ handleRegenerateClick }>
-										{
-											constants.text
-												.jetpackBoostCriticalCssModalConfirm
-										}
-									</Button>
-									<Button
-										variant="secondary"
-										onClick={ () =>
-											setIsOpenModal( false )
-										}
-									>
-										{
-											constants.text
-												.jetpackBoostCriticalCssModalReject
-										}
-									</Button>
-								</div>
-							</Modal.Panel>
-						</Modal>
-						{ messageModal && <p>{ messageModal }</p> }
 					</div>
 				</div>
 			) }

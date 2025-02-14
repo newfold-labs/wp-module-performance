@@ -102,6 +102,8 @@ class Performance {
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
+
+		add_action( 'admin_head', array( $this, 'prefetch_jetpack_boost' ) );
 	}
 
 	/**
@@ -355,5 +357,15 @@ class Performance {
 	 */
 	public function is_jetpackpremium_active() {
 		return class_exists( Boost::class ) && Boost::class::get_info()['is_upgradable'] ? ! Boost::class::get_info()['is_upgradable'] : false;
+	}
+
+	/**
+	 * Prefetch for JetPack Boost page.
+	 *
+	 * @return void
+	 */
+	public function prefetch_jetpack_boost() {
+		$admin_url = admin_url( 'admin.php?page=jetpack-boost' );
+		echo '<link rel="prefetch" href="' . esc_url( $admin_url ) . '">' . "\n";
 	}
 }
