@@ -19,7 +19,7 @@ class PersistentObjectCacheHealthCheck extends HealthCheck {
 			'<a href="%1$s" target="_blank" rel="noopener">%2$s</a><span class="screen-reader-text"> (%3$s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
 			'https://www.bluehost.com/help/article/object-caching',
 			esc_html__( 'Learn more about object caching', 'wp-module-performance' ),
-			__( 'opens in a new tab', 'newfold-module-performance' )
+			__( 'opens in a new tab', 'wp-module-performance' )
 		);
 	}
 
