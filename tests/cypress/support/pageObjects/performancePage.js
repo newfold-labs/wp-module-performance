@@ -77,7 +77,7 @@ class performancePage {
     }
 
     extractSamplePageName(callback) {
-        cy.get(this._samplePageButton, { timeout: 6000 })
+        this.getSamplePageButton()
             .should('be.visible')
             .invoke('text')
             .then((pageName) => {
@@ -287,7 +287,7 @@ class performancePage {
             .click();
 
         // Extract Sample Page Name & Continue Actions
-        cy.get(this._samplePageButton)
+        this.getSamplePageButton()
             .invoke('prop', 'href')
             .then((url) => {
                 const pageName = url.split('/').filter(Boolean).pop();
