@@ -2,20 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2025-02-14 12:57+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-02-10 11:55+0000\n"
-"Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Domain: wp-module-performance\n"
 
-#: includes/functions.php:48
-#: components/performance/defaultText.js:61
+#: includes/functions.php:48 components/performance/defaultText.js:61
 msgid "Cache Level"
 msgstr "Nivel de caché"
 
@@ -23,7 +22,7 @@ msgstr "Nivel de caché"
 msgid "Skip WordPress 404 Handling For Static Files"
 msgstr "Omitir el manejo de error 404 de WordPress para archivos estáticos"
 
-#: includes/Performance.php:262
+#: includes/Performance.php:261
 msgid "Caching"
 msgstr "Caché"
 
@@ -40,15 +39,15 @@ msgstr "Los campos ‘id’ y ‘value’ son requeridos."
 msgid "An error occurred while updating the option."
 msgstr "Ocurrió un error al actualizar la opción."
 
-#: includes/Performance.php:269
+#: includes/Performance.php:268
 msgid "Purge All"
 msgstr "Limpiar todo"
 
-#: includes/Performance.php:279
+#: includes/Performance.php:278
 msgid "Purge This Page"
 msgstr "Purge This Page"
 
-#: includes/Performance.php:290
+#: includes/Performance.php:289
 msgid "Cache Settings"
 msgstr "Configuración de caché"
 
@@ -155,8 +154,7 @@ msgstr "ID de medio inválido o elemento multimedia no encontrado."
 msgid "Image successfully optimized."
 msgstr "Imagen optimizada correctamente."
 
-#: includes/Performance.php:303
-#: includes/Performance.php:304
+#: includes/Performance.php:302 includes/Performance.php:303
 msgid "Performance"
 msgstr "Rendimiento"
 
@@ -960,3 +958,7 @@ msgstr "Newfold CLI: Se proporcionó un %s no válido a NFD_WPCLI::add_command()
 #: includes/NFD_WPCLI.php:87
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "Newfold CLI: La clase de controlador %s no existe."
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:22
+msgid "opens in a new tab"
+msgstr "se abre en una nueva pestaña"
