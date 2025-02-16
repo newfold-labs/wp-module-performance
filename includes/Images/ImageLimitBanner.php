@@ -35,7 +35,7 @@ class ImageLimitBanner {
 		}
 
 		// Check for permanent ban.
-		$is_banned = get_option( ImageService::$ban_site_option_key, false );
+		$is_banned = ImageSettings::is_banned();
 		if ( $is_banned ) {
 			$this->display_ban_banner();
 		}
@@ -53,7 +53,7 @@ class ImageLimitBanner {
 		echo '<p>';
 		printf(
 			/* translators: %s: Time remaining */
-			esc_html__( 'Your site has been rate limited for image optimization. Please try again after %s.', 'wp-module-performance' ),
+			esc_html__( 'This site has made too many requests in a short period. Please wait %s before trying again.', 'wp-module-performance' ),
 			esc_html( $retry_after )
 		);
 		echo '</p>';
@@ -71,7 +71,7 @@ class ImageLimitBanner {
 		printf(
 			wp_kses(
 				/* translators: %s: Support link */
-				__( 'Your site has been permanently banned from image optimization due to excessive usage. Please <a href="%s">contact support</a> for assistance.', 'wp-module-performance' ),
+				__( 'This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href="%s">contact support</a> for assistance.', 'wp-module-performance' ),
 				array(
 					'a' => array(
 						'href' => array(),

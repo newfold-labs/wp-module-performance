@@ -10,7 +10,7 @@ class ImageService {
 	/**
 	 * Cloudflare Worker URL for image optimization.
 	 */
-	private const WORKER_URL = 'https://hiive.cloud/workers/image-optimization';
+	private const WORKER_URL = 'http://localhost:8787';
 
 	/**
 	 * Rate limit transient key.
@@ -18,13 +18,6 @@ class ImageService {
 	 * @var string
 	 */
 	public static $rate_limit_transient_key = 'nfd_image_optimization_rate_limit';
-
-	/**
-	 * Ban site option key.
-	 *
-	 * @var string
-	 */
-	public static $ban_site_option_key = 'nfd_image_optimization_ban';
 
 	/**
 	 * Optimizes an uploaded image by sending it to the Cloudflare Worker and saving the result as WebP.
@@ -51,10 +44,10 @@ class ImageService {
 		}
 
 		// Check if the site is permanently banned
-		if ( get_option( 'nfd_image_optimization_ban', false ) ) {
+		if ( ImageSettings::is_banned() ) {
 			return new \WP_Error(
 				'nfd_performance_error',
-				__( 'Image optimization access has been permanently revoked for this site.', 'wp-module-performance' )
+				__( 'This site no longer qualifies for image optimization as it has reached its usage limits.', 'wp-module-performance' )
 			);
 		}
 
@@ -64,8 +57,8 @@ class ImageService {
 			return new \WP_Error(
 				'nfd_performance_error',
 				sprintf(
-					/* translators: %s: Retry time in seconds */
-					__( 'Rate limit exceeded. Please retry after %s.', 'wp-module-performance' ),
+				/* translators: %s: Retry time in seconds */
+					__( 'This site has made too many requests in a short period. Please wait %s before trying again.', 'wp-module-performance' ),
 					human_time_diff( time(), $rate_limit_transient )
 				)
 			);
@@ -83,12 +76,26 @@ class ImageService {
 			)
 		);
 
+		// Update the stored monthly usage data.
+		$monthly_request_count = wp_remote_retrieve_header( $response, 'X-Monthly-Request-Count' );
+		$monthly_limit         = wp_remote_retrieve_header( $response, 'X-Monthly-Limit' );
+		$monthly_request_count = ( '' !== $monthly_request_count ) ? intval( $monthly_request_count ) : null;
+		$monthly_limit         = ( '' !== $monthly_limit ) ? intval( $monthly_limit ) : null;
+		if ( null !== $monthly_request_count && null !== $monthly_limit ) {
+			$settings                  = ImageSettings::get();
+			$settings['monthly_usage'] = array(
+				'monthlyRequestCount' => $monthly_request_count,
+				'maxRequestsPerMonth' => $monthly_limit,
+			);
+			ImageSettings::update( $settings );
+		}
+
 		// Handle errors from the HTTP request
 		if ( is_wp_error( $response ) ) {
 			return new \WP_Error(
 				'nfd_performance_error',
 				sprintf(
-					/* translators: %s: Error message */
+				/* translators: %s: Error message */
 					__( 'Error connecting to Cloudflare Worker: %s', 'wp-module-performance' ),
 					$response->get_error_message()
 				)
@@ -112,21 +119,6 @@ class ImageService {
 			return new \WP_Error(
 				'nfd_performance_error',
 				__( 'Rate limit exceeded. Please try again later.', 'wp-module-performance' )
-			);
-		} elseif ( 400 <= $response_code && 499 >= $response_code ) {
-			$error_message = $this->get_response_message( $response );
-			return new \WP_Error(
-				'nfd_performance_error',
-				sprintf(
-					/* translators: %s: Error Message */
-					__( 'Client error from Cloudflare Worker: %s', 'wp-module-performance' ),
-					$error_message
-				)
-			);
-		} elseif ( 500 <= $response_code ) {
-			return new \WP_Error(
-				'nfd_performance_error',
-				__( 'Server error from Cloudflare Worker. Please try again later.', 'wp-module-performance' )
 			);
 		}
 
@@ -155,11 +147,18 @@ class ImageService {
 		return $webp_file_path;
 	}
 
+
+
 	/**
 	 * Permanently ban the site from accessing image optimization.
 	 */
 	private function ban_site() {
-		update_option( self::$ban_site_option_key, true );
+		$settings                      = ImageSettings::get();
+		$settings['banned_status']     = true;
+		$settings['bulk_optimization'] = false;
+		$settings['auto_optimized_uploaded_images']['enabled']                    = false;
+		$settings['auto_optimized_uploaded_images']['auto_delete_original_image'] = false;
+		ImageSettings::update( $settings );
 	}
 
 	/**
@@ -366,5 +365,70 @@ class ImageService {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Retrieves the monthly usage limit for image optimization from the Cloudflare Worker.
+	 *
+	 * @return array|WP_Error The monthly request count and limit, or a WP_Error on failure.
+	 */
+	public function get_monthly_usage_limit() {
+		$site_url = get_site_url();
+		if ( ! $site_url ) {
+			return new \WP_Error(
+				'nfd_performance_error',
+				__( 'Error retrieving site URL.', 'wp-module-performance' )
+			);
+		}
+
+		// Make a GET request to the CF Worker to retrieve monthly usage
+		$response = wp_remote_get(
+			self::WORKER_URL . '/?monthly-count=true',
+			array(
+				'timeout' => 15,
+				'headers' => array(
+					'X-Site-Url' => $site_url,
+				),
+			)
+		);
+
+		// Handle HTTP errors
+		if ( is_wp_error( $response ) ) {
+			return new \WP_Error(
+				'nfd_performance_error',
+				sprintf(
+					/* translators: %s: Error message */
+					__( 'Error connecting to Cloudflare Worker: %s', 'wp-module-performance' ),
+					$response->get_error_message()
+				)
+			);
+		}
+
+		// Parse response data
+		$response_code = wp_remote_retrieve_response_code( $response );
+		if ( 200 !== $response_code ) {
+			return new \WP_Error(
+				'nfd_performance_error',
+				sprintf(
+					/* translators: %s: HTTP response code */
+					__( 'Unexpected response from Cloudflare Worker: HTTP %s', 'wp-module-performance' ),
+					$response_code
+				)
+			);
+		}
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+		if ( ! is_array( $body ) || ! isset( $body['monthlyRequestCount'], $body['maxRequestsPerMonth'] ) ) {
+			return new \WP_Error(
+				'nfd_performance_error',
+				__( 'Invalid response from Cloudflare Worker.', 'wp-module-performance' )
+			);
+		}
+
+		$settings                  = ImageSettings::get();
+		$settings['monthly_usage'] = $body;
+		ImageSettings::update( $settings );
+
+		return $body;
 	}
 }
