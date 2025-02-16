@@ -36,7 +36,18 @@
     "newfold-labs/wp-module-installer": "^1.3.0"
   },
   "require-dev": {
-    "newfold-labs/wp-php-standards": "^1.2.4"
+    "newfold-labs/wp-php-standards": "^1.2.4",
+    "10up/wp_mock": "^1.0"
+  },
+  "scripts": {
+    "test": "phpunit --bootstrap tests/phpunit/bootstrap.php",
+    "cs-fix": "phpcbf --standard=phpcs.xml .",
+    "cs-lint": "phpcs --standard=phpcs.xml -s ."
+  },
+  "scripts-descriptions": {
+    "test": "Run PHPUnit tests.",
+    "cs-fix": "Automatically fix coding standards issues where possible.",
+    "cs-lint": "Check files against coding standards."
   },
   "config": {
     "allow-plugins": {

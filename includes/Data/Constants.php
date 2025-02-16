@@ -19,7 +19,7 @@ class Constants {
 		}
 
 		if ( ! defined( 'NFD_PERFORMANCE_BUILD_URL' ) ) {
-			define( 'NFD_PERFORMANCE_BUILD_URL', $container->plugin()->url . '/vendor/newfold-labs/wp-module-performance/build' );
+			define( 'NFD_PERFORMANCE_BUILD_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-performance/build' );
 		}
 	}
 }

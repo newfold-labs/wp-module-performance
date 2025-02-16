@@ -3,7 +3,6 @@
 namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
-use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 use function NewfoldLabs\WP\Module\Performance\getSkip404Option;
@@ -11,7 +10,7 @@ use function WP_Forge\WP_Htaccess_Manager\addContent;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 /**
- * Skip404 Class
+ * Skip 404 cache type.
  */
 class Skip404 extends CacheBase {
 
@@ -21,9 +20,14 @@ class Skip404 extends CacheBase {
 	const MARKER = 'Newfold Skip 404 Handling for Static Files';
 
 	/**
+	 * The option name.
+	 */
+	public const OPTION_SKIP_404 = 'newfold_skip_404_handling';
+
+	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container the container.
+	 * @param Container $container Dependency injection container.
 	 *
 	 * @return bool
 	 */
@@ -36,7 +40,7 @@ class Skip404 extends CacheBase {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_SKIP_404, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( self::OPTION_SKIP_404, array( __CLASS__, 'maybeAddRules' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'onUpdateHtaccess' ) );
 	}

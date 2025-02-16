@@ -80,7 +80,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	skip404OptionLabel: __(
-		'Skip 404 Handling For Static Files',
+		'Enable Skip 404 Handling For Static Files',
 		'wp-module-performance'
 	),
 	skip404NoticeTitle: __( 'Skip 404 saved', 'wp-module-performance' ),
