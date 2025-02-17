@@ -10,7 +10,7 @@ class ImageService {
 	/**
 	 * Cloudflare Worker URL for image optimization.
 	 */
-	private const WORKER_URL = 'http://localhost:8787';
+	private const WORKER_URL = 'https://hiive.cloud/workers/image-optimization';
 
 	/**
 	 * Rate limit transient key.
