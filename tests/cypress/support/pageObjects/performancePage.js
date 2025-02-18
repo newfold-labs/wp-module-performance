@@ -1,13 +1,13 @@
 class performancePage {
 	//Locators
 	_linkPrefetchText = '.newfold-link-prefetch';
-	_dropDownForLinkPrefetch = '.nfd-select__button-label';
+	_dropDownForLinkPrefetch = '[data-id="link-prefetch-behavior"] .nfd-select__button-label';
 	_visitSiteButton = 'a.nfd-button.nfd-bg-white';
 	_samplePageButton =
 		'.wp-block-pages-list__item__link.wp-block-navigation-item__content';
 	_excludeKeywordInputField = '#link-prefetch-ignore-keywords';
 	_isToggleEnabled = 'button[data-id="link-prefetch-active-desktop"]';
-	_selectedDropDown = '.nfd-select__option-label.nfd-font-semibold';
+	_selectedDropDown = '[aria-selected="true"] .nfd-select__option-label';
 
 	//All the methods related to performance page.
 	getLinkPrefetchText() {
@@ -43,7 +43,7 @@ class performancePage {
 	}
 
 	getDropDownOptionLabel() {
-		return cy.get( '.nfd-select__option-label.nfd-font-semibold' );
+		return cy.get( this._selectedDropDown );
 	}
 
 	getListItems() {
