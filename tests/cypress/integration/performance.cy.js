@@ -14,11 +14,11 @@ describe( 'Performance Page', { testIsolation: false }, () => {
 				Cypress.env( 'pluginId' ) +
 				'#/performance'
 		);
-		cy.injectAxe();
 		performanceLocators = new performancePageLocators();
 	} );
-
+    
 	it( 'Is Accessible', () => {
+        cy.injectAxe();
 		cy.wait( 500 );
 		cy.checkA11y( appClass + '-app-body' );
 	} );
