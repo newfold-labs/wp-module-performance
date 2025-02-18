@@ -172,102 +172,118 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					}
 				/>
 
-				<ToggleField
-					id="auto-optimize-images"
-					label={ defaultText.imageOptimizationAutoOptimizeLabel }
-					description={
-						defaultText.imageOptimizationAutoOptimizeDescription
-					}
-					checked={ autoOptimizeEnabled }
-					onChange={ () =>
-						handleToggleChange(
-							'autoOptimizeEnabled',
-							! autoOptimizeEnabled
-						)
-					}
-					disabled={ ! enabled }
-				/>
+				{ enabled && (
+					<>
+						<ToggleField
+							id="auto-optimize-images"
+							label={
+								defaultText.imageOptimizationAutoOptimizeLabel
+							}
+							description={
+								defaultText.imageOptimizationAutoOptimizeDescription
+							}
+							checked={ autoOptimizeEnabled }
+							onChange={ () =>
+								handleToggleChange(
+									'autoOptimizeEnabled',
+									! autoOptimizeEnabled
+								)
+							}
+							disabled={ ! enabled }
+						/>
+						<ToggleField
+							id="bulk-optimize-images"
+							label={
+								defaultText.imageOptimizationBulkOptimizeLabel
+							}
+							description={
+								<>
+									<p>
+										{
+											defaultText.imageOptimizationBulkOptimizeDescription
+										}
+									</p>
+									{ bulkOptimization && (
+										<a
+											href={ mediaLibraryLink() }
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											{
+												defaultText.imageOptimizationBulkOptimizeButtonLabel
+											}
+										</a>
+									) }
+								</>
+							}
+							checked={ bulkOptimization }
+							onChange={ () =>
+								handleToggleChange(
+									'bulkOptimize',
+									! bulkOptimization
+								)
+							}
+							disabled={ ! enabled }
+						/>
 
-				<ToggleField
-					id="bulk-optimize-images"
-					label={ defaultText.imageOptimizationBulkOptimizeLabel }
-					description={
-						<>
-							<p>
-								{
-									defaultText.imageOptimizationBulkOptimizeDescription
-								}
-							</p>
-							{ bulkOptimization && (
-								<a
-									href={ mediaLibraryLink() }
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{
-										defaultText.imageOptimizationBulkOptimizeButtonLabel
-									}
-								</a>
-							) }
-						</>
-					}
-					checked={ bulkOptimization }
-					onChange={ () =>
-						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
-					}
-					disabled={ ! enabled }
-				/>
+						<ToggleField
+							id="prefer-webp-when-exists"
+							label={
+								defaultText.imageOptimizationPreferWebPLabel
+							}
+							description={
+								defaultText.imageOptimizationPreferWebPDescription
+							}
+							checked={ preferOptimizedImageWhenExists }
+							onChange={ () =>
+								handleToggleChange(
+									'preferOptimizedImageWhenExists',
+									! preferOptimizedImageWhenExists
+								)
+							}
+							disabled={ ! enabled }
+						/>
 
-				<ToggleField
-					id="prefer-webp-when-exists"
-					label={ defaultText.imageOptimizationPreferWebPLabel }
-					description={
-						defaultText.imageOptimizationPreferWebPDescription
-					}
-					checked={ preferOptimizedImageWhenExists }
-					onChange={ () =>
-						handleToggleChange(
-							'preferOptimizedImageWhenExists',
-							! preferOptimizedImageWhenExists
-						)
-					}
-					disabled={ ! enabled }
-				/>
+						<ToggleField
+							id="auto-delete-original"
+							label={
+								defaultText.imageOptimizationAutoDeleteLabel
+							}
+							description={
+								defaultText.imageOptimizationAutoDeleteDescription
+							}
+							checked={ autoDeleteOriginalImage }
+							onChange={ () =>
+								handleToggleChange(
+									'autoDeleteOriginalImage',
+									! autoDeleteOriginalImage
+								)
+							}
+							disabled={
+								! enabled ||
+								( ! autoOptimizeEnabled && ! bulkOptimization )
+							}
+						/>
 
-				<ToggleField
-					id="auto-delete-original"
-					label={ defaultText.imageOptimizationAutoDeleteLabel }
-					description={
-						defaultText.imageOptimizationAutoDeleteDescription
-					}
-					checked={ autoDeleteOriginalImage }
-					onChange={ () =>
-						handleToggleChange(
-							'autoDeleteOriginalImage',
-							! autoDeleteOriginalImage
-						)
-					}
-					disabled={
-						! enabled ||
-						( ! autoOptimizeEnabled && ! bulkOptimization )
-					}
-				/>
-
-				<ToggleField
-					id="lazy-loading-enabled"
-					label={ defaultText.imageOptimizationLazyLoadingLabel }
-					description={
-						defaultText.imageOptimizationLazyLoadingDescription
-					}
-					checked={ lazyLoading.enabled }
-					onChange={ () =>
-						handleToggleChange(
-							'lazyLoading',
-							! lazyLoading.enabled
-						)
-					}
-					disabled={ ! enabled }
-				/>
+						<ToggleField
+							id="lazy-loading-enabled"
+							label={
+								defaultText.imageOptimizationLazyLoadingLabel
+							}
+							description={
+								defaultText.imageOptimizationLazyLoadingDescription
+							}
+							checked={ lazyLoading.enabled }
+							onChange={ () =>
+								handleToggleChange(
+									'lazyLoading',
+									! lazyLoading.enabled
+								)
+							}
+							disabled={ ! enabled }
+						/>
+					</>
+				) }
 			</div>
 		</Container.SettingsField>
 	);
