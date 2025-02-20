@@ -1,4 +1,6 @@
+// <reference types="Cypress" />
 import performancePageLocators from '../support/pageObjects/performancePage';
+
 describe( 'Performance Page', { testIsolation: false }, () => {
 	const appClass = '.' + Cypress.env( 'appId' );
 	const fixturePath = require( '../fixtures/performanceModule.json' );

@@ -1,13 +1,19 @@
+// <reference types="Cypress" />
 class performancePage {
 	//Locators
-	_linkPrefetchText = '.newfold-link-prefetch';
-	_dropDownForLinkPrefetch = '[data-id="link-prefetch-behavior"] .nfd-select__button-label';
+	// in site-info box
 	_visitSiteButton = 'a.nfd-button.nfd-bg-white';
+	// sample page link on front end of site
 	_samplePageButton =
 		'.wp-block-pages-list__item__link.wp-block-navigation-item__content';
-	_excludeKeywordInputField = '#link-prefetch-ignore-keywords';
-	_isToggleEnabled = 'button[data-id="link-prefetch-active-desktop"]';
+	_linkPrefetchText =
+		'[data-cy="link-prefetch-settings"] .newfold-link-prefetch';
+	_dropDownForLinkPrefetch =
+		'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label';
+	// selected element in dropdown select
 	_selectedDropDown = '[aria-selected="true"] .nfd-select__option-label';
+	_excludeKeywordInputField = '[data-cy="link-prefetch-ignore-keywords"]';
+	_desktopToggle = '[data-cy="link-prefetch-active-desktop-toggle"]';
 
 	//All the methods related to performance page.
 	getLinkPrefetchText() {
@@ -38,8 +44,8 @@ class performancePage {
 		return cy.get( this._excludeKeywordInputField );
 	}
 
-	getIsToggleEnabled() {
-		return cy.get( this._isToggleEnabled );
+	getDesktopToggle() {
+		return cy.get( this._desktopToggle );
 	}
 
 	getDropDownOptionLabel() {
@@ -94,12 +100,12 @@ class performancePage {
 	}
 
 	verifyIfToggleIsEnabled() {
-		this.getIsToggleEnabled().then( ( $toggle ) => {
+		this.getDesktopToggle().then( ( $toggle ) => {
 			if ( $toggle.attr( 'aria-checked' ) === 'false' ) {
 				cy.wrap( $toggle ).click();
 			}
 		} );
-		this.getIsToggleEnabled().should( 'have.attr', 'aria-checked', 'true' );
+		this.getDesktopToggle().should( 'have.attr', 'aria-checked', 'true' );
 	}
 
 	compareDropdownLabelAndSelectedOption() {
