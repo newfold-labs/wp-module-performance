@@ -1,7 +1,7 @@
-import performancePageLocators from '../../../../wp-module-performance/tests/cypress/support/pageObjects/performancePage';
+import performancePageLocators from '../support/pageObjects/performancePage';
 describe( 'Performance Page', { testIsolation: false }, () => {
 	const appClass = '.' + Cypress.env( 'appId' );
-	const fixturePath = require( '../../../../../../vendor/newfold-labs/wp-module-performance/tests/cypress/fixtures/performanceModule.json' );
+	const fixturePath = require( '../fixtures/performanceModule.json' );
 	let performanceLocators;
 	let data;
 
@@ -16,9 +16,9 @@ describe( 'Performance Page', { testIsolation: false }, () => {
 		);
 		performanceLocators = new performancePageLocators();
 	} );
-    
+
 	it( 'Is Accessible', () => {
-        cy.injectAxe();
+		cy.injectAxe();
 		cy.wait( 500 );
 		cy.checkA11y( appClass + '-app-body' );
 	} );
