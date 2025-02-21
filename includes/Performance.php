@@ -97,7 +97,7 @@ class Performance {
 	 * Remove the .htaccess rules for the file cache if the brand is Bluehost or HostGator.
 	 */
 	public function remove_file_cache_htaccess_for_bh_hg() {
-		$brand = $this->container->plugin()->brand;
+		$brand       = $this->container->plugin()->brand;
 		$fixed_bh_hg = get_option( 'nfd_file_cache_fixed_bh_hg', false );
 		if ( ( 'bluehost' === $brand || 'hostgator' !== $brand ) && ! $fixed_bh_hg ) {
 			File::removeRules();
