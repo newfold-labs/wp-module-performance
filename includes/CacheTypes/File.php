@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
-use NewfoldLabs\WP\Module\Performance\Performance;
+use NewfoldLabs\WP\Module\Performance\CacheManager;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\CacheExclusion;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
@@ -50,7 +50,7 @@ class File extends CacheBase implements Purgeable {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
@@ -77,7 +77,8 @@ class File extends CacheBase implements Purgeable {
 	 * @param  int $cacheLevel  The caching level.
 	 */
 	public static function maybeAddRules( $cacheLevel ) {
-		absint( $cacheLevel ) > 1 && 'bluehost' !== getContainer()->plugin()->brand && 'hostgator' !== getContainer()->plugin()->brand ? self::addRules() : self::removeRules();
+		$brand = getContainer()->plugin()->brand;
+		absint( $cacheLevel ) > 1 && 'bluehost' !== $brand && 'hostgator' !== $brand ? self::addRules() : self::removeRules();
 	}
 
 	/**
