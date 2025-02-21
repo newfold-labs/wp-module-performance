@@ -4,9 +4,9 @@ namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
-use NewfoldLabs\WP\Module\Performance\CacheManager;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\CacheExclusion;
+use NewfoldLabs\WP\Module\Performance\CacheManager;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
@@ -17,7 +17,7 @@ use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
 /**
- * Page cache class
+ * File cache type.
  */
 class File extends CacheBase implements Purgeable {
 	/**
@@ -37,7 +37,7 @@ class File extends CacheBase implements Purgeable {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param  Container $container the container.
+	 * @param Container $container Dependency injection container.
 	 *
 	 * @return bool
 	 */
@@ -87,7 +87,6 @@ class File extends CacheBase implements Purgeable {
 	 * @return bool
 	 */
 	public static function addRules() {
-
 		$base = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$path = str_replace( get_home_path(), '/', self::CACHE_DIR );
 

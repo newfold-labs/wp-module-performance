@@ -3,16 +3,16 @@
 namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
-use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use NewfoldLabs\WP\Module\Performance\CacheExclusion;
+use NewfoldLabs\WP\Module\Performance\CacheManager;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 /**
- * Browser cache class
+ * Browser cache type.
  */
 class Browser extends CacheBase {
 	/**
@@ -25,7 +25,7 @@ class Browser extends CacheBase {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container the container.
+	 * @param Container $container Dependency injection container.
 	 *
 	 * @return bool
 	 */
@@ -38,7 +38,7 @@ class Browser extends CacheBase {
 	 */
 	public function __construct() {
 
-		new OptionListener( Performance::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
+		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 

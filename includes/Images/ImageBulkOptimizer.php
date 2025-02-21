@@ -15,6 +15,33 @@ class ImageBulkOptimizer {
 	}
 
 	/**
+	 * Establish whether the current page allows scripts to be enqueued.
+	 *
+	 * @return boolean
+	 */
+	private function is_enqueue_allowed() {
+		global $pagenow;
+
+		$excluded_pages = array(
+			'admin.php',
+			'themes.php',
+			'plugins.php',
+			'users.php',
+			'tools.php',
+			'import.php',
+			'export.php',
+			'site-health.php',
+			'export-personal-data.php',
+			'erase-personal-data.php',
+			'theme-editor.php',
+			'plugin-editor.php',
+		);
+
+		$is_excluded = in_array( $pagenow, $excluded_pages, true );
+
+		return apply_filters( 'newfold_performance_image_bulk_optimizer_enqueue_allowed', ! $is_excluded );
+	}
+	/**
 	 * Enqueues the bulk optimizer script.
 	 */
 	public function enqueue_bulk_optimizer_script() {
@@ -26,20 +53,22 @@ class ImageBulkOptimizer {
 			true
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'nfd-performance-bulk-optimizer-style',
 			NFD_PERFORMANCE_BUILD_URL . '/image-bulk-optimizer/image-bulk-optimizer.min.css',
 			array(),
 			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-bulk-optimizer/image-bulk-optimizer.min.css' )
 		);
 
-		wp_add_inline_script(
-			'nfd-performance-bulk-optimizer',
-			$this->get_inline_script(),
-			'before'
-		);
-
-		wp_enqueue_script( 'nfd-performance-bulk-optimizer' );
+		if ( $this->is_enqueue_allowed() ) {
+			wp_enqueue_style( 'nfd-performance-bulk-optimizer-style' );
+			wp_enqueue_script( 'nfd-performance-bulk-optimizer' );
+			wp_add_inline_script(
+				'nfd-performance-bulk-optimizer',
+				$this->get_inline_script(),
+				'before'
+			);
+		}
 	}
 
 	/**

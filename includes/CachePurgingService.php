@@ -6,28 +6,31 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
 use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
 use wpscholar\Url;
 
+/**
+ * Cache purging service.
+ */
 class CachePurgingService {
 
 	/**
 	 * Cache types.
 	 *
-	 * @var CacheBase[]
+	 * @var CacheBase[] $cacheTypes Cache types.
 	 */
-	public $cacheTypes = [];
+	public $cacheTypes = array(); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 
 	/**
 	 * Constructor.
 	 *
-	 * @param  CacheBase[]  $cacheTypes
+	 * @param CacheBase[] $cacheTypes Cache types.
 	 */
 	public function __construct( array $cacheTypes ) {
 
-		$this->cacheTypes = $cacheTypes;
+		$this->cacheTypes = $cacheTypes; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		if ( $this->canPurge() ) {
 
 			// Handle manual purge requests
-			add_action( 'init', [ $this, 'manualPurgeRequest' ] );
+			add_action( 'init', array( $this, 'manualPurgeRequest' ) );
 
 			// Handle automatic purging
 			add_action( 'transition_post_status', array( $this, 'onSavePost' ), 10, 3 );
@@ -45,7 +48,7 @@ class CachePurgingService {
 	 * @return bool
 	 */
 	public function canPurge() {
-		foreach ( $this->cacheTypes as $instance ) {
+		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				return true;
 			}
@@ -86,9 +89,11 @@ class CachePurgingService {
 	 * Purge everything.
 	 */
 	public function purgeAll() {
-		foreach ( $this->cacheTypes as $instance ) {
+		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
+				 * Purgeable instance.
+				 *
 				 * @var Purgeable $instance
 				 */
 				$instance->purgeAll();
@@ -99,12 +104,14 @@ class CachePurgingService {
 	/**
 	 * Purge a specific URL.
 	 *
-	 * @param  string  $url  The URL to be purged.
+	 * @param  string $url  The URL to be purged.
 	 */
 	public function purgeUrl( $url ) {
-		foreach ( $this->cacheTypes as $instance ) {
+		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
+				 * Purgeable instance.
+				 *
 				 * @var Purgeable $instance
 				 */
 				$instance->purgeUrl( $url );
@@ -115,9 +122,9 @@ class CachePurgingService {
 	/**
 	 * Purge appropriate caches when a post is updated.
 	 *
-	 * @param  string  $oldStatus  The previous post status
-	 * @param  string  $newStatus  The new post status
-	 * @param  \WP_Post  $post  The post object of the edited or created post
+	 * @param  string   $oldStatus  The previous post status
+	 * @param  string   $newStatus  The new post status
+	 * @param  \WP_Post $post  The post object of the edited or created post
 	 */
 	public function onSavePost( $oldStatus, $newStatus, \WP_Post $post ) {
 
@@ -160,13 +167,12 @@ class CachePurgingService {
 		// Purge date archive URL when post is updated.
 		$year_archive = get_year_link( (int) get_the_date( 'y', $post ) );
 		$this->purgeUrl( $year_archive );
-
 	}
 
 	/**
 	 * Purge taxonomy term URL when a term is updated.
 	 *
-	 * @param  int  $termId  Term ID
+	 * @param  int $termId  Term ID
 	 */
 	public function onEditTerm( $termId ) {
 		$url = get_term_link( $termId );
@@ -178,7 +184,7 @@ class CachePurgingService {
 	/**
 	 * Purge a single post when a comment is updated.
 	 *
-	 * @param  int  $commentId  ID of the comment.
+	 * @param  int $commentId  ID of the comment.
 	 */
 	public function onUpdateComment( $commentId ) {
 		$comment = get_comment( $commentId );
@@ -190,8 +196,16 @@ class CachePurgingService {
 		}
 	}
 
+	/**
+	 * Purge all caches when an option is updated.
+	 *
+	 * @param  string $option    Option name.
+	 * @param  mixed  $oldValue  Old option value.
+	 * @param  mixed  $newValue  New option value.
+	 *
+	 * @return bool
+	 */
 	public function onUpdateOption( $option, $oldValue, $newValue ) {
-
 		// No need to process if nothing was updated
 		if ( $oldValue === $newValue ) {
 			return false;
@@ -298,13 +312,12 @@ class CachePurgingService {
 		$this->purgeAll();
 
 		return true;
-
 	}
 
 	/**
 	 * Checks if a taxonomy is public.
 	 *
-	 * @param  string  $taxonomy  Taxonomy name.
+	 * @param  string $taxonomy  Taxonomy name.
 	 *
 	 * @return boolean
 	 */
@@ -317,5 +330,4 @@ class CachePurgingService {
 
 		return $public;
 	}
-
 }
