@@ -86,6 +86,8 @@ class Performance {
 			new RestAPI();
 		}
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
@@ -308,9 +310,9 @@ class Performance {
 		);
 	}
 	/**
-	 * Enqueue scripts and styles in admin
+	 * Enqueue styles and styles in admin
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_styles() {
 		$brand = $this->container->plugin()->brand;
 		if ( is_settings_page( $brand ) ) {
 			$plugin_url = $this->container->plugin()->url . get_styles_path();
