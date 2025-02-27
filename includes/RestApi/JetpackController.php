@@ -99,13 +99,13 @@ class JetpackController {
 				);
 			}
 
-			if( 'critical-css' === $field['id'] && 1 === (int) $field['value'] ) {
-				//$jetpack_boost = new Jetpack_Boost();
-                $css = new Regenerate_CSS();
-                $css->handle( null, null );
-            }elseif ( 'critical-css-premium' === $field['id'] ) {
+			if ( 'critical-css' === $field['id'] && 1 === (int) $field['value'] ) {
+				// $jetpack_boost = new Jetpack_Boost();
+				$css = new Regenerate_CSS();
+				$css->handle( null, null );
+			} elseif ( 'critical-css-premium' === $field['id'] ) {
 				$field['id'] = 'critical-css';
-			}			
+			}
 
 			$option_key   = 'jetpack_boost_status_' . $field['id'];
 			$option_value = $field['value'];
@@ -155,10 +155,10 @@ class JetpackController {
 	 */
 	public function regenerate_critical_css( $request ) {
 		try {
-			$css = new Regenerate_CSS();
-			$result = $css->handle(null, null);
-	
-			if (!empty($result['success']) && $result['success']) {
+			$css    = new Regenerate_CSS();
+			$result = $css->handle( null, null );
+
+			if ( ! empty( $result['success'] ) && $result['success'] ) {
 				// Success response.
 				return new \WP_REST_Response(
 					array(
@@ -171,17 +171,17 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __('Failed to regenerate critical CSS.', 'newfold-performance-module'),
+						'error'   => __( 'Failed to regenerate critical CSS.', 'newfold-performance-module' ),
 					),
 					400 // Bad Request
 				);
 			}
-		} catch (\Exception $e) {
+		} catch ( \Exception $e ) {
 			// Exception handling.
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => __('An error occurred while regenerating critical CSS.', 'newfold-performance-module') . $e->getMessage(),
+					'error'   => __( 'An error occurred while regenerating critical CSS.', 'newfold-performance-module' ) . $e->getMessage(),
 				),
 				500 // Internal Server Error
 			);
