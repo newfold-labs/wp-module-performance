@@ -11,7 +11,6 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 use NFD_CLI;
 
@@ -89,21 +88,6 @@ class Performance {
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
-
-		add_action( 'init', array( $this, 'remove_file_cache_htaccess_for_bh_hg' ) );
-	}
-
-	/**
-	 * Remove the .htaccess rules for the file cache if the brand is Bluehost or HostGator.
-	 */
-	public function remove_file_cache_htaccess_for_bh_hg() {
-		$brand       = $this->container->plugin()->brand;
-		$fixed_bh_hg = get_option( 'nfd_file_cache_fixed_bh_hg', false );
-		if ( ( 'bluehost' === $brand || 'hostgator' !== $brand ) && ! $fixed_bh_hg ) {
-			File::removeRules();
-			update_option( 'nfd_file_cache_fixed_bh_hg', true );
-			return;
-		}
 	}
 
 	/**
