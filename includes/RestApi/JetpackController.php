@@ -100,7 +100,6 @@ class JetpackController {
 			}
 
 			if ( 'critical-css' === $field['id'] && 1 === (int) $field['value'] ) {
-				// $jetpack_boost = new Jetpack_Boost();
 				$css = new Regenerate_CSS();
 				$css->handle( null, null );
 			} elseif ( 'critical-css-premium' === $field['id'] ) {
@@ -153,7 +152,13 @@ class JetpackController {
 	 *
 	 * @return void
 	 */
-	public function regenerate_critical_css( $request ) {
+
+	/**
+	 * Regenerate Critical CSS.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function regenerate_critical_css() {
 		try {
 			$css    = new Regenerate_CSS();
 			$result = $css->handle( null, null );

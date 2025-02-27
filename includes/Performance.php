@@ -12,11 +12,9 @@ use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
-use NFD_CLI;
+use Automattic\Jetpack\My_Jetpack\Products\Boost;
 
 use function NewfoldLabs\WP\Module\Performance\is_settings_page;
-
-use Automattic\Jetpack\My_Jetpack\Products\Boost;
 
 /**
  * Main class for the performance module.
