@@ -27,15 +27,6 @@
       ]
     }
   ],
-
-  "scripts": {
-    "test": [
-      "phpunit --bootstrap tests/phpunit/bootstrap.php"
-    ]
-  },
-  "scripts-descriptions": {
-    "test": "Run phpunit tests"
-  },
   "require": {
     "newfold-labs/wp-module-context": "^1.0",
     "wp-forge/collection": "^1.0.2",
@@ -49,16 +40,14 @@
     "10up/wp_mock": "^1.0"
   },
   "scripts": {
-    "cs-fix": [
-      "phpcbf --standard=phpcs.xml ."
-    ],
-    "cs-lint": [
-      "phpcs --standard=phpcs.xml -s ."
-    ]
+    "test": "phpunit --bootstrap tests/phpunit/bootstrap.php",
+    "cs-fix": "phpcbf --standard=phpcs.xml .",
+    "cs-lint": "phpcs --standard=phpcs.xml -s ."
   },
   "scripts-descriptions": {
-    "fix": "Automatically fix coding standards issues where possible.",
-    "lint": "Check files against coding standards."
+    "test": "Run PHPUnit tests.",
+    "cs-fix": "Automatically fix coding standards issues where possible.",
+    "cs-lint": "Check files against coding standards."
   },
   "config": {
     "allow-plugins": {

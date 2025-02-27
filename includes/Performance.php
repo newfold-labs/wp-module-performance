@@ -11,6 +11,8 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
+use NFD_CLI;
 
 use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
@@ -20,21 +22,6 @@ use Automattic\Jetpack\My_Jetpack\Products\Boost;
  * Main class for the performance module.
  */
 class Performance {
-
-	/**
-	 * The option name where the cache level is stored.
-	 *
-	 * @var string
-	 */
-	const OPTION_CACHE_LEVEL = 'newfold_cache_level';
-
-
-	/**
-	 * The option name where the "Skip WordPress 404 Handling for Static Files" option is stored.
-	 *
-	 * @var string
-	 */
-	const OPTION_SKIP_404 = 'newfold_skip_404_handling';
 
 	/**
 	 * URL parameter used to purge the entire cache.
@@ -81,6 +68,7 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
 		new HealthChecks( $container );
@@ -113,7 +101,18 @@ class Performance {
 	 */
 	public function configureContainer( Container $container ) {
 
-		global $is_apache;
+		$is_apache = false;
+
+		// Ensure $is_apache is properly set, with a fallback for WP-CLI environment
+		if ( NFD_WPCLI::is_executing_wp_cli() ) {
+			// Attempt to detect Apache based on the SERVER_SOFTWARE header
+			$is_apache = isset( $_SERVER['SERVER_SOFTWARE'] ) && stripos( $_SERVER['SERVER_SOFTWARE'], 'apache' ) !== false;
+
+			// Check for the existence of an .htaccess file (commonly used in Apache environments)
+			if ( ! $is_apache && file_exists( ABSPATH . '.htaccess' ) ) {
+				$is_apache = true;
+			}
+		}
 
 		$container->set( 'isApache', $is_apache );
 
@@ -134,7 +133,7 @@ class Performance {
 
 		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
-		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
+		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
 		/**
 		 * On CLI requests, mod_rewrite is unavailable, so it fails to update
