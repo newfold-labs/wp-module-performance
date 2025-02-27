@@ -74,15 +74,15 @@ class PerformanceFeatureHooks {
 	/**
 	 * Activate Jetpack Boost automatically on fresh installation
 	 *
-	 * @param [type] $plugin
+	 * @param string $plugin Plugin just activated.
 	 * @return void
 	 */
 	public function activate_jetpack_boost( $plugin ) {
 		if ( container()->plugin()->basename === $plugin &&
 			container()->has( 'isFreshInstallation' ) &&
 			container()->get( 'isFreshInstallation' ) &&
-			isset( $_REQUEST['action'] ) &&
-			'activate' === $_REQUEST['action']
+			isset( $_REQUEST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification
+			'activate' === $_REQUEST['action'] // phpcs:ignore WordPress.Security.NonceVerification
 			) {
 			add_filter( 'wp_doing_ajax', '__return_true' );
 			PluginInstaller::install( 'jetpack-boost', true );
