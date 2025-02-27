@@ -28,6 +28,11 @@ class ImageSettings {
 		'lazy_loading'                       => array(
 			'enabled' => true,
 		),
+		'banned_status'                      => false,
+		'monthly_usage'                      => array(
+			'monthlyRequestCount' => 0,
+			'maxRequestsPerMonth' => 100000,
+		),
 	);
 
 	/**
@@ -96,6 +101,27 @@ class ImageSettings {
 								'description' => __( 'Enable bulk optimization of images.', 'wp-module-performance' ),
 								'default'     => self::DEFAULT_SETTINGS['bulk_optimization'],
 							),
+							'banned_status'     => array(
+								'type'        => 'boolean',
+								'description' => __( 'Indicates if the site is banned from image optimization.', 'wp-module-performance' ),
+								'default'     => self::DEFAULT_SETTINGS['banned_status'],
+							),
+							'monthly_usage'     => array(
+								'type'        => 'object',
+								'description' => __( 'Monthly usage statistics for image optimization.', 'wp-module-performance' ),
+								'properties'  => array(
+									'monthlyRequestCount' => array(
+										'type'        => 'integer',
+										'description' => __( 'Number of requests made this month.', 'wp-module-performance' ),
+										'default'     => self::DEFAULT_SETTINGS['monthly_usage']['monthlyRequestCount'],
+									),
+									'maxRequestsPerMonth' => array(
+										'type'        => 'integer',
+										'description' => __( 'Maximum allowed requests per month.', 'wp-module-performance' ),
+										'default'     => self::DEFAULT_SETTINGS['monthly_usage']['maxRequestsPerMonth'],
+									),
+								),
+							),
 						),
 						'additionalProperties' => false,
 					),
@@ -134,6 +160,8 @@ class ImageSettings {
 				'enabled' => ! empty( $settings['lazy_loading']['enabled'] ),
 			),
 			'bulk_optimization'                  => ! empty( $settings['bulk_optimization'] ),
+			'banned_status'                      => ! empty( $settings['banned_status'] ),
+			'monthly_usage'                      => isset( $settings['monthly_usage'] ) ? (array) $settings['monthly_usage'] : array(),
 		);
 	}
 
@@ -198,12 +226,55 @@ class ImageSettings {
 	}
 
 	/**
+	 * Checks if the site is banned from image optimization.
+	 *
+	 * @return bool True if the site is banned, false otherwise.
+	 */
+	public static function is_banned() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		return ! empty( $settings['banned_status'] );
+	}
+
+	/**
+	 * Retrieves the monthly usage statistics for image optimization.
+	 *
+	 * @return array An array containing `monthlyRequestCount` and `maxRequestsPerMonth`.
+	 */
+	public static function get_monthly_usage() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+
+		// Ensure monthly_usage exists and return default values if not set
+		return isset( $settings['monthly_usage'] ) && is_array( $settings['monthly_usage'] )
+		? $settings['monthly_usage']
+		: array(
+			'monthlyRequestCount' => 0,
+			'maxRequestsPerMonth' => 100000,
+		);
+	}
+
+
+	/**
 	 * Retrieves the image optimization settings.
 	 *
 	 * @return array The current image optimization settings.
 	 */
 	public static function get() {
-		return get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+
+		if ( ! isset( $settings['banned_status'] ) ) {
+			$settings['banned_status'] = self::is_banned();
+		}
+
+		// Fetch the latest monthly usage and store it if not already set.
+		if ( empty( $settings['monthly_usage'] ) ) {
+			$usage_data = ( new ImageService() )->get_monthly_usage_limit( true );
+			if ( ! is_wp_error( $usage_data ) ) {
+				$settings['monthly_usage'] = $usage_data;
+				update_option( self::SETTING_KEY, $settings );
+			}
+		}
+
+		return $settings;
 	}
 
 	/**
