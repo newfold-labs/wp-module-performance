@@ -80,7 +80,7 @@ const defaultText = {
 		'wp-module-performance'
 	),
 	skip404OptionLabel: __(
-		'Skip 404 Handling For Static Files',
+		'Enable Skip 404 Handling For Static Files',
 		'wp-module-performance'
 	),
 	skip404NoticeTitle: __( 'Skip 404 saved', 'wp-module-performance' ),
@@ -182,7 +182,10 @@ const defaultText = {
 		'Something went wrong while updating the settings. Please try again.',
 		'wp-module-performance'
 	),
-
+	imageOptimizationBannedMessage: __(
+		'This site no longer qualifies for image optimization as it has reached its usage limits.',
+		'wp-module-performance'
+	),
 	linkPrefetchDescription: __(
 		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.',
 		'wp-module-performance'

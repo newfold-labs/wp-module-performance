@@ -1,6 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
+use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+
 /**
  * Class Settings
  *
@@ -77,7 +79,7 @@ class SettingsController {
 
 			switch ( $field['id'] ) {
 				case 'skip404':
-					$result = update_option( 'newfold_skip_404_handling', $field['value'] );
+					$result = update_option( Skip404::OPTION_SKIP_404, $field['value'] );
 					break;
 
 				default:
