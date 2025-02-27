@@ -1,22 +1,23 @@
 .nfd-container__block.newfold-link-prefetch .nfd-toggle-field.nfd-mb-6 {
 	display: flex;
 	flex-direction: row;
-  }
-.nfd-performance-jetpack-boost-upsell{
+}
+
+.nfd-performance-jetpack-boost-upsell {
 	position: relative;
 }
 
-.nfd-performance-jetpack-boost-upsell:before {
-	content: '';
+.nfd-performance-jetpack-boost-upsell::before {
+	content: "";
 	display: block;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(255,255,0,0.1);
+	background-color: rgba(255, 255, 0, 0.1);
 	position: absolute;
 }
 
 
-.nfd-performance-jetpack-boost-container-install-activate-button{
+.nfd-performance-jetpack-boost-container-install-activate-button {
 	position: absolute;
 	width: 300px;
 	left: calc(50% - 150px);
@@ -24,12 +25,12 @@
 	z-index: 10;
 }
 
-.nfd-performance-jetpack-boost-container-install-activate-button svg{
+.nfd-performance-jetpack-boost-container-install-activate-button svg {
 	display: inline-block;
 	margin-right: 10px;
 }
 
-.nfd-performance-jetpack-boost-container-install-activate-button button{
+.nfd-performance-jetpack-boost-container-install-activate-button button {
 	padding: 10px;
 	border-radius: 6px;
 	width: 100%;
@@ -39,16 +40,16 @@
 	justify-content: left;
 }
 
-.nfd-performance-jetpack-boost-single-option .child-field .wrap-button button{
+.nfd-performance-jetpack-boost-single-option .child-field .wrap-button button {
 	text-decoration: underline;
-    margin: 10px 0 0 0;
+	margin: 10px 0 0 0;
 }
 
-.nfd-performance-jetpack-boost-single-option-container{
-	 margin-bottom: 20px;
+.nfd-performance-jetpack-boost-single-option-container {
+	margin-bottom: 20px;
 }
 
-.margin20{
+.margin20 {
 	margin: 20px 0;
 }
 
@@ -58,4 +59,8 @@
 
 .newfold-image-optimization a {
 	color: #05c !important;
+}
+
+.nfd-text-red {
+	color: #e63946;
 }
