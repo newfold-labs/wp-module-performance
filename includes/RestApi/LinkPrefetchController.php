@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
-use NewfoldLabs\WP\Module\Performance\LinkPrefetch;
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 
 /**
  * Class LinkPrefetchController
@@ -59,7 +59,7 @@ class LinkPrefetchController {
 	public function get_settings() {
 		return new \WP_REST_Response(
 			array(
-				'settings' => get_option( 'nfd_link_prefetch_settings', LinkPrefetch::getDefaultSettings() ),
+				'settings' => LinkPrefetch::get_settings(),
 			),
 			200
 		);
@@ -75,7 +75,7 @@ class LinkPrefetchController {
 		$settings = $request->get_param( 'settings' );
 		if ( is_array( $settings ) ) {
 			$settings['ignoreKeywords'] = sanitize_text_field( $settings['ignoreKeywords'] );
-			$updated                    = update_option( 'nfd_link_prefetch_settings', $settings );
+			$updated                    = LinkPrefetch::update_settings( $settings );
 			return new \WP_REST_Response(
 				array(
 					'result' => $updated,

@@ -2,39 +2,24 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+use Automattic\Jetpack\Current_Plan;
+
 use NewfoldLabs\WP\ModuleLoader\Container;
-
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
-
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\HealthChecks;
+use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
+use NFD_CLI;
 
-use Automattic\Jetpack\Current_Plan;
+use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
 /**
- * Performance Class
+ * Main class for the performance module.
  */
 class Performance {
-
-	/**
-	 * The option name where the cache level is stored.
-	 *
-	 * @var string
-	 */
-	const OPTION_CACHE_LEVEL = 'newfold_cache_level';
-
-
-	/**
-	 * The option name where the "Skip WordPress 404 Handling for Static Files" option is stored.
-	 *
-	 * @var string
-	 */
-	const OPTION_SKIP_404 = 'newfold_skip_404_handling';
 
 	/**
 	 * URL parameter used to purge the entire cache.
@@ -81,14 +66,16 @@ class Performance {
 
 		$cacheManager = new CacheManager( $container );
 		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
-
-		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
-		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
+		new HealthChecks( $container );
 
 		new LinkPrefetch( $container );
 		new CacheExclusion( $container );
+
+		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -110,7 +97,18 @@ class Performance {
 	 */
 	public function configureContainer( Container $container ) {
 
-		global $is_apache;
+		$is_apache = false;
+
+		// Ensure $is_apache is properly set, with a fallback for WP-CLI environment
+		if ( NFD_WPCLI::is_executing_wp_cli() ) {
+			// Attempt to detect Apache based on the SERVER_SOFTWARE header
+			$is_apache = isset( $_SERVER['SERVER_SOFTWARE'] ) && stripos( $_SERVER['SERVER_SOFTWARE'], 'apache' ) !== false;
+
+			// Check for the existence of an .htaccess file (commonly used in Apache environments)
+			if ( ! $is_apache && file_exists( ABSPATH . '.htaccess' ) ) {
+				$is_apache = true;
+			}
+		}
 
 		$container->set( 'isApache', $is_apache );
 
@@ -131,7 +129,7 @@ class Performance {
 
 		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
-		new OptionListener( self::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
+		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
 
 		/**
 		 * On CLI requests, mod_rewrite is unavailable, so it fails to update
@@ -235,7 +233,7 @@ class Performance {
 		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
 		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
 
-		// Remove the old option from EPC, if it exists
+		// Remove the old option from EPC, if it exists.
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
 			update_option( 'endurance_cache_level', 0 );
 			delete_option( 'endurance_cache_level' );
@@ -245,7 +243,7 @@ class Performance {
 	/**
 	 * Add options to the WordPress admin bar.
 	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar
+	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar.
 	 */
 	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
 
@@ -312,9 +310,12 @@ class Performance {
 	 * Enqueue scripts and styles in admin
 	 */
 	public function enqueue_scripts() {
-		$plugin_url = $this->container->plugin()->url . get_styles_path();
-		wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
-		wp_enqueue_style( 'wp-module-performance-styles' );
+		$brand = $this->container->plugin()->brand;
+		if ( is_settings_page( $brand ) ) {
+			$plugin_url = $this->container->plugin()->url . get_styles_path();
+			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
+			wp_enqueue_style( 'wp-module-performance-styles' );
+		}
 	}
 
 	/**
@@ -334,7 +335,7 @@ class Performance {
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
-			'skip404'                           => (bool) get_option( 'newfold_skip_404_handling', false ),
+			'skip404'                           => getSkip404Option(),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );

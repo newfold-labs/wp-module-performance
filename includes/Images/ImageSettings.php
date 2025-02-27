@@ -196,4 +196,26 @@ class ImageSettings {
 		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		return ! empty( $settings['prefer_optimized_image_when_exists'] );
 	}
+
+	/**
+	 * Retrieves the image optimization settings.
+	 *
+	 * @return array The current image optimization settings.
+	 */
+	public static function get() {
+		return get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+	}
+
+	/**
+	 * Updates the image optimization settings.
+	 *
+	 * @param array $settings The new settings array.
+	 *
+	 * @return bool true if the settings were updated successfully, false otherwise.
+	 */
+	public static function update( $settings ) {
+		$instance           = new self();
+		$sanitized_settings = $instance->sanitize_settings( $settings );
+		return update_option( self::SETTING_KEY, $sanitized_settings );
+	}
 }
