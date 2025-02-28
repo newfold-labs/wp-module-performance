@@ -2,8 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use Automattic\Jetpack\Current_Plan;
-
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Performance\Permissions;
@@ -12,7 +10,7 @@ use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
-use Automattic\Jetpack\My_Jetpack\Products\Boost;
+use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
 
 use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
@@ -74,6 +72,8 @@ class Performance {
 		new LinkPrefetch( $container );
 		new CacheExclusion( $container );
 
+		new JetpackBoost( $container );
+
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
@@ -88,8 +88,6 @@ class Performance {
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
-
-		add_action( 'admin_head', array( $this, 'prefetch_jetpack_boost' ) );
 	}
 
 	/**
@@ -327,42 +325,10 @@ class Performance {
 	 * @return array SDK data.
 	 */
 	public function add_to_runtime( $sdk ) {
-
-		$is_jetpack_boost_enabled = is_plugin_active( 'jetpack-boost/jetpack-boost.php' );
-
 		$values = array(
-			'jetpack_boost_is_active'           => $is_jetpack_boost_enabled,
-			'jetpack_premium_is_active'         => $this->is_jetpackpremium_active(),
-			'jetpack_boost_critical_css'        => $is_jetpack_boost_enabled ? get_option( 'jetpack_boost_status_critical-css' ) : false,
-			'jetpack_boost_blocking_js'         => $is_jetpack_boost_enabled ? get_option( 'jetpack_boost_status_render-blocking-js' ) : false,
-			'jetpack_boost_minify_js'           => $is_jetpack_boost_enabled ? get_option( 'jetpack_boost_status_minify-js', false ) : false,
-			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array( 'jquery', 'jquery-core', 'underscore', 'backbone' ) ) ),
-			'jetpack_boost_minify_css'          => $is_jetpack_boost_enabled ? get_option( 'jetpack_boost_status_minify-css', false ) : false,
-			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
-			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
-			'skip404'                           => getSkip404Option(),
+			'skip404' => getSkip404Option(),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );
-	}
-
-
-	/**
-	 * Check if Jetpack Boost premium is active.
-	 *
-	 * @return boolean
-	 */
-	public function is_jetpackpremium_active() {
-		return class_exists( Boost::class ) && Boost::class::get_info()['is_upgradable'] ? ! Boost::class::get_info()['is_upgradable'] : false;
-	}
-
-	/**
-	 * Prefetch for JetPack Boost page.
-	 *
-	 * @return void
-	 */
-	public function prefetch_jetpack_boost() {
-		$admin_url = admin_url( 'admin.php?page=jetpack-boost' );
-		echo '<link rel="prefetch" href="' . esc_url( $admin_url ) . '">' . "\n";
 	}
 }

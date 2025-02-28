@@ -21,7 +21,8 @@ const InstallActivatePluginButton = ( {
 		const apiUrl = methods.NewfoldRuntime.createApiUrl(
 			'/newfold-installer/v1/plugins/install'
 		);
-		const INSTALL_TOKEN = NewfoldRuntime.sdk.performance.install_token;
+		const INSTALL_TOKEN =
+			NewfoldRuntime.sdk?.jetpackboost.install_token || '';
 		const plugin = 'jetpack-boost';
 
 		try {

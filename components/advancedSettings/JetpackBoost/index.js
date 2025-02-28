@@ -23,11 +23,11 @@ const JetpackBoost = ( { methods, constants } ) => {
 	const currentUrl = window.location.href;
 	const siteUrl = currentUrl.split( '/wp-admin/' )[ 0 ];
 
-	const performance = NewfoldRuntime.sdk?.performance || {};
-	const isPremiumActive = performance.jetpack_premium_is_active || false;
+	const sdk = NewfoldRuntime.sdk?.jetpackboost || {};
+	const isPremiumActive = sdk.jetpack_premium_is_active || false;
 
 	const [ isModuleEnabled, setIsModuleEnabled ] = useState(
-		performance.jetpack_boost_is_active || false
+		sdk.is_active || false
 	);
 
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -37,15 +37,13 @@ const JetpackBoost = ( { methods, constants } ) => {
 	const [ progressBarValue, setProgeassBarValue ] = useState( null );
 
 	const [ settings, setSettings ] = useState( {
-		'critical-css': performance.jetpack_boost_critical_css || false,
-		'critical-css-premium': performance.jetpack_boost_critical_css || false,
-		'render-blocking-js': performance.jetpack_boost_blocking_js || false,
-		'minify-js': performance.jetpack_boost_minify_js || false,
-		'minify-js-excludes':
-			performance.jetpack_boost_minify_js_excludes || '',
-		'minify-css': performance.jetpack_boost_minify_css || false,
-		'minify-css-excludes':
-			performance.jetpack_boost_minify_css_excludes || '',
+		'critical-css': sdk.critical_css || false,
+		'critical-css-premium': sdk.jcritical_css || false,
+		'render-blocking-js': sdk.blocking_js || false,
+		'minify-js': sdk.minify_js || false,
+		'minify-js-excludes': sdk.minify_js_excludes || '',
+		'minify-css': sdk.minify_css || false,
+		'minify-css-excludes': sdk.minify_css_excludes || '',
 	} );
 
 	const debounceTimeout = useRef( null ); // Mantiene il timeout tra i render
@@ -97,6 +95,10 @@ const JetpackBoost = ( { methods, constants } ) => {
 				} );
 			setIsLoading( false );
 		}, 500 );
+
+		if ( id === 'critical-css' && value === true ) {
+			handleRegenerateClick();
+		}
 	};
 
 	const handleRegenerateClick = async () => {
@@ -104,7 +106,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 
 		try {
 			if ( ! settings[ 'critical-css' ] ) {
-				handleOnChangeOption( true, 'critical-css' );
+				//handleOnChangeOption( true, 'critical-css' );
 			}
 
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
