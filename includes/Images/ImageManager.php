@@ -43,6 +43,7 @@ class ImageManager {
 		$this->maybe_initialize_rest_api();
 		$this->maybe_initialize_marker();
 		$this->maybe_initialize_image_rewrite_handler( $container );
+		$this->maybe_initialize_image_limit_banner( $container );
 	}
 
 	/**
@@ -100,6 +101,17 @@ class ImageManager {
 		&& $container->has( 'isApache' )
 		&& $container->get( 'isApache' ) ) {
 			new ImageRewriteHandler();
+		}
+	}
+
+	/**
+	 * Conditionally initializes the Image Limit Banner in the WordPress admin area.
+	 *
+	 * @param Container $container Dependency injection container.
+	 */
+	private function maybe_initialize_image_limit_banner( $container ) {
+		if ( ImageSettings::is_optimization_enabled() && Permissions::is_authorized_admin() ) {
+			new ImageLimitBanner( $container );
 		}
 	}
 }

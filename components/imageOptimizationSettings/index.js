@@ -1,12 +1,18 @@
 import { useState, useEffect } from '@wordpress/element';
 import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
 
+import { __ } from '@wordpress/i18n';
 import defaultText from '../performance/defaultText';
 
 const ImageOptimizationSettings = ( { methods } ) => {
 	const [ settings, setSettings ] = useState( null );
 	const [ isError, setIsError ] = useState( false );
 	const [ isLoading, setIsLoading ] = useState( true );
+	const [ isBanned, setIsBanned ] = useState( false );
+	const [ monthlyUsage, setMonthlyUsage ] = useState( {
+		monthlyRequestCount: 0,
+		maxRequestsPerMonth: 100000,
+	} );
 
 	const notify = methods.useNotification();
 	const apiUrl = methods.NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
@@ -19,6 +25,15 @@ const ImageOptimizationSettings = ( { methods } ) => {
 		try {
 			const fetchedSettings = await methods.apiFetch( { path: apiUrl } );
 			setSettings( fetchedSettings.nfd_image_optimization || {} );
+			setIsBanned(
+				fetchedSettings?.nfd_image_optimization?.banned_status || false
+			);
+			const usage = fetchedSettings?.nfd_image_optimization
+				?.monthly_usage || {
+				monthlyRequestCount: 0,
+				maxRequestsPerMonth: 100000,
+			};
+			setMonthlyUsage( usage );
 		} catch ( error ) {
 			setIsError( true );
 		} finally {
@@ -36,7 +51,15 @@ const ImageOptimizationSettings = ( { methods } ) => {
 				data: { nfd_image_optimization: newSettings },
 			} );
 			setSettings( updatedSettings.nfd_image_optimization || {} );
-
+			setIsBanned(
+				updatedSettings.nfd_image_optimization?.banned_status || false
+			);
+			const usage = updatedSettings?.nfd_image_optimization
+				?.monthly_usage || {
+				monthlyRequestCount: 0,
+				maxRequestsPerMonth: 100000,
+			};
+			setMonthlyUsage( usage );
 			notify.push( 'image-optimization-updated', {
 				title: defaultText.imageOptimizationUpdatedTitle,
 				description: defaultText.imageOptimizationUpdatedDescription,
@@ -56,6 +79,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 
 	// Handle Toggle Changes
 	const handleToggleChange = ( field, value ) => {
+		if ( isBanned ) return;
 		const updatedSettings = { ...settings };
 
 		switch ( field ) {
@@ -157,9 +181,37 @@ const ImageOptimizationSettings = ( { methods } ) => {
 	return (
 		<Container.SettingsField
 			title={ defaultText.imageOptimizationSettingsTitle }
-			description={ defaultText.imageOptimizationSettingsDescription }
+			description={
+				<>
+					{ defaultText.imageOptimizationSettingsDescription }
+					<br />
+					<br />
+					<p>
+						<strong>
+							{ __( 'Usage:', 'wp-module-performance' ) }
+						</strong>{ ' ' }
+						{ monthlyUsage.monthlyRequestCount }{ ' ' }
+						{ __( 'images processed of', 'wp-module-performance' ) }{ ' ' }
+						{ monthlyUsage.maxRequestsPerMonth / 1000 }k
+						{ __( '/month', 'wp-module-performance' ) }
+					</p>
+					{ isBanned && (
+						<p className="nfd-text-red">
+							{ ' ' }
+							{
+								defaultText.imageOptimizationBannedMessage
+							}{ ' ' }
+						</p>
+					) }
+				</>
+			}
 		>
-			<div className="nfd-flex nfd-flex-col nfd-gap-6">
+			{ isBanned && <div className="nfd-overlay"></div> }
+			<div
+				className={ `nfd-flex nfd-flex-col nfd-gap-6 ${
+					isBanned ? 'nfd-disabled' : ''
+				}` }
+			>
 				<ToggleField
 					id="image-optimization-enabled"
 					label={ defaultText.imageOptimizationEnabledLabel }
@@ -170,6 +222,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					onChange={ () =>
 						handleToggleChange( 'enabled', ! enabled )
 					}
+					disabled={ isBanned }
 				/>
 
 				<ToggleField
@@ -185,7 +238,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 							! autoOptimizeEnabled
 						)
 					}
-					disabled={ ! enabled }
+					disabled={ ! enabled || isBanned }
 				/>
 
 				<ToggleField
@@ -215,7 +268,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					onChange={ () =>
 						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
 					}
-					disabled={ ! enabled }
+					disabled={ ! enabled || isBanned }
 				/>
 
 				<ToggleField
@@ -231,7 +284,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 							! preferOptimizedImageWhenExists
 						)
 					}
-					disabled={ ! enabled }
+					disabled={ ! enabled || isBanned }
 				/>
 
 				<ToggleField
@@ -249,7 +302,8 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					}
 					disabled={
 						! enabled ||
-						( ! autoOptimizeEnabled && ! bulkOptimization )
+						( ! autoOptimizeEnabled && ! bulkOptimization ) ||
+						isBanned
 					}
 				/>
 
@@ -266,7 +320,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 							! lazyLoading.enabled
 						)
 					}
-					disabled={ ! enabled }
+					disabled={ ! enabled || isBanned }
 				/>
 			</div>
 		</Container.SettingsField>
