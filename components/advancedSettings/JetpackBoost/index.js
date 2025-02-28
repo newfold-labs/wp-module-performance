@@ -1,6 +1,6 @@
 // Wordpress
 import { useState } from '@wordpress/element';
-import { sprintf, __ } from '@wordpress/i18n';
+import { sprintf } from '@wordpress/i18n';
 
 // Newfold
 import { FeatureUpsell } from '@newfold/ui-component-library';
@@ -105,7 +105,7 @@ const JetpackBoost = ( { methods, constants } ) => {
 						setModuleStatus={ setModuleStatus }
 					/>
 					<FeatureUpsell
-						cardText={ __( 'Installing', 'wp-module-performance' ) }
+						cardText={ constants.text.jetpackBoostInstalling }
 					>
 						{ fields.map( ( field ) => {
 							if ( field.showOnModuleDisabled ) {
