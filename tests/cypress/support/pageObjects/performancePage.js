@@ -6,8 +6,7 @@ class performancePage {
 	// sample page link on front end of site
 	_samplePageButton =
 		'.wp-block-pages-list__item__link.wp-block-navigation-item__content';
-	_linkPrefetchText =
-		'[data-cy="link-prefetch-settings"] .newfold-link-prefetch';
+	_linkPrefetchText = '[data-cy="link-prefetch-settings"]';
 	_dropDownForLinkPrefetch =
 		'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label';
 	// selected element in dropdown select
