@@ -28,7 +28,7 @@ class performancePage {
 	}
 
 	getSamplePageButton() {
-		return cy.get( this._samplePageButton );
+		return cy.get( this._samplePageButton ).first();
 	}
 
 	getMouseHoverElement() {
