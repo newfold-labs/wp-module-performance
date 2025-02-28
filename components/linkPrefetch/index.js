@@ -64,6 +64,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 			<Container.SettingsField
 				title={ constants.text.linkPrefetchTitle }
 				description={ constants.text.linkPrefetchDescription }
+				data-cy="link-prefetch-settings"
 			>
 				{ /* Desktop Settings */ }
 				<div className="nfd-toggle-field nfd-mb-6">
@@ -86,6 +87,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 					</div>
 					<Toggle
 						id="link-prefetch-active-desktop"
+						data-cy="link-prefetch-active-desktop-toggle"
 						screenReaderLabel={
 							constants.text.linkPrefetchActivateOnDesktopLabel
 						}
@@ -101,6 +103,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 				{ settings.activeOnDesktop && (
 					<SelectField
 						id="link-prefetch-behavior"
+						data-cy="link-prefetch-behavior-desktop"
 						label={ constants.text.linkPrefetchBehaviorLabel }
 						value={ settings.behavior }
 						selectedLabel={
@@ -156,6 +159,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 					</div>
 					<Toggle
 						id="link-prefetch-active-mobile"
+						data-cy="link-prefetch-active-mobile-toggle"
 						screenReaderLabel={
 							constants.text.linkPrefetchActivateOnMobileLabel
 						}
@@ -171,6 +175,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 				{ settings.activeOnMobile && (
 					<SelectField
 						id="link-prefetch-behavior-mobile"
+						data-cy="link-prefetch-behavior-mobile"
 						label={ constants.text.linkPrefetchBehaviorLabel }
 						value={ settings.mobileBehavior }
 						selectedLabel={
@@ -212,6 +217,7 @@ const LinkPrefetch = ( { methods, constants } ) => {
 				{ ( settings.activeOnMobile || settings.activeOnDesktop ) && (
 					<TextField
 						id="link-prefetch-ignore-keywords"
+						data-cy="link-prefetch-ignore-keywords"
 						label={ constants.text.linkPrefetchIgnoreKeywordsLabel }
 						description={
 							constants.text.linkPrefetchIgnoreKeywordsDescription
