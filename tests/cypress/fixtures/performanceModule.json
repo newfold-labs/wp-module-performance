@@ -3,6 +3,8 @@
     {
 
         "statusCode": 200,
-        "requestCount": 0
+        "requestCount": 0,
+        "cacheLevelZero": 0,
+        "cacheLevelOne": 1
       }
 

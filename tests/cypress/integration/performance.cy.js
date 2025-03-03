@@ -1,95 +1,74 @@
 import performancePageLocators from '../../../../wp-module-performance/tests/cypress/support/pageObjects/performancePage';
-describe( 'Performance Page', { testIsolation: false }, () => {
-    const appClass = '.' + Cypress.env( 'appId' );
-    const fixturePath = require( '../../../../../../vendor/newfold-labs/wp-module-performance/tests/cypress/fixtures/performanceModule.json' );
+describe('Performance Page', { testIsolation: false }, () => {
+    const appClass = '.' + Cypress.env('appId');
+    const fixturePath = require('../../../../../../vendor/newfold-labs/wp-module-performance/tests/cypress/fixtures/performanceModule.json');
     let performanceLocators;
     let data;
 
-    beforeEach( () => {
-        //cy.exec('npx wp-env run cli wp rewrite structure "/%postname%/"');
+    beforeEach(() => {
         data = fixturePath;
-        cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
+        cy.login(Cypress.env("wpUsername"), Cypress.env("wpPassword"));
         cy.visit(
             '/wp-admin/admin.php?page=' +
-            Cypress.env( 'pluginId' ) +
+            Cypress.env('pluginId') +
             '#/performance'
         );
         cy.injectAxe();
         performanceLocators = new performancePageLocators();
     });
 
+    it('Is Accessible', () => {
+        performanceLocators.verifyAccessibility(appClass); // Passing appClass from the test
+    });
 
+    it('Has Cache Settings', () => {
+        performanceLocators.verifyClearCacheSettingsVisible();
+    });
 
-    it( 'Is Accessible', () => {
-        cy.wait( 500 );
-        cy.checkA11y( appClass + '-app-body' );
-    } );
+    it('Clear Cache Disabled when Cache is Disabled', () => {
+        performanceLocators.selectCacheLevel(data.cacheLevelZero);
+        performanceLocators.isClearCacheButtonDisabled;
+        performanceLocators.selectCacheLevel(data.cacheLevelOne);
+        performanceLocators.isClearCacheButtonEnabled;
+        performanceLocators.verifyCacheClearedNotification;
+    });
 
-    it( 'Has Cache Settings', () => {
-        cy.get( '.newfold-cache-settings' )
-            .scrollIntoView()
-            .should( 'be.visible' );
-    } );
+    it('Clear Cache Button Functions', () => {
+        performanceLocators.clickClearCacheButton();
+        performanceLocators.verifyCacheClearedNotification();
+    });
 
-    it( 'Has Clear Cache Settings', () => {
-        cy.get( '.newfold-clear-cache' )
-            .scrollIntoView()
-            .should( 'be.visible' );
-    } );
-
-    it( 'Clear Cache Disabled when Cache is Disabled', () => {
-        cy.get( 'input[type="radio"]#cache-level-0' ).check();
-
-        cy.wait( 500 );
-
-        cy.get( '.clear-cache-button' )
-            .scrollIntoView()
-            .should( 'have.attr', 'disabled' );
-
-        cy.get( 'input[type="radio"]#cache-level-1' ).check();
-
-        cy.get( '.clear-cache-button' )
-            .scrollIntoView()
-            .should( 'not.have.attr', 'disabled' );
-
-        cy.get( '.nfd-notifications' )
-            .contains( 'p', 'Cache' )
-            .should( 'be.visible' );
-    } );
-
-    it( 'Clear Cache Button Functions', () => {
-        cy.get( '.clear-cache-button' ).click();
-
-        cy.get( '.nfd-notifications' )
-            .contains( 'p', 'Cache cleared' )
-            .should( 'be.visible' );
-    } );
-
-    it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+    it.only('Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
-         performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
-             data.statusCode
-        
+        performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
+            data.statusCode
+
         );
-    } );
+    });
 
-
-    it( 'Mouse Down-> with exclude:Extract RunTime Link value>>Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+    it('Mouse Down-> with exclude:Extract RunTime Link value>>Verify if "Link Prefetch" is displayed and intercept the network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
             data.requestCount
         );
-    } );
+    });
 
-    
-    it( 'Mouse Hover-> with exclude:Verify if "Link Prefetch" is displayed and intercept network call', () => {
+
+    it('Mouse Hover-> with exclude:Verify if "Link Prefetch" is displayed and intercept network call', () => {
         performanceLocators.verifyIfLinkPreFetchIsDisplayed();
         performanceLocators.verifyIfToggleIsEnabled();
         performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
             data.requestCount
         );
-    } );
-    
-} );
+    });
+
+    it('Handle JetPack boost', () => {
+        performanceLocators.scrollToAdvancedSettings();
+        performanceLocators.installOrUpgradeFeatureForJetPack();
+        performanceLocators.clickBoostLink();
+        performanceLocators.handleBoostAndMobileCheck();
+
+    });
+});

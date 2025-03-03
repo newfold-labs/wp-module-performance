@@ -2,11 +2,22 @@ class performancePage {
     //Locators
     _linkPrefetchText = '.newfold-link-prefetch';
     _dropDownForLinkPrefetch = '.nfd-select__button-label';
-    _visitSiteButton = 'a.nfd-button.nfd-bg-white';
+   _visitSiteButton = 'a.nfd-button.nfd-bg-white';
     _samplePageButton = '.wp-block-pages-list__item__link.wp-block-navigation-item__content';
     _excludeKeywordInputField = '#link-prefetch-ignore-keywords';
     _isToggleEnabled = 'button[data-id="link-prefetch-active-desktop"]';
     _selectedDropDown = '.nfd-select__option-label.nfd-font-semibold';
+    _installButton = 'button.nfd-button--upsell';
+    _upgradeButton = 'a.nfd-button.nfd-button--upsell';
+    _boostLink = 'a[href="admin.php?page=jetpack-boost"]';
+    _startForFreeButton = 'button:contains("Start for free")';
+    _mobileScoreBar = '.jb-score-bar--mobile .jb-score-bar__filler';
+    _advancedSettings = 'h3.nfd-title.nfd-title--4';
+    _clearCacheButton = '.clear-cache-button';
+    _notificationMessage = '.nfd-notifications';
+    _cacheLevelOff = 'input[type="radio"]#cache-level-0';
+    _cacheLevelOn = 'input[type="radio"]#cache-level-1';
+    _clearCacheSettings = '.newfold-clear-cache';
 
     //All the methods related to performance page.
     getLinkPrefetchText() {
@@ -25,14 +36,7 @@ class performancePage {
         return cy.get(this._samplePageButton);
     }
 
-    getMouseHoverElement() {
-        return cy.get(this._mouseHoverElement);
-    }
-
-    getMouseDownElement() {
-        return cy.get(this._mouseDownElement);
-    }
-
+    //Get Exclude input field
     getExcludeKeywordInputField() {
         return cy.get(this._excludeKeywordInputField);
     }
@@ -48,10 +52,96 @@ class performancePage {
     getListItems() {
         return cy.get('ul.nfd-select__options > li');
     }
+
+    getInstallButton() {
+        return cy.get(this._installButton);
+    }
+
+    getUpgradeButton() {
+        return cy.get(this._upgradeButton);
+    }
+
+    getBoostLink() {
+        return cy.get(this._boostLink);
+    }
+
+    getStartForFreeButton() {
+        return cy.get(this._startForFreeButton);
+    }
+
+    getMobileScoreBar() {
+        return cy.get(this._mobileScoreBar);
+    }
+
+    getAdvancedSettings() {
+        return cy.get(this._advancedSettings).contains('Advanced settings');
+    }
     interceptRequest(method, url, alias) {
         cy.intercept(method, url).as(alias);
     }
 
+    getClearCacheButton() {
+        return cy.get(this._clearCacheButton);
+    }
+
+    clickClearCacheButton() {
+        this.getClearCacheButton().click();
+    }
+
+    getNotificationMessage() {
+        return cy.get(this._notificationMessage);
+    }
+    verifyCacheClearedNotification() {
+        this.getNotificationMessage()
+            .contains('p', 'Cache cleared')
+            .should('be.visible');
+    }
+
+    getCacheLevelOff() {
+        return cy.get(this._cacheLevelOff);
+    }
+    getCacheLevelOn() {
+        return cy.get(this._cacheLevelOn);
+    }
+    get clearCacheSettings() {
+        return cy.get(this._clearCacheSettings);
+    }
+
+    selectCacheLevelOff() {
+        this.getCacheLevelOff().check();
+    }
+    selectCacheLevelOn() {
+        this.getCacheLevelOn().check();
+    }
+
+    verifyClearCacheButtonDisabled() {
+        this.getClearCacheButton()
+            .scrollIntoView()
+            .should('have.attr', 'disabled');
+    }
+    verifyClearCacheButtonEnabled() {
+        this.getClearCacheButton()
+            .scrollIntoView()
+            .should('not.have.attr', 'disabled');
+    }
+    selectCacheLevel(level) {
+        if (level === 0) {
+            this.selectCacheLevelOff();
+        }
+        else {
+            this.selectCacheLevelOn();
+        }
+        cy.wait(500);
+    }
+
+    verifyClearCacheSettingsVisible() {
+        this.clearCacheSettings.scrollIntoView().should('be.visible');
+    }
+
+    verifyAccessibility(appClass) {
+        cy.wait(500);
+        cy.checkA11y(`${appClass}-app-body`);
+    }
     visitSamplePageAndIntercept(alias) {
         // Wait for the sample page link to be visible
         this.getSamplePageButton()
@@ -325,6 +415,70 @@ class performancePage {
             });
     }
 
+    installOrUpgradeFeatureForJetPack() {
+
+        cy.get('body').then(($body) => {
+            if ($body.find(this._installButton).length) {
+                // Install button is present
+                cy.get(this._installButton, { timeout: 10000 })
+                    .should('be.visible')
+                    .then(($btn) => {
+                        cy.wrap($btn).click({ force: true }); // Handle cases where button may be detached
+                    });
+
+                // Ensure Upgrade button appears after clicking Install
+                cy.wait(10000);
+                cy.get(this._upgradeButton, { timeout: 10000 })
+                    .should('be.visible')
+                    .then(($btn) => {
+                        cy.wrap($btn).invoke('removeAttr', 'target').click({ force: true });
+                    });
+            } else {
+                // If Install button is NOT present, click Upgrade button directly
+                cy.get(this._upgradeButton, { timeout: 10000 })
+                    .should('be.visible')
+                    .then(($btn) => {
+                        cy.wrap($btn).invoke('removeAttr', 'target').click({ force: true });
+                    });
+            }
+        });
+
+    }
+
+    scrollToAdvancedSettings() {
+        this.getAdvancedSettings()
+            .scrollIntoView()
+            .should('be.visible');
+    }
+
+    clickBoostLink() {
+        this.getBoostLink()
+            .scrollIntoView()
+            .should('be.visible')
+            .click();
+    }
+
+    handleStartForFree() {
+        cy.get('body').then(($body) => {
+            if ($body.find(this._startForFreeButton).length > 0) {
+                this.getStartForFreeButton()
+                    .should('be.visible')
+                    .click({ force: true }).wait(5000);;
+            }
+        });
+    }
+
+    verifyMobileScoreBar() {
+        this.getMobileScoreBar()
+            .scrollIntoView()
+            .should('be.visible');
+    }
+
+    handleBoostAndMobileCheck() {
+        this.clickBoostLink();
+        this.handleStartForFree();
+        this.verifyMobileScoreBar();
+    }
 }
 
 export default performancePage;
