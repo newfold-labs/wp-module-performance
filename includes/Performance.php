@@ -16,6 +16,8 @@ use NFD_CLI;
 
 use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
+use function NewfoldLabs\WP\ModuleLoader\container;
+
 /**
  * Main class for the performance module.
  */
@@ -88,6 +90,9 @@ class Performance {
 		}
 
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
+
+		// Set default values for JetPack Boost on fresh installation.
+		add_action( 'admin_init', array( $this, 'handle_jetpack_boost_default_values' ) );
 	}
 
 	/**
@@ -327,12 +332,12 @@ class Performance {
 	public function add_to_runtime( $sdk ) {
 		$values = array(
 			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
-			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostActive(),
-			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
-			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
-			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
+			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostPremiumActive(),
+			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css', false ),
+			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js', true ),
+			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', false ),
 			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array( 'jquery', 'jquery-core', 'underscore', 'backbone' ) ) ),
-			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
+			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', false ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
 			'skip404'                           => getSkip404Option(),
@@ -347,7 +352,7 @@ class Performance {
 	 *
 	 * @return boolean
 	 */
-	public function isJetPackBoostActive() {
+	public function isJetPackBoostPremiumActive() {
 		$exists = false;
 		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
 			$products = Current_Plan::get_products();
@@ -360,5 +365,16 @@ class Performance {
 		}
 
 		return $exists;
+	}
+
+	/**
+	 * Set default values for JetPack Boost.
+	 *
+	 * @return void
+	 */
+	public function handle_jetpack_boost_default_values() {
+		if ( container()->has( 'isFreshInstallation' ) && container()->get( 'isFreshInstallation' ) && is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) ) {
+			update_option( 'jetpack_boost_status_render-blocking-js', true );
+		}
 	}
 }
