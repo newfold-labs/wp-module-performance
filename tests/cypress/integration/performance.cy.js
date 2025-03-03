@@ -69,6 +69,6 @@ describe('Performance Page', { testIsolation: false }, () => {
         performanceLocators.installOrUpgradeFeatureForJetPack();
         performanceLocators.clickBoostLink();
         performanceLocators.handleBoostAndMobileCheck();
-
+        
     });
 });

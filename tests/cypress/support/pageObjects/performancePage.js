@@ -2,7 +2,7 @@ class performancePage {
     //Locators
     _linkPrefetchText = '.newfold-link-prefetch';
     _dropDownForLinkPrefetch = '.nfd-select__button-label';
-   _visitSiteButton = 'a.nfd-button.nfd-bg-white';
+    _visitSiteButton = 'a.nfd-button.nfd-bg-white';
     _samplePageButton = '.wp-block-pages-list__item__link.wp-block-navigation-item__content';
     _excludeKeywordInputField = '#link-prefetch-ignore-keywords';
     _isToggleEnabled = 'button[data-id="link-prefetch-active-desktop"]';
