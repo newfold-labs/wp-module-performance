@@ -2,8 +2,7 @@
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 use Automattic\Jetpack_Boost\Lib\Critical_CSS\Data_Sync_Actions\Regenerate_CSS;
-use Automattic\Jetpack_Boost\Jetpack_Boost;
-use Automattic\Jetpack_Boost\Lib\Critical_CSS\Regenerate;
+use NewfoldLabs\WP\Module\Performance\Permissions;
 
 /**
  * Class JetpackController
@@ -59,9 +58,7 @@ class JetpackController {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'regenerate_critical_css' ),
-					'permission_callback' => function () {
-						return current_user_can( 'manage_options' );
-					},
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
@@ -99,7 +96,7 @@ class JetpackController {
 				);
 			}
 
-			if ( 'critical-css' === $field['id'] && 1 === (int) $field['value'] ) {
+			if ( 'critical-css' === $field['id'] && 1 === (int) $field['value'] && class_exists( 'Automattic\Jetpack_Boost\Lib\Critical_CSS\Data_Sync_Actions\Regenerate_CSS' ) ) {
 				$css = new Regenerate_CSS();
 				$css->handle( null, null );
 			} elseif ( 'critical-css-premium' === $field['id'] ) {
@@ -146,12 +143,6 @@ class JetpackController {
 			);
 		}
 	}
-
-	/**
-	 * Regenerate Critical CSS.
-	 *
-	 * @return void
-	 */
 
 	/**
 	 * Regenerate Critical CSS.

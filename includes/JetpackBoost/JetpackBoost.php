@@ -113,7 +113,7 @@ class JetpackBoost {
 			isset( $_REQUEST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification
 			'activate' === $_REQUEST['action'] // phpcs:ignore WordPress.Security.NonceVerification
 			) {
-			add_filter( 'wp_doing_ajax', '__return_true' );
+			add_filter( 'wp_doing_ajax', '__return_true' ); // This filter is needed because the PluginInstaller would block the process if considered outside ajax call.
 			PluginInstaller::install( 'jetpack-boost', true );
 		}
 	}
