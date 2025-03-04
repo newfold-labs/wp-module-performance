@@ -311,16 +311,16 @@
                 "Ativar Ignorar Tratamento de Erro 404 para Arquivos Est\u00e1ticos"
             ],
             "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                ""
+                "Este site n\u00e3o se qualifica mais para otimiza\u00e7\u00e3o de imagens, pois atingiu seus limites de uso."
             ],
             "Usage:": [
-                ""
+                "Uso:"
             ],
             "images processed of": [
-                ""
+                "imagens processadas de"
             ],
             "\/month": [
-                ""
+                "\/m\u00eas"
             ]
         }
     }

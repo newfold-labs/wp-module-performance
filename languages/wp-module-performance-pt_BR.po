@@ -963,60 +963,60 @@ msgstr "abre em uma nova aba"
 #: includes/Images/ImageLimitBanner.php:56
 #: includes/Images/ImageService.php:61
 msgid "This site has made too many requests in a short period. Please wait %s before trying again."
-msgstr ""
+msgstr "Este site fez muitas solicitações em um curto período. Aguarde %s antes de tentar novamente."
 
 #. translators: %s: Support link
 #: includes/Images/ImageLimitBanner.php:74
 msgid "This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href=\"%s\">contact support</a> for assistance."
-msgstr ""
+msgstr "Este site não se qualifica mais para otimização de imagens, pois atingiu seus limites de uso. Por favor, <a href=\"%s\">entre em contato com o suporte</a> para obter assistência."
 
 #: includes/Images/ImageService.php:42
 #: includes/Images/ImageService.php:380
 msgid "Error retrieving site URL."
-msgstr ""
+msgstr "Erro ao recuperar a URL do site."
 
 #: includes/Images/ImageService.php:50
 #: components/performance/defaultText.js:185
 msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
-msgstr ""
+msgstr "Este site não se qualifica mais para otimização de imagens, pois atingiu seus limites de uso."
 
 #: includes/Images/ImageService.php:112
 msgid "Image optimization access has been permanently revoked for this site."
-msgstr ""
+msgstr "O acesso à otimização de imagens foi permanentemente revogado para este site."
 
 #: includes/Images/ImageService.php:121
 msgid "Rate limit exceeded. Please try again later."
-msgstr ""
+msgstr "Limite de taxa excedido. Por favor, tente novamente mais tarde."
 
 #. translators: %s: HTTP response code
 #: includes/Images/ImageService.php:414
 msgid "Unexpected response from Cloudflare Worker: HTTP %s"
-msgstr ""
+msgstr "Resposta inesperada do Cloudflare Worker: HTTP %s"
 
 #: includes/Images/ImageSettings.php:106
 msgid "Indicates if the site is banned from image optimization."
-msgstr ""
+msgstr "Indica se o site está banido da otimização de imagens."
 
 #: includes/Images/ImageSettings.php:111
 msgid "Monthly usage statistics for image optimization."
-msgstr ""
+msgstr "Estatísticas de uso mensal para otimização de imagens."
 
 #: includes/Images/ImageSettings.php:115
 msgid "Number of requests made this month."
-msgstr ""
+msgstr "Número de solicitações feitas neste mês."
 
 #: includes/Images/ImageSettings.php:120
 msgid "Maximum allowed requests per month."
-msgstr ""
+msgstr "Número máximo de solicitações permitidas por mês."
 
 #: components/performance/defaultText.js:189
 msgid "Usage:"
-msgstr ""
+msgstr "Uso:"
 
 #: components/performance/defaultText.js:190
 msgid "images processed of"
-msgstr ""
+msgstr "imagens processadas de"
 
 #: components/performance/defaultText.js:194
 msgid "/month"
-msgstr ""
+msgstr "/mês"
