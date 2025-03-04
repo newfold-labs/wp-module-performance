@@ -167,7 +167,7 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( 'Failed to regenerate critical CSS.', 'newfold-performance-module' ),
+						'error'   => __( 'Failed to regenerate critical CSS.', 'wp-module-performance' ),
 					),
 					400 // Bad Request
 				);
@@ -177,7 +177,7 @@ class JetpackController {
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => __( 'An error occurred while regenerating critical CSS.', 'newfold-performance-module' ) . $e->getMessage(),
+					'error'   => __( 'An error occurred while regenerating critical CSS.', 'wp-module-performance' ) . $e->getMessage(),
 				),
 				500 // Internal Server Error
 			);
