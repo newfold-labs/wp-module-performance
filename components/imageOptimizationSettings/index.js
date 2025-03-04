@@ -1,7 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
 
-import { __ } from '@wordpress/i18n';
 import defaultText from '../performance/defaultText';
 
 const ImageOptimizationSettings = ( { methods } ) => {
@@ -187,13 +186,11 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					<br />
 					<br />
 					<p>
-						<strong>
-							{ __( 'Usage:', 'wp-module-performance' ) }
-						</strong>{ ' ' }
+						<strong>{ defaultText.imageOptimizationUsage }</strong>{ ' ' }
 						{ monthlyUsage.monthlyRequestCount }{ ' ' }
-						{ __( 'images processed of', 'wp-module-performance' ) }{ ' ' }
+						{ defaultText.imageOptimizationProcessed }{ ' ' }
 						{ monthlyUsage.maxRequestsPerMonth / 1000 }k
-						{ __( '/month', 'wp-module-performance' ) }
+						{ defaultText.imageOptimizationPerMonth }
 					</p>
 					{ isBanned && (
 						<p className="nfd-text-red">
@@ -225,103 +222,120 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					disabled={ isBanned }
 				/>
 
-				<ToggleField
-					id="auto-optimize-images"
-					label={ defaultText.imageOptimizationAutoOptimizeLabel }
-					description={
-						defaultText.imageOptimizationAutoOptimizeDescription
-					}
-					checked={ autoOptimizeEnabled }
-					onChange={ () =>
-						handleToggleChange(
-							'autoOptimizeEnabled',
-							! autoOptimizeEnabled
-						)
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+				{ enabled && (
+					<>
+						<ToggleField
+							id="auto-optimize-images"
+							label={
+								defaultText.imageOptimizationAutoOptimizeLabel
+							}
+							description={
+								defaultText.imageOptimizationAutoOptimizeDescription
+							}
+							checked={ autoOptimizeEnabled }
+							onChange={ () =>
+								handleToggleChange(
+									'autoOptimizeEnabled',
+									! autoOptimizeEnabled
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
+						<ToggleField
+							id="bulk-optimize-images"
+							label={
+								defaultText.imageOptimizationBulkOptimizeLabel
+							}
+							description={
+								<>
+									<p>
+										{
+											defaultText.imageOptimizationBulkOptimizeDescription
+										}
+									</p>
+									{ bulkOptimization && (
+										<a
+											href={ mediaLibraryLink() }
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											{
+												defaultText.imageOptimizationBulkOptimizeButtonLabel
+											}
+										</a>
+									) }
+								</>
+							}
+							checked={ bulkOptimization }
+							onChange={ () =>
+								handleToggleChange(
+									'bulkOptimize',
+									! bulkOptimization
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
 
-				<ToggleField
-					id="bulk-optimize-images"
-					label={ defaultText.imageOptimizationBulkOptimizeLabel }
-					description={
-						<>
-							<p>
-								{
-									defaultText.imageOptimizationBulkOptimizeDescription
-								}
-							</p>
-							{ bulkOptimization && (
-								<a
-									href={ mediaLibraryLink() }
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{
-										defaultText.imageOptimizationBulkOptimizeButtonLabel
-									}
-								</a>
-							) }
-						</>
-					}
-					checked={ bulkOptimization }
-					onChange={ () =>
-						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+						<ToggleField
+							id="prefer-webp-when-exists"
+							label={
+								defaultText.imageOptimizationPreferWebPLabel
+							}
+							description={
+								defaultText.imageOptimizationPreferWebPDescription
+							}
+							checked={ preferOptimizedImageWhenExists }
+							onChange={ () =>
+								handleToggleChange(
+									'preferOptimizedImageWhenExists',
+									! preferOptimizedImageWhenExists
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
 
-				<ToggleField
-					id="prefer-webp-when-exists"
-					label={ defaultText.imageOptimizationPreferWebPLabel }
-					description={
-						defaultText.imageOptimizationPreferWebPDescription
-					}
-					checked={ preferOptimizedImageWhenExists }
-					onChange={ () =>
-						handleToggleChange(
-							'preferOptimizedImageWhenExists',
-							! preferOptimizedImageWhenExists
-						)
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+						<ToggleField
+							id="auto-delete-original"
+							label={
+								defaultText.imageOptimizationAutoDeleteLabel
+							}
+							description={
+								defaultText.imageOptimizationAutoDeleteDescription
+							}
+							checked={ autoDeleteOriginalImage }
+							onChange={ () =>
+								handleToggleChange(
+									'autoDeleteOriginalImage',
+									! autoDeleteOriginalImage
+								)
+							}
+							disabled={
+								! enabled ||
+								( ! autoOptimizeEnabled &&
+									! bulkOptimization ) ||
+								isBanned
+							}
+						/>
 
-				<ToggleField
-					id="auto-delete-original"
-					label={ defaultText.imageOptimizationAutoDeleteLabel }
-					description={
-						defaultText.imageOptimizationAutoDeleteDescription
-					}
-					checked={ autoDeleteOriginalImage }
-					onChange={ () =>
-						handleToggleChange(
-							'autoDeleteOriginalImage',
-							! autoDeleteOriginalImage
-						)
-					}
-					disabled={
-						! enabled ||
-						( ! autoOptimizeEnabled && ! bulkOptimization ) ||
-						isBanned
-					}
-				/>
-
-				<ToggleField
-					id="lazy-loading-enabled"
-					label={ defaultText.imageOptimizationLazyLoadingLabel }
-					description={
-						defaultText.imageOptimizationLazyLoadingDescription
-					}
-					checked={ lazyLoading.enabled }
-					onChange={ () =>
-						handleToggleChange(
-							'lazyLoading',
-							! lazyLoading.enabled
-						)
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+						<ToggleField
+							id="lazy-loading-enabled"
+							label={
+								defaultText.imageOptimizationLazyLoadingLabel
+							}
+							description={
+								defaultText.imageOptimizationLazyLoadingDescription
+							}
+							checked={ lazyLoading.enabled }
+							onChange={ () =>
+								handleToggleChange(
+									'lazyLoading',
+									! lazyLoading.enabled
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
+					</>
+				) }
 			</div>
 		</Container.SettingsField>
 	);

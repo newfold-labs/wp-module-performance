@@ -1,20 +1,27 @@
 // <reference types="Cypress" />
+import performancePageLocators from '../support/pageObjects/performancePage';
 
-describe( 'Performance Page', { testIsolation: true }, () => {
+describe( 'Performance Page', { testIsolation: false }, () => {
 	const appClass = '.' + Cypress.env( 'appId' );
+	const fixturePath = require( '../fixtures/performanceModule.json' );
+	let performanceLocators;
+	let data;
 
 	beforeEach( () => {
-		cy.login( Cypress.env( "wpUsername" ), Cypress.env( "wpPassword" ) );
+		//cy.exec('npx wp-env run cli wp rewrite structure "/%postname%/"');
+		data = fixturePath;
+		cy.login( Cypress.env( 'wpUsername' ), Cypress.env( 'wpPassword' ) );
 		cy.visit(
 			'/wp-admin/admin.php?page=' +
-			Cypress.env( 'pluginId' ) +
-			'#/performance'
+				Cypress.env( 'pluginId' ) +
+				'#/performance'
 		);
-		cy.injectAxe();
+		performanceLocators = new performancePageLocators();
 	} );
 
 	it( 'Is Accessible', () => {
-		cy.wait( 2000 );
+		cy.injectAxe();
+		cy.wait( 500 );
 		cy.checkA11y( appClass + '-app-body' );
 	} );
 
@@ -56,5 +63,29 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 		cy.get( '.nfd-notifications' )
 			.contains( 'p', 'Cache cleared' )
 			.should( 'be.visible' );
+	} );
+
+	it( 'Mouse down-> without exclude: Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
+		performanceLocators.verifyIfToggleIsEnabled();
+		performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
+			data.statusCode
+		);
+	} );
+
+	it( 'Mouse Down-> with exclude:Extract RunTime Link value>>Verify if "Link Prefetch" is displayed and intercept the network call', () => {
+		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
+		performanceLocators.verifyIfToggleIsEnabled();
+		performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
+			data.requestCount
+		);
+	} );
+
+	it( 'Mouse Hover-> with exclude:Verify if "Link Prefetch" is displayed and intercept network call', () => {
+		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
+		performanceLocators.verifyIfToggleIsEnabled();
+		performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
+			data.requestCount
+		);
 	} );
 } );

@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\Module\Performance\Services\I18nService;
+
 /**
  * Manages bulk optimization functionality for the Media Library.
  */
@@ -51,6 +53,12 @@ class ImageBulkOptimizer {
 			array( 'wp-api-fetch', 'wp-element', 'wp-i18n' ),
 			filemtime( NFD_PERFORMANCE_BUILD_DIR . '/image-bulk-optimizer/image-bulk-optimizer.min.js' ),
 			true
+		);
+
+		I18nService::load_js_translations(
+			'wp-module-performance',
+			'nfd-performance-bulk-optimizer',
+			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
 		);
 
 		wp_register_style(

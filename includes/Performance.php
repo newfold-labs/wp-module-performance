@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\HealthChecks;
+use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
 
@@ -81,13 +82,16 @@ class Performance {
 
 		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
 		}
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
+
+		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
+		new I18nService( $container );
 	}
 
 	/**
@@ -256,14 +260,14 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
-					'title' => __( 'Caching', 'newfold-module-performance' ),
+					'title' => __( 'Caching', 'wp-module-performance' ),
 				)
 			);
 
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'newfold-module-performance' ),
+					'title'  => __( 'Purge All', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 				)
@@ -273,7 +277,7 @@ class Performance {
 				$wp_admin_bar->add_node(
 					array(
 						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+						'title'  => __( 'Purge This Page', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
 						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
 					)
@@ -284,7 +288,7 @@ class Performance {
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
-					'title'  => __( 'Cache Settings', 'newfold-module-performance' ),
+					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
 					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
 				)
@@ -297,19 +301,18 @@ class Performance {
 	public function add_sub_menu_page() {
 		$brand = $this->container->get( 'plugin' )['id'];
 		add_management_page(
-			__( 'Performance', 'newfold-performance-module' ),
-			__( 'Performance', 'newfold-performance-module' ),
+			__( 'Performance', 'wp-module-performance' ),
+			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
 			admin_url( "admin.php?page=$brand#/performance" ),
 			null,
 			5
 		);
 	}
-
 	/**
-	 * Enqueue scripts and styles in admin
+	 * Enqueue styles and styles in admin
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_styles() {
 		$brand = $this->container->plugin()->brand;
 		if ( is_settings_page( $brand ) ) {
 			$plugin_url = $this->container->plugin()->url . get_styles_path();

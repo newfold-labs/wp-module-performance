@@ -8,10 +8,6 @@
 	position: relative;
 }
 
-.nfd-root .nfd-modal {
-	z-index: 12;
-}
-
 .nfd-performance-jetpack-boost-critical-css-modal .nfd-modal__panel {
 	padding-right: 40px;
 	z-index: 400;
@@ -23,14 +19,6 @@
 
 .nfd-performance-jetpack-boost-critical-css-modal p {
 	margin-bottom: 10px;
-}
-
-.nfd-root .nfd-modal__overlay {
-	z-index: 100;
-}
-
-.nfd-modal__panel {
-    z-index: 150;
 }
 
 
@@ -150,7 +138,7 @@
 }
 
 .nfd-performance-jetpack-boost-single-option-container {
-	margin-bottom: 20px;
+	 margin-bottom: 20px;
 }
 
 .margin20 {
