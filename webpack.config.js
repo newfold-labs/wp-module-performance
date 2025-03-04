@@ -7,8 +7,10 @@ const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' );
 module.exports = {
 	mode: 'production', // Automatically sets minification
 	entry: glob.sync( './assets/**/*.js' ).reduce( ( entries, file ) => {
-		const name = path.relative( './assets', file ).replace( /\.js$/, '' );
-		entries[ name ] = file;
+		const name = path
+			.relative( path.resolve( __dirname, 'assets' ), file )
+			.replace( /\.js$/, '' );
+		entries[ name ] = `./${ file }`;
 		return entries;
 	}, {} ),
 	output: {
