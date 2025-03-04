@@ -161,7 +161,11 @@ class ImageSettings {
 			),
 			'bulk_optimization'                  => ! empty( $settings['bulk_optimization'] ),
 			'banned_status'                      => ! empty( $settings['banned_status'] ),
-			'monthly_usage'                      => isset( $settings['monthly_usage'] ) ? (array) $settings['monthly_usage'] : array(),
+			'monthly_usage'                      => array(
+				'monthlyRequestCount' => ! empty( $settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $settings['monthly_usage']['monthlyRequestCount'] : 0,
+				'maxRequestsPerMonth' => ! empty( $settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $settings['monthly_usage']['maxRequestsPerMonth'] : 100000,
+			),
+
 		);
 	}
 
