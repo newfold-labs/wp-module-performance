@@ -186,6 +186,12 @@ const defaultText = {
 		'This site no longer qualifies for image optimization as it has reached its usage limits.',
 		'wp-module-performance'
 	),
+	imageOptimizationUsage: __( 'Usage:', 'wp-module-performance' ),
+	imageOptimizationProcessed: __(
+		'images processed of',
+		'wp-module-performance'
+	),
+	imageOptimizationPerMonth: __( '/month', 'wp-module-performance' ),
 	linkPrefetchDescription: __(
 		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.',
 		'wp-module-performance'

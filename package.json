@@ -32,6 +32,6 @@
     "i18n-build": "composer run-script i18n",
     "i18n-rename-json": "node ./translations-json-rename.js",
     "i18n": "npm run -s i18n-build && npm run i18n-rename-json",
-	"lint-js": "wp-scripts lint-js"
+    "lint-js": "wp-scripts lint-js"
   }
 }

@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-14 12:57+0000",
+    "translation-revision-date": "2025-02-14 12:49+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "assets\/image-optimized-marker\/image-optimized-marker.js",
     "domain": "messages",
@@ -7,11 +7,11 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "es_MX",
+                "lang": "en_GB",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Optimized": [
-                "Optimizado"
+                ""
             ]
         }
     }

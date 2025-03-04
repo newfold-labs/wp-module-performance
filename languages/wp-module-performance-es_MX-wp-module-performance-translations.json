@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-10 11:55+0000",
+    "translation-revision-date": "2025-02-14 12:57+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "components\/performance\/defaultText.js",
     "domain": "messages",
@@ -309,6 +309,18 @@
             ],
             "Enable Skip 404 Handling For Static Files": [
                 "Activar la opci\u00f3n de no procesar los errores 404 para archivos est\u00e1ticos"
+            ],
+            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
+                ""
+            ],
+            "Usage:": [
+                ""
+            ],
+            "images processed of": [
+                ""
+            ],
+            "\/month": [
+                ""
             ]
         }
     }

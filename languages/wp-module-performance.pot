@@ -103,7 +103,7 @@ msgid "Cloudflare integration can improve performance and security."
 msgstr ""
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
-#: components/performance/defaultText.js:307
+#: components/performance/defaultText.js:316
 msgid "Concatenate CSS"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgid "Cron lock timeout affects how long a cron job can run for. Setting it to 
 msgstr ""
 
 #: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14
-#: components/performance/defaultText.js:290
+#: components/performance/defaultText.js:299
 msgid "Defer Non-Essential JavaScript"
 msgstr ""
 
@@ -304,95 +304,139 @@ msgstr ""
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 msgstr ""
 
-#: includes/Images/ImageService.php:27
+#. translators: %s: Time remaining
+#. translators: %s: Retry time in seconds
+#: includes/Images/ImageLimitBanner.php:56
+#: includes/Images/ImageService.php:61
+msgid "This site has made too many requests in a short period. Please wait %s before trying again."
+msgstr ""
+
+#. translators: %s: Support link
+#: includes/Images/ImageLimitBanner.php:74
+msgid "This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href=\"%s\">contact support</a> for assistance."
+msgstr ""
+
+#: includes/Images/ImageService.php:34
 msgid "The provided image URL is invalid."
 msgstr ""
 
+#: includes/Images/ImageService.php:42
+#: includes/Images/ImageService.php:380
+msgid "Error retrieving site URL."
+msgstr ""
+
+#: includes/Images/ImageService.php:50
+#: components/performance/defaultText.js:185
+msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
+msgstr ""
+
 #. translators: %s: Error message
-#: includes/Images/ImageService.php:46
+#: includes/Images/ImageService.php:99
+#: includes/Images/ImageService.php:401
 msgid "Error connecting to Cloudflare Worker: %s"
 msgstr ""
 
-#. translators: %s: Error message
-#: includes/Images/ImageService.php:60
-msgid "Client error from Cloudflare Worker: %s"
+#: includes/Images/ImageService.php:112
+msgid "Image optimization access has been permanently revoked for this site."
 msgstr ""
 
-#: includes/Images/ImageService.php:67
-msgid "Server error from Cloudflare Worker. Please try again later."
+#: includes/Images/ImageService.php:121
+msgid "Rate limit exceeded. Please try again later."
 msgstr ""
 
-#: includes/Images/ImageService.php:74
+#: includes/Images/ImageService.php:128
+#: includes/Images/ImageService.php:424
 msgid "Invalid response from Cloudflare Worker."
 msgstr ""
 
-#: includes/Images/ImageService.php:89
+#: includes/Images/ImageService.php:143
 msgid "Failed to save the optimized WebP image."
 msgstr ""
 
-#: includes/Images/ImageService.php:108
+#: includes/Images/ImageService.php:176
 msgid "Invalid file path for generating WebP."
 msgstr ""
 
 #. translators: 1: HTTP response code, 2: Response message
-#: includes/Images/ImageService.php:150
+#: includes/Images/ImageService.php:218
 msgid "HTTP %1$d: %2$s"
 msgstr ""
 
-#: includes/Images/ImageService.php:175
+#: includes/Images/ImageService.php:243
 msgid "WebP file is missing or empty."
 msgstr ""
 
-#: includes/Images/ImageService.php:186
+#: includes/Images/ImageService.php:254
 msgid "Invalid Media ID provided."
 msgstr ""
 
-#: includes/Images/ImageService.php:206
+#: includes/Images/ImageService.php:274
 msgid "Invalid Media ID or file path provided."
 msgstr ""
 
-#: includes/Images/ImageService.php:214
+#: includes/Images/ImageService.php:282
 msgid "Failed to delete the original file."
 msgstr ""
 
-#: includes/Images/ImageService.php:230
+#: includes/Images/ImageService.php:298
 msgid "Failed to generate attachment metadata."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:50
+#. translators: %s: HTTP response code
+#: includes/Images/ImageService.php:414
+msgid "Unexpected response from Cloudflare Worker: HTTP %s"
+msgstr ""
+
+#: includes/Images/ImageSettings.php:55
 msgid "Settings for NFD Image Optimization."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:59
+#: includes/Images/ImageSettings.php:64
 msgid "Enable image optimization."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:64
+#: includes/Images/ImageSettings.php:69
 msgid "Prefer WebP format when it exists."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:69
+#: includes/Images/ImageSettings.php:74
 msgid "Auto-optimized uploaded images settings."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:73
+#: includes/Images/ImageSettings.php:78
 msgid "Automatically optimize uploaded images."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:78
+#: includes/Images/ImageSettings.php:83
 msgid "Delete the original uploaded image after optimization."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:85
+#: includes/Images/ImageSettings.php:90
 msgid "Settings for lazy loading."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:89
+#: includes/Images/ImageSettings.php:94
 msgid "Enable lazy loading."
 msgstr ""
 
-#: includes/Images/ImageSettings.php:96
+#: includes/Images/ImageSettings.php:101
 msgid "Enable bulk optimization of images."
+msgstr ""
+
+#: includes/Images/ImageSettings.php:106
+msgid "Indicates if the site is banned from image optimization."
+msgstr ""
+
+#: includes/Images/ImageSettings.php:111
+msgid "Monthly usage statistics for image optimization."
+msgstr ""
+
+#: includes/Images/ImageSettings.php:115
+msgid "Number of requests made this month."
+msgstr ""
+
+#: includes/Images/ImageSettings.php:120
+msgid "Maximum allowed requests per month."
 msgstr ""
 
 #: includes/Images/RestApi/ImagesController.php:45
@@ -494,24 +538,24 @@ msgstr ""
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr ""
 
-#: includes/Performance.php:261
+#: includes/Performance.php:263
 msgid "Caching"
 msgstr ""
 
-#: includes/Performance.php:268
+#: includes/Performance.php:270
 msgid "Purge All"
 msgstr ""
 
-#: includes/Performance.php:278
+#: includes/Performance.php:280
 msgid "Purge This Page"
 msgstr ""
 
-#: includes/Performance.php:289
+#: includes/Performance.php:291
 msgid "Cache Settings"
 msgstr ""
 
-#: includes/Performance.php:302
-#: includes/Performance.php:303
+#: includes/Performance.php:304
+#: includes/Performance.php:305
 msgid "Performance"
 msgstr ""
 
@@ -789,176 +833,188 @@ msgstr ""
 msgid "Something went wrong while updating the settings. Please try again."
 msgstr ""
 
-#: components/performance/defaultText.js:186
-msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+#: components/performance/defaultText.js:189
+msgid "Usage:"
 msgstr ""
 
 #: components/performance/defaultText.js:190
-msgid "Link prefetching setting saved"
+msgid "images processed of"
 msgstr ""
 
 #: components/performance/defaultText.js:194
-msgid "Link Prefetch"
+msgid "/month"
 msgstr ""
 
 #: components/performance/defaultText.js:195
-msgid "Enable link prefetching on desktop"
+msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
 msgstr ""
 
 #: components/performance/defaultText.js:199
-msgid "Activate on desktop"
+msgid "Link prefetching setting saved"
 msgstr ""
 
 #: components/performance/defaultText.js:203
-msgid "Behavior of the prefetch"
+msgid "Link Prefetch"
 msgstr ""
 
-#: components/performance/defaultText.js:207
-msgid "Behavior"
+#: components/performance/defaultText.js:204
+msgid "Enable link prefetching on desktop"
 msgstr ""
 
 #: components/performance/defaultText.js:208
-msgid "Prefetch on Mouse Down"
+msgid "Activate on desktop"
 msgstr ""
 
 #: components/performance/defaultText.js:212
-msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+msgid "Behavior of the prefetch"
 msgstr ""
 
 #: components/performance/defaultText.js:216
+msgid "Behavior"
+msgstr ""
+
+#: components/performance/defaultText.js:217
+msgid "Prefetch on Mouse Down"
+msgstr ""
+
+#: components/performance/defaultText.js:221
+msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+msgstr ""
+
+#: components/performance/defaultText.js:225
 msgid "Prefetch on Mouse Hover (Recommended)"
 msgstr ""
 
-#: components/performance/defaultText.js:220
+#: components/performance/defaultText.js:229
 msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
 msgstr ""
 
-#: components/performance/defaultText.js:224
+#: components/performance/defaultText.js:233
 msgid "Enable link prefetching on mobile"
 msgstr ""
 
-#: components/performance/defaultText.js:228
+#: components/performance/defaultText.js:237
 msgid "Activate on mobile"
 msgstr ""
 
-#: components/performance/defaultText.js:232
+#: components/performance/defaultText.js:241
 msgid "Prefetch on Touchstart (Recommended)"
 msgstr ""
 
-#: components/performance/defaultText.js:236
+#: components/performance/defaultText.js:245
 msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
 msgstr ""
 
-#: components/performance/defaultText.js:240
+#: components/performance/defaultText.js:249
 msgid "Prefetch Above the Fold"
 msgstr ""
 
-#: components/performance/defaultText.js:244
+#: components/performance/defaultText.js:253
 msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
 msgstr ""
 
-#: components/performance/defaultText.js:248
+#: components/performance/defaultText.js:257
 msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
 msgstr ""
 
-#: components/performance/defaultText.js:252
+#: components/performance/defaultText.js:261
 msgid "Exclude keywords"
 msgstr ""
 
-#: components/performance/defaultText.js:256
+#: components/performance/defaultText.js:265
 msgid "Advanced settings"
 msgstr ""
 
-#: components/performance/defaultText.js:260
+#: components/performance/defaultText.js:269
 msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
 msgstr ""
 
-#: components/performance/defaultText.js:264
+#: components/performance/defaultText.js:273
 msgid "Optimize Critical CSS Loading (manual)"
 msgstr ""
 
-#: components/performance/defaultText.js:268
+#: components/performance/defaultText.js:277
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
 msgstr ""
 
-#: components/performance/defaultText.js:272
+#: components/performance/defaultText.js:281
 msgid "Optimize Critical CSS Loading (UPGRADED)"
 msgstr ""
 
-#: components/performance/defaultText.js:276
+#: components/performance/defaultText.js:285
 msgid "Generate Critical CSS Automatically"
 msgstr ""
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
-#: components/performance/defaultText.js:282
+#: components/performance/defaultText.js:291
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
 msgstr ""
 
-#: components/performance/defaultText.js:294
+#: components/performance/defaultText.js:303
 msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
 msgstr ""
 
-#: components/performance/defaultText.js:298
+#: components/performance/defaultText.js:307
 msgid "Concatenate JS"
 msgstr ""
 
-#: components/performance/defaultText.js:299
+#: components/performance/defaultText.js:308
 msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
 msgstr ""
 
-#: components/performance/defaultText.js:303
+#: components/performance/defaultText.js:312
 msgid "Exclude JS Strings"
 msgstr ""
 
-#: components/performance/defaultText.js:311
+#: components/performance/defaultText.js:320
 msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
 msgstr ""
 
-#: components/performance/defaultText.js:315
+#: components/performance/defaultText.js:324
 msgid "Exclude CSS Strings"
 msgstr ""
 
-#: components/performance/defaultText.js:319
+#: components/performance/defaultText.js:328
 msgid "Show more"
 msgstr ""
 
-#: components/performance/defaultText.js:320
+#: components/performance/defaultText.js:329
 msgid "Show less"
 msgstr ""
 
-#: components/performance/defaultText.js:321
+#: components/performance/defaultText.js:330
 msgid "Discover More"
 msgstr ""
 
-#: components/performance/defaultText.js:322
+#: components/performance/defaultText.js:331
 msgid "Install Jetpack Boost to unlock"
 msgstr ""
 
-#: components/performance/defaultText.js:326
+#: components/performance/defaultText.js:335
 msgid "Installing Jetpack Boost…"
 msgstr ""
 
-#: components/performance/defaultText.js:330
+#: components/performance/defaultText.js:339
 msgid "Jetpack Boost is now active"
 msgstr ""
 
-#: components/performance/defaultText.js:334
+#: components/performance/defaultText.js:343
 msgid "Activation failed"
 msgstr ""
 
 #. translators: %1$s is the opening <a> tag, %2$s is the closing </a> tag.
-#: components/performance/defaultText.js:339
+#: components/performance/defaultText.js:348
 msgid "Discover more %1$shere%2$s"
 msgstr ""
 
-#: components/performance/defaultText.js:343
+#: components/performance/defaultText.js:352
 msgid "Option saved correctly"
 msgstr ""
 
-#: components/performance/defaultText.js:344
+#: components/performance/defaultText.js:353
 msgid "Error saving option"
 msgstr ""
 
-#: components/performance/defaultText.js:345
+#: components/performance/defaultText.js:354
 msgid "Upgrade to unlock"
 msgstr ""
