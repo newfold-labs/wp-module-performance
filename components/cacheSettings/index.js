@@ -19,6 +19,7 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 			label: constants.text.cacheLevel1Label,
 			description:
 				constants.text.cacheLevel1Description +
+				' ' +
 				constants.text.cacheLevel1Recommendation,
 			value: 1,
 			notice: constants.text.cacheLevel1NoticeText,
@@ -27,6 +28,7 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 			label: constants.text.cacheLevel2Label,
 			description:
 				constants.text.cacheLevel2Description +
+				' ' +
 				constants.text.cacheLevel2Recommendation,
 			value: 2,
 			notice: constants.text.cacheLevel2NoticeText,
@@ -35,6 +37,7 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 			label: constants.text.cacheLevel3Label,
 			description:
 				constants.text.cacheLevel3Description +
+				' ' +
 				constants.text.cacheLevel3Recommendation,
 			value: 3,
 			notice: constants.text.cacheLevel3NoticeText,

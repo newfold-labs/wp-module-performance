@@ -1,7 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
 
-import { __ } from '@wordpress/i18n';
 import defaultText from '../performance/defaultText';
 
 const ImageOptimizationSettings = ( { methods } ) => {
@@ -187,13 +186,11 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					<br />
 					<br />
 					<p>
-						<strong>
-							{ __( 'Usage:', 'wp-module-performance' ) }
-						</strong>{ ' ' }
+						<strong>{ defaultText.imageOptimizationUsage }</strong>{ ' ' }
 						{ monthlyUsage.monthlyRequestCount }{ ' ' }
-						{ __( 'images processed of', 'wp-module-performance' ) }{ ' ' }
+						{ defaultText.imageOptimizationProcessed }{ ' ' }
 						{ monthlyUsage.maxRequestsPerMonth / 1000 }k
-						{ __( '/month', 'wp-module-performance' ) }
+						{ defaultText.imageOptimizationPerMonth }
 					</p>
 					{ isBanned && (
 						<p className="nfd-text-red">
@@ -314,7 +311,8 @@ const ImageOptimizationSettings = ( { methods } ) => {
 							}
 							disabled={
 								! enabled ||
-								( ! autoOptimizeEnabled && ! bulkOptimization ) ||
+								( ! autoOptimizeEnabled &&
+									! bulkOptimization ) ||
 								isBanned
 							}
 						/>
@@ -338,7 +336,6 @@ const ImageOptimizationSettings = ( { methods } ) => {
 						/>
 					</>
 				) }
-
 			</div>
 		</Container.SettingsField>
 	);
