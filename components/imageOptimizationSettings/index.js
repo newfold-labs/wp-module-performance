@@ -225,103 +225,120 @@ const ImageOptimizationSettings = ( { methods } ) => {
 					disabled={ isBanned }
 				/>
 
-				<ToggleField
-					id="auto-optimize-images"
-					label={ defaultText.imageOptimizationAutoOptimizeLabel }
-					description={
-						defaultText.imageOptimizationAutoOptimizeDescription
-					}
-					checked={ autoOptimizeEnabled }
-					onChange={ () =>
-						handleToggleChange(
-							'autoOptimizeEnabled',
-							! autoOptimizeEnabled
-						)
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+				{ enabled && (
+					<>
+						<ToggleField
+							id="auto-optimize-images"
+							label={
+								defaultText.imageOptimizationAutoOptimizeLabel
+							}
+							description={
+								defaultText.imageOptimizationAutoOptimizeDescription
+							}
+							checked={ autoOptimizeEnabled }
+							onChange={ () =>
+								handleToggleChange(
+									'autoOptimizeEnabled',
+									! autoOptimizeEnabled
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
+						<ToggleField
+							id="bulk-optimize-images"
+							label={
+								defaultText.imageOptimizationBulkOptimizeLabel
+							}
+							description={
+								<>
+									<p>
+										{
+											defaultText.imageOptimizationBulkOptimizeDescription
+										}
+									</p>
+									{ bulkOptimization && (
+										<a
+											href={ mediaLibraryLink() }
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											{
+												defaultText.imageOptimizationBulkOptimizeButtonLabel
+											}
+										</a>
+									) }
+								</>
+							}
+							checked={ bulkOptimization }
+							onChange={ () =>
+								handleToggleChange(
+									'bulkOptimize',
+									! bulkOptimization
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
 
-				<ToggleField
-					id="bulk-optimize-images"
-					label={ defaultText.imageOptimizationBulkOptimizeLabel }
-					description={
-						<>
-							<p>
-								{
-									defaultText.imageOptimizationBulkOptimizeDescription
-								}
-							</p>
-							{ bulkOptimization && (
-								<a
-									href={ mediaLibraryLink() }
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{
-										defaultText.imageOptimizationBulkOptimizeButtonLabel
-									}
-								</a>
-							) }
-						</>
-					}
-					checked={ bulkOptimization }
-					onChange={ () =>
-						handleToggleChange( 'bulkOptimize', ! bulkOptimization )
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+						<ToggleField
+							id="prefer-webp-when-exists"
+							label={
+								defaultText.imageOptimizationPreferWebPLabel
+							}
+							description={
+								defaultText.imageOptimizationPreferWebPDescription
+							}
+							checked={ preferOptimizedImageWhenExists }
+							onChange={ () =>
+								handleToggleChange(
+									'preferOptimizedImageWhenExists',
+									! preferOptimizedImageWhenExists
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
 
-				<ToggleField
-					id="prefer-webp-when-exists"
-					label={ defaultText.imageOptimizationPreferWebPLabel }
-					description={
-						defaultText.imageOptimizationPreferWebPDescription
-					}
-					checked={ preferOptimizedImageWhenExists }
-					onChange={ () =>
-						handleToggleChange(
-							'preferOptimizedImageWhenExists',
-							! preferOptimizedImageWhenExists
-						)
-					}
-					disabled={ ! enabled || isBanned }
-				/>
+						<ToggleField
+							id="auto-delete-original"
+							label={
+								defaultText.imageOptimizationAutoDeleteLabel
+							}
+							description={
+								defaultText.imageOptimizationAutoDeleteDescription
+							}
+							checked={ autoDeleteOriginalImage }
+							onChange={ () =>
+								handleToggleChange(
+									'autoDeleteOriginalImage',
+									! autoDeleteOriginalImage
+								)
+							}
+							disabled={
+								! enabled ||
+								( ! autoOptimizeEnabled && ! bulkOptimization ) ||
+								isBanned
+							}
+						/>
 
-				<ToggleField
-					id="auto-delete-original"
-					label={ defaultText.imageOptimizationAutoDeleteLabel }
-					description={
-						defaultText.imageOptimizationAutoDeleteDescription
-					}
-					checked={ autoDeleteOriginalImage }
-					onChange={ () =>
-						handleToggleChange(
-							'autoDeleteOriginalImage',
-							! autoDeleteOriginalImage
-						)
-					}
-					disabled={
-						! enabled ||
-						( ! autoOptimizeEnabled && ! bulkOptimization ) ||
-						isBanned
-					}
-				/>
+						<ToggleField
+							id="lazy-loading-enabled"
+							label={
+								defaultText.imageOptimizationLazyLoadingLabel
+							}
+							description={
+								defaultText.imageOptimizationLazyLoadingDescription
+							}
+							checked={ lazyLoading.enabled }
+							onChange={ () =>
+								handleToggleChange(
+									'lazyLoading',
+									! lazyLoading.enabled
+								)
+							}
+							disabled={ ! enabled || isBanned }
+						/>
+					</>
+				) }
 
-				<ToggleField
-					id="lazy-loading-enabled"
-					label={ defaultText.imageOptimizationLazyLoadingLabel }
-					description={
-						defaultText.imageOptimizationLazyLoadingDescription
-					}
-					checked={ lazyLoading.enabled }
-					onChange={ () =>
-						handleToggleChange(
-							'lazyLoading',
-							! lazyLoading.enabled
-						)
-					}
-					disabled={ ! enabled || isBanned }
-				/>
 			</div>
 		</Container.SettingsField>
 	);
