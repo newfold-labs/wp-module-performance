@@ -4,8 +4,7 @@ class performancePage {
 	// in site-info box
 	_visitSiteButton = 'a.nfd-button.nfd-bg-white';
 	// sample page link on front end of site
-	_samplePageButton =
-		'.wp-block-pages-list__item__link.wp-block-navigation-item__content';
+	_samplePageButton = '.wp-block-pages-list__item__link[href*="sample-page"]';
 	_linkPrefetchText = '[data-cy="link-prefetch-settings"]';
 	_dropDownForLinkPrefetch =
 		'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label';
