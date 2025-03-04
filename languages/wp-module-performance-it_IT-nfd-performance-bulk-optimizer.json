@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-02-14 12:38+0000",
+    "translation-revision-date": "2025-03-04 12:44",
     "generator": "WP-CLI\/2.11.0",
     "source": "assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
     "domain": "messages",
@@ -11,34 +11,34 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Optimizing Images\u2026": [
-                ""
+                "Ottimizzazione Delle Immagini\u2026"
             ],
             "Preparing files\u2026": [
-                ""
+                "Preparazione dei file\u2026"
             ],
             "Done": [
-                ""
+                "Fatto"
             ],
             "Optimization Canceled": [
-                ""
+                "Ottimizzazione Annullata"
             ],
             "Optimizing:": [
-                ""
+                "Ottimizzazione:"
             ],
             "Optimization Complete!": [
-                ""
+                "Ottimizzazione Completata!"
             ],
             "Passed": [
-                ""
+                "Passato"
             ],
             "Failed": [
-                ""
+                "Fallito"
             ],
             "An error occurred.": [
-                ""
+                "Si \u00e8 verificato un errore."
             ],
             "Optimize": [
-                ""
+                "Ottimizza"
             ]
         }
     }
