@@ -26,7 +26,11 @@
 }
 
 .nfd-root .nfd-modal__overlay {
-	z-index: 300;
+	z-index: 100;
+}
+
+.nfd-modal__panel {
+    z-index: 150;
 }
 
 
