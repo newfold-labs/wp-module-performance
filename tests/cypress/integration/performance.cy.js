@@ -8,7 +8,7 @@ describe( 'Performance Page', { testIsolation: false }, () => {
 	let data;
 
 	beforeEach( () => {
-		cy.exec('npx wp-env run cli wp rewrite structure "/%postname%/"');
+		cy.setPermalinkStructure();
 		data = fixturePath;
 		cy.login( Cypress.env( 'wpUsername' ), Cypress.env( 'wpPassword' ) );
 		cy.visit(
