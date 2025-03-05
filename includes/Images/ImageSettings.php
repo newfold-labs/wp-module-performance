@@ -262,9 +262,11 @@ class ImageSettings {
 	/**
 	 * Retrieves the image optimization settings.
 	 *
-	 * @return array The current image optimization settings.
+	 * @param bool $call_worker Whether to fetch the latest monthly usage from the worker. Default is true.
+	 *
+	 * @return array The current image optimization settings, including monthly usage and banned status.
 	 */
-	public static function get() {
+	public static function get( $call_worker = true ) {
 		$settings = get_option( self::SETTING_KEY, array() );
 
 		if ( ! is_array( $settings ) ) {
@@ -275,7 +277,7 @@ class ImageSettings {
 			$settings['banned_status'] = self::is_banned();
 		}
 
-		if ( empty( $settings['monthly_usage'] ) || ! is_array( $settings['monthly_usage'] ) ) {
+		if ( $call_worker && ( empty( $settings['monthly_usage'] ) || ! is_array( $settings['monthly_usage'] ) ) ) {
 			$usage_data = ( new ImageService() )->get_monthly_usage_limit( true );
 			if ( ! is_wp_error( $usage_data ) ) {
 				$settings['monthly_usage'] = $usage_data;
