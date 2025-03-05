@@ -425,7 +425,7 @@ class ImageService {
 			);
 		}
 
-		$settings                  = ImageSettings::get();
+		$settings                  = ImageSettings::get( false );
 		$settings['monthly_usage'] = $body;
 		ImageSettings::update( $settings );
 
