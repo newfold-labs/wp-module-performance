@@ -112,6 +112,8 @@ class Performance {
 			if ( ! $is_apache && file_exists( ABSPATH . '.htaccess' ) ) {
 				$is_apache = true;
 			}
+		} else {
+			global $is_apache;
 		}
 
 		$container->set( 'isApache', $is_apache );
