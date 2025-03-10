@@ -3,7 +3,7 @@
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Skip404 as BurstSkip404;
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser as BurstBrowser;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser as CacheBrowser;
-use NewfoldLabs\WP\Module\Performance\Skip404\Skip404 as Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 
 

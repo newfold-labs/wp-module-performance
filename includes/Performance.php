@@ -55,7 +55,7 @@ class Performance {
 		$this->hooks();
 
 		new Cache( $container );
-        new Skip404( $container );
+		new Skip404( $container );
 		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
