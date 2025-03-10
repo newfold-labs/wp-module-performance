@@ -7,7 +7,7 @@ import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 const Skip404 = ( { methods, constants } ) => {
 	const [ skip404, setSkip404 ] = methods.useState(
-		NewfoldRuntime.sdk.performance.skip404
+		NewfoldRuntime.sdk.skip404.is_active
 	);
 
 	const getSkip404NoticeTitle = () => {

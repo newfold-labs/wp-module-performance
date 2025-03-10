@@ -76,7 +76,7 @@ class SettingsController {
 					400
 				);
 			}
-            error_log($field['value']);
+
 			switch ( $field['id'] ) {
 				case 'skip404':
 					$result = update_option( Skip404::OPTION_NAME, $field['value'] );

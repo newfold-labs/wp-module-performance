@@ -7,7 +7,6 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 
 use function WP_Forge\WP_Htaccess_Manager\addContent;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
-use function NewfoldLabs\WP\Module\Performance\get_skip404_option;
 
 /**
  * Handles Skip 404 functionality.
@@ -152,10 +151,10 @@ class Skip404 {
      */
     public function add_to_runtime( $sdk ) {
         $values = array(
-            'skip404'   => $this->get_value(),
+            'is_active'   => $this->get_value(),
         );
 
-        return array_merge( $sdk, array( 'performance' => $values ) );
+        return array_merge( $sdk, array( 'skip404' => $values ) );
     }
 
 
