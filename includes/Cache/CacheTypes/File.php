@@ -1,12 +1,12 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
 
-use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use NewfoldLabs\WP\Module\Performance\Cache\Purgeable;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Performance\CacheExclusion;
-use NewfoldLabs\WP\Module\Performance\CacheManager;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 use wpscholar\Url;
 
@@ -48,7 +48,6 @@ class File extends CacheBase implements Purgeable {
 	 * Constructor.
 	 */
 	public function __construct() {
-
 		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 

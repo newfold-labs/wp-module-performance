@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;

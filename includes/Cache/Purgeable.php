@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Concerns;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 /**
  * Interface for cache types that can be purged.

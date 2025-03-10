@@ -1,12 +1,12 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
-use NewfoldLabs\WP\Module\Performance\CacheExclusion;
-use NewfoldLabs\WP\Module\Performance\CacheManager;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;

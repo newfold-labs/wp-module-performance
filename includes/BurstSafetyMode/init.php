@@ -2,16 +2,16 @@
 
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Skip404 as BurstSkip404;
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser as BurstBrowser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser as CacheBrowser;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404 as CacheSkip404;
-use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Browser as CacheBrowser;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Skip404 as CacheSkip404;
+use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 
 
 $newfold_burst_safety_mode = function_exists( 'get_option' ) ? (bool) get_option( 'newfold_burst_safety_mode', false ) : false;
 $newfold_cache_level       = function_exists( 'newfold_cache_level' ) ? (int) get_option( 'newfold_cache_level', 0 ) : 0;
 
 // Check if Performance feature is enabled and it's necessary reset the cache options
-if ( class_exists( 'NewfoldLabs\WP\Module\Performance\PerformanceFeatureHooks' ) ) {
+if ( class_exists( 'NewfoldLabs\WP\Module\Performance\Cache\PerformanceFeatureHooks' ) ) {
 	if ( $newfold_burst_safety_mode ) {
 		$browser = new CacheBrowser();
 		$browser::maybeAddRules( $newfold_cache_level );

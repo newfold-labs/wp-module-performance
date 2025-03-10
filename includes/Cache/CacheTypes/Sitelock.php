@@ -1,8 +1,8 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
 
-use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use NewfoldLabs\WP\Module\Performance\Cache\Purgeable;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**

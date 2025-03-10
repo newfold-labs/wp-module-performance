@@ -1,5 +1,5 @@
 <?php
-namespace NewfoldLabs\WP\Module\Performance;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 

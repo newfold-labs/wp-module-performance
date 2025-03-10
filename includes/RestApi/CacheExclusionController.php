@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
 use NewfoldLabs\WP\Module\ECommerce\Permissions;
-use NewfoldLabs\WP\Module\Performance\CacheExclusion;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 
 use function NewfoldLabs\WP\Module\Performance\get_default_cache_exclusions;
 

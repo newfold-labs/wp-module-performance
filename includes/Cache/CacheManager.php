@@ -1,8 +1,8 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
-use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\CacheBase;
 use wpscholar\Url;
 
 /**

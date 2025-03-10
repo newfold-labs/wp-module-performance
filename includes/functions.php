@@ -2,7 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 
 /**
  * Return defaul exclusions.
