@@ -3,7 +3,7 @@
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Skip404 as BurstSkip404;
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser as BurstBrowser;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser as CacheBrowser;
-use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404 as CacheSkip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404 as Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 
 
@@ -19,8 +19,8 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\Cache\PerformanceFeatureHo
 		$skip_404_handling = (bool) get_option( 'newfold_skip_404_handling', true );
 
 		if ( ! $skip_404_handling ) {
-			$skip404 = new CacheSkip404();
-			$skip404::maybeAddRules( false );
+			$skip404 = new Skip404();
+			$skip404::maybe_add_rules( false );
 		}
 
 		$response_header_manager = new ResponseHeaderManager();

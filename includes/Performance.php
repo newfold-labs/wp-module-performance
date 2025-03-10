@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use Automattic\Jetpack\Current_Plan;
 
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
@@ -54,6 +55,7 @@ class Performance {
 		$this->hooks();
 
 		new Cache( $container );
+        new Skip404( $container );
 		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
@@ -290,7 +292,6 @@ class Performance {
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
-			'skip404'                           => get_skip404_option(),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );

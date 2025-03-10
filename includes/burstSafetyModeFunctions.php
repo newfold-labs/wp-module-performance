@@ -1,14 +1,12 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance;
 
+use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser;
-use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 
 $newfold_burst_safety_mode = (bool) get_option( 'newfold_burst_safety_mode' );
-
-$site_cache_level = get_option( 'newfold_cache_level', 3 );
-$site_skip404     = (bool) get_option( 'newfold_skip_404_handling', true );
 
 if ( defined( 'BURST_SAFETY_MODE' ) && BURST_SAFETY_MODE ) {
 	if ( false === $newfold_burst_safety_mode ) {
@@ -19,7 +17,7 @@ if ( defined( 'BURST_SAFETY_MODE' ) && BURST_SAFETY_MODE ) {
 		$browser::maybeAddRules( 3 );
 		if ( function_exists( 'get_skip404_option' ) && ! get_skip404_option() ) {
 			$skip404 = new Skip404();
-			$skip404::maybeAddRules( true );
+			$skip404::maybe_add_rules( true );
 		}
 		$response_header_manager = new ResponseHeaderManager();
 		$response_header_manager->add_header( 'X-Newfold-Cache-Level', 3 );
@@ -30,7 +28,7 @@ if ( defined( 'BURST_SAFETY_MODE' ) && BURST_SAFETY_MODE ) {
 	$browser::maybeAddRules( $cache_level );
 	if ( function_exists( 'get_skip404_option' ) && ! get_skip404_option() ) {
 		$skip404 = new Skip404();
-		$skip404::maybeAddRules( false );
+		$skip404::maybe_add_rules( false );
 	}
 	$response_header_manager = new ResponseHeaderManager();
 	$response_header_manager->add_header( 'X-Newfold-Cache-Level', $cache_level );

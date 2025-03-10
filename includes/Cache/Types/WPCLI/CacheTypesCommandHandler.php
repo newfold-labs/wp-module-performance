@@ -5,7 +5,7 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\NFD_WPCLI;
-use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 
 /**
  * Handles WP-CLI commands for Cache settings.
@@ -91,7 +91,7 @@ class CacheTypesCommandHandler {
 			NFD_WPCLI::error( __( "Invalid value. Use 'true' or 'false' for skip_404 handling.", 'wp-module-performance' ) );
 		}
 		$status = filter_var( $args[0], FILTER_VALIDATE_BOOLEAN );
-		update_option( Skip404::OPTION_SKIP_404, $status );
+		update_option( Skip404::OPTION_NAME, $status );
 		NFD_WPCLI::success(
 			sprintf(
 				/* translators: %s is the new boolean status. */

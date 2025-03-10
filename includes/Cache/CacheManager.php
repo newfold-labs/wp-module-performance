@@ -53,7 +53,6 @@ class CacheManager {
 			'file'       => __NAMESPACE__ . '\\Types\\File',
 			'nginx'      => __NAMESPACE__ . '\\Types\\Nginx',
 			'sitelock'   => __NAMESPACE__ . '\\Types\\Sitelock',
-			'skip404'    => __NAMESPACE__ . '\\Types\\Skip404',
 		);
 	}
 
@@ -72,7 +71,7 @@ class CacheManager {
 	 * @return array
 	 */
 	public function enabled_cache_types() {
-		$default_cache_types = array( 'browser', 'skip404' );
+		$default_cache_types = array( 'browser' );
 
 		if ( $this->container->has( 'cache_types' ) ) {
 			$provided_types = $this->container->get( 'cache_types' );

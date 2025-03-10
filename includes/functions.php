@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 
 /**
@@ -29,7 +29,7 @@ function get_cache_level() {
  * @return bool Whether to skip 404 handling for static files.
  */
 function get_skip404_option() {
-	return (bool) get_option( Skip404::OPTION_SKIP_404, true );
+	return (bool) get_option( Skip404::OPTION_NAME, true );
 }
 
 /**
