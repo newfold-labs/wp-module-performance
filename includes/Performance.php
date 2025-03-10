@@ -12,11 +12,8 @@ use NewfoldLabs\WP\Module\Performance\Data\Constants;
 use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 use NewfoldLabs\WP\Module\Performance\Cache\Cache;
-use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 use NFD_CLI;
-
-use function NewfoldLabs\WP\Module\Performance\is_settings_page;
 
 /**
  * Main class for the performance module.
@@ -56,7 +53,7 @@ class Performance {
 
 		$this->hooks();
 
-        new Cache( $container );
+		new Cache( $container );
 		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
@@ -64,8 +61,7 @@ class Performance {
 
 		new LinkPrefetch( $container );
 
-
-		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
@@ -78,7 +74,6 @@ class Performance {
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
-
 	}
 
 	/**
@@ -97,9 +92,9 @@ class Performance {
 			if ( ! $is_apache && file_exists( ABSPATH . '.htaccess' ) ) {
 				$is_apache = true;
 			}
-		}else{
-            global $is_apache;
-        }
+		} else {
+			global $is_apache;
+		}
 
 		$container->set( 'isApache', $is_apache );
 
@@ -147,7 +142,7 @@ class Performance {
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
 	}
 
-    /**
+	/**
 	 * Remove EPC Settings if needed
 	 *
 	 * @return void
@@ -206,7 +201,7 @@ class Performance {
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar.
 	 */
-	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
+	public function admin_bar_menu( \WP_Admin_Bar $wp_admin_bar ) {
 
 		// If the EPC MU plugin exists, remove its cache clearing options.
 		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
@@ -287,7 +282,7 @@ class Performance {
 	public function add_to_runtime( $sdk ) {
 		$values = array(
 			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
-			'jetpack_boost_premium_is_active'   => $this->isJetPackBoostActive(),
+			'jetpack_boost_premium_is_active'   => $this->is_jetpackboost_active(),
 			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
 			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
 			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
@@ -295,7 +290,7 @@ class Performance {
 			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
 			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
-			'skip404'                           => getSkip404Option(),
+			'skip404'                           => get_skip404_option(),
 		);
 
 		return array_merge( $sdk, array( 'performance' => $values ) );
@@ -307,7 +302,7 @@ class Performance {
 	 *
 	 * @return boolean
 	 */
-	public function isJetPackBoostActive() {
+	public function is_jetpackboost_active() {
 		$exists = false;
 		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
 			$products = Current_Plan::get_products();

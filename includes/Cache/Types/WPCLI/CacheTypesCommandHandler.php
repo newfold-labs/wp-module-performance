@@ -1,11 +1,11 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\WPCLI;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI;
 
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\NFD_WPCLI;
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
 
 /**
  * Handles WP-CLI commands for Cache settings.

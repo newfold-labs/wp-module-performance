@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;
@@ -8,7 +8,7 @@ use WP_Forge\WP_Htaccess_Manager\htaccess;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 
-use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
+use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 /**
@@ -29,7 +29,7 @@ class Browser extends CacheBase {
 	 *
 	 * @return bool
 	 */
-	public static function shouldEnable( Container $container ) {
+	public static function should_enable( Container $container ) {
 		return (bool) $container->has( 'isApache' ) && $container->get( 'isApache' );
 	}
 
@@ -42,21 +42,21 @@ class Browser extends CacheBase {
 
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
-		add_filter( 'newfold_update_htaccess', array( $this, 'onRewrite' ) );
+		add_filter( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
 	}
 
 	/**
 	 * When updating .htaccess, also update our rules as appropriate.
 	 */
-	public function onRewrite() {
-		self::maybeAddRules( getCacheLevel() );
+	public function on_rewrite() {
+		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
 	 * Manage on exlcusion option change.
 	 */
 	public static function exclusionChange() {
-		self::maybeAddRules( getCacheLevel() );
+		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
@@ -183,14 +183,14 @@ class Browser extends CacheBase {
 	/**
 	 * Handle activation logic.
 	 */
-	public static function onActivation() {
-		self::maybeAddRules( getCacheLevel() );
+	public static function on_activation() {
+		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
 	 * Handle deactivation logic.
 	 */
-	public static function onDeactivation() {
+	public static function on_deactivation() {
 		self::removeRules();
 	}
 }

@@ -24,11 +24,11 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\Cache\PerformanceFeatureHo
 		}
 
 		$response_header_manager = new ResponseHeaderManager();
-		$response_header_manager->addHeader( 'X-Newfold-Cache-Level', $newfold_cache_level );
+		$response_header_manager->add_header( 'X-Newfold-Cache-Level', $newfold_cache_level );
 
 		delete_option( 'newfold_burst_safety_mode' );
 	}
-} elseif ( ! $newfold_burst_safety_mode ) {
+} elseif ( ! $newfold_burst_safety_mode && defined( 'BLUEHOST_PLUGIN_DIR' ) ) {
 		$files_to_include = array(
 			'htaccess'                => BLUEHOST_PLUGIN_DIR . 'vendor/wp-forge/wp-htaccess-manager/includes/htaccess.php',
 			'htaccess_functions'      => BLUEHOST_PLUGIN_DIR . 'vendor/wp-forge/wp-htaccess-manager/includes/functions.php',

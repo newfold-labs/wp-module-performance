@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
 use NewfoldLabs\WP\Module\Performance\Cache\Purgeable;
 use wpscholar\Url;
@@ -13,7 +13,7 @@ class Nginx extends CacheBase implements Purgeable {
 	/**
 	 * Purge all assets from the Nginx cache.
 	 */
-	public function purgeAll() {
+	public function purge_all() {
 		$this->purgeRequest();
 	}
 
@@ -22,7 +22,7 @@ class Nginx extends CacheBase implements Purgeable {
 	 *
 	 * @param string $url The URL to purge.
 	 */
-	public function purgeUrl( $url ) {
+	public function purge_url( $url ) {
 		$this->purgeRequest( $url );
 	}
 

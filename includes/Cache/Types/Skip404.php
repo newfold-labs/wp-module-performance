@@ -1,11 +1,11 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
-use function NewfoldLabs\WP\Module\Performance\getSkip404Option;
+use function NewfoldLabs\WP\Module\Performance\get_skip404_option;
 use function WP_Forge\WP_Htaccess_Manager\addContent;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
@@ -31,7 +31,7 @@ class Skip404 extends CacheBase {
 	 *
 	 * @return bool
 	 */
-	public static function shouldEnable( Container $container ) {
+	public static function should_enable( Container $container ) {
 		return (bool) $container->has( 'isApache' ) && $container->get( 'isApache' );
 	}
 
@@ -49,7 +49,7 @@ class Skip404 extends CacheBase {
 	 * When updating .htaccess, also update our rules as appropriate.
 	 */
 	public function onUpdateHtaccess() {
-		self::maybeAddRules( getSkip404Option() );
+		self::maybeAddRules( get_skip404_option() );
 
 		// Remove the old option from EPC, if it exists
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'epc_skip_404_handling', 0 ) ) ) {
@@ -95,14 +95,14 @@ HTACCESS;
 	/**
 	 * Handle activation logic.
 	 */
-	public static function onActivation() {
-		self::maybeAddRules( getSkip404Option() );
+	public static function on_activation() {
+		self::maybeAddRules( get_skip404_option() );
 	}
 
 	/**
 	 * Handle deactivation logic.
 	 */
-	public static function onDeactivation() {
+	public static function on_deactivation() {
 		self::removeRules();
 	}
 }

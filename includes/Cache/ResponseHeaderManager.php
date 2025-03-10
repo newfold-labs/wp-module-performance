@@ -37,7 +37,7 @@ class ResponseHeaderManager {
 	 *
 	 * @return array
 	 */
-	public function parseHeaders() {
+	public function parse_headers() {
 
 		$headers = array();
 
@@ -64,10 +64,10 @@ class ResponseHeaderManager {
 	 * @param string $name  Header name
 	 * @param string $value Header value
 	 */
-	public function addHeader( string $name, string $value ) {
-		$this->setHeaders(
+	public function add_header( string $name, string $value ) {
+		$this->set_headers(
 			array_merge(
-				$this->parseHeaders(),
+				$this->parse_headers(),
 				array( $name => $value )
 			)
 		);
@@ -78,9 +78,9 @@ class ResponseHeaderManager {
 	 *
 	 * @param string[] $headers Headers to add.
 	 */
-	public function addHeaders( array $headers ) {
-		$headers = array_merge( $this->parseHeaders(), $headers );
-		$this->setHeaders( $headers );
+	public function add_headers( array $headers ) {
+		$headers = array_merge( $this->parse_headers(), $headers );
+		$this->set_headers( $headers );
 	}
 
 	/**
@@ -88,17 +88,17 @@ class ResponseHeaderManager {
 	 *
 	 * @param string $name Header name
 	 */
-	public function removeHeader( $name ) {
-		$headers = $this->parseHeaders();
+	public function remove_header( $name ) {
+		$headers = $this->parse_headers();
 		unset( $headers[ $name ] );
-		$this->setHeaders( $headers );
+		$this->set_headers( $headers );
 	}
 
 	/**
 	 * Remove all headers.
 	 */
-	public function removeAllHeaders() {
-		$this->setHeaders( array() );
+	public function remove_all_headers() {
+		$this->set_headers( array() );
 	}
 
 	/**
@@ -106,7 +106,7 @@ class ResponseHeaderManager {
 	 *
 	 * @param array $headers Headers to set.
 	 */
-	public function setHeaders( array $headers ) {
+	public function set_headers( array $headers ) {
 
 		if ( empty( $headers ) ) {
 			$this->htaccess->removeContent();

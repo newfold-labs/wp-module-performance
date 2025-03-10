@@ -12,7 +12,7 @@ interface Purgeable {
 	 *
 	 * @return void
 	 */
-	public function purgeAll();
+	public function purge_all();
 
 	/**
 	 * Purge a specific URL for the given cache type.
@@ -21,5 +21,5 @@ interface Purgeable {
 	 *
 	 * @return void
 	 */
-	public function purgeUrl( $url );
+	public function purge_url( $url );
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Cache\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
@@ -23,7 +23,7 @@ abstract class CacheBase {
 	 *
 	 * @return bool True if the cache type should be enabled, false otherwise.
 	 */
-	public static function shouldEnable( Container $container ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public static function should_enable( Container $container ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 		return true;
 	}
 

@@ -20,7 +20,7 @@ class Browser {
 	 */
 	public function __construct() {
 		$responseHeaderManager = new ResponseHeaderManager();
-		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', BURST_SAFETY_CACHE_LEVEL );
+		$responseHeaderManager->add_header( 'X-Newfold-Cache-Level', BURST_SAFETY_CACHE_LEVEL );
 		$this->addRules();
 	}
 
