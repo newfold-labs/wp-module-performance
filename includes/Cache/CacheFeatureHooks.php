@@ -4,9 +4,9 @@ namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\File;
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\File;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 

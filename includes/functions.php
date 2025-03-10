@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 
 /**

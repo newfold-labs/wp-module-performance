@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Cache;
 
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\CacheBase;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 
@@ -48,12 +48,12 @@ class CacheManager {
 	 */
 	protected function classMap() {
 		return array(
-			'browser'    => __NAMESPACE__ . '\\CacheTypes\\Browser',
-			'cloudflare' => __NAMESPACE__ . '\\CacheTypes\\Cloudflare',
-			'file'       => __NAMESPACE__ . '\\CacheTypes\\File',
-			'nginx'      => __NAMESPACE__ . '\\CacheTypes\\Nginx',
-			'sitelock'   => __NAMESPACE__ . '\\CacheTypes\\Sitelock',
-			'skip404'    => __NAMESPACE__ . '\\CacheTypes\\Skip404',
+			'browser'    => __NAMESPACE__ . '\\Types\\Browser',
+			'cloudflare' => __NAMESPACE__ . '\\Types\\Cloudflare',
+			'file'       => __NAMESPACE__ . '\\Types\\File',
+			'nginx'      => __NAMESPACE__ . '\\Types\\Nginx',
+			'sitelock'   => __NAMESPACE__ . '\\Types\\Sitelock',
+			'skip404'    => __NAMESPACE__ . '\\Types\\Skip404',
 		);
 	}
 

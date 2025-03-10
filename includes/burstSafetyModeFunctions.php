@@ -1,8 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Browser;
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 
 $newfold_burst_safety_mode = (bool) get_option( 'newfold_burst_safety_mode' );

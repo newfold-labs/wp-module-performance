@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Cache;
 
-use NewfoldLabs\WP\Module\Performance\Cache\CacheTypes\CacheBase;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase;
 use wpscholar\Url;
 
 /**
