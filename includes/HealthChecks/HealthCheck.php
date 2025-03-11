@@ -95,7 +95,8 @@ abstract class HealthCheck {
 					'actions'     => $this->actions,
 					'test'        => $this->id,
 					'badge'       => array(
-						'label' => __( 'Performance' ), // No text domain, as we want to match the WP core badge text.
+						// No text domain, as we want to match the WP core badge text.
+						'label' => __( 'Performance' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
 						'color' => $this->badge_color,
 					),
 				);

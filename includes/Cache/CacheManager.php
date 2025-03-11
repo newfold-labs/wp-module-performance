@@ -1,8 +1,8 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 
@@ -48,12 +48,11 @@ class CacheManager {
 	 */
 	protected function classMap() {
 		return array(
-			'browser'    => __NAMESPACE__ . '\\CacheTypes\\Browser',
-			'cloudflare' => __NAMESPACE__ . '\\CacheTypes\\Cloudflare',
-			'file'       => __NAMESPACE__ . '\\CacheTypes\\File',
-			'nginx'      => __NAMESPACE__ . '\\CacheTypes\\Nginx',
-			'sitelock'   => __NAMESPACE__ . '\\CacheTypes\\Sitelock',
-			'skip404'    => __NAMESPACE__ . '\\CacheTypes\\Skip404',
+			'browser'    => __NAMESPACE__ . '\\Types\\Browser',
+			'cloudflare' => __NAMESPACE__ . '\\Types\\Cloudflare',
+			'file'       => __NAMESPACE__ . '\\Types\\File',
+			'nginx'      => __NAMESPACE__ . '\\Types\\Nginx',
+			'sitelock'   => __NAMESPACE__ . '\\Types\\Sitelock',
 		);
 	}
 
@@ -62,7 +61,7 @@ class CacheManager {
 	 *
 	 * @return string[]
 	 */
-	public function registeredCacheTypes() {
+	public function registered_cache_types() {
 		return array_keys( $this->classMap() );
 	}
 
@@ -71,8 +70,8 @@ class CacheManager {
 	 *
 	 * @return array
 	 */
-	public function enabledCacheTypes() {
-		$default_cache_types = array( 'browser', 'skip404' );
+	public function enabled_cache_types() {
+		$default_cache_types = array( 'browser' );
 
 		if ( $this->container->has( 'cache_types' ) ) {
 			$provided_types = $this->container->get( 'cache_types' );
@@ -81,7 +80,7 @@ class CacheManager {
 		}
 
 		return is_array( $provided_types )
-		? array_intersect( array_map( 'strtolower', $provided_types ), $this->registeredCacheTypes() )
+		? array_intersect( array_map( 'strtolower', $provided_types ), $this->registered_cache_types() )
 		: $default_cache_types;
 	}
 
@@ -91,17 +90,17 @@ class CacheManager {
 	 *
 	 * @return CacheBase[] An array of cache type instances.
 	 */
-	public function getInstances() {
+	public function get_instances() {
 		$instances  = array();
 		$collection = new Collection( $this->classMap() );
-		$map        = $collection->only( $this->enabledCacheTypes() );
+		$map        = $collection->only( $this->enabled_cache_types() );
 		foreach ( $map as $type => $class ) {
 			/**
 			 * CacheBase instance.
 			 *
 			 * @var CacheBase $class
 			 */
-			if ( $class::shouldEnable( $this->container ) ) {
+			if ( $class::should_enable( $this->container ) ) {
 				$instances[ $type ] = new $class();
 				$instances[ $type ]->setContainer( $this->container );
 			}

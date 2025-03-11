@@ -1,14 +1,14 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 
 /**
  * Class Settings
  *
  * @package NewfoldLabs\WP\Module\Performance
  */
-class SettingsController {
+class Skip404Controller {
 
 	/**
 	 * The REST route namespace.
@@ -22,7 +22,7 @@ class SettingsController {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/settings';
+	protected $rest_base = '/skip404';
 
 	/**
 	 * Register API routes.
@@ -59,7 +59,7 @@ class SettingsController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( "The parameter 'field' is missing or invalid.", 'newfold-performance-module' ),
+						'error'   => __( "The parameter 'field' is missing or invalid.", 'wp-module-performance' ),
 					),
 					400
 				);
@@ -71,7 +71,7 @@ class SettingsController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( "The fields 'id' and 'value' are required.", 'newfold-performance-module' ),
+						'error'   => __( "The fields 'id' and 'value' are required.", 'wp-module-performance' ),
 					),
 					400
 				);
@@ -79,7 +79,7 @@ class SettingsController {
 
 			switch ( $field['id'] ) {
 				case 'skip404':
-					$result = update_option( Skip404::OPTION_SKIP_404, $field['value'] );
+					$result = update_option( Skip404::OPTION_NAME, $field['value'] );
 					break;
 
 				default:
@@ -90,7 +90,7 @@ class SettingsController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ),
+						'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ),
 					),
 					500
 				);
@@ -110,7 +110,7 @@ class SettingsController {
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ) . $e->getMessage(),
+					'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ) . $e->getMessage(),
 				),
 				500
 			);
