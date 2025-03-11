@@ -17,7 +17,7 @@ const Skip404 = ( { methods, constants } ) => {
 	const handleSkip404Change = () => {
 		const value = ! skip404;
 		apiFetch( {
-			path: 'newfold-performance/v1/settings',
+			path: 'newfold-performance/v1/skip404',
 			method: 'POST',
 			data: {
 				field: {

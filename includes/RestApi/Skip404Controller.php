@@ -8,7 +8,7 @@ use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
  *
  * @package NewfoldLabs\WP\Module\Performance
  */
-class SettingsController {
+class Skip404Controller {
 
 	/**
 	 * The REST route namespace.
@@ -22,7 +22,7 @@ class SettingsController {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/settings';
+	protected $rest_base = '/skip404';
 
 	/**
 	 * Register API routes.

@@ -6,7 +6,6 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\File;
-use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
@@ -56,7 +55,6 @@ class CacheFeatureHooks {
 	 * Activation hook to perform when plugin is activated or feature is enabled
 	 */
 	public function on_activation() {
-		// Skip404::on_activation();
 		File::on_activation();
 		Browser::on_activation();
 		// Add headers to .htaccess
@@ -68,7 +66,6 @@ class CacheFeatureHooks {
 	 * Deactivation hook to perform when plugin is deactivated or feature is disabled
 	 */
 	public function on_deactivation() {
-		// Skip404::on_deactivation();
 		File::on_deactivation();
 		Browser::on_deactivation();
 		// Remove all headers from .htaccess
