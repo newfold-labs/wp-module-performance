@@ -14,6 +14,7 @@ use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
 use function NewfoldLabs\WP\Module\Performance\removeDirectory;
 use function NewfoldLabs\WP\Module\Performance\shouldCachePages;
 use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
+use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
 /**
  * File cache type.
@@ -76,7 +77,8 @@ class File extends CacheBase implements Purgeable {
 	 * @param  int $cacheLevel  The caching level.
 	 */
 	public static function maybeAddRules( $cacheLevel ) {
-		absint( $cacheLevel ) > 1 ? self::addRules() : self::removeRules();
+		$brand = getContainer()->plugin()->brand;
+		absint( $cacheLevel ) > 1 && 'bluehost' !== $brand && 'hostgator' !== $brand ? self::addRules() : self::removeRules();
 	}
 
 	/**
