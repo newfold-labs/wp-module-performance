@@ -74,7 +74,7 @@ class JetpackBoost {
 	 * @return boolean
 	 */
 	public function is_jetpackpremium_active() {
-		return class_exists( Boost::class ) && Boost::class::get_info()['is_upgradable'] ? ! Boost::class::get_info()['is_upgradable'] : false;
+		return class_exists( 'Boost' ) && Boost::get_info()['is_upgradable'] ? ! Boost::get_info()['is_upgradable'] : false;
 	}
 
 	/**
