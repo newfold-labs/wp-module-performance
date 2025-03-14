@@ -12,14 +12,12 @@ use Automattic\Jetpack\My_Jetpack\Products\Boost;
  */
 class JetpackBoost {
 
-
 	/**
 	 * Dependency injection container.
 	 *
 	 * @var Container
 	 */
 	protected $container;
-
 
 	/**
 	 * Constructor.
@@ -40,7 +38,6 @@ class JetpackBoost {
 		add_action( 'activated_plugin', array( $this, 'activate_jetpack_boost' ) );
 	}
 
-
 	/**
 	 * Add to Newfold SDK runtime.
 	 *
@@ -48,7 +45,6 @@ class JetpackBoost {
 	 * @return array SDK data.
 	 */
 	public function add_to_runtime( $sdk ) {
-
 		$is_jetpack_boost_enabled = is_plugin_active( 'jetpack-boost/jetpack-boost.php' );
 
 		$values = array(
@@ -66,15 +62,20 @@ class JetpackBoost {
 		return array_merge( $sdk, array( 'jetpackboost' => $values ) );
 	}
 
-
-
 	/**
 	 * Check if Jetpack Boost premium is active.
 	 *
 	 * @return boolean
 	 */
 	public function is_jetpackpremium_active() {
-		return class_exists( Boost::class ) && Boost::class::get_info()['is_upgradable'] ? ! Boost::class::get_info()['is_upgradable'] : false;
+		if ( ! class_exists( Boost::class ) ) {
+			return false;
+		}
+
+		$info = Boost::get_info();
+		return array_key_exists( 'is_upgradable', $info )
+			? ! $info['is_upgradable']
+			: false;
 	}
 
 	/**
@@ -86,7 +87,6 @@ class JetpackBoost {
 		$admin_url = admin_url( 'admin.php?page=jetpack-boost' );
 		echo '<link rel="prefetch" href="' . esc_url( $admin_url ) . '">' . "\n";
 	}
-
 
 	/**
 	 * Set default values for JetPack Boost.
