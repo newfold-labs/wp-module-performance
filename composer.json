@@ -39,7 +39,7 @@
 	  "newfold-labs/wp-php-standards": "^1.2.4",
 	  "wp-cli/wp-cli-bundle": "^2.11",
 	  "wp-cli/i18n-command": "^2.6",
-	  "10up/wp_mock": "^1.0"
+	  "10up/wp_mock": "^1.1"
 	},
 	"scripts": {
 		"test": "phpunit --bootstrap tests/phpunit/bootstrap.php",
