@@ -252,7 +252,7 @@ class Performance {
 			$wp_admin_bar->remove_node( 'epc_purge_menu' );
 		}
 
-		if ( current_user_can( 'manage_options' ) && CacheManager::get_cache_level() > 0 ) {
+		if ( current_user_can( 'manage_options' ) ) {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => 'nfd_purge_menu',
@@ -260,24 +260,27 @@ class Performance {
 				)
 			);
 
-			$wp_admin_bar->add_node(
-				array(
-					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'newfold-module-performance' ),
-					'parent' => 'nfd_purge_menu',
-					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
-				)
-			);
-
-			if ( ! is_admin() ) {
+			$cache_level = CacheManager::get_cache_level();
+			if ( $cache_level > 0 ) {
 				$wp_admin_bar->add_node(
 					array(
-						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+						'id'     => 'nfd_purge_menu-purge_all',
+						'title'  => __( 'Purge All', 'newfold-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+						'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 					)
 				);
+
+				if ( ! is_admin() ) {
+					$wp_admin_bar->add_node(
+						array(
+							'id'     => 'nfd_purge_menu-purge_single',
+							'title'  => __( 'Purge This Page', 'newfold-module-performance' ),
+							'parent' => 'nfd_purge_menu',
+							'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+						)
+					);
+				}
 			}
 
 			$brand = $this->container->get( 'plugin' )['id'];
