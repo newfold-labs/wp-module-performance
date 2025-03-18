@@ -6,7 +6,6 @@ namespace NewfoldLabs\WP\Module\Performance\Images;
  * Manages the registration and sanitization of image optimization settings.
  */
 class ImageSettings {
-
 	/**
 	 * The setting key for image optimization.
 	 */
@@ -19,14 +18,19 @@ class ImageSettings {
 	 */
 	private const DEFAULT_SETTINGS = array(
 		'enabled'                            => true,
-		'bulk_optimization'                  => false,
-		'prefer_optimized_image_when_exists' => false,
+		'bulk_optimization'                  => true,
+		'prefer_optimized_image_when_exists' => true,
 		'auto_optimized_uploaded_images'     => array(
-			'enabled'                    => false,
+			'enabled'                    => true,
 			'auto_delete_original_image' => false,
 		),
 		'lazy_loading'                       => array(
 			'enabled' => true,
+		),
+		'banned_status'                      => false,
+		'monthly_usage'                      => array(
+			'monthlyRequestCount' => 0,
+			'maxRequestsPerMonth' => 100000,
 		),
 	);
 
@@ -96,6 +100,27 @@ class ImageSettings {
 								'description' => __( 'Enable bulk optimization of images.', 'wp-module-performance' ),
 								'default'     => self::DEFAULT_SETTINGS['bulk_optimization'],
 							),
+							'banned_status'     => array(
+								'type'        => 'boolean',
+								'description' => __( 'Indicates if the site is banned from image optimization.', 'wp-module-performance' ),
+								'default'     => self::DEFAULT_SETTINGS['banned_status'],
+							),
+							'monthly_usage'     => array(
+								'type'        => 'object',
+								'description' => __( 'Monthly usage statistics for image optimization.', 'wp-module-performance' ),
+								'properties'  => array(
+									'monthlyRequestCount' => array(
+										'type'        => 'integer',
+										'description' => __( 'Number of requests made this month.', 'wp-module-performance' ),
+										'default'     => self::DEFAULT_SETTINGS['monthly_usage']['monthlyRequestCount'],
+									),
+									'maxRequestsPerMonth' => array(
+										'type'        => 'integer',
+										'description' => __( 'Maximum allowed requests per month.', 'wp-module-performance' ),
+										'default'     => self::DEFAULT_SETTINGS['monthly_usage']['maxRequestsPerMonth'],
+									),
+								),
+							),
 						),
 						'additionalProperties' => false,
 					),
@@ -110,8 +135,7 @@ class ImageSettings {
 	private function initialize_settings() {
 		$current_settings = get_option( self::SETTING_KEY, false );
 
-		// If the settings do not exist, initialize them with default values.
-		if ( false === $current_settings ) {
+		if ( false === $current_settings || ! is_array( $current_settings ) ) {
 			add_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
 		}
 	}
@@ -123,17 +147,28 @@ class ImageSettings {
 	 * @return array The sanitized settings.
 	 */
 	public function sanitize_settings( $settings ) {
+		$existing_settings = get_option( self::SETTING_KEY, array() );
+
+		if ( ! is_array( $settings ) ) {
+			$settings = array();
+		}
+
 		return array(
-			'enabled'                            => ! empty( $settings['enabled'] ),
-			'prefer_optimized_image_when_exists' => ! empty( $settings['prefer_optimized_image_when_exists'] ),
+			'enabled'                            => isset( $settings['enabled'] ) ? ! empty( $settings['enabled'] ) : ( ! empty( $existing_settings['enabled'] ) ),
+			'prefer_optimized_image_when_exists' => isset( $settings['prefer_optimized_image_when_exists'] ) ? ! empty( $settings['prefer_optimized_image_when_exists'] ) : ( ! empty( $existing_settings['prefer_optimized_image_when_exists'] ) ),
 			'auto_optimized_uploaded_images'     => array(
-				'enabled'                    => ! empty( $settings['auto_optimized_uploaded_images']['enabled'] ),
-				'auto_delete_original_image' => ! empty( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] ),
+				'enabled'                    => isset( $settings['auto_optimized_uploaded_images']['enabled'] ) ? ! empty( $settings['auto_optimized_uploaded_images']['enabled'] ) : ( ! empty( $existing_settings['auto_optimized_uploaded_images']['enabled'] ) ),
+				'auto_delete_original_image' => isset( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] ) ? ! empty( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] ) : ( ! empty( $existing_settings['auto_optimized_uploaded_images']['auto_delete_original_image'] ) ),
 			),
 			'lazy_loading'                       => array(
-				'enabled' => ! empty( $settings['lazy_loading']['enabled'] ),
+				'enabled' => isset( $settings['lazy_loading']['enabled'] ) ? ! empty( $settings['lazy_loading']['enabled'] ) : ( ! empty( $existing_settings['lazy_loading']['enabled'] ) ),
 			),
-			'bulk_optimization'                  => ! empty( $settings['bulk_optimization'] ),
+			'bulk_optimization'                  => isset( $settings['bulk_optimization'] ) ? ! empty( $settings['bulk_optimization'] ) : ( ! empty( $existing_settings['bulk_optimization'] ) ),
+			'banned_status'                      => isset( $settings['banned_status'] ) ? ! empty( $settings['banned_status'] ) : ( ! empty( $existing_settings['banned_status'] ) ),
+			'monthly_usage'                      => array(
+				'monthlyRequestCount' => isset( $settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $settings['monthly_usage']['monthlyRequestCount'] : ( isset( $existing_settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $existing_settings['monthly_usage']['monthlyRequestCount'] : 0 ),
+				'maxRequestsPerMonth' => isset( $settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $settings['monthly_usage']['maxRequestsPerMonth'] : ( isset( $existing_settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $existing_settings['monthly_usage']['maxRequestsPerMonth'] : 100000 ),
+			),
 		);
 	}
 
@@ -198,12 +233,64 @@ class ImageSettings {
 	}
 
 	/**
+	 * Checks if the site is banned from image optimization.
+	 *
+	 * @return bool True if the site is banned, false otherwise.
+	 */
+	public static function is_banned() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		return ! empty( $settings['banned_status'] );
+	}
+
+	/**
+	 * Retrieves the monthly usage statistics for image optimization.
+	 *
+	 * @return array An array containing `monthlyRequestCount` and `maxRequestsPerMonth`.
+	 */
+	public static function get_monthly_usage() {
+		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+
+		// Ensure monthly_usage exists and return default values if not set
+		return isset( $settings['monthly_usage'] ) && is_array( $settings['monthly_usage'] )
+		? $settings['monthly_usage']
+		: array(
+			'monthlyRequestCount' => 0,
+			'maxRequestsPerMonth' => 100000,
+		);
+	}
+
+	/**
 	 * Retrieves the image optimization settings.
 	 *
-	 * @return array The current image optimization settings.
+	 * @param bool $call_worker Whether to fetch the latest monthly usage from the worker. Default is true.
+	 *
+	 * @return array The current image optimization settings, including monthly usage and banned status.
 	 */
-	public static function get() {
-		return get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+	public static function get( $call_worker = true ) {
+		$settings = get_option( self::SETTING_KEY, array() );
+
+		if ( ! is_array( $settings ) ) {
+			$settings = self::DEFAULT_SETTINGS;
+		}
+
+		if ( ! isset( $settings['banned_status'] ) ) {
+			$settings['banned_status'] = self::is_banned();
+		}
+
+		if ( $call_worker && ( empty( $settings['monthly_usage'] ) || ! is_array( $settings['monthly_usage'] ) ) ) {
+			$usage_data = ( new ImageService() )->get_monthly_usage_limit( true );
+			if ( ! is_wp_error( $usage_data ) ) {
+				$settings['monthly_usage'] = $usage_data;
+				update_option( self::SETTING_KEY, $settings );
+			} else {
+				$settings['monthly_usage'] = isset( $settings['monthly_usage'] ) ? $settings['monthly_usage'] : array(
+					'monthlyRequestCount' => 0,
+					'maxRequestsPerMonth' => 100000,
+				);
+			}
+		}
+
+		return $settings;
 	}
 
 	/**

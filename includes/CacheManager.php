@@ -3,6 +3,7 @@
 namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
+use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use WP_Forge\Collection\Collection;
 
@@ -39,6 +40,8 @@ class CacheManager {
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
+
+		add_action( 'init', array( $this, 'remove_file_cache_htaccess_for_bh_hg' ) );
 	}
 
 	/**
@@ -117,5 +120,18 @@ class CacheManager {
 	 */
 	public static function get_cache_level() {
 		return (int) get_option( self::OPTION_CACHE_LEVEL, 0 );
+	}
+
+	/**
+	 * Remove the .htaccess rules for the file cache if the brand is Bluehost or HostGator.
+	 */
+	public function remove_file_cache_htaccess_for_bh_hg() {
+		$brand       = $this->container->plugin()->brand;
+		$fixed_bh_hg = get_option( 'nfd_file_cache_fixed_bh_hg', false );
+		if ( ( 'bluehost' === $brand || 'hostgator' !== $brand ) && ! $fixed_bh_hg ) {
+			File::removeRules();
+			update_option( 'nfd_file_cache_fixed_bh_hg', true );
+			return;
+		}
 	}
 }

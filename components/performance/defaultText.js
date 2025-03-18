@@ -182,7 +182,16 @@ const defaultText = {
 		'Something went wrong while updating the settings. Please try again.',
 		'wp-module-performance'
 	),
-
+	imageOptimizationBannedMessage: __(
+		'This site no longer qualifies for image optimization as it has reached its usage limits.',
+		'wp-module-performance'
+	),
+	imageOptimizationUsage: __( 'Usage:', 'wp-module-performance' ),
+	imageOptimizationProcessed: __(
+		'images processed of',
+		'wp-module-performance'
+	),
+	imageOptimizationPerMonth: __( '/month', 'wp-module-performance' ),
 	linkPrefetchDescription: __(
 		'Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.',
 		'wp-module-performance'
@@ -265,12 +274,32 @@ const defaultText = {
 		'Optimize Critical CSS Loading (manual)',
 		'wp-module-performance'
 	),
-	jetpackBoostCriticalCssDescription: __(
-		'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.',
-		'wp-module-performance'
+	jetpackBoostCriticalCssDescription: sprintf(
+		// translators: %1$s is a line break (<br>) tag.
+		__(
+			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s You should regenerate your Critical CSS whenever you make changes to the HTML or CSS structure of your site.',
+			'wp-module-performance'
+		),
+		'<br><br>',
 	),
 	jetpackBoostCriticalCssPremiumTitle: __(
 		'Optimize Critical CSS Loading (UPGRADED)',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssButton: __(
+		'Generate CSS',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssGenerattionSuccess: __(
+		'Critical CSS generated successfully.',
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssGenerationText: __(
+		"Keep this page opened until the process finish",
+		'wp-module-performance'
+	),
+	jetpackBoostCriticalCssGenerationIssue: __(
+		"Error generating Critical CSS, try again",
 		'wp-module-performance'
 	),
 	jetpackBoostCriticalCssUpgradeTitle: __(
@@ -283,9 +312,18 @@ const defaultText = {
 			'Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.',
 			'wp-module-performance'
 		),
-		'<br>',
+		'<br><br>',
 		'<strong>',
 		'</strong>'
+	),
+	jetpackBoostCriticalCssModalDescription: sprintf(
+		// translators: %1$s is a line break (<p>), %2$s is the opening </p> tag.
+		__(
+			"%1$sThe manual generation of your Critical CSS will be launched now and you'll be redirected to Jetpack Boost page to track the progress.%2$s%1$sDo you want proceed?%2$s",
+			'wp-module-performance'
+		),
+		'<p>',
+		'</p>',
 	),
 	jetpackBoostRenderBlockingTitle: __(
 		'Defer Non-Essential JavaScript',
@@ -340,6 +378,7 @@ const defaultText = {
 		'Discover more %1$shere%2$s',
 		'wp-module-performance'
 	),
+	lockedBadgeText : __( 'Locked', 'wp-module-performance' ),
 	optionSet: __( 'Option saved correctly', 'wp-module-performance' ),
 	optionNotSet: __( 'Error saving option', 'wp-module-performance' ),
 	upgradeModule: __( 'Upgrade to unlock', 'wp-module-performance' ),

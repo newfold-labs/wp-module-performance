@@ -1,6 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
+use Automattic\Jetpack_Boost\Lib\Critical_CSS\Data_Sync_Actions\Regenerate_CSS;
+use NewfoldLabs\WP\Module\Performance\Permissions;
+
 /**
  * Class JetpackController
  *
@@ -48,6 +51,17 @@ class JetpackController {
 				),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/regenerate_critical_css',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'regenerate_critical_css' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -64,7 +78,7 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( "The parameter 'field' is missing or invalid.", 'newfold-performance-module' ),
+						'error'   => __( "The parameter 'field' is missing or invalid.", 'wp-module-performance' ),
 					),
 					400
 				);
@@ -76,13 +90,16 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( "The fields 'id' and 'value' are required.", 'newfold-performance-module' ),
+						'error'   => __( "The fields 'id' and 'value' are required.", 'wp-module-performance' ),
 					),
 					400
 				);
 			}
 
-			if ( 'critical-css-premium' === $field['id'] ) {
+			if ( 'critical-css' === $field['id'] && 1 === (int) $field['value'] && class_exists( 'Automattic\Jetpack_Boost\Lib\Critical_CSS\Data_Sync_Actions\Regenerate_CSS' ) ) {
+				$css = new Regenerate_CSS();
+				$css->handle( null, null );
+			} elseif ( 'critical-css-premium' === $field['id'] ) {
 				$field['id'] = 'critical-css';
 			}
 
@@ -100,7 +117,7 @@ class JetpackController {
 				return new \WP_REST_Response(
 					array(
 						'success' => false,
-						'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ),
+						'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ),
 					),
 					500
 				);
@@ -120,9 +137,49 @@ class JetpackController {
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
-					'error'   => __( 'An error occurred while updating the option.', 'newfold-performance-module' ) . $e->getMessage(),
+					'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ) . $e->getMessage(),
 				),
 				500
+			);
+		}
+	}
+
+	/**
+	 * Regenerate Critical CSS.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function regenerate_critical_css() {
+		try {
+			$css    = new Regenerate_CSS();
+			$result = $css->handle( null, null );
+
+			if ( ! empty( $result['success'] ) && $result['success'] ) {
+				// Success response.
+				return new \WP_REST_Response(
+					array(
+						'success' => true,
+					),
+					200
+				);
+			} else {
+				// Case where the process did not throw an exception but failed.
+				return new \WP_REST_Response(
+					array(
+						'success' => false,
+						'error'   => __( 'Failed to regenerate critical CSS.', 'wp-module-performance' ),
+					),
+					400 // Bad Request
+				);
+			}
+		} catch ( \Exception $e ) {
+			// Exception handling.
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'error'   => __( 'An error occurred while regenerating critical CSS.', 'wp-module-performance' ) . $e->getMessage(),
+				),
+				500 // Internal Server Error
 			);
 		}
 	}
