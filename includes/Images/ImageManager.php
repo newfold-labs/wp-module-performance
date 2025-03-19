@@ -37,7 +37,7 @@ class ImageManager {
 	 * @param Container $container Dependency injection container.
 	 */
 	private function initialize_services( Container $container ) {
-		$this->maybe_initialize_upload_listener();
+		$this->initialize_upload_listener();
 		$this->maybe_initialize_lazy_loader();
 		$this->maybe_initialize_bulk_optimizer();
 		$this->maybe_initialize_rest_api();
@@ -49,10 +49,8 @@ class ImageManager {
 	/**
 	 * Initializes the ImageUploadListener if auto-optimization is enabled.
 	 */
-	private function maybe_initialize_upload_listener() {
-		if ( ImageSettings::is_optimization_enabled() && ImageSettings::is_auto_optimization_enabled() ) {
-			new ImageUploadListener( ImageSettings::is_auto_delete_enabled() );
-		}
+	private function initialize_upload_listener() {
+		new ImageUploadListener( ImageSettings::is_auto_delete_enabled() );
 	}
 
 	/**
