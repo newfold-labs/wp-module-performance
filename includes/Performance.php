@@ -4,7 +4,6 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use Automattic\Jetpack\Current_Plan;
 
-use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
@@ -14,7 +13,10 @@ use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 use NewfoldLabs\WP\Module\Performance\Cache\Cache;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
-use NFD_CLI;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
+use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
+
+use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
 /**
  * Main class for the performance module.
@@ -63,6 +65,8 @@ class Performance {
 
 		new LinkPrefetch( $container );
 
+		new JetpackBoost( $container );
+
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 
@@ -71,8 +75,6 @@ class Performance {
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-
-		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
@@ -84,6 +86,8 @@ class Performance {
 	 * @param Container $container the container.
 	 */
 	public function configureContainer( Container $container ) {
+
+		$is_apache = false;
 
 		// Ensure $is_apache is properly set, with a fallback for WP-CLI environment
 		if ( NFD_WPCLI::is_executing_wp_cli() ) {
@@ -197,7 +201,6 @@ class Performance {
 		return 1000;
 	}
 
-
 	/**
 	 * Add options to the WordPress admin bar.
 	 *
@@ -218,24 +221,27 @@ class Performance {
 				)
 			);
 
-			$wp_admin_bar->add_node(
-				array(
-					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'wp-module-performance' ),
-					'parent' => 'nfd_purge_menu',
-					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
-				)
-			);
-
-			if ( ! is_admin() ) {
+			$cache_level = get_cache_level();
+			if ( $cache_level > 0 ) {
 				$wp_admin_bar->add_node(
 					array(
-						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'wp-module-performance' ),
+						'id'     => 'nfd_purge_menu-purge_all',
+						'title'  => __( 'Purge All', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+						'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 					)
 				);
+
+				if ( ! is_admin() ) {
+					$wp_admin_bar->add_node(
+						array(
+							'id'     => 'nfd_purge_menu-purge_single',
+							'title'  => __( 'Purge This Page', 'wp-module-performance' ),
+							'parent' => 'nfd_purge_menu',
+							'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+						)
+					);
+				}
 			}
 
 			$brand = $this->container->get( 'plugin' )['id'];
@@ -273,48 +279,5 @@ class Performance {
 			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
 			wp_enqueue_style( 'wp-module-performance-styles' );
 		}
-	}
-
-	/**
-	 * Add to Newfold SDK runtime.
-	 *
-	 * @param array $sdk SDK data.
-	 * @return array SDK data.
-	 */
-	public function add_to_runtime( $sdk ) {
-		$values = array(
-			'jetpack_boost_is_active'           => defined( 'JETPACK_BOOST_VERSION' ),
-			'jetpack_boost_premium_is_active'   => $this->is_jetpackboost_active(),
-			'jetpack_boost_critical_css'        => get_option( 'jetpack_boost_status_critical-css' ),
-			'jetpack_boost_blocking_js'         => get_option( 'jetpack_boost_status_render-blocking-js' ),
-			'jetpack_boost_minify_js'           => get_option( 'jetpack_boost_status_minify-js', array() ),
-			'jetpack_boost_minify_js_excludes'  => implode( ',', get_option( 'jetpack_boost_ds_minify_js_excludes', array( 'jquery', 'jquery-core', 'underscore', 'backbone' ) ) ),
-			'jetpack_boost_minify_css'          => get_option( 'jetpack_boost_status_minify-css', array() ),
-			'jetpack_boost_minify_css_excludes' => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
-			'install_token'                     => PluginInstaller::rest_get_plugin_install_hash(),
-		);
-
-		return array_merge( $sdk, array( 'performance' => $values ) );
-	}
-
-
-	/**
-	 * Check if Jetpack Boost premium is active.
-	 *
-	 * @return boolean
-	 */
-	public function is_jetpackboost_active() {
-		$exists = false;
-		if ( class_exists( 'Automattic\Jetpack\Current_Plan' ) ) {
-			$products = Current_Plan::get_products();
-			foreach ( $products as $product ) {
-				if ( isset( $product['product_slug'] ) && strpos( $product['product_slug'], 'jetpack-boost' ) !== false ) {
-					$exists = true;
-					break;
-				}
-			}
-		}
-
-		return $exists;
 	}
 }
