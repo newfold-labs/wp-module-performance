@@ -6,6 +6,8 @@ const ClearCache = ( { methods, constants } ) => {
 		'/newfold-performance/v1/cache/settings'
 	);
 
+	const { store, setStore } = methods.useContext( methods.AppStore );
+
 	const clearCache = () => {
 
 
@@ -28,7 +30,7 @@ const ClearCache = ( { methods, constants } ) => {
 			} );
 	};
 
-	const cacheLevel = constants.store.cacheLevel ?? methods.NewfoldRuntime.sdk.cache.level;
+	const cacheLevel = store.cacheLevel ?? methods.NewfoldRuntime.sdk.cache.level;
 
 
 	return (

@@ -3,8 +3,11 @@ import { Container, RadioGroup } from '@newfold/ui-component-library';
 
 const CacheSettings = ( { methods, constants, Components } ) => {
 	const [ cacheLevel, setCacheLevel ] = methods.useState(
-		constants.store.cacheLevel
+		methods.NewfoldRuntime.sdk.cache.level
 	);
+
+	const { store, setStore } = methods.useContext( methods.AppStore );
+
 
 	const apiUrl = methods.NewfoldRuntime.createApiUrl(
 		'/newfold-performance/v1/cache/settings'
@@ -53,7 +56,7 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 	};
 
 	const getCacheLevelNoticeText = () => {
-		return cacheOptions[ cacheLevel ].notice;
+		return cacheOptions[ store.cacheLevel ].notice;
 	};
 
 	const handleCacheLevelChange = ( e ) => {
@@ -66,7 +69,11 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 			} )
 			.then( () => {
 				setCacheLevel( parseInt( e.target.value ) );
-				constants.store.cacheLevel = parseInt( e.target.value );
+
+				setStore(prevState => ({
+					...prevState,
+					cacheLevel: parseInt( e.target.value ),
+				}))
 			} )
 			.catch( ( error ) => {
 				methods.setError

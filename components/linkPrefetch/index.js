@@ -10,6 +10,8 @@ const LinkPrefetch = ( { methods, constants } ) => {
 	const [ settings, setSettings ] = methods.useState(
 		methods.NewfoldRuntime.sdk.linkPrefetch.settings
 	);
+	const { store, setStore } = methods.useContext( methods.AppStore );
+
 	const [ ignoreKeywords, setIgnoreKeywords ] = methods.useState(
 		settings.ignoreKeywords
 	);
@@ -45,10 +47,11 @@ const LinkPrefetch = ( { methods, constants } ) => {
 	};
 
 	methods.useUpdateEffect( () => {
-		methods.setStore( {
-			...constants.store,
+
+		setStore(prevState => ({
+			...prevState,
 			linkPrefetch: settings,
-		} );
+		}))
 
 		methods.makeNotice(
 			'link-prefetch-change-notice',
