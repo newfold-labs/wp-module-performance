@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
+use function NewfoldLabs\WP\Module\Performance\get_cache_exclusion;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
 /**
@@ -38,6 +39,8 @@ class Cache {
 		$this->hooks();
 
 		add_action( 'plugins_loaded', array( $this, 'hooks2' ) );
+
+		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
 
 	/**
@@ -79,5 +82,21 @@ class Cache {
 			update_option( 'endurance_cache_level', 0 );
 			delete_option( 'endurance_cache_level' );
 		}
+	}
+
+	/**
+	 * Add to Newfold SDK runtime.
+	 *
+	 * @param array $sdk SDK data.
+	 * @return array SDK data.
+	 */
+	public function add_to_runtime( $sdk ) {
+
+		$values = array(
+			'level'     => get_cache_level(),
+			'exclusion' => get_cache_exclusion(),
+		);
+
+		return array_merge( $sdk, array( 'cache' => $values ) );
 	}
 }

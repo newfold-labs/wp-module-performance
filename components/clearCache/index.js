@@ -1,11 +1,20 @@
 import { Button, Container } from '@newfold/ui-component-library';
 
 const ClearCache = ( { methods, constants } ) => {
+
+	const apiUrl = methods.NewfoldRuntime.createApiUrl(
+		'/newfold-performance/v1/cache/settings'
+	);
+
 	const clearCache = () => {
-		methods.newfoldPurgeCacheApiFetch(
-			{},
-			methods.setError,
-			( response ) => {
+
+
+		methods
+			.apiFetch( {
+				url: apiUrl,
+				method: 'DELETE',
+			} )
+			.then( () => {
 				methods.makeNotice(
 					'disable-old-posts-comments-notice',
 					constants.text.clearCacheNoticeTitle,
@@ -13,9 +22,14 @@ const ClearCache = ( { methods, constants } ) => {
 					'success',
 					5000
 				);
-			}
-		);
+			} )
+			.catch( ( error ) => {
+				methods.setError( error )
+			} );
 	};
+
+	const cacheLevel = constants.store.cacheLevel ?? methods.NewfoldRuntime.sdk.cache.level;
+
 
 	return (
 		<Container.SettingsField
@@ -25,7 +39,7 @@ const ClearCache = ( { methods, constants } ) => {
 			<Button
 				variant="secondary"
 				className="clear-cache-button"
-				disabled={ constants.store.cacheLevel > 0 ? false : true }
+				disabled={ cacheLevel > 0 ? false : true }
 				onClick={ clearCache }
 			>
 				{ constants.text.clearCacheButton }

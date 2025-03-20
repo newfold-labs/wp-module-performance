@@ -6,6 +6,10 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 		constants.store.cacheLevel
 	);
 
+	const apiUrl = methods.NewfoldRuntime.createApiUrl(
+		'/newfold-performance/v1/cache/settings'
+	);
+
 	const cacheOptions = [
 		{
 			label: constants.text.cacheLevel0Label,
@@ -53,21 +57,23 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 	};
 
 	const handleCacheLevelChange = ( e ) => {
-		methods.newfoldSettingsApiFetch(
-			{ cacheLevel: parseInt( e.target.value ) },
-			methods.setError,
-			() => {
+
+		methods
+			.apiFetch( {
+				url: apiUrl,
+				method: 'POST',
+				data: { cacheLevel: parseInt( e.target.value ) },
+			} )
+			.then( () => {
 				setCacheLevel( parseInt( e.target.value ) );
-			}
-		);
+				constants.store.cacheLevel = parseInt( e.target.value );
+			} )
+			.catch( ( error ) => {
+				methods.setError
+			} );
 	};
 
 	methods.useUpdateEffect( () => {
-		methods.setStore( {
-			...constants.store,
-			cacheLevel,
-		} );
-
 		methods.makeNotice(
 			'cache-level-change-notice',
 			getCacheLevelNoticeTitle(),
@@ -95,7 +101,7 @@ const CacheSettings = ( { methods, constants, Components } ) => {
 								<RadioGroup.Radio
 									defaultChecked={
 										option.value ===
-										constants.store.cacheLevel
+										methods.NewfoldRuntime.sdk.cache.level
 									}
 									id={ 'cache-level-' + option.value }
 									label={ option.label }

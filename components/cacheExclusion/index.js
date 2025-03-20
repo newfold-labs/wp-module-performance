@@ -9,13 +9,16 @@ const CacheExclusion = ( { methods, constants } ) => {
 	const [ isError, setIsError ] = methods.useState( false );
 	const [ isSaved, setIsSaved ] = methods.useState( false );
 	const [ currentValue, setCurrentValue ] = methods.useState(
-		methods.NewfoldRuntime.sdk.cacheExclusion
+		methods.NewfoldRuntime.sdk.cache.exclusion
 	);
+
 	const [ cacheExclusion, setCacheExclusion ] = methods.useState(
-		methods.NewfoldRuntime.sdk.cacheExclusion
+		methods.NewfoldRuntime.sdk.cache.exclusion
 	);
+
+
 	const apiUrl = methods.NewfoldRuntime.createApiUrl(
-		'/newfold-performance/v1/cache-exclusion/update'
+		'/newfold-performance/v1/cache/settings'
 	);
 
 	const handleCacheExclusionChange = ( e ) => {
@@ -45,18 +48,17 @@ const CacheExclusion = ( { methods, constants } ) => {
 	};
 
 	methods.useUpdateEffect( () => {
-		methods.setStore( {
-			...constants.store,
-			CacheExclusion: cacheExclusion,
-		} );
 
 		methods.makeNotice(
-			'cache-exlusion-notice',
+			'cache-exclusion-notice',
 			constants.text.cacheExclusionTitle,
 			! isError ? constants.text.cacheExclusionSaved : isError,
 			! isError ? 'success' : 'error',
 			5000
 		);
+
+		setIsSaved( false );
+
 	}, [ isSaved, isError ] );
 
 	return (

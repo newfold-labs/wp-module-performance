@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 
 /**
  * Return defaul exclusions.
@@ -21,6 +22,15 @@ function get_default_cache_exclusions() {
  */
 function get_cache_level() {
 	return absint( get_option( CacheManager::OPTION_CACHE_LEVEL, 2 ) );
+}
+
+/**
+ * Get the cache exclusion.
+ *
+ * @return int Cache exclusion.
+ */
+function get_cache_exclusion() {
+	return get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() );
 }
 
 /**
