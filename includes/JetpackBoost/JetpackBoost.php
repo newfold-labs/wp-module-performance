@@ -33,9 +33,6 @@ class JetpackBoost {
 
 		// Set default values for JetPack Boost on fresh installation.
 		add_action( 'admin_init', array( $this, 'handle_jetpack_boost_default_values' ) );
-
-		// Activate Jetpack Boost on fresh installatin.
-		add_action( 'activated_plugin', array( $this, 'activate_jetpack_boost' ) );
 	}
 
 	/**
@@ -98,24 +95,6 @@ class JetpackBoost {
 	public function handle_jetpack_boost_default_values() {
 		if ( $this->container->has( 'isFreshInstallation' ) && $this->container->get( 'isFreshInstallation' ) && is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) ) {
 			update_option( 'jetpack_boost_status_render-blocking-js', true );
-		}
-	}
-
-
-	/**
-	 * Activate Jetpack Boost automatically on fresh installation
-	 *
-	 * @param string $plugin Plugin just activated.
-	 * @return void
-	 */
-	public function activate_jetpack_boost( $plugin ) {
-		if ( $this->container->plugin()->basename === $plugin &&
-			$this->container->has( 'isFreshInstallation' ) &&
-			$this->container->get( 'isFreshInstallation' ) &&
-			isset( $_REQUEST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification
-			'activate' === $_REQUEST['action'] // phpcs:ignore WordPress.Security.NonceVerification
-			) {
-			PluginInstaller::install( 'jetpack-boost', true );
 		}
 	}
 }
