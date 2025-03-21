@@ -2,7 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
+use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 
 /**
  * Return defaul exclusions.
@@ -18,43 +20,17 @@ function get_default_cache_exclusions() {
  *
  * @return int Cache level.
  */
-function getCacheLevel() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+function get_cache_level() {
 	return absint( get_option( CacheManager::OPTION_CACHE_LEVEL, 2 ) );
 }
 
 /**
- * Get available cache levels.
+ * Get the cache exclusion.
  *
- * @return string[] Cache levels.
+ * @return int Cache exclusion.
  */
-function getCacheLevels() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return array(
-		0 => 'Off',         // Disable caching.
-		1 => 'Assets Only', // Cache assets only.
-		2 => 'Normal',      // Cache pages and assets for a shorter time range.
-		3 => 'Advanced',    // Cache pages and assets for a longer time range.
-	);
-}
-
-/**
- * Output the cache level select field.
- */
-function getCacheLevelDropdown() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-
-	$cacheLevels       = getCacheLevels();
-	$currentCacheLevel = getCacheLevel();
-
-	$name  = CacheManager::OPTION_CACHE_LEVEL;
-	$label = __( 'Cache Level', 'wp-module-performance' );
-	?>
-	<select name="<?php echo esc_attr( $name ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
-		<?php foreach ( $cacheLevels as $cacheLevel => $optionLabel ) : ?>
-			<option value="<?php echo absint( $cacheLevel ); ?>"<?php selected( $cacheLevel, $currentCacheLevel ); ?>>
-				<?php echo esc_html( $optionLabel ); ?>
-			</option>
-		<?php endforeach; ?>
-	</select>
-	<?php
+function get_cache_exclusion() {
+	return get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() );
 }
 
 /**
@@ -62,26 +38,8 @@ function getCacheLevelDropdown() { // phpcs:ignore WordPress.NamingConventions.V
  *
  * @return bool Whether to skip 404 handling for static files.
  */
-function getSkip404Option() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return (bool) get_option( Skip404::OPTION_SKIP_404, true );
-}
-
-/**
- * Output the "Skip WordPress 404 Handling for Static Files" input field.
- */
-function getSkip404InputField() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	$name  = Skip404::OPTION_SKIP_404;
-	$value = getSkip404Option();
-	$label = __( 'Skip WordPress 404 Handling For Static Files', 'wp-module-performance' );
-	?>
-	<input
-		type="checkbox"
-		name="<?php echo esc_attr( $name ); ?>"
-		value="1"
-		aria-label="<?php echo esc_attr( $label ); ?>"
-		<?php checked( $value, true ); ?>
-	/>
-	<?php
+function get_skip404_option() {
+	return (bool) get_option( Skip404::OPTION_NAME, true );
 }
 
 /**
@@ -89,8 +47,8 @@ function getSkip404InputField() { // phpcs:ignore WordPress.NamingConventions.Va
  *
  * @return bool
  */
-function shouldCachePages() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return getCacheLevel() > 1;
+function should_cache_pages() {
+	return get_cache_level() > 1;
 }
 
 /**
@@ -98,8 +56,8 @@ function shouldCachePages() { // phpcs:ignore WordPress.NamingConventions.ValidF
  *
  * @return bool
  */
-function shouldCacheAssets() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return getCacheLevel() > 0;
+function should_cache_assets() {
+	return get_cache_level() > 0;
 }
 
 /**
@@ -107,15 +65,30 @@ function shouldCacheAssets() { // phpcs:ignore WordPress.NamingConventions.Valid
  *
  * @param string $path Path to the directory.
  */
-function removeDirectory( $path ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	if ( ! is_dir( $path ) ) {
+function remove_directory( $path ) {
+	global $wp_filesystem;
+
+	if ( ! function_exists( 'WP_Filesystem' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+	}
+	WP_Filesystem();
+
+	if ( ! $wp_filesystem || ! $wp_filesystem->is_dir( $path ) ) {
 		return;
 	}
-	$files = glob( $path . '/*' );
-	foreach ( $files as $file ) {
-		is_dir( $file ) ? removeDirectory( $file ) : wp_delete_file( $file );
+
+	$files = $wp_filesystem->dirlist( $path );
+
+	foreach ( $files as $file => $file_info ) {
+		$file_path = trailingslashit( $path ) . $file;
+		if ( 'f' === $file_info['type'] ) {
+			$wp_filesystem->delete( $file_path );
+		} elseif ( 'd' === $file_info['type'] ) {
+			remove_directory( $file_path );
+		}
 	}
-	rmdir( $path );
+
+	$wp_filesystem->rmdir( $path );
 }
 
 /**
@@ -126,7 +99,7 @@ function removeDirectory( $path ) { // phpcs:ignore WordPress.NamingConventions.
  *
  * @return string
  */
-function toSnakeCase( string $value, string $delimiter = '_' ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+function to_snake_case( string $value, string $delimiter = '_' ) {
 	if ( ! ctype_lower( $value ) ) {
 		$value = preg_replace( '/(\s+)/u', '', ucwords( $value ) );
 		$value = trim( mb_strtolower( preg_replace( '/([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)/u', '$1' . $delimiter, $value ), 'UTF-8' ), $delimiter );
@@ -142,7 +115,7 @@ function toSnakeCase( string $value, string $delimiter = '_' ) { // phpcs:ignore
  *
  * @return string
  */
-function toStudlyCase( $value ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+function to_studly_case( $value ) {
 	return str_replace( ' ', '', ucwords( str_replace( array( '-', '_' ), ' ', $value ) ) );
 }
 

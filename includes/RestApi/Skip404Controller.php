@@ -1,14 +1,14 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 
 /**
  * Class Settings
  *
  * @package NewfoldLabs\WP\Module\Performance
  */
-class SettingsController {
+class Skip404Controller {
 
 	/**
 	 * The REST route namespace.
@@ -22,7 +22,7 @@ class SettingsController {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = '/settings';
+	protected $rest_base = '/skip404';
 
 	/**
 	 * Register API routes.
@@ -79,7 +79,7 @@ class SettingsController {
 
 			switch ( $field['id'] ) {
 				case 'skip404':
-					$result = update_option( Skip404::OPTION_SKIP_404, $field['value'] );
+					$result = update_option( Skip404::OPTION_NAME, $field['value'] );
 					break;
 
 				default:
