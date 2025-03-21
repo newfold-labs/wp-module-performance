@@ -7,8 +7,10 @@ use NewfoldLabs\WP\Module\Performance\CacheTypes\Browser;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\File;
 use NewfoldLabs\WP\Module\Performance\CacheTypes\Skip404;
 use NewfoldLabs\WP\Module\Performance\ResponseHeaderManager;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 use function NewfoldLabs\WP\Module\Performance\getCacheLevel;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Add activation/deactivation hooks for the performance feature.
@@ -22,6 +24,8 @@ class PerformanceFeatureHooks {
 		if ( function_exists( 'add_action' ) ) {
 			add_action( 'newfold_container_set', array( $this, 'pluginHooks' ) );
 			add_action( 'plugins_loaded', array( $this, 'hooks' ) );
+            // Activate Jetpack Boost on fresh installatin.
+            add_action( 'activated_plugin', array( $this, 'activate_jetpack_boost' ) );
 		}
 	}
 
@@ -66,4 +70,22 @@ class PerformanceFeatureHooks {
 		$responseHeaderManager = new ResponseHeaderManager();
 		$responseHeaderManager->removeAllHeaders();
 	}
+
+    /**
+     * Activate Jetpack Boost automatically on fresh installation
+     *
+     * @param string $plugin Plugin just activated.
+     * @return void
+     */
+    public function activate_jetpack_boost( $plugin ) {
+        if ( container()->plugin()->basename === $plugin &&
+            container()->has( 'isFreshInstallation' ) &&
+            container()->get( 'isFreshInstallation' ) &&
+            isset( $_REQUEST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification
+            'activate' === $_REQUEST['action'] // phpcs:ignore WordPress.Security.NonceVerification
+        ) {
+            add_filter( 'wp_doing_ajax', '__return_true' );
+            PluginInstaller::install( 'jetpack-boost', true );
+        }
+    }
 }
