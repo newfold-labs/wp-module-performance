@@ -13,9 +13,10 @@ class Cloudflare extends CacheBase implements Purgeable {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
+	 * @param Container $container Dependency injection container.
 	 * @return bool True if the cache type should be enabled, false otherwise.
 	 */
-	public static function shouldEnable() {
+	public static function shouldEnable( Container $container ) {
 		return (bool) \get_option( 'endurance_cloudflare_enabled', false );
 	}
 
