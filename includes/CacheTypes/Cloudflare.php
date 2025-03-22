@@ -11,11 +11,28 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 class Cloudflare extends CacheBase implements Purgeable {
 
 	/**
+	 * Dependency injection container.
+	 *
+	 * @var Container
+	 */
+	protected $container;
+
+	/**
+	 * Cloudflare constructor.
+	 *
+	 * @param Container $container Dependency injection container.
+	 */
+	public function __construct( Container $container ) {
+		$this->container = $container;
+	}
+
+	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
+	 * @param Container $container Dependency injection container.
 	 * @return bool True if the cache type should be enabled, false otherwise.
 	 */
-	public static function shouldEnable() {
+	public static function shouldEnable( Container $container ) {
 		return (bool) \get_option( 'endurance_cloudflare_enabled', false );
 	}
 
@@ -83,10 +100,10 @@ class Cloudflare extends CacheBase implements Purgeable {
 		global $wp_version;
 
 		$queryString = http_build_query( array( 'cf' => $this->getCloudflareTier() ), '', '&' );
+		$host        = wp_parse_url( \home_url(), PHP_URL_HOST );
 
-		$host           = wp_parse_url( \home_url(), PHP_URL_HOST );
-		$plugin_brand   = $this->getContainer()->plugin()->get( 'id' );
-		$plugin_version = $this->getContainer()->plugin()->version;
+		$plugin_brand   = $this->container->plugin()->get( 'id' );
+		$plugin_version = $this->container->plugin()->version;
 
 		$headerName = 'X-' . strtoupper( $plugin_brand ) . '-PLUGIN-PURGE';
 
