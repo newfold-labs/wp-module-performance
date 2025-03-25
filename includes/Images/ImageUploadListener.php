@@ -2,6 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\Module\Performance\Data\Events;
+use NewfoldLabs\WP\Module\Performance\Services\EventService;
+
 /**
  * Listens for media uploads and manages image optimization processing.
  */
@@ -35,8 +38,33 @@ class ImageUploadListener {
 	 * Registers the WordPress hooks for listening to media uploads.
 	 */
 	private function register_hooks() {
-		add_filter( 'wp_handle_upload', array( $this, 'handle_media_upload' ), 10, 2 );
-		add_action( 'add_attachment', array( $this, 'process_attachment_metadata' ) );
+		if ( ImageSettings::is_optimization_enabled() && ImageSettings::is_auto_optimization_enabled() ) {
+			add_filter( 'wp_handle_upload', array( $this, 'handle_media_upload' ), 10, 2 );
+			add_action( 'add_attachment', array( $this, 'process_attachment_metadata' ) );
+		}
+		add_filter( 'wp_generate_attachment_metadata', array( $this, 'track_wp_image_resizes' ), 10, 2 );
+	}
+
+	/**
+	 * Tracks how many times WordPress generates image metadata.
+	 *
+	 * @param array $metadata The generated metadata for the image.
+	 * @param int   $attachment_id The attachment ID.
+	 * @return array The unchanged metadata.
+	 */
+	public function track_wp_image_resizes( $metadata, $attachment_id ) {
+		EventService::send(
+			array(
+				'category' => Events::get_category()[0],
+				'action'   => 'image_resized',
+				'data'     => array(
+					'attachment_id'   => $attachment_id,
+					'generated_sizes' => count( $metadata['sizes'] ?? array() ),
+				),
+			)
+		);
+
+		return $metadata;
 	}
 
 	/**
