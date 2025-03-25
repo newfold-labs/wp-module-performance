@@ -105,7 +105,7 @@ class ImageService {
 
 		// Handle errors from the HTTP request
 		if ( is_wp_error( $response ) ) {
-			EventService::sned(
+			EventService::send(
 				array(
 					'category' => Events::get_category()[0],
 					'action'   => 'image_transformation_failed',
