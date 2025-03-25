@@ -112,6 +112,16 @@ class CacheManager {
 
 		return $instances;
 	}
+
+	/**
+	 * Retrieves the cache level setting from the database.
+	 *
+	 * @return int The cache level value, ensuring an integer is returned.
+	 */
+	public static function get_cache_level() {
+		return (int) get_option( self::OPTION_CACHE_LEVEL, 0 );
+	}
+
 	/**
 	 * Remove the .htaccess rules for the file cache if the brand is Bluehost or HostGator.
 	 */

@@ -267,24 +267,27 @@ class Performance {
 				)
 			);
 
-			$wp_admin_bar->add_node(
-				array(
-					'id'     => 'nfd_purge_menu-purge_all',
-					'title'  => __( 'Purge All', 'wp-module-performance' ),
-					'parent' => 'nfd_purge_menu',
-					'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
-				)
-			);
-
-			if ( ! is_admin() ) {
+			$cache_level = CacheManager::get_cache_level();
+			if ( $cache_level > 0 ) {
 				$wp_admin_bar->add_node(
 					array(
-						'id'     => 'nfd_purge_menu-purge_single',
-						'title'  => __( 'Purge This Page', 'wp-module-performance' ),
+						'id'     => 'nfd_purge_menu-purge_all',
+						'title'  => __( 'Purge All', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+						'href'   => add_query_arg( array( self::PURGE_ALL => true ) ),
 					)
 				);
+
+				if ( ! is_admin() ) {
+					$wp_admin_bar->add_node(
+						array(
+							'id'     => 'nfd_purge_menu-purge_single',
+							'title'  => __( 'Purge This Page', 'wp-module-performance' ),
+							'parent' => 'nfd_purge_menu',
+							'href'   => add_query_arg( array( self::PURGE_URL => true ) ),
+						)
+					);
+				}
 			}
 
 			$brand = $this->container->get( 'plugin' )['id'];
