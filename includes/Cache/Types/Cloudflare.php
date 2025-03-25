@@ -26,12 +26,12 @@ class Cloudflare extends CacheBase implements Purgeable {
 		$this->container = $container;
 	}
 
-    /**
-     * Whether or not the code for this cache type should be loaded.
-     *
-     * @param Container $container Method container.
-     * @return bool True if the cache type should be enabled, false otherwise.
-     */
+	/**
+	 * Whether or not the code for this cache type should be loaded.
+	 *
+	 * @param Container $container Method container.
+	 * @return bool True if the cache type should be enabled, false otherwise.
+	 */
 	public static function should_enable( Container $container ) {
 		return (bool) \get_option( 'endurance_cloudflare_enabled', false );
 	}
