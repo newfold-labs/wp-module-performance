@@ -77,6 +77,7 @@ class Performance {
 
 		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
+		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
 
 		$container->set( 'cachePurger', $cachePurger );
 
@@ -314,6 +315,24 @@ class Performance {
 			5
 		);
 	}
+
+	/**
+	 * Add to the Newfold subnav.
+	 *
+	 * @param array $subnav The nav array.
+	 * @return array The filtered nav array
+	 */
+	public function add_nfd_subnav( $subnav ) {
+		$brand = $this->container->get( 'plugin' )['id'];
+		$performance = array(
+			'route'    => $brand . '#/performance',
+			'title'    => __( 'Performance', 'wp-module-performance' ),
+			'priority' => 30,
+		);
+		array_push( $subnav, $performance );
+		return $subnav;
+	}
+
 	/**
 	 * Enqueue styles and styles in admin
 	 */
