@@ -258,6 +258,7 @@ const ImageOptimizationSettings = ( { methods } ) => {
 											href={ mediaLibraryLink() }
 											target="_blank"
 											rel="noopener noreferrer"
+											className="nfd-underline"
 										>
 											{
 												defaultText.imageOptimizationBulkOptimizeButtonLabel
