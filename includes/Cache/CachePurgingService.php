@@ -1,10 +1,13 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance;
+namespace NewfoldLabs\WP\Module\Performance\Cache;
 
-use NewfoldLabs\WP\Module\Performance\CacheTypes\CacheBase;
-use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use NewfoldLabs\WP\Module\Performance\Performance;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase;
 use wpscholar\Url;
+
+use function NewfoldLabs\WP\Module\Performance\to_studly_case;
+use function NewfoldLabs\WP\Module\Performance\to_snake_case;
 
 /**
  * Cache purging service.
@@ -12,32 +15,32 @@ use wpscholar\Url;
 class CachePurgingService {
 
 	/**
-	 * Cache types.
+	 * Define cache types.
 	 *
-	 * @var CacheBase[] $cacheTypes Cache types.
+	 * @var array|CacheBase[] $cache_types Cache types.
 	 */
-	public $cacheTypes = array(); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
+	public $cache_types = array();
 
 	/**
 	 * Constructor.
 	 *
-	 * @param CacheBase[] $cacheTypes Cache types.
+	 * @param CacheBase[] $cache_types Cache types.
 	 */
-	public function __construct( array $cacheTypes ) {
+	public function __construct( array $cache_types ) {
 
-		$this->cacheTypes = $cacheTypes; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		$this->cache_types = $cache_types;
 
-		if ( $this->canPurge() ) {
+		if ( $this->can_purge() ) {
 
 			// Handle manual purge requests
-			add_action( 'init', array( $this, 'manualPurgeRequest' ) );
+			add_action( 'init', array( $this, 'manual_purge_request' ) );
 
 			// Handle automatic purging
-			add_action( 'transition_post_status', array( $this, 'onSavePost' ), 10, 3 );
-			add_action( 'edit_terms', array( $this, 'onEditTerm' ) );
-			add_action( 'comment_post', array( $this, 'onUpdateComment' ) );
-			add_action( 'updated_option', array( $this, 'onUpdateOption' ), 10, 3 );
-			add_action( 'wp_update_nav_menu', array( $this, 'purgeAll' ) );
+			add_action( 'transition_post_status', array( $this, 'on_save_post' ), 10, 3 );
+			add_action( 'edit_terms', array( $this, 'on_edit_term' ) );
+			add_action( 'comment_post', array( $this, 'on_update_comment' ) );
+			add_action( 'updated_option', array( $this, 'on_update_option' ), 10, 3 );
+			add_action( 'wp_update_nav_menu', array( $this, 'purge_all' ) );
 
 		}
 	}
@@ -47,8 +50,8 @@ class CachePurgingService {
 	 *
 	 * @return bool
 	 */
-	public function canPurge() {
-		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	public function can_purge() {
+		foreach ( $this->cache_types as $instance ) {
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				return true;
 			}
@@ -60,21 +63,21 @@ class CachePurgingService {
 	/**
 	 * Listens for purge actions and handles based on type.
 	 */
-	public function manualPurgeRequest() {
+	public function manual_purge_request() {
 
-		$purgeAll = Performance::PURGE_ALL;
-		$purgeUrl = Performance::PURGE_URL;
+		$purge_all = Performance::PURGE_ALL;
+		$purge_url = Performance::PURGE_URL;
 
-		if ( ( isset( $_GET[ $purgeAll ] ) || isset( $_GET[ $purgeUrl ] ) ) && is_user_logged_in() && current_user_can( 'manage_options' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( ( isset( $_GET[ $purge_all ] ) || isset( $_GET[ $purge_url ] ) ) && is_user_logged_in() && current_user_can( 'manage_options' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 
 			$url = new Url();
-			$url->removeQueryVar( $purgeAll );
-			$url->removeQueryVar( $purgeUrl );
+			$url->removeQueryVar( $purge_all );
+			$url->removeQueryVar( $purge_url );
 
-			if ( isset( $_GET[ $purgeAll ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$this->purgeAll();
+			if ( isset( $_GET[ $purge_all ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$this->purge_all();
 			} else {
-				$this->purgeUrl( Url::stripQueryString( $url ) );
+				$this->purge_url( Url::stripQueryString( $url ) );
 			}
 			wp_safe_redirect(
 				$url,
@@ -88,15 +91,15 @@ class CachePurgingService {
 	/**
 	 * Purge everything.
 	 */
-	public function purgeAll() {
-		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	public function purge_all() {
+		foreach ( $this->cache_types as $instance ) {
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
 				 * Purgeable instance.
 				 *
 				 * @var Purgeable $instance
 				 */
-				$instance->purgeAll();
+				$instance->purge_all();
 			}
 		}
 	}
@@ -106,15 +109,15 @@ class CachePurgingService {
 	 *
 	 * @param  string $url  The URL to be purged.
 	 */
-	public function purgeUrl( $url ) {
-		foreach ( $this->cacheTypes as $instance ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	public function purge_url( $url ) {
+		foreach ( $this->cache_types as $instance ) {
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
 				 * Purgeable instance.
 				 *
 				 * @var Purgeable $instance
 				 */
-				$instance->purgeUrl( $url );
+				$instance->purge_url( $url );
 			}
 		}
 	}
@@ -126,7 +129,7 @@ class CachePurgingService {
 	 * @param  string   $newStatus  The new post status
 	 * @param  \WP_Post $post  The post object of the edited or created post
 	 */
-	public function onSavePost( $oldStatus, $newStatus, \WP_Post $post ) {
+	public function on_save_post( $oldStatus, $newStatus, \WP_Post $post ) {
 
 		// Skip purging for non-public post types
 		if ( ! get_post_type_object( $post->post_type )->public ) {
@@ -141,18 +144,18 @@ class CachePurgingService {
 		// Purge post URL when post is updated.
 		$permalink = get_permalink( $post );
 		if ( $permalink ) {
-			$this->purgeUrl( $permalink );
+			$this->purge_url( $permalink );
 		}
 
 		// Purge taxonomy term URLs for related terms.
 		$taxonomies = get_post_taxonomies( $post );
 		foreach ( $taxonomies as $taxonomy ) {
-			if ( $this->isPublicTaxonomy( $taxonomy ) ) {
+			if ( $this->is_public_taxonomy( $taxonomy ) ) {
 				$terms = get_the_terms( $post, $taxonomy );
 				if ( is_array( $terms ) ) {
 					foreach ( $terms as $term ) {
 						$term_link = get_term_link( $term );
-						$this->purgeUrl( $term_link );
+						$this->purge_url( $term_link );
 					}
 				}
 			}
@@ -161,12 +164,12 @@ class CachePurgingService {
 		// Purge post type archive URL when post is updated.
 		$post_type_archive = get_post_type_archive_link( $post->post_type );
 		if ( $post_type_archive ) {
-			$this->purgeUrl( $post_type_archive );
+			$this->purge_url( $post_type_archive );
 		}
 
 		// Purge date archive URL when post is updated.
 		$year_archive = get_year_link( (int) get_the_date( 'y', $post ) );
-		$this->purgeUrl( $year_archive );
+		$this->purge_url( $year_archive );
 	}
 
 	/**
@@ -174,10 +177,10 @@ class CachePurgingService {
 	 *
 	 * @param  int $termId  Term ID
 	 */
-	public function onEditTerm( $termId ) {
+	public function on_edit_term( $termId ) {
 		$url = get_term_link( $termId );
 		if ( ! is_wp_error( $url ) ) {
-			$this->purgeUrl( $url );
+			$this->purge_url( $url );
 		}
 	}
 
@@ -186,12 +189,12 @@ class CachePurgingService {
 	 *
 	 * @param  int $commentId  ID of the comment.
 	 */
-	public function onUpdateComment( $commentId ) {
+	public function on_update_comment( $commentId ) {
 		$comment = get_comment( $commentId );
 		if ( $comment && property_exists( $comment, 'comment_post_ID' ) ) {
 			$postUrl = get_permalink( $comment->comment_post_ID );
 			if ( $postUrl ) {
-				$this->purgeUrl( $postUrl );
+				$this->purge_url( $postUrl );
 			}
 		}
 	}
@@ -205,7 +208,7 @@ class CachePurgingService {
 	 *
 	 * @return bool
 	 */
-	public function onUpdateOption( $option, $oldValue, $newValue ) {
+	public function on_update_option( $option, $oldValue, $newValue ) {
 		// No need to process if nothing was updated
 		if ( $oldValue === $newValue ) {
 			return false;
@@ -292,7 +295,7 @@ class CachePurgingService {
 		if ( ctype_upper( str_replace( array( '-', '_' ), '', $option ) ) ) {
 			$option = strtolower( $option );
 		}
-		$option_name = '_' . toSnakeCase( toStudlyCase( $option ) ) . '_';
+		$option_name = '_' . to_snake_case( to_studly_case( $option ) ) . '_';
 
 		foreach ( $forceIfContains as $slug ) {
 			if ( false !== strpos( $option_name, $slug ) ) {
@@ -309,7 +312,7 @@ class CachePurgingService {
 			}
 		}
 
-		$this->purgeAll();
+		$this->purge_all();
 
 		return true;
 	}
@@ -321,7 +324,7 @@ class CachePurgingService {
 	 *
 	 * @return boolean
 	 */
-	protected function isPublicTaxonomy( $taxonomy ) {
+	protected function is_public_taxonomy( $taxonomy ) {
 		$public          = false;
 		$taxonomy_object = get_taxonomy( $taxonomy );
 		if ( $taxonomy_object && isset( $taxonomy_object->public ) ) {

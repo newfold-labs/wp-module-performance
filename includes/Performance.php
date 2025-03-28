@@ -2,18 +2,21 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
+use Automattic\Jetpack\Current_Plan;
+
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
-use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
-use NewfoldLabs\WP\Module\Performance\HealthChecks;
 use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
+use NewfoldLabs\WP\Module\Performance\Cache\Cache;
+use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
+use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
 
-use function NewfoldLabs\WP\Module\Performance\is_settings_page;
+use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
 /**
  * Main class for the performance module.
@@ -35,16 +38,6 @@ class Performance {
 	const PURGE_URL = 'nfd_purge_url';
 
 	/**
-	 * The HTML ID of the section in the settings where performance options can be managed.
-	 */
-	const SETTINGS_ID = 'newfold-performance-settings';
-
-	/**
-	 * The name of the performance settings section.
-	 */
-	const SETTINGS_SECTION = 'newfold_performance_settings_section';
-
-	/**
 	 * Dependency injection container.
 	 *
 	 * @var Container
@@ -61,35 +54,28 @@ class Performance {
 		$this->container = $container;
 		$this->configureContainer( $container );
 
-		$this->hooks( $container );
+		$this->hooks();
 
-		$cacheManager = new CacheManager( $container );
-		$cachePurger  = new CachePurgingService( $cacheManager->getInstances() );
+		new Cache( $container );
+		new Skip404( $container );
 		new PerformanceWPCLI();
 		new Constants( $container );
 		new ImageManager( $container );
 		new HealthChecks( $container );
 
 		new LinkPrefetch( $container );
-		new CacheExclusion( $container );
 
 		new JetpackBoost( $container );
 
-		add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 100 );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
 		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
-
-		$container->set( 'cachePurger', $cachePurger );
-
-		$container->set( 'hasMustUsePlugin', file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) );
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-
-		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
@@ -136,8 +122,6 @@ class Performance {
 
 		add_action( 'admin_init', array( $this, 'remove_epc_settings' ), 99 );
 
-		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( $this, 'onCacheLevelChange' ) );
-
 		/**
 		 * On CLI requests, mod_rewrite is unavailable, so it fails to update
 		 * the .htaccess file when save_mod_rewrite_rules() is called. This
@@ -161,7 +145,6 @@ class Performance {
 			}
 		);
 
-		add_action( 'after_mod_rewrite_rules', array( $this, 'onRewrite' ) );
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
 	}
@@ -220,39 +203,11 @@ class Performance {
 	}
 
 	/**
-	 * When updating mod rewrite rules, also update our rewrites as appropriate.
-	 */
-	public function onRewrite() {
-		$this->onCacheLevelChange( getCacheLevel() );
-	}
-
-	/**
-	 * On cache level change, update the response headers.
-	 *
-	 * @param int|null $cacheLevel The cache level.
-	 */
-	public function onCacheLevelChange( $cacheLevel ) {
-		/**
-		 * Respone Header Manager from container
-		 *
-		 * @var ResponseHeaderManager $responseHeaderManager
-		 */
-		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
-		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
-
-		// Remove the old option from EPC, if it exists.
-		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
-			update_option( 'endurance_cache_level', 0 );
-			delete_option( 'endurance_cache_level' );
-		}
-	}
-
-	/**
 	 * Add options to the WordPress admin bar.
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar the admin bar.
 	 */
-	public function adminBarMenu( \WP_Admin_Bar $wp_admin_bar ) {
+	public function admin_bar_menu( \WP_Admin_Bar $wp_admin_bar ) {
 
 		// If the EPC MU plugin exists, remove its cache clearing options.
 		if ( $this->container->get( 'hasMustUsePlugin' ) ) {
@@ -267,7 +222,7 @@ class Performance {
 				)
 			);
 
-			$cache_level = CacheManager::get_cache_level();
+			$cache_level = get_cache_level();
 			if ( $cache_level > 0 ) {
 				$wp_admin_bar->add_node(
 					array(
@@ -343,19 +298,5 @@ class Performance {
 			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
 			wp_enqueue_style( 'wp-module-performance-styles' );
 		}
-	}
-
-	/**
-	 * Add to Newfold SDK runtime.
-	 *
-	 * @param array $sdk SDK data.
-	 * @return array SDK data.
-	 */
-	public function add_to_runtime( $sdk ) {
-		$values = array(
-			'skip404' => getSkip404Option(),
-		);
-
-		return array_merge( $sdk, array( 'performance' => $values ) );
 	}
 }

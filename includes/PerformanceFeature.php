@@ -2,8 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\Performance;
-
 use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
 /**
