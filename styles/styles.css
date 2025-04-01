@@ -117,12 +117,12 @@
 	z-index: 100;
 }
 
-.nfd-performance-jetpack-boost-container-install-activate-button svg {
+.nfd-root .nfd-performance-jetpack-boost-container-install-activate-button svg {
 	display: inline-block;
 	margin-right: 10px;
 }
 
-.nfd-performance-jetpack-boost-container-install-activate-button button {
+.nfd-root .nfd-performance-jetpack-boost-container-install-activate-button button {
 	padding: 10px;
 	border-radius: 6px;
 	width: 100%;
