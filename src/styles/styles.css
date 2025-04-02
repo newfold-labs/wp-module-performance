@@ -4,6 +4,7 @@
 @import '../sections/JetpackBoost/stylesheet.css';
 @import '../sections/ImageOptimization/stylesheet.css';
 @import './branding.css';
+@import '../components/App/stylesheet.css';
 
 /* Tailwind base styles, layers must come *after* the import */
 @tailwind base;

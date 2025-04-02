@@ -115,11 +115,11 @@
 	opacity: 1;
 	z-index: 100;
 }
-.nfd-performance-jetpack-boost-container-install-activate-button svg {
+.nfd-root .nfd-performance-jetpack-boost-container-install-activate-button svg {
 	display: inline-block;
 	margin-right: 10px;
 }
-.nfd-performance-jetpack-boost-container-install-activate-button button {
+.nfd-root .nfd-performance-jetpack-boost-container-install-activate-button button {
 	padding: 10px;
 	border-radius: 6px;
 	width: 100%;
@@ -192,6 +192,9 @@
     --nfd-color-title: #1F2044;
     --nfd-color-body: #4A4A4A;
   }
+.nfd-performance-container {
+	margin-top: 20px;
+}
 /* Tailwind base styles, layers must come *after* the import */
 *, ::before, ::after {
 		--tw-border-spacing-x: 0;
