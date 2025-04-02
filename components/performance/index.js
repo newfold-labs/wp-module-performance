@@ -18,8 +18,9 @@ import { default as LinkPrefetch } from '../linkPrefetch/';
  * @param {*} props
  * @return
  */
-const Performance = ( { methods, constants, Components, ...props } ) => {
+const Performance = ( { constants, methods, Components, ...props } ) => {
 	const { store, setStore } = methods.useContext( methods.AppStore );
+
 	const [ isError, setError ] = methods.useState( false );
 
 	const notify = methods.useNotification();
@@ -41,7 +42,7 @@ const Performance = ( { methods, constants, Components, ...props } ) => {
 			autoDismiss: duration,
 		} );
 	};
-	constants.store = store;
+
 	methods.makeNotice = makeNotice;
 	methods.setStore = setStore;
 	methods.setError = setError;

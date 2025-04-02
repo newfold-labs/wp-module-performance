@@ -1,8 +1,8 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
-use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use NewfoldLabs\WP\Module\Performance\Cache\Purgeable;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -29,10 +29,10 @@ class Cloudflare extends CacheBase implements Purgeable {
 	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
-	 * @param Container $container Dependency injection container.
+	 * @param Container $container Method container.
 	 * @return bool True if the cache type should be enabled, false otherwise.
 	 */
-	public static function shouldEnable( Container $container ) {
+	public static function should_enable( Container $container ) {
 		return (bool) \get_option( 'endurance_cloudflare_enabled', false );
 	}
 
@@ -72,7 +72,7 @@ class Cloudflare extends CacheBase implements Purgeable {
 	/**
 	 * Purge all Cloudflare cache.
 	 */
-	public function purgeAll() {
+	public function purge_all() {
 		if ( $this->isCoudflareEnabled() ) {
 			$this->purgeRequest();
 		}
@@ -83,7 +83,7 @@ class Cloudflare extends CacheBase implements Purgeable {
 	 *
 	 * @param string $url URL to purge.
 	 */
-	public function purgeUrl( $url ) {
+	public function purge_url( $url ) {
 		if ( $this->isCoudflareEnabled() ) {
 			$this->purgeRequest( array( $url ) );
 		}

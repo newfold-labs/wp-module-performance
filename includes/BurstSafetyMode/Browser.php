@@ -1,7 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Performance\BurstSafetyMode;
 
-use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\ResponseHeaderManager;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 
 /**
@@ -20,7 +19,7 @@ class Browser {
 	 */
 	public function __construct() {
 		$responseHeaderManager = new ResponseHeaderManager();
-		$responseHeaderManager->addHeader( 'X-Newfold-Cache-Level', BURST_SAFETY_CACHE_LEVEL );
+		$responseHeaderManager->add_header( 'X-Newfold-Cache-Level', BURST_SAFETY_CACHE_LEVEL );
 		$this->addRules();
 	}
 

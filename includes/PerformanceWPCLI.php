@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance;
 
 use NewfoldLabs\WP\Module\Performance\Images\WPCLI\ImageCommandHandler;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\WPCLI\LinkPrefetchCommandHandler;
-use NewfoldLabs\WP\Module\Performance\CacheTypes\WPCLI\CacheTypesCommandHandler;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler;
 
 /**
  * Manages all "wp nfd performance" WP-CLI commands.

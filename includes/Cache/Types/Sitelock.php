@@ -1,8 +1,8 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\CacheTypes;
+namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
-use NewfoldLabs\WP\Module\Performance\Concerns\Purgeable;
+use NewfoldLabs\WP\Module\Performance\Cache\Purgeable;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -17,14 +17,14 @@ class Sitelock extends CacheBase implements Purgeable {
 	 *
 	 * @return bool True if the code should be loaded, false otherwise.
 	 */
-	public static function shouldEnable( Container $container ) {
+	public static function should_enable( Container $container ) {
 		return (bool) \get_option( 'endurance_sitelock_enabled', false );
 	}
 
 	/**
 	 * Purge all content from the Sitelock CDN cache.
 	 */
-	public function purgeAll() {
+	public function purge_all() {
 
 		$refresh_token = \get_option( '_mm_refresh_token' );
 
@@ -65,7 +65,7 @@ class Sitelock extends CacheBase implements Purgeable {
 	 *
 	 * @param string $url The URL to purge.
 	 */
-	public function purgeUrl( $url ) {
+	public function purge_url( $url ) {
 
 		$refreshToken = \get_option( '_mm_refresh_token' );
 
