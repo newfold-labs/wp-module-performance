@@ -283,7 +283,7 @@ class Performance {
 	 */
 	public function add_nfd_subnav( $subnav ) {
 		$performance = array(
-			'url'      => admin_url( 'tools.php?page=' . self::PAGE_SLUG ),
+			'route'    => self::PAGE_SLUG,
 			'title'    => __( 'Performance', 'wp-module-performance' ),
 			'priority' => 30,
 		);
