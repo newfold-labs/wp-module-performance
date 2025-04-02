@@ -110,6 +110,14 @@ const JetpackBoost = ( { methods, constants } ) => {
 			}
 
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
+
+			if ( ! sdk.jetpack_boost_connected ) {
+				await apiFetch( {
+					path: 'jetpack-boost/v1/connection',
+					method: 'POST',
+				} );
+			}
+
 			await apiFetch( {
 				path: 'newfold-performance/v1/jetpack/regenerate_critical_css',
 				method: 'POST',
