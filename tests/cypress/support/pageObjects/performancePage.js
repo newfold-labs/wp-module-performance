@@ -2,7 +2,7 @@
 class performancePage {
 	//Locators
 	// in site-info box
-	_visitSiteButton = 'a.nfd-button.nfd-bg-white';
+	_visitSiteButton = '#wp-admin-bar-view-site a';
 	// sample page link on front end of site
 	_samplePageButton = '.wp-block-pages-list__item__link[href*="sample-page"]';
 	_linkPrefetchText = '[data-cy="link-prefetch-settings"]';
@@ -171,7 +171,7 @@ class performancePage {
 		this.getExcludeKeywordInputField().clear();
 
 		// Visit site
-		this.getVisitSiteButton().invoke( 'removeAttr', 'target' ).click();
+		this.getVisitSiteButton().click( { force: true } );
 
 		// Handle sample page navigation
 		this.getSamplePageButton( { timeout: 6000 } )
@@ -224,9 +224,7 @@ class performancePage {
 			} );
 
 		// Visit the site
-		this.getVisitSiteButton()
-			.invoke( 'removeAttr', 'target' ) // Prevent opening in a new tab
-			.click();
+		this.getVisitSiteButton().click( { force: true } );
 
 		// Use the reusable function to extract the Sample Page Name
 		this.extractSamplePageName( ( samplePageText ) => {
@@ -237,7 +235,7 @@ class performancePage {
 				.type( samplePageText )
 				.should( 'have.value', samplePageText );
 
-			this.getVisitSiteButton().invoke( 'removeAttr', 'target' ).click();
+			this.getVisitSiteButton().click( { force: true } );
 
 			// Intercept the API call related to the sample page
 			const alias = 'apiRequest';
@@ -287,7 +285,7 @@ class performancePage {
 			} );
 
 		// Visit the site
-		this.getVisitSiteButton().invoke( 'removeAttr', 'target' ).click();
+		this.getVisitSiteButton().click( { force: true } );
 
 		// Extract Sample Page Name & Continue Actions
 		this.getSamplePageButton()
@@ -306,9 +304,7 @@ class performancePage {
 					.should( 'have.value', pageName );
 
 				// Revisit site after setting the exclusion keyword
-				this.getVisitSiteButton()
-					.invoke( 'removeAttr', 'target' )
-					.click( { force: true } );
+				this.getVisitSiteButton().click( { force: true } );
 
 				cy.reload( forceReload );
 
