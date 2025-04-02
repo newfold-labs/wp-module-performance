@@ -253,7 +253,7 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
+					'href'   => admin_url( 'tools.php?page=' . self::PAGE_SLUG ),
 				)
 			);
 		}

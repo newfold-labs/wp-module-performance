@@ -40,7 +40,7 @@ const getJetpackBoostText = () => ( {
 		'Generate CSS',
 		'wp-module-performance'
 	),
-	jetpackBoostCriticalCssGenerattionSuccess: __(
+	jetpackBoostCriticalCssGenerationSuccess: __(
 		'Critical CSS generated successfully.',
 		'wp-module-performance'
 	),

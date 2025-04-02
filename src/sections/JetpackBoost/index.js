@@ -28,7 +28,7 @@ const JetpackBoost = () => {
 		jetpackBoostCriticalCssTitle,
 		jetpackBoostCriticalCssDescription,
 		jetpackBoostCriticalCssButton,
-		jetpackBoostCriticalCssGenerattionSuccess,
+		jetpackBoostCriticalCssGenerationSuccess,
 		jetpackBoostCriticalCssGenerationText,
 		jetpackBoostCriticalCssGenerationIssue,
 		jetpackBoostCriticalCssPremiumTitle,
@@ -126,7 +126,7 @@ const JetpackBoost = () => {
 
 	const handleRegenerateClick = async () => {
 		setCssIsGenerating( true );
-
+		let iframe;
 		try {
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
 
@@ -135,7 +135,7 @@ const JetpackBoost = () => {
 				method: 'POST',
 			} );
 			const adminUrl = `${ siteUrl }/wp-admin/admin.php?page=jetpack-boost`;
-			const iframe = document.createElement( 'iframe' );
+			iframe = document.createElement( 'iframe' );
 			iframe.src = adminUrl;
 			document.body.appendChild( iframe );
 
@@ -147,6 +147,18 @@ const JetpackBoost = () => {
 					const progressBar = iframeDocument.querySelector(
 						'div[role="progressbar"]'
 					);
+					if ( ! progressBar ) {
+						iframe?.remove();
+						setCssIsGenerating( false );
+
+						makeNotice(
+							'critical-css-generation-notice',
+							jetpackBoostCriticalCssGenerationIssue,
+							'',
+							'error'
+						);
+						return;
+					}
 
 					setCssIsGenerating( false );
 					let observer;
@@ -163,7 +175,7 @@ const JetpackBoost = () => {
 								iframe.remove();
 								makeNotice(
 									'cache-level-change-notice',
-									jetpackBoostCriticalCssGenerattionSuccess
+									jetpackBoostCriticalCssGenerationSuccess
 								);
 							}, 1000 );
 							if ( typeof observer !== 'undefined' )
@@ -184,13 +196,19 @@ const JetpackBoost = () => {
 					console.error( 'Error accessing iFrame:', error );
 					makeNotice(
 						'cache-level-change-notice',
-						jetpackBoostCriticalCssGenerationIssue,
-						'',
-						'error'
+						jetpackBoostCriticalCssGenerationIssue
 					);
 				}
 			};
 		} catch ( error ) {
+			iframe?.remove();
+			setCssIsGenerating( false );
+			makeNotice(
+				'critical-css-generation-notice',
+				jetpackBoostCriticalCssGenerationIssue,
+				'',
+				'error'
+			);
 			// eslint-disable-next-line no-console
 			console.error( error );
 		}
@@ -260,7 +278,10 @@ const JetpackBoost = () => {
 										size="small"
 										variant="secondary"
 										onClick={ handleRegenerateClick }
-										disabled={ progressBarValue > 0 }
+										disabled={
+											progressBarValue > 0 ||
+											cssIsGenerating
+										}
 										isLoading={ cssIsGenerating }
 										className="nfd-performance-jetpack-boost-regenerate-critical-css"
 									>

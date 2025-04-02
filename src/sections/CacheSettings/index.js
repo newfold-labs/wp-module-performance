@@ -73,21 +73,23 @@ const CacheSettings = () => {
 				name="cache-level"
 				value=""
 			>
-				{ options.map( ( { value, label, optionDescription } ) => (
-					<Fragment key={ value }>
-						<RadioGroup.Radio
-							defaultChecked={ value === runtimeLevel }
-							id={ `cache-level-${ value }` }
-							label={ label }
-							value={ value }
-							name="cache-level"
-							onChange={ handleCacheLevelChange }
-						/>
-						<div className="nfd-radio__description">
-							{ optionDescription }
-						</div>
-					</Fragment>
-				) ) }
+				{ options.map(
+					( { value, label, description: optionDescription } ) => (
+						<Fragment key={ value }>
+							<RadioGroup.Radio
+								defaultChecked={ value === runtimeLevel }
+								id={ `cache-level-${ value }` }
+								label={ label }
+								value={ value }
+								name="cache-level"
+								onChange={ handleCacheLevelChange }
+							/>
+							<div className="nfd-radio__description">
+								{ optionDescription }
+							</div>
+						</Fragment>
+					)
+				) }
 			</RadioGroup>
 		</Container.SettingsField>
 	);
