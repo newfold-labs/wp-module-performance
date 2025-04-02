@@ -82,8 +82,8 @@ class ImageLazyLoader {
 	 * Enqueues the lazy loader script file and adds inline exclusion settings.
 	 */
 	public function enqueue_lazy_loader() {
-		$script_path = NFD_PERFORMANCE_BUILD_DIR . '/image-lazy-loader.min.js';
-		$script_url  = NFD_PERFORMANCE_BUILD_URL . '/image-lazy-loader.min.js';
+		$script_path = NFD_PERFORMANCE_BUILD_DIR . '/assets/image-lazy-loader.min.js';
+		$script_url  = NFD_PERFORMANCE_BUILD_URL . '/assets/image-lazy-loader.min.js';
 
 		// Register the script with version based on file modification time.
 		wp_register_script(

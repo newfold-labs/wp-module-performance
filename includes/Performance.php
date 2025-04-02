@@ -2,10 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use Automattic\Jetpack\Current_Plan;
-
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Performance\Images\ImageManager;
 use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Performance\Data\Constants;
@@ -38,6 +35,13 @@ class Performance {
 	const PURGE_URL = 'nfd_purge_url';
 
 	/**
+	* Slug used for the Performance module's admin page.
+	*
+	* @var string
+	*/
+	const PAGE_SLUG = 'nfd-performance';
+
+	/**
 	 * Dependency injection container.
 	 *
 	 * @var Container
@@ -67,15 +71,14 @@ class Performance {
 
 		new JetpackBoost( $container );
 
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
-		add_action( 'admin_menu', array( $this, 'add_sub_menu_page' ) );
-		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
-
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
+		add_action( 'admin_menu', array( $this, 'add_management_page' ) );
+		add_action( 'load-tools_page_' . self::PAGE_SLUG, array( __CLASS__, 'initialize_performance_app' ) );
+		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
@@ -251,23 +254,24 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => admin_url( "admin.php?page=$brand#/performance" ),
+					'href'   => admin_url( 'tools.php?page=' . self::PAGE_SLUG ),
 				)
 			);
 		}
 	}
+
 	/**
-	 * Add performance menu in WP/Settings
+	 * Adds the Performance module to the WordPress Tools > Site Health menu.
+	 *
+	 * @return void
 	 */
-	public function add_sub_menu_page() {
-		$brand = $this->container->get( 'plugin' )['id'];
+	public function add_management_page() {
 		add_management_page(
 			__( 'Performance', 'wp-module-performance' ),
 			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
-			admin_url( "admin.php?page=$brand#/performance" ),
-			null,
-			5
+			self::PAGE_SLUG,
+			array( __CLASS__, 'render_performance_app' )
 		);
 	}
 
@@ -278,9 +282,8 @@ class Performance {
 	 * @return array The filtered nav array
 	 */
 	public function add_nfd_subnav( $subnav ) {
-		$brand = $this->container->get( 'plugin' )['id'];
 		$performance = array(
-			'route'    => $brand . '#/performance',
+			'route'    => self::PAGE_SLUG,
 			'title'    => __( 'Performance', 'wp-module-performance' ),
 			'priority' => 30,
 		);
@@ -289,14 +292,59 @@ class Performance {
 	}
 
 	/**
-	 * Enqueue styles and styles in admin
+	 * Outputs the HTML container for the Performance module's React application.
+	 *
+	 * @return void
 	 */
-	public function enqueue_styles() {
-		$brand = $this->container->plugin()->brand;
-		if ( is_settings_page( $brand ) ) {
-			$plugin_url = $this->container->plugin()->url . get_styles_path();
-			wp_register_style( 'wp-module-performance-styles', $plugin_url, array(), $this->container->plugin()->version );
-			wp_enqueue_style( 'wp-module-performance-styles' );
+	public static function render_performance_app() {
+		echo PHP_EOL;
+		echo '<!-- NFD:PERFORMANCE -->';
+		echo PHP_EOL;
+		echo '<div id="' . esc_attr( self::PAGE_SLUG ) . '" class="' . esc_attr( self::PAGE_SLUG ) . '-container"></div>';
+		echo PHP_EOL;
+		echo '<!-- /NFD:PERFORMANCE -->';
+		echo PHP_EOL;
+	}
+
+	/**
+	 * Initializes the Performance module by registering and enqueuing its assets.
+	 *
+	 * @return void
+	 */
+	public static function initialize_performance_app() {
+		self::register_performance_assets();
+	}
+
+	/**
+	 * Registers and enqueues the JavaScript and CSS assets for the Performance module.
+	 *
+	 * @return void
+	 */
+	public static function register_performance_assets() {
+		$build_dir  = NFD_PERFORMANCE_BUILD_DIR;
+		$build_url  = NFD_PERFORMANCE_BUILD_URL;
+		$asset_file = $build_dir . '/performance/performance.min.asset.php';
+
+		if ( is_readable( $asset_file ) ) {
+			$asset = include_once $asset_file;
+
+			wp_register_script(
+				self::PAGE_SLUG,
+				$build_url . '/performance/performance.min.js',
+				$asset['dependencies'],
+				$asset['version'],
+				true
+			);
+
+			wp_register_style(
+				self::PAGE_SLUG,
+				$build_url . '/performance/performance.min.css',
+				array(),
+				$asset['version']
+			);
+
+			wp_enqueue_script( self::PAGE_SLUG );
+			wp_enqueue_style( self::PAGE_SLUG );
 		}
 	}
 }
