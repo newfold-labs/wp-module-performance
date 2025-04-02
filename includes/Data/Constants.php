@@ -21,5 +21,9 @@ class Constants {
 		if ( ! defined( 'NFD_PERFORMANCE_BUILD_URL' ) ) {
 			define( 'NFD_PERFORMANCE_BUILD_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-performance/build' );
 		}
+
+		if ( ! defined( 'NFD_MODULE_DATA_EVENTS_API' ) ) {
+			define( 'NFD_MODULE_DATA_EVENTS_API', '/newfold-data/v1/events' );
+		}
 	}
 }

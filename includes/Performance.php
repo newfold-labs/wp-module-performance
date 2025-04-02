@@ -78,6 +78,7 @@ class Performance {
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_management_page' ) );
 		add_action( 'load-tools_page_' . self::PAGE_SLUG, array( __CLASS__, 'initialize_performance_app' ) );
+		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
@@ -272,6 +273,23 @@ class Performance {
 			self::PAGE_SLUG,
 			array( __CLASS__, 'render_performance_app' )
 		);
+	}
+
+	/**
+	 * Add to the Newfold subnav.
+	 *
+	 * @param array $subnav The nav array.
+	 * @return array The filtered nav array
+	 */
+	public function add_nfd_subnav( $subnav ) {
+		$brand       = $this->container->get( 'plugin' )['id'];
+		$performance = array(
+			'route'    => $brand . '#/performance',
+			'title'    => __( 'Performance', 'wp-module-performance' ),
+			'priority' => 30,
+		);
+		array_push( $subnav, $performance );
+		return $subnav;
 	}
 
 	/**
