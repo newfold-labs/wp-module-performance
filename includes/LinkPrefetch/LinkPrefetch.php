@@ -93,7 +93,7 @@ class LinkPrefetch {
 		$settings['isMobile'] = wp_is_mobile();
 		wp_enqueue_script(
 			'linkprefetcher',
-			NFD_PERFORMANCE_BUILD_URL . '/link-prefetch.min.js',
+			NFD_PERFORMANCE_BUILD_URL . '/assets/link-prefetch.min.js',
 			array(),
 			$this->container->plugin()->version,
 			true

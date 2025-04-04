@@ -2,6 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\Module\Performance\Data\Events;
+use NewfoldLabs\WP\Module\Performance\Services\EventService;
+
 /**
  * Optimizes images using a Cloudflare Worker and saves them locally.
  */
@@ -64,6 +67,16 @@ class ImageService {
 			);
 		}
 
+		EventService::send(
+			array(
+				'category' => Events::get_category()[0],
+				'action'   => 'image_transformation_requested',
+				'data'     => array(
+					'image_url' => $image_url,
+				),
+			)
+		);
+
 		// Make a POST request to the Cloudflare Worker
 		$response = wp_remote_post(
 			self::WORKER_URL . '/?image=' . rawurlencode( $image_url ),
@@ -92,6 +105,16 @@ class ImageService {
 
 		// Handle errors from the HTTP request
 		if ( is_wp_error( $response ) ) {
+			EventService::send(
+				array(
+					'category' => Events::get_category()[0],
+					'action'   => 'image_transformation_failed',
+					'data'     => array(
+						'image_url' => $image_url,
+						'error'     => $response->get_error_message(),
+					),
+				)
+			);
 			return new \WP_Error(
 				'nfd_performance_error',
 				sprintf(
@@ -107,6 +130,16 @@ class ImageService {
 		if ( 403 === $response_code ) {
 			// If worker indicates a permanent ban, ban the site
 			$this->ban_site();
+			EventService::send(
+				array(
+					'category' => Events::get_category()[0],
+					'action'   => 'image_transformation_failed',
+					'data'     => array(
+						'image_url' => $image_url,
+						'error'     => __( 'Image optimization access has been permanently revoked for this site.', 'wp-module-performance' ),
+					),
+				)
+			);
 			return new \WP_Error(
 				'nfd_performance_error',
 				__( 'Image optimization access has been permanently revoked for this site.', 'wp-module-performance' )
@@ -116,6 +149,16 @@ class ImageService {
 			$retry_after   = wp_remote_retrieve_header( $response, 'Retry-After' );
 			$retry_seconds = $retry_after ? intval( $retry_after ) : 60;
 			set_transient( self::$rate_limit_transient_key, time() + $retry_seconds, $retry_seconds );
+			EventService::send(
+				array(
+					'category' => Events::get_category()[0],
+					'action'   => 'image_transformation_failed',
+					'data'     => array(
+						'image_url' => $image_url,
+						'error'     => __( 'Rate limit exceeded. Please try again later.', 'wp-module-performance' ),
+					),
+				)
+			);
 			return new \WP_Error(
 				'nfd_performance_error',
 				__( 'Rate limit exceeded. Please try again later.', 'wp-module-performance' )
@@ -126,11 +169,31 @@ class ImageService {
 		$content_type         = wp_remote_retrieve_header( $response, 'content-type' );
 		if ( empty( $optimized_image_body ) || 'image/webp' !== $content_type ) {
 			$error_message = $this->get_response_message( $response ) ?? __( 'Invalid response from Cloudflare Worker.', 'wp-module-performance' );
+			EventService::send(
+				array(
+					'category' => Events::get_category()[0],
+					'action'   => 'image_transformation_failed',
+					'data'     => array(
+						'image_url' => $image_url,
+						'error'     => $error_message,
+					),
+				)
+			);
 			return new \WP_Error(
 				'nfd_performance_error',
 				$error_message
 			);
 		}
+
+		EventService::send(
+			array(
+				'category' => Events::get_category()[0],
+				'action'   => 'image_transformation_completed',
+				'data'     => array(
+					'image_url' => $image_url,
+				),
+			)
+		);
 
 		// Save the WebP image to the same directory as the original file
 		$webp_file_path = $this->generate_webp_file_path( $original_file_path );
@@ -146,8 +209,6 @@ class ImageService {
 
 		return $webp_file_path;
 	}
-
-
 
 	/**
 	 * Permanently ban the site from accessing image optimization.
