@@ -42,7 +42,9 @@ class JetpackBoost {
 	 * @return array SDK data.
 	 */
 	public function add_to_runtime( $sdk ) {
-		$is_jetpack_boost_enabled = is_plugin_active( 'jetpack-boost/jetpack-boost.php' );
+		$is_jetpack_boost_enabled   = is_plugin_active( 'jetpack-boost/jetpack-boost.php' );
+		$jetpack_options            = get_option( 'jetpack_options', false );
+		$is_jetpack_boost_connected = is_array( $jetpack_options ) && isset( $jetpack_options['id'] ) ? true : false;
 
 		$values = array(
 			'is_active'                 => $is_jetpack_boost_enabled,
@@ -54,6 +56,7 @@ class JetpackBoost {
 			'minify_css'                => $is_jetpack_boost_enabled ? get_option( 'jetpack_boost_status_minify-css', false ) : false,
 			'minify_css_excludes'       => implode( ',', get_option( 'jetpack_boost_ds_minify_css_excludes', array( 'admin-bar', 'dashicons', 'elementor-app' ) ) ),
 			'install_token'             => PluginInstaller::rest_get_plugin_install_hash(),
+			'jetpack_boost_connected'   => $is_jetpack_boost_connected,
 		);
 
 		return array_merge( $sdk, array( 'jetpackboost' => $values ) );
