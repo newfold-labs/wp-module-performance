@@ -143,7 +143,7 @@ const JetpackBoost = () => {
 			iframe = document.createElement( 'iframe' );
 			iframe.src = adminUrl;
 			document.body.appendChild( iframe );
-
+			iframe.style.height = '0';
 			iframe.onload = function () {
 				try {
 					const iframeDocument =
