@@ -47,6 +47,7 @@ const CacheSettings = () => {
 		} )
 			.then( () => {
 				setCacheLevel( selectedLevel );
+				dispatchSetCacheLevel( selectedLevel );
 			} )
 			.catch( ( err ) => {
 				pushNotification( 'cache-level-error', {
