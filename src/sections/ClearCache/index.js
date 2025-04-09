@@ -1,5 +1,4 @@
-import { useState } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { Button, Container } from '@newfold/ui-component-library';
 
@@ -18,7 +17,11 @@ const ClearCache = () => {
 	const apiUrl = NewfoldRuntime.createApiUrl(
 		'/newfold-performance/v1/cache/settings'
 	);
-	const [ cacheLevel ] = useState( NewfoldRuntime?.sdk?.cache?.level ?? 0 );
+
+	const cacheLevel = useSelect( ( select ) =>
+		select( STORE_NAME ).getCacheLevel()
+	);
+
 	const { pushNotification } = useDispatch( STORE_NAME );
 
 	const clearCache = () => {
