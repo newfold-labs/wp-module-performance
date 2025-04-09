@@ -25,7 +25,8 @@ const CacheSettings = () => {
 	const runtimeLevel = NewfoldRuntime?.sdk?.cache?.level ?? 0;
 	const [ cacheLevel, setCacheLevel ] = useState( runtimeLevel );
 
-	const { pushNotification } = useDispatch( STORE_NAME );
+	const { pushNotification, setCacheLevel: dispatchSetCacheLevel } =
+		useDispatch( STORE_NAME );
 
 	const apiUrl = NewfoldRuntime.createApiUrl(
 		'/newfold-performance/v1/cache/settings'
@@ -46,6 +47,7 @@ const CacheSettings = () => {
 		} )
 			.then( () => {
 				setCacheLevel( selectedLevel );
+				dispatchSetCacheLevel( selectedLevel );
 			} )
 			.catch( ( err ) => {
 				pushNotification( 'cache-level-error', {
@@ -64,6 +66,10 @@ const CacheSettings = () => {
 			autoDismiss: 5000,
 		} );
 	}, [ cacheLevel ] );
+
+	useEffect( () => {
+		dispatchSetCacheLevel( cacheLevel );
+	}, [] );
 
 	return (
 		<Container.SettingsField title={ title } description={ description }>
