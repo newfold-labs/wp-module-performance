@@ -254,6 +254,7 @@ const ImageOptimization = () => {
 									</p>
 									{ bulk && (
 										<a
+											className="nfd-bulk-optimize-images-link"
 											href={ mediaLibraryLink() }
 											target="_blank"
 											rel="noopener noreferrer"

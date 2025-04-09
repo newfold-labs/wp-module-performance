@@ -146,6 +146,9 @@
 .nfd-text-red {
 	color: #e63946;
 }
+.nfd-bulk-optimize-images-link {
+	font-weight: 700;
+}
 :root {
     --nfd-color-primary: #196BDE;
     --nfd-color-primary-dark: #1A4884;

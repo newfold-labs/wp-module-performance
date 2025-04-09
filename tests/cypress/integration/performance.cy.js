@@ -2,7 +2,6 @@
 import performancePageLocators from '../support/pageObjects/performancePage';
 
 describe( 'Performance Page', { testIsolation: true }, () => {
-	const appClass = '.' + Cypress.env( 'appId' );
 	const fixturePath = require( '../fixtures/performanceModule.json' );
 	let performanceLocators;
 	let data;
@@ -11,18 +10,15 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 		cy.setPermalinkStructure();
 		data = fixturePath;
 		cy.login( Cypress.env( 'wpUsername' ), Cypress.env( 'wpPassword' ) );
-		cy.visit(
-			'/wp-admin/admin.php?page=' +
-				Cypress.env( 'pluginId' ) +
-				'#/performance'
-		);
+		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
 		performanceLocators = new performancePageLocators();
 	} );
 
 	it( 'Is Accessible', () => {
 		cy.injectAxe();
-		cy.wait( 500 );
-		cy.checkA11y( appClass + '-app-body' );
+		cy.get( '#nfd-performance' ).then( ( $el ) => {
+			cy.checkA11y( $el );
+		} );
 	} );
 
 	it( 'Has Cache Settings', () => {
