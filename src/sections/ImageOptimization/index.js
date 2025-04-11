@@ -46,7 +46,7 @@ const ImageOptimization = () => {
 	} );
 
 	const { pushNotification } = useDispatch( STORE_NAME );
-	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
+	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
 
 	const fetchSettings = async () => {
 		setIsLoading( true );

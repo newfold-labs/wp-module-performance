@@ -6,6 +6,9 @@ import '../../styles/styles.css';
 import { Container, Root, Page } from '@newfold/ui-component-library';
 import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
+// WordPress
+import { useEffect } from '@wordpress/element';
+
 // Components
 import CacheSettings from '../../sections/CacheSettings';
 import NotificationFeed from '../NotificationFeed';
@@ -21,12 +24,12 @@ import getAppText from './getAppText';
 const App = () => {
 	const { title, description } = getAppText();
 
-	useEffect(() => {
+	useEffect( () => {
 		const brand = NewfoldRuntime.sdk?.plugin?.brand;
 		if ( brand ) {
 			document.body.classList.add( `nfd-brand--${ brand }` );
 		}
-	}, [])
+	}, [] );
 
 	return (
 		<Root context={ { isRTL: false } }>
