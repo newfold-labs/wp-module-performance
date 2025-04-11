@@ -99,7 +99,7 @@ const JetpackBoost = () => {
 
 		debounceTimeout.current = setTimeout( () => {
 			apiFetch( {
-				path: 'newfold-performance/v1/jetpack/settings',
+				url: NewfoldRuntime.createApiUrl('/newfold-performance/v1/jetpack/settings'),
 				method: 'POST',
 				data: { field: { id, value } },
 			} )
@@ -131,12 +131,12 @@ const JetpackBoost = () => {
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
 			if ( ! sdk.jetpack_boost_connected ) {
 				await apiFetch( {
-					path: 'jetpack-boost/v1/connection',
+					url: NewfoldRuntime.createApiUrl('/jetpack-boost/v1/connection'),
 					method: 'POST',
 				} );
 			}
 			await apiFetch( {
-				path: 'newfold-performance/v1/jetpack/regenerate_critical_css',
+				url: NewfoldRuntime.createApiUrl('/newfold-performance/v1/jetpack/regenerate_critical_css'),
 				method: 'POST',
 			} );
 			const adminUrl = `${ siteUrl }/wp-admin/admin.php?page=jetpack-boost`;

@@ -4,6 +4,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { STORE_NAME } from '../../data/constants';
 import getImageOptimizationText from './getImageOptimizationText';
+import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 const ImageOptimization = () => {
 	const {
@@ -45,14 +46,14 @@ const ImageOptimization = () => {
 	} );
 
 	const { pushNotification } = useDispatch( STORE_NAME );
-	const apiUrl = '/wp/v2/settings';
+	const apiUrl = NewfoldRuntime.createApiUrl('/wp/v2/settings');
 
 	const fetchSettings = async () => {
 		setIsLoading( true );
 		setIsError( false );
 
 		try {
-			const res = await apiFetch( { path: apiUrl } );
+			const res = await apiFetch( { url: apiUrl } );
 			const fetched = res?.nfd_image_optimization || {};
 			setSettings( fetched );
 			setIsBanned( fetched?.banned_status || false );
@@ -73,7 +74,7 @@ const ImageOptimization = () => {
 		setIsError( false );
 		try {
 			const res = await apiFetch( {
-				path: apiUrl,
+				url: apiUrl,
 				method: 'POST',
 				data: { nfd_image_optimization: newSettings },
 			} );
