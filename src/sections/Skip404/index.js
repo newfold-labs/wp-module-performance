@@ -24,8 +24,12 @@ const Skip404 = () => {
 	const handleSkip404Change = () => {
 		const newValue = ! skip404;
 
+		const apiUrl = NewfoldRuntime.createApiUrl(
+			'/newfold-performance/v1/skip404'
+		);
+
 		apiFetch( {
-			path: '/newfold-performance/v1/skip404',
+			url: apiUrl,
 			method: 'POST',
 			data: {
 				field: {
