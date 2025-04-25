@@ -84,15 +84,15 @@ class I18nService {
 	 * The JSON file must be named $domain-$locale-$script_slug.json.
 	 * Note: The script must be registered before this function is called.
 	 *
-	 * @param [string] $domain The text domain.
-	 * @param [string] $script_slug The slug of the registered script.
+	 * @param [string] $textdomain The text domain.
+	 * @param [string] $script_handle The handle of the registered script.
 	 * @param [string] $languages_dir The directory containing the .json file for the script.
 	 * @return boolean
 	 */
-	public static function load_js_translations( $domain, $script_slug, $languages_dir ) {
+	public static function load_js_translations( $textdomain, $script_handle, $languages_dir ) {
 		return wp_set_script_translations(
-			$script_slug,
-			$domain,
+			$script_handle,
+			$textdomain,
 			$languages_dir
 		);
 	}
