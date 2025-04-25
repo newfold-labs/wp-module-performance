@@ -102,7 +102,7 @@ msgstr "La integración con Cloudflare puede mejorar el rendimiento y la segurid
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
 msgid "Concatenate CSS"
-msgstr "Concatenate CSS"
+msgstr "Concatenar CSS"
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:15
 msgid "CSS files are concatenated"
@@ -629,3 +629,1028 @@ msgstr "Se produjo un error al regenerar el CSS crítico."
 #: includes/Services/EventService.php:23
 msgid "Bad event structure/value."
 msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido un error."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: assets/image-optimized-marker/image-optimized-marker.js:23
+msgid "Optimized"
+msgstr "Optimizado"
+
+#: includes/RestApi/JetpackController.php:170
+msgid "Failed to regenerate critical CSS."
+msgstr "Error al regenerar el CSS crítico."
+
+#: includes/RestApi/JetpackController.php:180
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Se produjo un error al regenerar el CSS crítico."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
+
+#: includes/Performance.php:224
+msgid "Caching"
+msgstr "Caché"
+
+#: includes/Performance.php:233
+msgid "Purge All"
+msgstr "Purgar todo"
+
+#: includes/Performance.php:243
+msgid "Purge This Page"
+msgstr "Purgar esta página"
+
+#: includes/Performance.php:255
+msgid "Cache Settings"
+msgstr "Ajustes de caché"
+
+#: includes/Performance.php:277
+#: includes/Performance.php:278
+#: includes/Performance.php:294
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Falta el parámetro 'campo' o no es válido."
+
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Los campos 'id' y 'value' son obligatorios."
+
+#: includes/RestApi/JetpackController.php:120
+#: includes/RestApi/JetpackController.php:140
+#: includes/RestApi/Skip404Controller.php:93
+#: includes/RestApi/Skip404Controller.php:113
+msgid "An error occurred while updating the option."
+msgstr "Se ha producido un error al actualizar la opción."
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+msgid "Optimizing Images…"
+msgstr "Optimizando imágenes…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+msgid "Preparing files…"
+msgstr "Preparando archivos…"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+msgid "Done"
+msgstr "Hecho"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+msgid "Optimization Canceled"
+msgstr "Optimización cancelada"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+msgid "Optimizing:"
+msgstr "Optimizando:"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+msgid "Optimization Complete!"
+msgstr "¡Optimización completada!"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
+msgid "Passed"
+msgstr "Pasado"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
+msgid "Failed"
+msgstr "Fallo"
+
+#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+msgid "An error occurred."
+msgstr "Se ha producido
