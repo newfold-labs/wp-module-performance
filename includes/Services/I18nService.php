@@ -20,9 +20,10 @@ class I18nService {
 	 */
 	public function __construct( $container ) {
 		$this->version = $container->plugin()->version;
-		add_action( 'newfold/performance/load_default_translations', array( $this, 'prepare_and_load_js_translations' ) );
+		// add_action( 'newfold/performance/load_default_translations', array( $this, 'prepare_and_load_js_translations' ) );
 		add_action( 'load-toplevel_page_' . $container->plugin()->id, array( $this, 'prepare_and_load_js_translations' ), 1 );
 		add_action( 'init', array( $this, 'load_text_domain' ) );
+		add_action( 'load-tools_page_nfd-performance', array( $this, 'prepare_and_load_js_translations' ), 1 );
 	}
 
 	/**
