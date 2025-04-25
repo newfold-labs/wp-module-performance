@@ -274,14 +274,14 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched."
             ],
-            "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
-                ""
+            "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used.": [
+                "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used."
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                ""
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.": [
+                "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                ""
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
+                "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
             ]
         }
     }
