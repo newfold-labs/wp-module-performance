@@ -73,349 +73,349 @@ msgstr "Optimisé"
 
 #: build/performance/performance.min.js:2
 msgid "This is where you can manage performance settings for your website."
-msgstr ""
+msgstr "C'est ici que vous pouvez gérer les paramètres de performance pour votre site web."
 
 #: build/performance/performance.min.js:2
 msgid "Exclude from cache"
-msgstr ""
+msgstr "Exclure du cache"
 
 #: build/performance/performance.min.js:2
-msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr ""
+msgid "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
+msgstr "Ce paramètre contrôle quelles pages transmettent un en-tête "no-cache" afin que la mise en cache des pages et du navigateur ne soit pas utilisée."
 
 #: build/performance/performance.min.js:2
 msgid "Cache Exclusion saved"
-msgstr ""
+msgstr "Exclusion du cache enregistrée"
 
 #: build/performance/performance.min.js:2
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: build/performance/performance.min.js:2
 msgid "Cache Level"
-msgstr ""
+msgstr "Niveau de cache"
 
 #: build/performance/performance.min.js:2
 msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
-msgstr ""
+msgstr "Augmentez la vitesse et les performances en stockant une copie du contenu, des fichiers et des images de votre site web en ligne afin que les pages de votre site web se chargent plus rapidement pour vos visiteurs."
 
 #: build/performance/performance.min.js:2
 msgid "Cache setting saved"
-msgstr ""
+msgstr "Paramètre de cache enregistré"
 
 #: build/performance/performance.min.js:2
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: build/performance/performance.min.js:2
 msgid "No cache enabled. Every page load is fresh. Not recommended."
-msgstr ""
+msgstr "Aucun cache activé. Chaque chargement de page est nouveau. Non recommandé."
 
 #: build/performance/performance.min.js:2
 msgid "Caching disabled."
-msgstr ""
+msgstr "Mise en cache désactivée."
 
 #: build/performance/performance.min.js:2
 msgid "Assets Only"
-msgstr ""
+msgstr "Ressources uniquement"
 
 #: build/performance/performance.min.js:2
 msgid "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
-msgstr ""
+msgstr "Mettez en cache les ressources statiques comme les images et l'apparence de votre site pendant 1 heure. Optimisé pour les boutiques en ligne et les sites de membres qui doivent être à jour."
 
 #: build/performance/performance.min.js:2
 msgid "Cache enabled for assets only."
-msgstr ""
+msgstr "Cache activé pour les ressources uniquement."
 
 #: build/performance/performance.min.js:2
 msgid "Assets & Web Pages"
-msgstr ""
+msgstr "Ressources et pages web"
 
 #: build/performance/performance.min.js:2
 msgid "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
-msgstr ""
+msgstr "Mettez en cache les ressources statiques pendant 24 heures et les pages web pendant 2 heures. Optimisé pour les sites qui changent au moins une fois par semaine."
 
 #: build/performance/performance.min.js:2
 msgid "Cache enabled for assets and pages."
-msgstr ""
+msgstr "Cache activé pour les ressources et les pages."
 
 #: build/performance/performance.min.js:2
 msgid "Assets & Web Pages - Extended"
-msgstr ""
+msgstr "Ressources et pages web - Étendu"
 
 #: build/performance/performance.min.js:2
 msgid "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
-msgstr ""
+msgstr "Mettez en cache les ressources statiques pendant 1 semaine et les pages web pendant 8 heures. Optimisé pour les sites qui se mettent à jour quelques fois par mois ou moins."
 
 #: build/performance/performance.min.js:2
 msgid "Cache enabled for assets and pages (extended)."
-msgstr ""
+msgstr "Cache activé pour les ressources et les pages (étendu)."
 
 #: build/performance/performance.min.js:2
 msgid "Image Optimization"
-msgstr ""
+msgstr "Optimisation d'image"
 
 #: build/performance/performance.min.js:2
 msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
-msgstr ""
+msgstr "Nous optimisons automatiquement vos images téléchargées au format WebP pour des performances plus rapides et des tailles de fichiers réduites. Vous pouvez également choisir de supprimer les images originales pour économiser de l'espace de stockage."
 
 #: build/performance/performance.min.js:2
 msgid "Usage:"
-msgstr ""
+msgstr "Utilisation :"
 
 #: build/performance/performance.min.js:2
 msgid "images processed of"
-msgstr ""
+msgstr "images traitées sur"
 
 #: build/performance/performance.min.js:2
 msgid "/month"
-msgstr ""
+msgstr "/mois"
 
 #: build/performance/performance.min.js:2
 msgid "Loading settings…"
-msgstr ""
+msgstr "Chargement des paramètres…"
 
 #: build/performance/performance.min.js:2
 msgid "Oops! Something went wrong. Please try again."
-msgstr ""
+msgstr "Oups ! Quelque chose s'est mal passé. Veuillez réessayer."
 
 #: build/performance/performance.min.js:2
 msgid "No settings available."
-msgstr ""
+msgstr "Aucun paramètre disponible."
 
 #: build/performance/performance.min.js:2
 msgid "Enable Image Optimization"
-msgstr ""
+msgstr "Activer l'optimisation d'image"
 
 #: build/performance/performance.min.js:2
 msgid "Enable or disable image optimization globally."
-msgstr ""
+msgstr "Activer ou désactiver l'optimisation d'image globalement."
 
 #: build/performance/performance.min.js:2
 msgid "Automatically Optimize Uploaded Images"
-msgstr ""
+msgstr "Optimiser automatiquement les images téléchargées"
 
 #: build/performance/performance.min.js:2
 msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
-msgstr ""
+msgstr "Lorsque cette option est activée, toutes vos nouvelles images téléchargées seront automatiquement optimisées au format WebP, garantissant un chargement de page plus rapide et des tailles de fichiers réduites."
 
 #: build/performance/performance.min.js:2
 msgid "Enable Bulk Optimization of Images"
-msgstr ""
+msgstr "Activer l'optimisation en masse des images"
 
 #: build/performance/performance.min.js:2
 msgid "When enabled, allows bulk optimization of images in the media library."
-msgstr ""
+msgstr "Lorsque cette option est activée, permet l'optimisation en masse des images dans la bibliothèque de médias."
 
 #: build/performance/performance.min.js:2
 msgid "Go to Media Library"
-msgstr ""
+msgstr "Aller à la bibliothèque de médias"
 
 #: build/performance/performance.min.js:2
 msgid "Auto Delete Original Image"
-msgstr ""
+msgstr "Supprimer automatiquement l'image originale"
 
 #: build/performance/performance.min.js:2
 msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
-msgstr ""
+msgstr "Lorsque cette option est activée, l'image originale téléchargée est supprimée et remplacée par la version optimisée, ce qui permet d'économiser de l'espace de stockage. Si elle est désactivée, l'image optimisée est enregistrée en tant que fichier séparé, conservant l'original."
 
 #: build/performance/performance.min.js:2
 msgid "Enable Lazy Loading"
-msgstr ""
+msgstr "Activer le chargement différé"
 
 #: build/performance/performance.min.js:2
 msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
-msgstr ""
+msgstr "Le chargement différé reporte le chargement des images jusqu'à ce qu'elles soient visibles à l'écran, améliorant la vitesse de chargement des pages et les performances."
 
 #: build/performance/performance.min.js:2
 msgid "Prefer Optimized Image When Exists"
-msgstr ""
+msgstr "Préférer l'image optimisée lorsqu'elle existe"
 
 #: build/performance/performance.min.js:2
 msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
-msgstr ""
+msgstr "Lorsque cette option est activée, les images optimisées seront servies à la place des images originales lorsqu'elles existent, améliorant les performances."
 
 #: build/performance/performance.min.js:2
 msgid "Settings updated successfully"
-msgstr ""
+msgstr "Paramètres mis à jour avec succès"
 
 #: build/performance/performance.min.js:2
 msgid "Your image optimization settings have been saved."
-msgstr ""
+msgstr "Vos paramètres d'optimisation d'image ont été enregistrés."
 
 #: build/performance/performance.min.js:2
 msgid "Error Updating Settings"
-msgstr ""
+msgstr "Erreur lors de la mise à jour des paramètres"
 
 #: build/performance/performance.min.js:2
 msgid "Something went wrong while updating the settings. Please try again."
-msgstr ""
+msgstr "Une erreur s'est produite lors de la mise à jour des paramètres. Veuillez réessayer."
 
 #: build/performance/performance.min.js:2
 msgid "Advanced settings"
-msgstr ""
+msgstr "Paramètres avancés"
 
 #: build/performance/performance.min.js:2
 msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
-msgstr ""
+msgstr "Fonctionnalités supplémentaires de vitesse et d'évolutivité alimentées par Jetpack Boost pour rendre votre site aussi rapide que possible."
 
 #: build/performance/performance.min.js:2
 msgid "Option saved correctly"
-msgstr ""
+msgstr "Option enregistrée correctement"
 
 #: build/performance/performance.min.js:2
 msgid "Error saving option"
-msgstr ""
+msgstr "Erreur lors de l'enregistrement de l'option"
 
 #: build/performance/performance.min.js:2
 msgid "Upgrade to unlock"
-msgstr ""
+msgstr "Mettez à niveau pour débloquer"
 
 #: build/performance/performance.min.js:2
 msgid "Install Jetpack Boost to unlock"
-msgstr ""
+msgstr "Installez Jetpack Boost pour débloquer"
 
 #: build/performance/performance.min.js:2
 msgid "Installing Jetpack Boost…"
-msgstr ""
+msgstr "Installation de Jetpack Boost…"
 
 #: build/performance/performance.min.js:2
 msgid "Jetpack Boost is now active"
-msgstr ""
+msgstr "Jetpack Boost est maintenant actif"
 
 #: build/performance/performance.min.js:2
 msgid "Activation failed"
-msgstr ""
+msgstr "L'activation a échoué"
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Critical CSS Loading (manual)"
-msgstr ""
+msgstr "Optimiser le chargement du CSS critique (manuel)"
 
 #: build/performance/performance.min.js:2
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr ""
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+msgstr "Déplacez les informations de style importantes au début de la page, ce qui aide les pages à afficher votre contenu plus rapidement, afin que vos utilisateurs n'aient pas à attendre que la page entière se charge."
 
 #: build/performance/performance.min.js:2
 msgid "Generate CSS"
-msgstr ""
+msgstr "Générer le CSS"
 
 #: build/performance/performance.min.js:2
 msgid "Critical CSS generated successfully."
-msgstr ""
+msgstr "CSS critique généré avec succès."
 
 #: build/performance/performance.min.js:2
 msgid "Keep this page opened until the process finish"
-msgstr ""
+msgstr "Gardez cette page ouverte jusqu'à la fin du processus"
 
 #: build/performance/performance.min.js:2
 msgid "Error generating Critical CSS, try again"
-msgstr ""
+msgstr "Erreur lors de la génération du CSS critique, réessayez"
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Critical CSS Loading (UPGRADED)"
-msgstr ""
+msgstr "Optimiser le chargement du CSS critique (AMÉLIORÉ)"
 
 #: build/performance/performance.min.js:2
 msgid "Generate Critical CSS Automatically"
-msgstr ""
+msgstr "Générer le CSS critique automatiquement"
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr ""
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr "Déplacez les informations de style importantes au début de la page, ce qui aide les pages à afficher votre contenu plus rapidement, afin que vos utilisateurs n'aient pas à attendre que la page entière se charge.%1$s %2$sBoost générera automatiquement votre CSS critique%3$s chaque fois que vous apporterez des modifications à la structure HTML ou CSS de votre site."
 
 #: build/performance/performance.min.js:5
 msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
-msgstr ""
+msgstr "Exécutez le JavaScript non essentiel après le chargement de la page afin que les styles et les images puissent se charger plus rapidement."
 
 #: build/performance/performance.min.js:5
 msgid "Concatenate JS"
-msgstr ""
+msgstr "Concaténer JS"
 
 #: build/performance/performance.min.js:5
 msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr ""
+msgstr "Les scripts sont regroupés par leur emplacement d'origine, concaténés et minifiés pour réduire le temps de chargement du site et réduire le nombre de requêtes."
 
 #: build/performance/performance.min.js:5
 msgid "Exclude JS Strings"
-msgstr ""
+msgstr "Exclure les chaînes JS"
 
 #: build/performance/performance.min.js:5
 msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr ""
+msgstr "Les styles sont regroupés par leur emplacement d'origine, concaténés et minifiés pour réduire le temps de chargement du site et réduire le nombre de requêtes."
 
 #: build/performance/performance.min.js:5
 msgid "Exclude CSS Strings"
-msgstr ""
+msgstr "Exclure les chaînes CSS"
 
 #: build/performance/performance.min.js:5
 msgid "Link Prefetch"
-msgstr ""
+msgstr "Préchargement de liens"
 
 #: build/performance/performance.min.js:5
 msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
-msgstr ""
+msgstr "Demande au navigateur de télécharger et de mettre en cache les liens sur la page avant qu'ils ne soient cliqués, de sorte que lorsqu'ils sont cliqués, ils se chargent presque instantanément."
 
 #: build/performance/performance.min.js:5
 msgid "Link prefetching setting saved"
-msgstr ""
+msgstr "Paramètre de préchargement de liens enregistré"
 
 #: build/performance/performance.min.js:5
 msgid "Enable link prefetching on desktop"
-msgstr ""
+msgstr "Activer le préchargement de liens sur ordinateur"
 
 #: build/performance/performance.min.js:5
 msgid "Activate on desktop"
-msgstr ""
+msgstr "Activer sur ordinateur"
 
 #: build/performance/performance.min.js:5
 msgid "Behavior"
-msgstr ""
+msgstr "Comportement"
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Mouse Down"
-msgstr ""
+msgstr "Préchargement au clic de souris"
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
-msgstr ""
+msgstr "Préchargement au clic de souris : Commence à charger la page dès que vous cliquez, pour une réponse plus rapide lorsque vous relâchez le clic."
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Mouse Hover (Recommended)"
-msgstr ""
+msgstr "Préchargement au survol de la souris (Recommandé)"
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
-msgstr ""
+msgstr "Préchargement au survol de la souris : Commence à charger la page dès que votre curseur survole un lien"
 
 #: build/performance/performance.min.js:5
 msgid "Enable link prefetching on mobile"
-msgstr ""
+msgstr "Activer le préchargement de liens sur mobile"
 
 #: build/performance/performance.min.js:5
 msgid "Activate on mobile"
-msgstr ""
+msgstr "Activer sur mobile"
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Touchstart (Recommended)"
-msgstr ""
+msgstr "Préchargement au toucher (Recommandé)"
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
-msgstr ""
+msgstr "Préchargement au toucher : Commence instantanément à charger la page dès que vous touchez l'écran, assurant une réponse plus rapide lorsque vous levez votre doigt."
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch Above the Fold"
-msgstr ""
+msgstr "Préchargement au-dessus de la ligne de flottaison"
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
-msgstr ""
+msgstr "Préchargement au-dessus de la ligne de flottaison : Charge instantanément les liens dans votre vue actuelle, garantissant qu'ils sont prêts quand vous en avez besoin."
 
 #: build/performance/performance.min.js:5
 msgid "Exclude keywords"
-msgstr ""
+msgstr "Exclure les mots-clés"
 
 #: build/performance/performance.min.js:5
 msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
-msgstr ""
+msgstr "Exclure les mots-clés : Une liste de mots ou de chaînes séparés par des virgules qui exclura un lien d'être préchargé. Par exemple, exclure \"app\" empêchera https://example.com/apple d'être préchargé."

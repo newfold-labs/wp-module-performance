@@ -408,14 +408,14 @@ msgid "Exclude Keywords: A comma separated list of words or strings that will ex
 msgstr "Schlüsselwörter ausschließen: Eine durch Kommas getrennte Liste von Wörtern oder Zeichenketten, die einen Link vom Vorabruf ausschließen. Zum Beispiel wird durch den Ausschluss von \"app\" verhindert, dass https://example.com/apple vorabgerufen wird."
 
 #: build/performance/performance.min.js:2
-msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr ""
+msgid "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
+msgstr "Diese Einstellung steuert, welche Seiten einen "no-cache"-Header übergeben, sodass Seiten-Caching und Browser-Caching nicht verwendet werden."
 
 #: build/performance/performance.min.js:2
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr ""
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+msgstr "Verschieben Sie wichtige Styling-Informationen an den Anfang der Seite, was hilft, Ihre Inhalte schneller anzuzeigen, sodass Ihre Benutzer nicht warten müssen, bis die gesamte Seite geladen ist."
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr ""
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr "Verschieben Sie wichtige Styling-Informationen an den Anfang der Seite, was hilft, Ihre Inhalte schneller anzuzeigen, sodass Ihre Benutzer nicht warten müssen, bis die gesamte Seite geladen ist.%1$s %2$sBoost wird automatisch Ihr kritisches CSS generieren%3$s, wenn Sie Änderungen an der HTML- oder CSS-Struktur Ihrer Website vornehmen."
