@@ -570,8 +570,8 @@ msgid "An error occurred while updating the option."
 msgstr "An error occurred while updating the option."
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
-msgid "Optimizing Images…"
-msgstr "Optimizing Images…"
+msgid "Optimising Images…"
+msgstr "Optimising Images…"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
 msgid "Preparing files…"
@@ -582,16 +582,16 @@ msgid "Done"
 msgstr "Done"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
-msgid "Optimization Canceled"
-msgstr "Optimization Canceled"
+msgid "Optimisation Cancelled"
+msgstr "Optimisation Cancelled"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
-msgid "Optimizing:"
-msgstr "Optimizing:"
+msgid "Optimising:"
+msgstr "Optimising:"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
-msgid "Optimization Complete!"
-msgstr "Optimization Complete!"
+msgid "Optimisation Complete!"
+msgstr "Optimisation Complete!"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
 msgid "Passed"
@@ -606,12 +606,12 @@ msgid "An error occurred."
 msgstr "An error occurred."
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
-msgid "Optimize"
-msgstr "Optimize"
+msgid "Optimise"
+msgstr "Optimise"
 
 #: assets/image-optimized-marker/image-optimized-marker.js:23
-msgid "Optimized"
-msgstr "Optimized"
+msgid "Optimised"
+msgstr "Optimised"
 
 #: includes/RestApi/JetpackController.php:170
 msgid "Failed to regenerate critical CSS."
@@ -624,3 +624,48 @@ msgstr "An error occurred while regenerating critical CSS."
 #: includes/Services/EventService.php:23
 msgid "Bad event structure/value."
 msgstr "Bad event structure/value."
+
+msgid "Image Optimization"
+msgstr "Image Optimisation"
+
+msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+msgstr "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+
+msgid "Enable Image Optimization"
+msgstr "Enable Image Optimisation"
+
+msgid "Enable or disable image optimization globally."
+msgstr "Enable or disable image optimisation globally."
+
+msgid "Automatically Optimise Uploaded Images"
+msgstr "Automatically Optimise Uploaded Images"
+
+msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
+msgstr "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
+
+msgid "Enable Bulk Optimisation of Images"
+msgstr "Enable Bulk Optimisation of Images"
+
+msgid "When enabled, allows bulk optimization of images in the media library."
+msgstr "When enabled, allows bulk optimisation of images in the media library."
+
+msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
+msgstr "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
+
+msgid "Prefer Optimised Image When Exists"
+msgstr "Prefer Optimised Image When Exists"
+
+msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
+msgstr "When enabled, optimised images will be served in place of original images when they exist, improving performance."
+
+msgid "Your image optimisation settings have been saved."
+msgstr "Your image optimisation settings have been saved."
+
+msgid "Optimise Critical CSS Loading (manual)"
+msgstr "Optimise Critical CSS Loading (manual)"
+
+msgid "Optimise Critical CSS Loading (UPGRADED)"
+msgstr "Optimise Critical CSS Loading (UPGRADED)"
+
+msgid "Behaviour"
+msgstr "Behaviour"

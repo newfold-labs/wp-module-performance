@@ -571,7 +571,7 @@ msgstr "An error occurred while updating the option."
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
 msgid "Optimizing Images…"
-msgstr "Optimizing Images…"
+msgstr "Optimising Images…"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
 msgid "Preparing files…"
@@ -583,15 +583,15 @@ msgstr "Done"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
 msgid "Optimization Canceled"
-msgstr "Optimization Canceled"
+msgstr "Optimisation Cancelled"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
 msgid "Optimizing:"
-msgstr "Optimizing:"
+msgstr "Optimising:"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
 msgid "Optimization Complete!"
-msgstr "Optimization Complete!"
+msgstr "Optimisation Complete!"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
 msgid "Passed"
@@ -607,11 +607,11 @@ msgstr "An error occurred."
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
 msgid "Optimize"
-msgstr "Optimize"
+msgstr "Optimise"
 
 #: assets/image-optimized-marker/image-optimized-marker.js:23
 msgid "Optimized"
-msgstr "Optimized"
+msgstr "Optimised"
 
 #: includes/RestApi/JetpackController.php:170
 msgid "Failed to regenerate critical CSS."
@@ -624,3 +624,264 @@ msgstr "An error occurred while regenerating critical CSS."
 #: includes/Services/EventService.php:23
 msgid "Bad event structure/value."
 msgstr "Bad event structure/value."
+
+msgid "This is where you can manage performance settings for your website."
+msgstr "This is where you can manage performance settings for your website."
+
+msgid "Exclude from cache"
+msgstr "Exclude from cache"
+
+msgid "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
+msgstr "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
+
+msgid "Cache Exclusion saved"
+msgstr "Cache Exclusion saved"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cache Level"
+msgstr "Cache Level"
+
+msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+msgstr "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+
+msgid "Cache setting saved"
+msgstr "Cache setting saved"
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "No cache enabled. Every page load is fresh. Not recommended."
+msgstr "No cache enabled. Every page load is fresh. Not recommended."
+
+msgid "Caching disabled."
+msgstr "Caching disabled."
+
+msgid "Assets Only"
+msgstr "Assets Only"
+
+msgid "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
+msgstr "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
+
+msgid "Cache enabled for assets only."
+msgstr "Cache enabled for assets only."
+
+msgid "Assets & Web Pages"
+msgstr "Assets & Web Pages"
+
+msgid "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
+msgstr "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
+
+msgid "Cache enabled for assets and pages."
+msgstr "Cache enabled for assets and pages."
+
+msgid "Assets & Web Pages - Extended"
+msgstr "Assets & Web Pages - Extended"
+
+msgid "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
+msgstr "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
+
+msgid "Cache enabled for assets and pages (extended)."
+msgstr "Cache enabled for assets and pages (extended)."
+
+msgid "Image Optimization"
+msgstr "Image Optimisation"
+
+msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+msgstr "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+
+msgid "Usage:"
+msgstr "Usage:"
+
+msgid "images processed of"
+msgstr "images processed of"
+
+msgid "/month"
+msgstr "/month"
+
+msgid "Loading settings…"
+msgstr "Loading settings…"
+
+msgid "Oops! Something went wrong. Please try again."
+msgstr "Oops! Something went wrong. Please try again."
+
+msgid "No settings available."
+msgstr "No settings available."
+
+msgid "Enable Image Optimization"
+msgstr "Enable Image Optimisation"
+
+msgid "Enable or disable image optimization globally."
+msgstr "Enable or disable image optimisation globally."
+
+msgid "Automatically Optimize Uploaded Images"
+msgstr "Automatically Optimise Uploaded Images"
+
+msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
+msgstr "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
+
+msgid "Enable Bulk Optimization of Images"
+msgstr "Enable Bulk Optimisation of Images"
+
+msgid "When enabled, allows bulk optimization of images in the media library."
+msgstr "When enabled, allows bulk optimisation of images in the media library."
+
+msgid "Go to Media Library"
+msgstr "Go to Media Library"
+
+msgid "Auto Delete Original Image"
+msgstr "Auto Delete Original Image"
+
+msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
+msgstr "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
+
+msgid "Enable Lazy Loading"
+msgstr "Enable Lazy Loading"
+
+msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
+msgstr "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
+
+msgid "Prefer Optimized Image When Exists"
+msgstr "Prefer Optimised Image When Exists"
+
+msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
+msgstr "When enabled, optimised images will be served in place of original images when they exist, improving performance."
+
+msgid "Settings updated successfully"
+msgstr "Settings updated successfully"
+
+msgid "Your image optimization settings have been saved."
+msgstr "Your image optimisation settings have been saved."
+
+msgid "Error Updating Settings"
+msgstr "Error Updating Settings"
+
+msgid "Something went wrong while updating the settings. Please try again."
+msgstr "Something went wrong while updating the settings. Please try again."
+
+msgid "Advanced settings"
+msgstr "Advanced settings"
+
+msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+msgstr "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+
+msgid "Option saved correctly"
+msgstr "Option saved correctly"
+
+msgid "Error saving option"
+msgstr "Error saving option"
+
+msgid "Upgrade to unlock"
+msgstr "Upgrade to unlock"
+
+msgid "Install Jetpack Boost to unlock"
+msgstr "Install Jetpack Boost to unlock"
+
+msgid "Installing Jetpack Boost…"
+msgstr "Installing Jetpack Boost…"
+
+msgid "Jetpack Boost is now active"
+msgstr "Jetpack Boost is now active"
+
+msgid "Activation failed"
+msgstr "Activation failed"
+
+msgid "Optimize Critical CSS Loading (manual)"
+msgstr "Optimise Critical CSS Loading (manual)"
+
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+msgstr "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+
+msgid "Generate CSS"
+msgstr "Generate CSS"
+
+msgid "Critical CSS generated successfully."
+msgstr "Critical CSS generated successfully."
+
+msgid "Keep this page opened until the process finish"
+msgstr "Keep this page opened until the process finish"
+
+msgid "Error generating Critical CSS, try again"
+msgstr "Error generating Critical CSS, try again"
+
+msgid "Optimize Critical CSS Loading (UPGRADED)"
+msgstr "Optimise Critical CSS Loading (UPGRADED)"
+
+msgid "Generate Critical CSS Automatically"
+msgstr "Generate Critical CSS Automatically"
+
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+
+msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+msgstr "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+
+msgid "Concatenate JS"
+msgstr "Concatenate JS"
+
+msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+
+msgid "Exclude JS Strings"
+msgstr "Exclude JS Strings"
+
+msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+
+msgid "Exclude CSS Strings"
+msgstr "Exclude CSS Strings"
+
+msgid "Link Prefetch"
+msgstr "Link Prefetch"
+
+msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+msgstr "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+
+msgid "Link prefetching setting saved"
+msgstr "Link prefetching setting saved"
+
+msgid "Enable link prefetching on desktop"
+msgstr "Enable link prefetching on desktop"
+
+msgid "Activate on desktop"
+msgstr "Activate on desktop"
+
+msgid "Behavior"
+msgstr "Behaviour"
+
+msgid "Prefetch on Mouse Down"
+msgstr "Prefetch on Mouse Down"
+
+msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+msgstr "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+
+msgid "Prefetch on Mouse Hover (Recommended)"
+msgstr "Prefetch on Mouse Hover (Recommended)"
+
+msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
+msgstr "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
+
+msgid "Enable link prefetching on mobile"
+msgstr "Enable link prefetching on mobile"
+
+msgid "Activate on mobile"
+msgstr "Activate on mobile"
+
+msgid "Prefetch on Touchstart (Recommended)"
+msgstr "Prefetch on Touchstart (Recommended)"
+
+msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
+msgstr "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
+
+msgid "Prefetch Above the Fold"
+msgstr "Prefetch Above the Fold"
+
+msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+msgstr "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+
+msgid "Exclude keywords"
+msgstr "Exclude keywords"
+
+msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding "app" will prevent https://example.com/apple from being prefetched."
+msgstr "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding "app" will prevent https://example.com/apple from being prefetched."
