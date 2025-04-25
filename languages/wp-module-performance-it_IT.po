@@ -560,7 +560,7 @@ msgstr "Prestazioni"
 #: includes/RestApi/JetpackController.php:81
 #: includes/RestApi/Skip404Controller.php:62
 msgid "The parameter 'field' is missing or invalid."
-msgstr "Il parametro 'campo' è mancante o non valido."
+msgstr "Il parametro 'field' è mancante o non valido."
 
 #: includes/RestApi/JetpackController.php:93
 #: includes/RestApi/Skip404Controller.php:74
