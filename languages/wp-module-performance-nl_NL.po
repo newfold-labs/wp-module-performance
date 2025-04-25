@@ -560,12 +560,12 @@ msgstr "Prestaties"
 #: includes/RestApi/JetpackController.php:81
 #: includes/RestApi/Skip404Controller.php:62
 msgid "The parameter 'field' is missing or invalid."
-msgstr "De parameter 'veld' ontbreekt of is ongeldig."
+msgstr "De parameter 'field' ontbreekt of is ongeldig."
 
 #: includes/RestApi/JetpackController.php:93
 #: includes/RestApi/Skip404Controller.php:74
 msgid "The fields 'id' and 'value' are required."
-msgstr "De velden 'id' en 'waarde' zijn vereist."
+msgstr "De velden 'id' en 'value' zijn vereist."
 
 #: includes/RestApi/JetpackController.php:120
 #: includes/RestApi/JetpackController.php:140
