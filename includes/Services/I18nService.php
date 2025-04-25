@@ -75,7 +75,7 @@ class I18nService {
 		);
 
 		$current_language = get_locale();
-		$loaded_td        = load_textdomain( 'wp-module-performance', $languages_dir . '/' . $domain . '-' . $current_language . '.mo' );
+		$loaded_td        = load_textdomain( 'wp-module-performance', $languages_dir . '/' . $textdomain . '-' . $current_language . '.mo' );
 
 		return $loaded_ptd && $loaded_td;
 	}
