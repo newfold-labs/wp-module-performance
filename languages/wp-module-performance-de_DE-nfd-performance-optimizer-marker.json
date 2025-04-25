@@ -1,7 +1,7 @@
 {
     "translation-revision-date": "2025-03-04 12:44",
     "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/image-optimized-marker\/image-optimized-marker.js",
+    "source": "build\/assets\/image-optimized-marker\/image-optimized-marker.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
