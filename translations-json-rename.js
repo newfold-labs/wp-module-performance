@@ -14,10 +14,10 @@ const RENAMED = chalk.reset.inverse.bold.green(" RENAMED ");
 const ERROR = chalk.reset.inverse.bold.red(" ERROR ");
 
 const slugsMap = {
-  "build/performance/performance.min.js": "wp-module-performance-translations",
-  "build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js":
+  "build/performance/performance.js": "nfd-performance",
+  "build/assets/image-bulk-optimizer/image-bulk-optimizer.js":
     "nfd-performance-bulk-optimizer",
-  "build/assets/image-optimized-marker/image-optimized-marker.min.js":
+  "build/assets/image-optimized-marker/image-optimized-marker.js":
     "nfd-performance-optimizer-marker"
 };
 
