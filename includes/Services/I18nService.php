@@ -42,21 +42,31 @@ class I18nService {
 	 * Enqueue script for translations of the performance panel settings
 	 */
 	public function prepare_and_load_js_translations() {
-		wp_register_script(
-			'wp-module-performance-translations',
-			NFD_PERFORMANCE_BUILD_URL . '/translations.min.js',
-			array( 'lodash', 'react', 'react-dom', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-html-entities', 'wp-i18n' ),
-			$this->version,
-			true
+
+		add_action( 
+			'admin_enqueue_scripts',
+			function() {
+				$this::load_js_translations(
+					'wp-module-performance',
+					'nfd-performance',
+					NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
+				);
+
+				$this::load_js_translations(
+					'wp-module-performance',
+					'nfd-performance-bulk-optimizer',
+					NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
+				);
+
+				$this::load_js_translations(
+					'wp-module-performance',
+					'nfd-performance-image-bulk-optimizer',
+					NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
+				);
+			},
+			100
 		);
 
-		$this::load_js_translations(
-			'wp-module-performance',
-			'wp-module-performance-translations',
-			NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR
-		);
-
-		wp_enqueue_script( 'wp-module-performance-translations' );
 	}
 
 	/**
