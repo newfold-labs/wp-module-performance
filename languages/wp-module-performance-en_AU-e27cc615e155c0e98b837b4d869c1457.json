@@ -1,44 +1,38 @@
 {
-    "translation-revision-date": "2025-03-04 12:44",
+    "translation-revision-date": "2025-03-04 18:17+0530",
     "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
+    "source": "build\/assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "nl_NL",
+                "lang": "en_AU",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Optimizing Images\u2026": [
-                "Afbeeldingen optimaliseren\u2026"
+                "Optimising Images\u2026"
             ],
             "Preparing files\u2026": [
-                "Bestanden voorbereiden\u2026"
+                "Preparing files\u2026"
             ],
             "Done": [
-                "Voltooid"
+                "Done"
             ],
             "Optimization Canceled": [
-                "Optimalisatie geannuleerd"
+                "Optimisation Cancelled"
             ],
             "Optimizing:": [
-                "Optimaliseren:"
+                "Optimising:"
             ],
             "Optimization Complete!": [
-                "Optimalisatie voltooid!"
-            ],
-            "Passed": [
-                "Geslaagd"
-            ],
-            "Failed": [
-                "Mislukt"
+                "Optimisation Complete!"
             ],
             "An error occurred.": [
-                "Er is een fout opgetreden."
+                "An error occurred."
             ],
             "Optimize": [
-                "Optimaliseren"
+                "Optimise"
             ]
         }
     }
