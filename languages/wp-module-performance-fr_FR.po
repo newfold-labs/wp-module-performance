@@ -560,7 +560,7 @@ msgstr "Performances"
 #: includes/RestApi/JetpackController.php:81
 #: includes/RestApi/Skip404Controller.php:62
 msgid "The parameter 'field' is missing or invalid."
-msgstr "Le paramètre 'champ' est manquant ou invalide."
+msgstr "Le paramètre 'field' est manquant ou invalide."
 
 #: includes/RestApi/JetpackController.php:93
 #: includes/RestApi/Skip404Controller.php:74
