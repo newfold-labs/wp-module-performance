@@ -339,7 +339,7 @@ msgstr "Links permanentes não estão configurados"
 
 #: includes/HealthChecks/PermalinksHealthCheck.php:17
 msgid "Setting permalinks to anything other than plain can improve performance and SEO."
-msgstr "Definir links permanentes para qualquer coisa diferente de "simples" pode melhorar o desempenho e o SEO."
+msgstr "Definir links permanentes para qualquer coisa diferente de \"simples\" pode melhorar o desempenho e o SEO."
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
 msgid "Object Caching"
