@@ -61,15 +61,15 @@ class I18nService {
 
 	/**
 	 * Loads the PHP translations from .mo files in the languages dir.
-	 * The .mo file must be named $domain-$locale.mo
+	 * The .mo file must be named $textdomain-$locale.mo
 	 *
-	 * @param [string] $domain The text domain.
+	 * @param [string] $textdomain The text domain.
 	 * @param [string] $languages_dir The directory containing the .mo files.
 	 * @return boolean
 	 */
-	public static function load_php_translations( $domain, $languages_dir ) {
+	public static function load_php_translations( $textdomain, $languages_dir ) {
 		$loaded_ptd = load_plugin_textdomain(
-			$domain,
+			$textdomain,
 			false,
 			$languages_dir
 		);
