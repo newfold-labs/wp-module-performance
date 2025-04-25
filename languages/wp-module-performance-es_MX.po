@@ -37,15 +37,15 @@ msgstr "Ocurrió un error al actualizar la opción."
 
 #: includes/Performance.php:233
 msgid "Purge All"
-msgstr "Limpiar todo"
+msgstr "Purgar todo"
 
 #: includes/Performance.php:243
 msgid "Purge This Page"
-msgstr "Purge This Page"
+msgstr "Purgar esta página"
 
 #: includes/Performance.php:255
 msgid "Cache Settings"
-msgstr "Configuración de caché"
+msgstr "Ajustes de caché"
 
 #: includes/Images/ImageService.php:37
 msgid "The provided image URL is invalid."
@@ -207,11 +207,11 @@ msgstr "La integración de Cloudflare puede mejorar el rendimiento y la segurida
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:15
 msgid "CSS files are concatenated"
-msgstr "Los archivos CSS se han combinado"
+msgstr "Los archivos CSS están concatenados"
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:16
 msgid "CSS files are not concatenated"
-msgstr "Los archivos CSS no se han combinado"
+msgstr "Los archivos CSS no están concatenados"
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:17
 msgid "Concatenating CSS can improve performance by reducing the number of requests."
@@ -395,7 +395,7 @@ msgstr "Priorizar el CSS crítico puede mejorar el rendimiento al cargar primero
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
 msgid "Optimizing Images…"
-msgstr "Optimizando las imágenes…"
+msgstr "Optimizando imágenes…"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
 msgid "Preparing files…"
@@ -403,7 +403,7 @@ msgstr "Preparando archivos…"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
 msgid "Done"
-msgstr "Hecho"
+msgstr "Listo"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
 msgid "Optimization Canceled"
@@ -415,7 +415,7 @@ msgstr "Optimizando:"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
 msgid "Optimization Complete!"
-msgstr "¡Optimización finalizada!"
+msgstr "¡Optimización completada!"
 
 #: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
 msgid "Passed"
