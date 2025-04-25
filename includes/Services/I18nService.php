@@ -43,9 +43,9 @@ class I18nService {
 	 */
 	public function prepare_and_load_js_translations() {
 
-		add_action( 
+		add_action(
 			'admin_enqueue_scripts',
-			function() {
+			function () {
 				$this::load_js_translations(
 					'wp-module-performance',
 					'nfd-performance',
@@ -66,7 +66,6 @@ class I18nService {
 			},
 			100
 		);
-
 	}
 
 	/**
