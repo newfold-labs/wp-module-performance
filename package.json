@@ -23,7 +23,7 @@
     "@testing-library/cypress": "^10.0.3",
     "@wordpress/scripts": "^30.15.0",
     "autoprefixer": "^10.4.21",
-    "chalk": "^4.1.2",
+    "chalk": "^5.4.1",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "cypress": "^14.3.1",
     "cypress-axe": "^1.6.0",
