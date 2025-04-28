@@ -274,14 +274,14 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Excluir Palavras-chave: Uma lista separada por v\u00edrgulas de palavras ou strings que excluir\u00e3o um link do pr\u00e9-carregamento. Por exemplo, excluir \"app\" impedir\u00e1 que https:\/\/example.com\/apple seja pr\u00e9-carregado."
             ],
-            "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used.": [
-                "Esta configura\u00e7\u00e3o controla quais p\u00e1ginas passam um cabe\u00e7alho \"no-cache\" para que o cache de p\u00e1ginas e de navegador n\u00e3o seja usado."
+            "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
+                ""
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.": [
-                "Mova informa\u00e7\u00f5es importantes de estilo para o in\u00edcio da p\u00e1gina, o que ajuda as p\u00e1ginas a exibirem seu conte\u00fado mais rapidamente, para que seus usu\u00e1rios n\u00e3o precisem esperar o carregamento completo da p\u00e1gina."
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
+                ""
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "Mova informa\u00e7\u00f5es importantes de estilo para o in\u00edcio da p\u00e1gina, o que ajuda as p\u00e1ginas a exibirem seu conte\u00fado mais rapidamente, para que seus usu\u00e1rios n\u00e3o precisem esperar o carregamento completo da p\u00e1gina.%1$s %2$sO Boost gerar\u00e1 automaticamente seu CSS Cr\u00edtico%3$s sempre que voc\u00ea fizer altera\u00e7\u00f5es na estrutura HTML ou CSS do seu site."
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
+                ""
             ]
         }
     }

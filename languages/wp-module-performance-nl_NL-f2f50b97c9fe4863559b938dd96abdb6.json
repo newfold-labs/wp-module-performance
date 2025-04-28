@@ -28,9 +28,6 @@
             "Exclude from cache": [
                 "Uitsluiten van cache"
             ],
-            "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used.": [
-                "Deze instelling bepaalt welke pagina's een \"no-cache\" header doorgeven, zodat pagina-caching en browser-caching niet worden gebruikt."
-            ],
             "Cache Exclusion saved": [
                 "Cache-uitsluiting opgeslagen"
             ],
@@ -187,9 +184,6 @@
             "Optimize Critical CSS Loading (manual)": [
                 "Kritische CSS-laden optimaliseren (handmatig)"
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.": [
-                "Verplaats belangrijke stijlinformatie naar het begin van de pagina, wat helpt om je inhoud sneller weer te geven, zodat je gebruikers niet hoeven te wachten tot de hele pagina is geladen."
-            ],
             "Generate CSS": [
                 "CSS genereren"
             ],
@@ -207,9 +201,6 @@
             ],
             "Generate Critical CSS Automatically": [
                 "Kritische CSS automatisch genereren"
-            ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "Verplaats belangrijke stijlinformatie naar het begin van de pagina, wat helpt om je inhoud sneller weer te geven, zodat je gebruikers niet hoeven te wachten tot de hele pagina is geladen.%1$s %2$sBoost zal automatisch je kritische CSS genereren%3$s wanneer je wijzigingen aanbrengt in de HTML- of CSS-structuur van je site."
             ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "Voer niet-essenti\u00eble JavaScript uit nadat de pagina is geladen, zodat stijlen en afbeeldingen sneller kunnen laden."
@@ -282,6 +273,15 @@
             ],
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Trefwoorden uitsluiten: Een door komma's gescheiden lijst met woorden of strings die een link uitsluiten van prefetching. Bijvoorbeeld, het uitsluiten van \"app\" zal voorkomen dat https:\/\/example.com\/apple wordt voorgeladen."
+            ],
+            "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
+                ""
+            ],
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
+                ""
+            ],
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
+                ""
             ]
         }
     }
