@@ -80,10 +80,6 @@ msgid "Exclude from cache"
 msgstr "Uitsluiten van cache"
 
 #: build/performance/performance.min.js:2
-msgid "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
-msgstr "Deze instelling bepaalt welke pagina's een \"no-cache\" header doorgeven, zodat pagina-caching en browser-caching niet worden gebruikt."
-
-#: build/performance/performance.min.js:2
 msgid "Cache Exclusion saved"
 msgstr "Cache-uitsluiting opgeslagen"
 
@@ -292,10 +288,6 @@ msgid "Optimize Critical CSS Loading (manual)"
 msgstr "Kritische CSS-laden optimaliseren (handmatig)"
 
 #: build/performance/performance.min.js:2
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
-msgstr "Verplaats belangrijke stijlinformatie naar het begin van de pagina, wat helpt om je inhoud sneller weer te geven, zodat je gebruikers niet hoeven te wachten tot de hele pagina is geladen."
-
-#: build/performance/performance.min.js:2
 msgid "Generate CSS"
 msgstr "CSS genereren"
 
@@ -318,11 +310,6 @@ msgstr "Kritische CSS-laden optimaliseren (VERBETERD)"
 #: build/performance/performance.min.js:2
 msgid "Generate Critical CSS Automatically"
 msgstr "Kritische CSS automatisch genereren"
-
-#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
-#: build/performance/performance.min.js:5
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr "Verplaats belangrijke stijlinformatie naar het begin van de pagina, wat helpt om je inhoud sneller weer te geven, zodat je gebruikers niet hoeven te wachten tot de hele pagina is geladen.%1$s %2$sBoost zal automatisch je kritische CSS genereren%3$s wanneer je wijzigingen aanbrengt in de HTML- of CSS-structuur van je site."
 
 #: build/performance/performance.min.js:5
 msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
@@ -419,3 +406,16 @@ msgstr "Trefwoorden uitsluiten"
 #: build/performance/performance.min.js:5
 msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
 msgstr "Trefwoorden uitsluiten: Een door komma's gescheiden lijst met woorden of strings die een link uitsluiten van prefetching. Bijvoorbeeld, het uitsluiten van \"app\" zal voorkomen dat https://example.com/apple wordt voorgeladen."
+
+#: build/performance/performance.min.js:2
+msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
+msgstr ""
+
+#: build/performance/performance.min.js:2
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
+msgstr ""
+
+#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+#: build/performance/performance.min.js:5
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr ""

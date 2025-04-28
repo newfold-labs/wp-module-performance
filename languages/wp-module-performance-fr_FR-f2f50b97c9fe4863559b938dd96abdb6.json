@@ -28,9 +28,6 @@
             "Exclude from cache": [
                 "Exclure du cache"
             ],
-            "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used.": [
-                "Ce param\u00e8tre contr\u00f4le quelles pages transmettent un en-t\u00eate \"no-cache\" afin que la mise en cache des pages et du navigateur ne soit pas utilis\u00e9e."
-            ],
             "Cache Exclusion saved": [
                 "Exclusion du cache enregistr\u00e9e"
             ],
@@ -187,9 +184,6 @@
             "Optimize Critical CSS Loading (manual)": [
                 "Optimiser le chargement du CSS critique (manuel)"
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.": [
-                "D\u00e9placez les informations de style importantes au d\u00e9but de la page, ce qui aide les pages \u00e0 afficher votre contenu plus rapidement, afin que vos utilisateurs n'aient pas \u00e0 attendre que la page enti\u00e8re se charge."
-            ],
             "Generate CSS": [
                 "G\u00e9n\u00e9rer le CSS"
             ],
@@ -207,9 +201,6 @@
             ],
             "Generate Critical CSS Automatically": [
                 "G\u00e9n\u00e9rer le CSS critique automatiquement"
-            ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "D\u00e9placez les informations de style importantes au d\u00e9but de la page, ce qui aide les pages \u00e0 afficher votre contenu plus rapidement, afin que vos utilisateurs n'aient pas \u00e0 attendre que la page enti\u00e8re se charge.%1$s %2$sBoost g\u00e9n\u00e9rera automatiquement votre CSS critique%3$s chaque fois que vous apporterez des modifications \u00e0 la structure HTML ou CSS de votre site."
             ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "Ex\u00e9cutez le JavaScript non essentiel apr\u00e8s le chargement de la page afin que les styles et les images puissent se charger plus rapidement."
@@ -282,6 +273,15 @@
             ],
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Exclure les mots-cl\u00e9s : Une liste de mots ou de cha\u00eenes s\u00e9par\u00e9s par des virgules qui exclura un lien d'\u00eatre pr\u00e9charg\u00e9. Par exemple, exclure \"app\" emp\u00eachera https:\/\/example.com\/apple d'\u00eatre pr\u00e9charg\u00e9."
+            ],
+            "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
+                ""
+            ],
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
+                ""
+            ],
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
+                ""
             ]
         }
     }

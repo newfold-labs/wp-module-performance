@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-03-04 18:17+0530",
+    "translation-revision-date": "2025-03-04 18:16+0530",
     "generator": "WP-CLI\/2.11.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -7,7 +7,7 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "en_AU",
+                "lang": "en_GB",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Concatenate CSS": [
@@ -21,6 +21,30 @@
             ],
             "Performance": [
                 "Performance"
+            ],
+            "Image Optimization": [
+                "Image Optimisation"
+            ],
+            "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.": [
+                "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+            ],
+            "Enable Image Optimization": [
+                "Enable Image Optimisation"
+            ],
+            "Enable or disable image optimization globally.": [
+                "Enable or disable image optimisation globally."
+            ],
+            "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.": [
+                "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
+            ],
+            "When enabled, allows bulk optimization of images in the media library.": [
+                "When enabled, allows bulk optimisation of images in the media library."
+            ],
+            "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.": [
+                "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
+            ],
+            "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
+                "When enabled, optimised images will be served in place of original images when they exist, improving performance."
             ],
             "This is where you can manage performance settings for your website.": [
                 "This is where you can manage performance settings for your website."
@@ -79,12 +103,6 @@
             "Cache enabled for assets and pages (extended).": [
                 "Cache enabled for assets and pages (extended)."
             ],
-            "Image Optimization": [
-                "Image Optimisation"
-            ],
-            "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.": [
-                "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
-            ],
             "Usage:": [
                 "Usage:"
             ],
@@ -103,32 +121,17 @@
             "No settings available.": [
                 "No settings available."
             ],
-            "Enable Image Optimization": [
-                "Enable Image Optimisation"
-            ],
-            "Enable or disable image optimization globally.": [
-                "Enable or disable image optimisation globally."
-            ],
             "Automatically Optimize Uploaded Images": [
                 "Automatically Optimise Uploaded Images"
             ],
-            "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.": [
-                "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
-            ],
             "Enable Bulk Optimization of Images": [
                 "Enable Bulk Optimisation of Images"
-            ],
-            "When enabled, allows bulk optimization of images in the media library.": [
-                "When enabled, allows bulk optimisation of images in the media library."
             ],
             "Go to Media Library": [
                 "Go to Media Library"
             ],
             "Auto Delete Original Image": [
                 "Auto Delete Original Image"
-            ],
-            "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.": [
-                "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
             ],
             "Enable Lazy Loading": [
                 "Enable Lazy Loading"
@@ -138,9 +141,6 @@
             ],
             "Prefer Optimized Image When Exists": [
                 "Prefer Optimised Image When Exists"
-            ],
-            "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
-                "When enabled, optimised images will be served in place of original images when they exist, improving performance."
             ],
             "Settings updated successfully": [
                 "Settings updated successfully"
@@ -191,7 +191,7 @@
                 "Critical CSS generated successfully."
             ],
             "Keep this page opened until the process finish": [
-                "Keep this page opened until the process finish"
+                "Keep this page open until the process finishes"
             ],
             "Error generating Critical CSS, try again": [
                 "Error generating Critical CSS, try again"
@@ -274,14 +274,14 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched."
             ],
-            "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used.": [
-                "This setting controls what pages pass a \"no-cache\" header so that page caching and browser caching is not used."
+            "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
+                ""
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.": [
-                "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
+                ""
             ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
+                ""
             ]
         }
     }
