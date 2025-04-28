@@ -1,7 +1,7 @@
 {
     "translation-revision-date": "2025-03-04 12:44",
     "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
+    "source": "build\/assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
@@ -27,12 +27,6 @@
             ],
             "Optimization Complete!": [
                 "Optimisation termin\u00e9e !"
-            ],
-            "Passed": [
-                "R\u00e9ussi"
-            ],
-            "Failed": [
-                "Echou\u00e9"
             ],
             "An error occurred.": [
                 "Une erreur est survenue."

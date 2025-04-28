@@ -14,613 +14,403 @@ msgstr ""
 "X-Domain: wp-module-performance\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. translators: %s is the list of valid cache levels.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:27
-msgid "Invalid cache level. Use one of the following: %s."
-msgstr "Invalid cache level. Use one of the following: %s."
-
-#. translators: %s is the list of valid cache levels.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:56
-msgid "A value for cache level is required. Use one of the following: %s."
-msgstr "A value for cache level is required. Use one of the following: %s."
-
-#. translators: %s is the new cache level.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:66
-msgid "Setting 'newfold_cache_level' has been set to '%s'."
-msgstr "Setting 'newfold_cache_level' has been set to '%s'."
-
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:91
-msgid "Invalid value. Use 'true' or 'false' for skip_404 handling."
-msgstr "Invalid value. Use 'true' or 'false' for skip_404 handling."
-
-#. translators: %s is the new boolean status.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:98
-msgid "Setting 'newfold_skip_404_handling' has been set to '%s'."
-msgstr "Setting 'newfold_skip_404_handling' has been set to '%s'."
-
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:122
-msgid "A value for cache exclusion is required."
-msgstr "A value for cache exclusion is required."
-
-#. translators: %s is the new cache exclusion list.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:136
-msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
-msgstr "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
-
-#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
-msgid "Autosave Interval"
-msgstr "Autosave Interval"
-
-#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:15
-msgid "Autosaving is set to happen every 30 seconds or more"
-msgstr "Autosaving is set to happen every 30 seconds or more"
-
-#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:16
-msgid "Autosaving is set to be frequent, less than every 30 seconds"
-msgstr "Autosaving is set to be frequent, less than every 30 seconds"
-
-#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:17
-msgid "Setting the autosave interval to a longer period can reduce server load. It is recommended to set it to 30 seconds or more."
-msgstr "Setting the autosave interval to a longer period can reduce server load. It is recommended to set it to 30 seconds or more."
-
-#: includes/HealthChecks/BrowserCachingHealthCheck.php:14
-msgid "Browser Caching"
-msgstr "Browser Caching"
-
-#: includes/HealthChecks/BrowserCachingHealthCheck.php:15
-msgid "Browser caching is enabled"
-msgstr "Browser caching is enabled"
-
-#: includes/HealthChecks/BrowserCachingHealthCheck.php:16
-msgid "Browser caching is disabled"
-msgstr "Browser caching is disabled"
-
-#: includes/HealthChecks/BrowserCachingHealthCheck.php:17
-msgid "Enabling browser caching can improve performance by storing static assets in the browser for faster page loads."
-msgstr "Enabling browser caching can improve performance by storing static assets in the browser for faster page loads."
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:14
-msgid "Cloudflare enabled"
-msgstr "Cloudflare enabled"
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:15
-msgid "Cloudflare integration is enabled"
-msgstr "Cloudflare integration is enabled"
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:16
-msgid "Cloudflare integration is disabled"
-msgstr "Cloudflare integration is disabled"
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:17
-msgid "Cloudflare integration can improve performance and security."
-msgstr "Cloudflare integration can improve performance and security."
-
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
+#: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
 msgstr "Concatenate CSS"
 
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:15
-msgid "CSS files are concatenated"
-msgstr "CSS files are concatenated"
-
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:16
-msgid "CSS files are not concatenated"
-msgstr "CSS files are not concatenated"
-
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:17
-msgid "Concatenating CSS can improve performance by reducing the number of requests."
-msgstr "Concatenating CSS can improve performance by reducing the number of requests."
-
-#: includes/HealthChecks/ConcatenateJsHealthCheck.php:14
-msgid "Concatenate JavaScript"
-msgstr "Concatenate JavaScript"
-
-#: includes/HealthChecks/ConcatenateJsHealthCheck.php:15
-msgid "JavaScript files are concatenated"
-msgstr "JavaScript files are concatenated"
-
-#: includes/HealthChecks/ConcatenateJsHealthCheck.php:16
-msgid "JavaScript files are not concatenated"
-msgstr "JavaScript files are not concatenated"
-
-#: includes/HealthChecks/ConcatenateJsHealthCheck.php:17
-msgid "Concatenating JavaScript can improve performance by reducing the number of requests."
-msgstr "Concatenating JavaScript can improve performance by reducing the number of requests."
-
-#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:14
-msgid "WP Cron Lock Timeout"
-msgstr "WP Cron Lock Timeout"
-
-#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:15
-msgid "Cron lock timeout is set to 60 seconds or less."
-msgstr "Cron lock timeout is set to 60 seconds or less."
-
-#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:16
-msgid "Cron lock timeout is set to a high number."
-msgstr "Cron lock timeout is set to a high number."
-
-#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:17
-msgid "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
-msgstr "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
-
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14
+#: build/performance/performance.min.js:5
 msgid "Defer Non-Essential JavaScript"
 msgstr "Defer Non-Essential JavaScript"
 
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:15
-msgid "Non-essential JavaScript is deferred"
-msgstr "Non-essential JavaScript is deferred"
-
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:16
-msgid "Non-essential JavaScript is not deferred"
-msgstr "Non-essential JavaScript is not deferred"
-
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:17
-msgid "JavaScript can be deferred to improve performance by loading it after the page has loaded."
-msgstr "JavaScript can be deferred to improve performance by loading it after the page has loaded."
-
-#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:14
-msgid "Empty Trash Days"
-msgstr "Empty Trash Days"
-
-#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:15
-msgid "Trash is emptied every 30 days or less"
-msgstr "Trash is emptied every 30 days or less"
-
-#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:16
-msgid "Trash is emptied less frequently than every 30 days."
-msgstr "Trash is emptied less frequently than every 30 days."
-
-#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:17
-msgid "Emptying the trash more frequently can reduce database bloat."
-msgstr "Emptying the trash more frequently can reduce database bloat."
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:14
-msgid "Lazy Loading"
-msgstr "Lazy Loading"
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:15
-msgid "Lazy loading is enabled"
-msgstr "Lazy loading is enabled"
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:16
-msgid "Lazy loading is disabled"
-msgstr "Lazy loading is disabled"
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:17
-msgid "Lazy loading can improve performance by only loading images when they are in view."
-msgstr "Lazy loading can improve performance by only loading images when they are in view."
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
-msgid "Link Prefetching"
-msgstr "Link Prefetching"
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
-msgid "Link prefetching is enabled"
-msgstr "Link prefetching is enabled"
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:18
-msgid "Link prefetching is disabled"
-msgstr "Link prefetching is disabled"
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:19
-msgid "Link prefetching can improve performance by loading pages immediately before they are requested."
-msgstr "Link prefetching can improve performance by loading pages immediately before they are requested."
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:14
-msgid "Page Caching"
-msgstr "Page Caching"
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:15
-msgid "Page caching is enabled"
-msgstr "Page caching is enabled"
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:16
-msgid "Page caching is disabled"
-msgstr "Page caching is disabled"
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:17
-msgid "Page caching can improve performance by bypassing PHP and database queries for faster page loads."
-msgstr "Page caching can improve performance by bypassing PHP and database queries for faster page loads."
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:14
-msgid "Permalinks"
-msgstr "Permalinks"
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:15
-msgid "Permalinks are pretty"
-msgstr "Permalinks are pretty"
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:16
-msgid "Permalinks are not set up"
-msgstr "Permalinks are not set up"
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:17
-msgid "Setting permalinks to anything other than plain can improve performance and SEO."
-msgstr "Setting permalinks to anything other than plain can improve performance and SEO."
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
-msgid "Object Caching"
-msgstr "Object Caching"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:15
-msgid "Object caching is enabled"
-msgstr "Object caching is enabled"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:16
-msgid "Object caching is disabled"
-msgstr "Object caching is disabled"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:17
-msgid "Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud."
-msgstr "Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud."
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:21
-msgid "Learn more about object caching"
-msgstr "Learn more about object caching"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:22
-msgid "opens in a new tab"
-msgstr "opens in a new tab"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:14
-msgid "Post Revisions"
-msgstr "Post Revisions"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:15
-msgid "Number of post revisions is limited to 5 or less"
-msgstr "Number of post revisions is limited to 5 or less"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:16
-msgid "Number of post revisions is set to a high number"
-msgstr "Number of post revisions is set to a high number"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:17
-msgid "Setting the number of post revisions to a lower number can reduce database bloat."
-msgstr "Setting the number of post revisions to a lower number can reduce database bloat."
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:14
-msgid "Prioritize Critical CSS"
-msgstr "Prioritize Critical CSS"
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:15
-msgid "Critical CSS is prioritized"
-msgstr "Critical CSS is prioritized"
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:16
-msgid "Critical CSS is not prioritized"
-msgstr "Critical CSS is not prioritized"
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
-msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
-msgstr "Prioritizing critical CSS can improve performance by loading the most important CSS first."
-
-#. translators: %s: Time remaining
-#. translators: %s: Retry time in seconds
-#: includes/Images/ImageLimitBanner.php:56
-#: includes/Images/ImageService.php:64
-msgid "This site has made too many requests in a short period. Please wait %s before trying again."
-msgstr "This site has made too many requests in a short period. Please wait %s before trying again."
-
-#. translators: %s: Support link
-#: includes/Images/ImageLimitBanner.php:74
-msgid "This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href=\"%s\">contact support</a> for assistance."
-msgstr "This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href=\"%s\">contact support</a> for assistance."
-
-#: includes/Images/ImageService.php:37
-msgid "The provided image URL is invalid."
-msgstr "The provided image URL is invalid."
-
-#: includes/Images/ImageService.php:45
-#: includes/Images/ImageService.php:441
-msgid "Error retrieving site URL."
-msgstr "Error retrieving site URL."
-
-#: includes/Images/ImageService.php:53
+#: build/performance/performance.min.js:2
 msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
 msgstr "This site no longer qualifies for image optimization as it has reached its usage limits."
 
-#. translators: %s: Error message
-#: includes/Images/ImageService.php:122
-#: includes/Images/ImageService.php:462
-msgid "Error connecting to Cloudflare Worker: %s"
-msgstr "Error connecting to Cloudflare Worker: %s"
-
-#: includes/Images/ImageService.php:139
-#: includes/Images/ImageService.php:145
-msgid "Image optimization access has been permanently revoked for this site."
-msgstr "Image optimization access has been permanently revoked for this site."
-
-#: includes/Images/ImageService.php:158
-#: includes/Images/ImageService.php:164
-msgid "Rate limit exceeded. Please try again later."
-msgstr "Rate limit exceeded. Please try again later."
-
-#: includes/Images/ImageService.php:171
-#: includes/Images/ImageService.php:485
-msgid "Invalid response from Cloudflare Worker."
-msgstr "Invalid response from Cloudflare Worker."
-
-#: includes/Images/ImageService.php:206
-msgid "Failed to save the optimized WebP image."
-msgstr "Failed to save the optimized WebP image."
-
-#: includes/Images/ImageService.php:237
-msgid "Invalid file path for generating WebP."
-msgstr "Invalid file path for generating WebP."
-
-#. translators: 1: HTTP response code, 2: Response message
-#: includes/Images/ImageService.php:279
-msgid "HTTP %1$d: %2$s"
-msgstr "HTTP %1$d: %2$s"
-
-#: includes/Images/ImageService.php:304
-msgid "WebP file is missing or empty."
-msgstr "WebP file is missing or empty."
-
-#: includes/Images/ImageService.php:315
-msgid "Invalid Media ID provided."
-msgstr "Invalid Media ID provided."
-
-#: includes/Images/ImageService.php:335
-msgid "Invalid Media ID or file path provided."
-msgstr "Invalid Media ID or file path provided."
-
-#: includes/Images/ImageService.php:343
-msgid "Failed to delete the original file."
-msgstr "Failed to delete the original file."
-
-#: includes/Images/ImageService.php:359
-msgid "Failed to generate attachment metadata."
-msgstr "Failed to generate attachment metadata."
-
-#. translators: %s: HTTP response code
-#: includes/Images/ImageService.php:475
-msgid "Unexpected response from Cloudflare Worker: HTTP %s"
-msgstr "Unexpected response from Cloudflare Worker: HTTP %s"
-
-#: includes/Images/ImageSettings.php:54
-msgid "Settings for NFD Image Optimization."
-msgstr "Settings for NFD Image Optimization."
-
-#: includes/Images/ImageSettings.php:63
-msgid "Enable image optimization."
-msgstr "Enable image optimization."
-
-#: includes/Images/ImageSettings.php:68
-msgid "Prefer WebP format when it exists."
-msgstr "Prefer WebP format when it exists."
-
-#: includes/Images/ImageSettings.php:73
-msgid "Auto-optimized uploaded images settings."
-msgstr "Auto-optimized uploaded images settings."
-
-#: includes/Images/ImageSettings.php:77
-msgid "Automatically optimize uploaded images."
-msgstr "Automatically optimize uploaded images."
-
-#: includes/Images/ImageSettings.php:82
-msgid "Delete the original uploaded image after optimization."
-msgstr "Delete the original uploaded image after optimization."
-
-#: includes/Images/ImageSettings.php:89
-msgid "Settings for lazy loading."
-msgstr "Settings for lazy loading."
-
-#: includes/Images/ImageSettings.php:93
-msgid "Enable lazy loading."
-msgstr "Enable lazy loading."
-
-#: includes/Images/ImageSettings.php:100
-msgid "Enable bulk optimization of images."
-msgstr "Enable bulk optimization of images."
-
-#: includes/Images/ImageSettings.php:105
-msgid "Indicates if the site is banned from image optimization."
-msgstr "Indicates if the site is banned from image optimization."
-
-#: includes/Images/ImageSettings.php:110
-msgid "Monthly usage statistics for image optimization."
-msgstr "Monthly usage statistics for image optimization."
-
-#: includes/Images/ImageSettings.php:114
-msgid "Number of requests made this month."
-msgstr "Number of requests made this month."
-
-#: includes/Images/ImageSettings.php:119
-msgid "Maximum allowed requests per month."
-msgstr "Maximum allowed requests per month."
-
-#: includes/Images/RestApi/ImagesController.php:45
-msgid "The ID of the media item to optimize."
-msgstr "The ID of the media item to optimize."
-
-#: includes/Images/RestApi/ImagesController.php:71
-msgid "Invalid media ID or media item not found."
-msgstr "Invalid media ID or media item not found."
-
-#: includes/Images/RestApi/ImagesController.php:110
-msgid "Image successfully optimized."
-msgstr "Image successfully optimized."
-
-#. translators: %s is the on/off status.
-#: includes/Images/WPCLI/ImageCommandHandler.php:156
-msgid "All image optimization settings have been turned %s."
-msgstr "All image optimization settings have been turned %s."
-
-#. translators: 1: the setting key, 2: the on/off status
-#: includes/Images/WPCLI/ImageCommandHandler.php:192
-msgid "Setting '%1$s' has been turned %2$s."
-msgstr "Setting '%1$s' has been turned %2$s."
-
-#: includes/Images/WPCLI/ImageCommandHandler.php:247
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
-msgid "A status ('on' or 'off') is required."
-msgstr "A status ('on' or 'off') is required."
-
-#: includes/Images/WPCLI/ImageCommandHandler.php:251
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
-msgid "Invalid status: Use 'on' or 'off'."
-msgstr "Invalid status: Use 'on' or 'off'."
-
-#. translators: %s is the on/off status.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:75
-msgid "Setting 'activeOnDesktop' has been turned %s."
-msgstr "Setting 'activeOnDesktop' has been turned %s."
-
-#. translators: %s is the on/off status.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:104
-msgid "Setting 'activeOnMobile' has been turned %s."
-msgstr "Setting 'activeOnMobile' has been turned %s."
-
-#. translators: %s is the on/off status.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:133
-msgid "Setting 'instantClick' has been turned %s."
-msgstr "Setting 'instantClick' has been turned %s."
-
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:160
-msgid "A behavior value is required."
-msgstr "A behavior value is required."
-
-#. translators: %s is the list of valid mobile behaviors.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
-msgid "Invalid behavior: Use one of the following - %s."
-msgstr "Invalid behavior: Use one of the following - %s."
-
-#. translators: %s is the new behavior value.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:176
-msgid "Setting 'behavior' has been set to '%s'."
-msgstr "Setting 'behavior' has been set to '%s'."
-
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:200
-msgid "A numeric value for hoverDelay is required."
-msgstr "A numeric value for hoverDelay is required."
-
-#. translators: %s is the numeric value for hoverDelay.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:207
-msgid "Setting 'hoverDelay' has been set to '%s'."
-msgstr "Setting 'hoverDelay' has been set to '%s'."
-
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:231
-msgid "A mobile behavior value is required."
-msgstr "A mobile behavior value is required."
-
-#. translators: %s is the new mobile behavior value.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:247
-msgid "Setting 'mobileBehavior' has been set to '%s'."
-msgstr "Setting 'mobileBehavior' has been set to '%s'."
-
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:271
-msgid "A value for ignoreKeywords is required."
-msgstr "A value for ignoreKeywords is required."
-
-#. translators: %s is the new ignoreKeywords value.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:286
-msgid "Setting 'ignoreKeywords' has been set to '%s'."
-msgstr "Setting 'ignoreKeywords' has been set to '%s'."
-
-#. translators: %s is the name of the field that is invalid (e.g., 'namespace', 'command', or 'handler').
-#: includes/NFD_WPCLI.php:49
-msgid "Newfold CLI: Invalid %s provided to NFD_WPCLI::add_command()."
-msgstr "Newfold CLI: Invalid %s provided to NFD_WPCLI::add_command()."
-
-#. translators: %s is the name of the handler class.
-#: includes/NFD_WPCLI.php:87
-msgid "Newfold CLI: The handler class %s does not exist."
-msgstr "Newfold CLI: The handler class %s does not exist."
-
-#: includes/Performance.php:224
-msgid "Caching"
-msgstr "Caching"
-
-#: includes/Performance.php:233
-msgid "Purge All"
-msgstr "Purge All"
-
-#: includes/Performance.php:243
-msgid "Purge This Page"
-msgstr "Purge This Page"
-
-#: includes/Performance.php:255
-msgid "Cache Settings"
-msgstr "Cache Settings"
-
-#: includes/Performance.php:277
-#: includes/Performance.php:278
-#: includes/Performance.php:294
+#: build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Performance"
 
-#: includes/RestApi/JetpackController.php:81
-#: includes/RestApi/Skip404Controller.php:62
-msgid "The parameter 'field' is missing or invalid."
-msgstr "The parameter 'field' is missing or invalid."
-
-#: includes/RestApi/JetpackController.php:93
-#: includes/RestApi/Skip404Controller.php:74
-msgid "The fields 'id' and 'value' are required."
-msgstr "The fields 'id' and 'value' are required."
-
-#: includes/RestApi/JetpackController.php:120
-#: includes/RestApi/JetpackController.php:140
-#: includes/RestApi/Skip404Controller.php:93
-#: includes/RestApi/Skip404Controller.php:113
-msgid "An error occurred while updating the option."
-msgstr "An error occurred while updating the option."
-
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:38
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimizing Images…"
-msgstr "Optimizing Images…"
+msgstr "Optimising Images…"
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:45
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Preparing files…"
 msgstr "Preparing files…"
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:64
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Done"
 msgstr "Done"
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:151
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimization Canceled"
-msgstr "Optimization Canceled"
+msgstr "Optimisation Cancelled"
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:160
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimizing:"
-msgstr "Optimizing:"
+msgstr "Optimising:"
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:179
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimization Complete!"
-msgstr "Optimization Complete!"
+msgstr "Optimisation Complete!"
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:190
-msgid "Passed"
-msgstr "Passed"
-
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:191
-msgid "Failed"
-msgstr "Failed"
-
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:199
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "An error occurred."
 msgstr "An error occurred."
 
-#: assets/image-bulk-optimizer/image-bulk-optimizer.js:211
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimize"
-msgstr "Optimize"
+msgstr "Optimise"
 
-#: assets/image-optimized-marker/image-optimized-marker.js:23
+#: build/assets/image-optimized-marker/image-optimized-marker.min.js:1
 msgid "Optimized"
-msgstr "Optimized"
+msgstr "Optimised"
 
-#: includes/RestApi/JetpackController.php:170
-msgid "Failed to regenerate critical CSS."
-msgstr ""
+#: build/performance/performance.min.js:2
+msgid "This is where you can manage performance settings for your website."
+msgstr "This is where you can manage performance settings for your website."
 
-#: includes/RestApi/JetpackController.php:180
-msgid "An error occurred while regenerating critical CSS."
-msgstr ""
+#: build/performance/performance.min.js:2
+msgid "Exclude from cache"
+msgstr "Exclude from cache"
 
-#: includes/Services/EventService.php:23
-msgid "Bad event structure/value."
-msgstr ""
+#: build/performance/performance.min.js:2
+msgid "Cache Exclusion saved"
+msgstr "Cache Exclusion saved"
+
+#: build/performance/performance.min.js:2
+msgid "Save"
+msgstr "Save"
+
+#: build/performance/performance.min.js:2
+msgid "Cache Level"
+msgstr "Cache Level"
+
+#: build/performance/performance.min.js:2
+msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+msgstr "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+
+#: build/performance/performance.min.js:2
+msgid "Cache setting saved"
+msgstr "Cache setting saved"
+
+#: build/performance/performance.min.js:2
+msgid "Disabled"
+msgstr "Disabled"
+
+#: build/performance/performance.min.js:2
+msgid "No cache enabled. Every page load is fresh. Not recommended."
+msgstr "No cache enabled. Every page load is fresh. Not recommended."
+
+#: build/performance/performance.min.js:2
+msgid "Caching disabled."
+msgstr "Caching disabled."
+
+#: build/performance/performance.min.js:2
+msgid "Assets Only"
+msgstr "Assets Only"
+
+#: build/performance/performance.min.js:2
+msgid "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
+msgstr "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
+
+#: build/performance/performance.min.js:2
+msgid "Cache enabled for assets only."
+msgstr "Cache enabled for assets only."
+
+#: build/performance/performance.min.js:2
+msgid "Assets & Web Pages"
+msgstr "Assets & Web Pages"
+
+#: build/performance/performance.min.js:2
+msgid "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
+msgstr "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
+
+#: build/performance/performance.min.js:2
+msgid "Cache enabled for assets and pages."
+msgstr "Cache enabled for assets and pages."
+
+#: build/performance/performance.min.js:2
+msgid "Assets & Web Pages - Extended"
+msgstr "Assets & Web Pages - Extended"
+
+#: build/performance/performance.min.js:2
+msgid "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
+msgstr "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
+
+#: build/performance/performance.min.js:2
+msgid "Cache enabled for assets and pages (extended)."
+msgstr "Cache enabled for assets and pages (extended)."
+
+#: build/performance/performance.min.js:2
+msgid "Image Optimization"
+msgstr "Image Optimisation"
+
+#: build/performance/performance.min.js:2
+msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+msgstr "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+
+#: build/performance/performance.min.js:2
+msgid "Usage:"
+msgstr "Usage:"
+
+#: build/performance/performance.min.js:2
+msgid "images processed of"
+msgstr "images processed of"
+
+#: build/performance/performance.min.js:2
+msgid "/month"
+msgstr "/month"
+
+#: build/performance/performance.min.js:2
+msgid "Loading settings…"
+msgstr "Loading settings…"
+
+#: build/performance/performance.min.js:2
+msgid "Oops! Something went wrong. Please try again."
+msgstr "Oops! Something went wrong. Please try again."
+
+#: build/performance/performance.min.js:2
+msgid "No settings available."
+msgstr "No settings available."
+
+#: build/performance/performance.min.js:2
+msgid "Enable Image Optimization"
+msgstr "Enable Image Optimisation"
+
+#: build/performance/performance.min.js:2
+msgid "Enable or disable image optimization globally."
+msgstr "Enable or disable image optimisation globally."
+
+#: build/performance/performance.min.js:2
+msgid "Automatically Optimize Uploaded Images"
+msgstr "Automatically Optimise Uploaded Images"
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
+msgstr "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
+
+#: build/performance/performance.min.js:2
+msgid "Enable Bulk Optimization of Images"
+msgstr "Enable Bulk Optimisation of Images"
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, allows bulk optimization of images in the media library."
+msgstr "When enabled, allows bulk optimisation of images in the media library."
+
+#: build/performance/performance.min.js:2
+msgid "Go to Media Library"
+msgstr "Go to Media Library"
+
+#: build/performance/performance.min.js:2
+msgid "Auto Delete Original Image"
+msgstr "Auto Delete Original Image"
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
+msgstr "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
+
+#: build/performance/performance.min.js:2
+msgid "Enable Lazy Loading"
+msgstr "Enable Lazy Loading"
+
+#: build/performance/performance.min.js:2
+msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
+msgstr "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
+
+#: build/performance/performance.min.js:2
+msgid "Prefer Optimized Image When Exists"
+msgstr "Prefer Optimised Image When Exists"
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
+msgstr "When enabled, optimised images will be served in place of original images when they exist, improving performance."
+
+#: build/performance/performance.min.js:2
+msgid "Settings updated successfully"
+msgstr "Settings updated successfully"
+
+#: build/performance/performance.min.js:2
+msgid "Your image optimization settings have been saved."
+msgstr "Your image optimisation settings have been saved."
+
+#: build/performance/performance.min.js:2
+msgid "Error Updating Settings"
+msgstr "Error Updating Settings"
+
+#: build/performance/performance.min.js:2
+msgid "Something went wrong while updating the settings. Please try again."
+msgstr "Something went wrong while updating the settings. Please try again."
+
+#: build/performance/performance.min.js:2
+msgid "Advanced settings"
+msgstr "Advanced settings"
+
+#: build/performance/performance.min.js:2
+msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+msgstr "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+
+#: build/performance/performance.min.js:2
+msgid "Option saved correctly"
+msgstr "Option saved correctly"
+
+#: build/performance/performance.min.js:2
+msgid "Error saving option"
+msgstr "Error saving option"
+
+#: build/performance/performance.min.js:2
+msgid "Upgrade to unlock"
+msgstr "Upgrade to unlock"
+
+#: build/performance/performance.min.js:2
+msgid "Install Jetpack Boost to unlock"
+msgstr "Install Jetpack Boost to unlock"
+
+#: build/performance/performance.min.js:2
+msgid "Installing Jetpack Boost…"
+msgstr "Installing Jetpack Boost…"
+
+#: build/performance/performance.min.js:2
+msgid "Jetpack Boost is now active"
+msgstr "Jetpack Boost is now active"
+
+#: build/performance/performance.min.js:2
+msgid "Activation failed"
+msgstr "Activation failed"
+
+#: build/performance/performance.min.js:2
+msgid "Optimize Critical CSS Loading (manual)"
+msgstr "Optimise Critical CSS Loading (manual)"
+
+#: build/performance/performance.min.js:2
+msgid "Generate CSS"
+msgstr "Generate CSS"
+
+#: build/performance/performance.min.js:2
+msgid "Critical CSS generated successfully."
+msgstr "Critical CSS generated successfully."
+
+#: build/performance/performance.min.js:2
+msgid "Keep this page opened until the process finish"
+msgstr "Keep this page opened until the process finish"
+
+#: build/performance/performance.min.js:2
+msgid "Error generating Critical CSS, try again"
+msgstr "Error generating Critical CSS, try again"
+
+#: build/performance/performance.min.js:2
+msgid "Optimize Critical CSS Loading (UPGRADED)"
+msgstr "Optimise Critical CSS Loading (UPGRADED)"
+
+#: build/performance/performance.min.js:2
+msgid "Generate Critical CSS Automatically"
+msgstr "Generate Critical CSS Automatically"
+
+#: build/performance/performance.min.js:5
+msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+msgstr "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+
+#: build/performance/performance.min.js:5
+msgid "Concatenate JS"
+msgstr "Concatenate JS"
+
+#: build/performance/performance.min.js:5
+msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+
+#: build/performance/performance.min.js:5
+msgid "Exclude JS Strings"
+msgstr "Exclude JS Strings"
+
+#: build/performance/performance.min.js:5
+msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+
+#: build/performance/performance.min.js:5
+msgid "Exclude CSS Strings"
+msgstr "Exclude CSS Strings"
+
+#: build/performance/performance.min.js:5
+msgid "Link Prefetch"
+msgstr "Link Prefetch"
+
+#: build/performance/performance.min.js:5
+msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+msgstr "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+
+#: build/performance/performance.min.js:5
+msgid "Link prefetching setting saved"
+msgstr "Link prefetching setting saved"
+
+#: build/performance/performance.min.js:5
+msgid "Enable link prefetching on desktop"
+msgstr "Enable link prefetching on desktop"
+
+#: build/performance/performance.min.js:5
+msgid "Activate on desktop"
+msgstr "Activate on desktop"
+
+#: build/performance/performance.min.js:5
+msgid "Behavior"
+msgstr "Behaviour"
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch on Mouse Down"
+msgstr "Prefetch on Mouse Down"
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+msgstr "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch on Mouse Hover (Recommended)"
+msgstr "Prefetch on Mouse Hover (Recommended)"
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
+msgstr "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
+
+#: build/performance/performance.min.js:5
+msgid "Enable link prefetching on mobile"
+msgstr "Enable link prefetching on mobile"
+
+#: build/performance/performance.min.js:5
+msgid "Activate on mobile"
+msgstr "Activate on mobile"
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch on Touchstart (Recommended)"
+msgstr "Prefetch on Touchstart (Recommended)"
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
+msgstr "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch Above the Fold"
+msgstr "Prefetch Above the Fold"
+
+#: build/performance/performance.min.js:5
+msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+msgstr "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+
+#: build/performance/performance.min.js:5
+msgid "Exclude keywords"
+msgstr "Exclude keywords"
+
+#: build/performance/performance.min.js:5
+msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
+msgstr "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
+
+#: build/performance/performance.min.js:2
+msgid "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
+msgstr "This setting controls what pages pass a "no-cache" header so that page caching and browser caching is not used."
+
+#: build/performance/performance.min.js:2
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+msgstr "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load."
+
+#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+#: build/performance/performance.min.js:5
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don't have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
