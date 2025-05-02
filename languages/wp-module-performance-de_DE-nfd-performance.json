@@ -11,7 +11,7 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Concatenate CSS": [
-                "Concatenate CSS"
+                "CSS zusammenf\u00fchren"
             ],
             "Defer Non-Essential JavaScript": [
                 "Verweilen Sie JavaScript"
@@ -35,7 +35,7 @@
                 "Speichern"
             ],
             "Cache Level": [
-                "Cache-Level"
+                "Cache-Stufe"
             ],
             "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors.": [
                 "Steigern Sie Geschwindigkeit und Leistung, indem Sie eine Kopie Ihrer Website-Inhalte, Dateien und Bilder online speichern, damit die Seiten Ihrer Website f\u00fcr Ihre Besucher schneller laden."
@@ -275,13 +275,37 @@
                 "Schl\u00fcsselw\u00f6rter ausschlie\u00dfen: Eine durch Kommas getrennte Liste von W\u00f6rtern oder Zeichenketten, die einen Link vom Vorabruf ausschlie\u00dfen. Zum Beispiel wird durch den Ausschluss von \"app\" verhindert, dass https:\/\/example.com\/apple vorabgerufen wird."
             ],
             "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
-                ""
+                "Diese Einstellung legt fest, auf welchen Seiten ein \u201eno-cache\u201c-Header gesendet wird, sodass Seiten- und Browser-Caching nicht verwendet werden."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                ""
+                "Verschiebt wichtige Styling-Informationen an den Anfang der Seite, damit der Inhalt schneller angezeigt wird und Nutzer nicht auf das vollst\u00e4ndige Laden der Seite warten m\u00fcssen."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                ""
+                "Verschiebt wichtige Styling-Informationen an den Anfang der Seite, damit der Inhalt schneller angezeigt wird und Nutzer nicht auf das vollst\u00e4ndige Laden der Seite warten m\u00fcssen.%1$s %2$sBoost generiert automatisch das Critical CSS%3$s, sobald \u00c4nderungen an der HTML- oder CSS-Struktur deiner Website vorgenommen werden."
+            ],
+            "Clear Cache": [
+                "Cache leeren"
+            ],
+            "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
+                "Wir leeren deinen Cache automatisch, w\u00e4hrend du arbeitest (beim Erstellen von Inhalten, \u00c4ndern von Einstellungen, Installieren von Plugins und mehr). Du kannst ihn aber auch manuell hier leeren, um sicherzugehen, dass alles aktuell ist."
+            ],
+            "Clear All Cache Now": [
+                "Jetzt gesamten Cache leeren"
+            ],
+            "Cache cleared": [
+                "Cache geleert"
+            ],
+            "Skip 404": [
+                "404 \u00fcberspringen"
+            ],
+            "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages.": [
+                "Wenn aktiviert, verwenden statische Ressourcen wie Bilder und Schriftarten eine standardm\u00e4\u00dfige 404-Fehlerseite des Servers und nicht die WordPress-404-Seiten. Seiten und Beitr\u00e4ge nutzen weiterhin die WordPress-404-Seiten."
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                ",,404-Verarbeitung f\u00fcr statische Dateien \u00fcberspringen\u201c aktivieren"
+            ],
+            "Skip 404 saved": [
+                ",,404 \u00fcberspringen\u201c gespeichert"
             ]
         }
     }

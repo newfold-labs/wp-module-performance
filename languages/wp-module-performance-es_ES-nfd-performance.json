@@ -282,6 +282,30 @@
             ],
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 ""
+            ],
+            "Clear Cache": [
+                ""
+            ],
+            "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
+                ""
+            ],
+            "Clear All Cache Now": [
+                ""
+            ],
+            "Cache cleared": [
+                ""
+            ],
+            "Skip 404": [
+                ""
+            ],
+            "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages.": [
+                ""
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                ""
+            ],
+            "Skip 404 saved": [
+                ""
             ]
         }
     }
