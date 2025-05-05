@@ -275,13 +275,37 @@
                 "Excluir palabras clave: Una lista separada por comas de palabras o cadenas que excluir\u00e1n un enlace de ser precargado. Por ejemplo, excluir \"app\" evitar\u00e1 que https:\/\/example.com\/apple sea precargado."
             ],
             "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
-                ""
+                "Esta configuraci\u00f3n controla qu\u00e9 p\u00e1ginas env\u00edan un encabezado \u201cno-cache\u201d, para que no se utilice el almacenamiento en cach\u00e9 de p\u00e1ginas ni el del navegador."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                ""
+                "Mueve la informaci\u00f3n de estilo importante al inicio de la p\u00e1gina, lo que ayuda a que el contenido se muestre antes y los usuarios no tengan que esperar a que cargue toda la p\u00e1gina."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                ""
+                "Mueve la informaci\u00f3n de estilo importante al inicio de la p\u00e1gina, lo que ayuda a que el contenido se muestre antes y los usuarios no tengan que esperar a que cargue toda la p\u00e1gina.%1$s %2$sBoost generar\u00e1 autom\u00e1ticamente tu CSS cr\u00edtico%3$s cada vez que realices cambios en la estructura HTML o CSS de tu sitio."
+            ],
+            "Clear Cache": [
+                "Borrar cach\u00e9"
+            ],
+            "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
+                "Borramos tu cach\u00e9 autom\u00e1ticamente mientras trabajas (creando contenido, cambiando configuraciones, instalando plugins y m\u00e1s). Pero puedes borrarla manualmente aqu\u00ed para asegurarte de que est\u00e9 actualizada."
+            ],
+            "Clear All Cache Now": [
+                "Borrar toda la cach\u00e9 ahora"
+            ],
+            "Cache cleared": [
+                "Cach\u00e9 borrada"
+            ],
+            "Skip 404": [
+                "Omitir 404"
+            ],
+            "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages.": [
+                "Cuando est\u00e1 activado, los recursos est\u00e1ticos como im\u00e1genes y fuentes usar\u00e1n una p\u00e1gina 404 predeterminada del servidor y no las p\u00e1ginas 404 de WordPress. Las p\u00e1ginas y entradas seguir\u00e1n utilizando las p\u00e1ginas 404 de WordPress."
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                "Activar la omisi\u00f3n de 404 para archivos est\u00e1ticos"
+            ],
+            "Skip 404 saved": [
+                "Omisi\u00f3n de 404 guardada"
             ]
         }
     }

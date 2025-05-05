@@ -11,7 +11,7 @@
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
             "Concatenate CSS": [
-                "Concatenate CSS"
+                "Concat\u00e9ner le CSS"
             ],
             "Defer Non-Essential JavaScript": [
                 "Reporter JavaScript non essentiel"
@@ -275,13 +275,37 @@
                 "Exclure les mots-cl\u00e9s : Une liste de mots ou de cha\u00eenes s\u00e9par\u00e9s par des virgules qui exclura un lien d'\u00eatre pr\u00e9charg\u00e9. Par exemple, exclure \"app\" emp\u00eachera https:\/\/example.com\/apple d'\u00eatre pr\u00e9charg\u00e9."
             ],
             "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
-                ""
+                "Ce param\u00e8tre d\u00e9termine quelles pages envoient un en-t\u00eate \u201cno-cache\u201d, afin que la mise en cache des pages et des navigateurs ne soit pas utilis\u00e9e."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                ""
+                "D\u00e9place les informations de style importantes au d\u00e9but de la page, ce qui permet d\u2019afficher votre contenu plus rapidement et \u00e9vite aux utilisateurs d\u2019attendre le chargement complet."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                ""
+                "D\u00e9place les informations de style importantes au d\u00e9but de la page, ce qui permet d\u2019afficher votre contenu plus rapidement et \u00e9vite aux utilisateurs d\u2019attendre le chargement complet de la page.%1$s %2$sBoost g\u00e9n\u00e9rera automatiquement votre CSS critique%3$s \u00e0 chaque fois que vous modifiez la structure HTML ou CSS de votre site."
+            ],
+            "Clear Cache": [
+                "Vider le cache"
+            ],
+            "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
+                "Nous vidons automatiquement votre cache pendant que vous travaillez (cr\u00e9ation de contenu, modification des param\u00e8tres, installation de plugins, etc.). Mais vous pouvez aussi le vider manuellement ici pour vous assurer qu\u2019il est bien actualis\u00e9."
+            ],
+            "Clear All Cache Now": [
+                "Vider tout le cache maintenant"
+            ],
+            "Cache cleared": [
+                "Cache vid\u00e9"
+            ],
+            "Skip 404": [
+                "Ignorer 404"
+            ],
+            "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages.": [
+                "Lorsqu\u2019elle est activ\u00e9e, les ressources statiques comme les images et les polices utiliseront une page 404 par d\u00e9faut du serveur et non celles de WordPress. Les pages et articles continueront \u00e0 utiliser les pages 404 de WordPress."
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                "Activer l\u2019ignorance des erreurs 404 pour les fichiers statiques"
+            ],
+            "Skip 404 saved": [
+                "Ignorer 404 enregistr\u00e9"
             ]
         }
     }
