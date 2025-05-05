@@ -255,6 +255,7 @@ msgid "Option saved correctly"
 msgstr "Opção salva corretamente"
 
 #: build/performance/performance.min.js:2
+#: build/performance/performance.min.js:5
 msgid "Error saving option"
 msgstr "Erro ao salvar opção"
 
@@ -404,13 +405,45 @@ msgstr "Excluir Palavras-chave: Uma lista separada por vírgulas de palavras ou 
 
 #: build/performance/performance.min.js:2
 msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr ""
+msgstr "Esta configuração controla quais páginas enviam um cabeçalho “no-cache”, para que o cache de página e de navegador não seja usado."
 
 #: build/performance/performance.min.js:2
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr ""
+msgstr "Move as informações de estilo importantes para o início da página, o que ajuda a exibir seu conteúdo mais rapidamente e evita que os usuários esperem o carregamento completo."
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr ""
+msgstr "Move as informações de estilo importantes para o início da página, o que ajuda a exibir seu conteúdo mais rapidamente e evita que os usuários esperem o carregamento completo da página.%1$s %2$sO Boost irá gerar automaticamente seu CSS crítico%3$s sempre que você fizer alterações na estrutura HTML ou CSS do seu site."
+
+#: build/performance/performance.min.js:2
+msgid "Clear Cache"
+msgstr "Limpar cache"
+
+#: build/performance/performance.min.js:2
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr "Limpamos automaticamente o cache enquanto você trabalha (criando conteúdo, alterando configurações, instalando plugins e mais). Mas você pode limpá-lo manualmente aqui para garantir que esteja atualizado."
+
+#: build/performance/performance.min.js:2
+msgid "Clear All Cache Now"
+msgstr "Limpar todo o cache agora"
+
+#: build/performance/performance.min.js:2
+msgid "Cache cleared"
+msgstr "Cache limpa"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404"
+msgstr "Ignorar 404"
+
+#: build/performance/performance.min.js:5
+msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
+msgstr "Quando ativado, recursos estáticos como imagens e fontes usarão uma página 404 padrão do servidor, e não as páginas 404 do WordPress. Páginas e posts continuarão usando as páginas 404 do WordPress."
+
+#: build/performance/performance.min.js:5
+msgid "Enable Skip 404 Handling For Static Files"
+msgstr "Ativar ignorar 404 para arquivos estáticos"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404 saved"
+msgstr "Ignorar 404 salvo"

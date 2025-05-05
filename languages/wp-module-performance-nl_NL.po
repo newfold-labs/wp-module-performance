@@ -21,7 +21,7 @@ msgstr ""
 
 #: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
-msgstr "Concatenate CSS"
+msgstr "CSS samenvoegen"
 
 #: build/performance/performance.min.js:5
 msgid "Defer Non-Essential JavaScript"
@@ -260,6 +260,7 @@ msgid "Option saved correctly"
 msgstr "Optie correct opgeslagen"
 
 #: build/performance/performance.min.js:2
+#: build/performance/performance.min.js:5
 msgid "Error saving option"
 msgstr "Fout bij opslaan optie"
 
@@ -337,7 +338,7 @@ msgstr "CSS-strings uitsluiten"
 
 #: build/performance/performance.min.js:5
 msgid "Link Prefetch"
-msgstr "Link prefetch"
+msgstr "Voorladen van links"
 
 #: build/performance/performance.min.js:5
 msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
@@ -409,13 +410,45 @@ msgstr "Trefwoorden uitsluiten: Een door komma's gescheiden lijst met woorden of
 
 #: build/performance/performance.min.js:2
 msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr ""
+msgstr "Deze instelling bepaalt welke pagina’s een “no-cache”-header gebruiken, zodat pagina- en browsercaching niet worden toegepast."
 
 #: build/performance/performance.min.js:2
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr ""
+msgstr "Verplaatst belangrijke stijlinformatie naar het begin van de pagina, zodat de inhoud sneller wordt weergegeven en gebruikers niet hoeven te wachten tot de hele pagina is geladen."
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr ""
+msgstr "Verplaatst belangrijke stijlinformatie naar het begin van de pagina, zodat de inhoud sneller wordt weergegeven en gebruikers niet hoeven te wachten tot de hele pagina is geladen.%1$s %2$sBoost genereert automatisch je kritieke CSS%3$s telkens wanneer je wijzigingen aanbrengt in de HTML- of CSS-structuur van je site."
+
+#: build/performance/performance.min.js:2
+msgid "Clear Cache"
+msgstr "Cache wissen"
+
+#: build/performance/performance.min.js:2
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr "We wissen je cache automatisch terwijl je werkt (zoals content maken, instellingen wijzigen, plugins installeren enzovoort). Maar je kunt het hier ook handmatig wissen om zeker te zijn dat alles up-to-date is."
+
+#: build/performance/performance.min.js:2
+msgid "Clear All Cache Now"
+msgstr "Alle cache nu wissen"
+
+#: build/performance/performance.min.js:2
+msgid "Cache cleared"
+msgstr "Cache geleegd"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404"
+msgstr "404 overslaan"
+
+#: build/performance/performance.min.js:5
+msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
+msgstr "Wanneer ingeschakeld, gebruiken statische bronnen zoals afbeeldingen en lettertypen een standaard 404-pagina van de server en niet de 404-pagina's van WordPress. Pagina's en berichten blijven de WordPress 404-pagina gebruiken."
+
+#: build/performance/performance.min.js:5
+msgid "Enable Skip 404 Handling For Static Files"
+msgstr "404-afhandeling voor statische bestanden inschakelen"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404 saved"
+msgstr "404-overslaan opgeslagen"

@@ -11,7 +11,7 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Concatenate CSS": [
-                "Concatenate CSS"
+                "CSS samenvoegen"
             ],
             "Defer Non-Essential JavaScript": [
                 "Uitstellen van niet-Essenti\u00eble JavaScript"
@@ -221,7 +221,7 @@
                 "CSS-strings uitsluiten"
             ],
             "Link Prefetch": [
-                "Link prefetch"
+                "Voorladen van links"
             ],
             "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.": [
                 "Vraagt de browser om links op de pagina te downloaden en in de cache op te slaan voordat erop wordt geklikt, zodat ze bijna direct laden wanneer erop wordt geklikt."
@@ -275,13 +275,37 @@
                 "Trefwoorden uitsluiten: Een door komma's gescheiden lijst met woorden of strings die een link uitsluiten van prefetching. Bijvoorbeeld, het uitsluiten van \"app\" zal voorkomen dat https:\/\/example.com\/apple wordt voorgeladen."
             ],
             "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
-                ""
+                "Deze instelling bepaalt welke pagina\u2019s een \u201cno-cache\u201d-header gebruiken, zodat pagina- en browsercaching niet worden toegepast."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                ""
+                "Verplaatst belangrijke stijlinformatie naar het begin van de pagina, zodat de inhoud sneller wordt weergegeven en gebruikers niet hoeven te wachten tot de hele pagina is geladen."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                ""
+                "Verplaatst belangrijke stijlinformatie naar het begin van de pagina, zodat de inhoud sneller wordt weergegeven en gebruikers niet hoeven te wachten tot de hele pagina is geladen.%1$s %2$sBoost genereert automatisch je kritieke CSS%3$s telkens wanneer je wijzigingen aanbrengt in de HTML- of CSS-structuur van je site."
+            ],
+            "Clear Cache": [
+                "Cache wissen"
+            ],
+            "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
+                "We wissen je cache automatisch terwijl je werkt (zoals content maken, instellingen wijzigen, plugins installeren enzovoort). Maar je kunt het hier ook handmatig wissen om zeker te zijn dat alles up-to-date is."
+            ],
+            "Clear All Cache Now": [
+                "Alle cache nu wissen"
+            ],
+            "Cache cleared": [
+                "Cache geleegd"
+            ],
+            "Skip 404": [
+                "404 overslaan"
+            ],
+            "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages.": [
+                "Wanneer ingeschakeld, gebruiken statische bronnen zoals afbeeldingen en lettertypen een standaard 404-pagina van de server en niet de 404-pagina's van WordPress. Pagina's en berichten blijven de WordPress 404-pagina gebruiken."
+            ],
+            "Enable Skip 404 Handling For Static Files": [
+                "404-afhandeling voor statische bestanden inschakelen"
+            ],
+            "Skip 404 saved": [
+                "404-overslaan opgeslagen"
             ]
         }
     }

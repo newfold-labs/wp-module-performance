@@ -21,7 +21,7 @@ msgstr ""
 
 #: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
-msgstr "Concatenate CSS"
+msgstr "Concaténer le CSS"
 
 #: build/performance/performance.min.js:5
 msgid "Defer Non-Essential JavaScript"
@@ -260,6 +260,7 @@ msgid "Option saved correctly"
 msgstr "Option enregistrée correctement"
 
 #: build/performance/performance.min.js:2
+#: build/performance/performance.min.js:5
 msgid "Error saving option"
 msgstr "Erreur lors de l'enregistrement de l'option"
 
@@ -409,13 +410,45 @@ msgstr "Exclure les mots-clés : Une liste de mots ou de chaînes séparés par 
 
 #: build/performance/performance.min.js:2
 msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr ""
+msgstr "Ce paramètre détermine quelles pages envoient un en-tête “no-cache”, afin que la mise en cache des pages et des navigateurs ne soit pas utilisée."
 
 #: build/performance/performance.min.js:2
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr ""
+msgstr "Déplace les informations de style importantes au début de la page, ce qui permet d’afficher votre contenu plus rapidement et évite aux utilisateurs d’attendre le chargement complet."
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr ""
+msgstr "Déplace les informations de style importantes au début de la page, ce qui permet d’afficher votre contenu plus rapidement et évite aux utilisateurs d’attendre le chargement complet de la page.%1$s %2$sBoost générera automatiquement votre CSS critique%3$s à chaque fois que vous modifiez la structure HTML ou CSS de votre site."
+
+#: build/performance/performance.min.js:2
+msgid "Clear Cache"
+msgstr "Vider le cache"
+
+#: build/performance/performance.min.js:2
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr "Nous vidons automatiquement votre cache pendant que vous travaillez (création de contenu, modification des paramètres, installation de plugins, etc.). Mais vous pouvez aussi le vider manuellement ici pour vous assurer qu’il est bien actualisé."
+
+#: build/performance/performance.min.js:2
+msgid "Clear All Cache Now"
+msgstr "Vider tout le cache maintenant"
+
+#: build/performance/performance.min.js:2
+msgid "Cache cleared"
+msgstr "Cache vidé"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404"
+msgstr "Ignorer 404"
+
+#: build/performance/performance.min.js:5
+msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
+msgstr "Lorsqu’elle est activée, les ressources statiques comme les images et les polices utiliseront une page 404 par défaut du serveur et non celles de WordPress. Les pages et articles continueront à utiliser les pages 404 de WordPress."
+
+#: build/performance/performance.min.js:5
+msgid "Enable Skip 404 Handling For Static Files"
+msgstr "Activer l’ignorance des erreurs 404 pour les fichiers statiques"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404 saved"
+msgstr "Ignorer 404 enregistré"
