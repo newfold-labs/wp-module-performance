@@ -39,7 +39,7 @@ const App = () => {
 					<Title as="h1" className="nfd-mb-2">
 						{ title }
 					</Title>
-					<Title as="p" className="nfd-font-normal">
+					<Title as="h2" className="nfd-font-normal nfd-text-[13px]">
 						{ description }
 					</Title>
 				</div>
