@@ -3,7 +3,7 @@ import '../../store';
 import '../../styles/styles.css';
 
 // Newfold
-import { Container, Root, Page } from '@newfold/ui-component-library';
+import { Container, Root, Page, Title } from '@newfold/ui-component-library';
 import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 // WordPress
@@ -35,12 +35,15 @@ const App = () => {
 		<Root context={ { isRTL: false } }>
 			<NotificationFeed />
 			<Page title={ title }>
+				<div>
+					<Title as="h1" className="nfd-mb-2">
+						{ title }
+					</Title>
+					<Title as="h2" className="nfd-font-normal nfd-text-[13px]">
+						{ description }
+					</Title>
+				</div>
 				<Container>
-					<Container.Header
-						title={ title }
-						description={ description }
-						className="wppbh-app-settings-header"
-					/>
 					<Container.Block
 						separator
 						className="newfold-cache-settings"

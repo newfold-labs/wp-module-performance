@@ -53,7 +53,7 @@ msgid "Performance"
 msgstr ""
 
 #: build/performance/performance.min.js:2
-msgid "This is where you can manage performance settings for your website."
+msgid "Optimize your website by managing cache and performance settings"
 msgstr ""
 
 #: build/performance/performance.min.js:2
