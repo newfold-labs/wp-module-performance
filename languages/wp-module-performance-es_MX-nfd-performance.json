@@ -22,9 +22,6 @@
             "This site no longer qualifies for image optimization as it has reached its usage limits.": [
                 "Este sitio ya no califica para la optimizaci\u00f3n de im\u00e1genes, ya que ha alcanzado sus l\u00edmites de uso."
             ],
-            "This is where you can manage performance settings for your website.": [
-                "Aqu\u00ed es donde puedes administrar la configuraci\u00f3n de rendimiento para tu sitio web."
-            ],
             "Exclude from cache": [
                 "Excluir del cach\u00e9"
             ],
@@ -306,6 +303,9 @@
             ],
             "Skip 404 saved": [
                 "Omisi\u00f3n de 404 guardada"
+            ],
+            "Optimize your website by managing cache and performance settings": [
+                "Optimiza tu sitio web gestionando la cach\u00e9 y la configuraci\u00f3n de rendimiento"
             ]
         }
     }

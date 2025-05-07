@@ -22,9 +22,6 @@
             "Performance": [
                 "Prestaties"
             ],
-            "This is where you can manage performance settings for your website.": [
-                "Hier kun je de prestatie-instellingen voor je website beheren."
-            ],
             "Exclude from cache": [
                 "Uitsluiten van cache"
             ],
@@ -306,6 +303,9 @@
             ],
             "Skip 404 saved": [
                 "404-overslaan opgeslagen"
+            ],
+            "Optimize your website by managing cache and performance settings": [
+                "Optimaliseer je website door cache- en prestatie-instellingen te beheren"
             ]
         }
     }

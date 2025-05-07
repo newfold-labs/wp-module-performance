@@ -22,9 +22,6 @@
             "Performance": [
                 "Performances"
             ],
-            "This is where you can manage performance settings for your website.": [
-                "C'est ici que vous pouvez g\u00e9rer les param\u00e8tres de performance pour votre site web."
-            ],
             "Exclude from cache": [
                 "Exclure du cache"
             ],
@@ -306,6 +303,9 @@
             ],
             "Skip 404 saved": [
                 "Ignorer 404 enregistr\u00e9"
+            ],
+            "Optimize your website by managing cache and performance settings": [
+                "Optimisez votre site web en g\u00e9rant le cache et les param\u00e8tres de performance"
             ]
         }
     }

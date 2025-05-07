@@ -67,10 +67,6 @@ msgid "This site no longer qualifies for image optimization as it has reached it
 msgstr "Este site não se qualifica mais para otimização de imagens, pois atingiu seus limites de uso."
 
 #: build/performance/performance.min.js:2
-msgid "This is where you can manage performance settings for your website."
-msgstr "Aqui é onde você pode gerenciar as configurações de desempenho para o seu site."
-
-#: build/performance/performance.min.js:2
 msgid "Exclude from cache"
 msgstr "Excluir do cache"
 
@@ -447,3 +443,7 @@ msgstr "Ativar ignorar 404 para arquivos estáticos"
 #: build/performance/performance.min.js:5
 msgid "Skip 404 saved"
 msgstr "Ignorar 404 salvo"
+
+#: build/performance/performance.min.js:2
+msgid "Optimize your website by managing cache and performance settings"
+msgstr "Otimize seu site gerenciando o cache e as configurações de desempenho"

@@ -46,9 +46,6 @@
             "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
                 "When enabled, optimised images will be served in place of original images when they exist, improving performance."
             ],
-            "This is where you can manage performance settings for your website.": [
-                "This is where you can manage performance settings for your website."
-            ],
             "Exclude from cache": [
                 "Exclude from cache"
             ],
@@ -306,6 +303,9 @@
             ],
             "Skip 404 saved": [
                 "Skip 404 saved"
+            ],
+            "Optimize your website by managing cache and performance settings": [
+                "Optimize your website by managing cache and performance settings"
             ]
         }
     }

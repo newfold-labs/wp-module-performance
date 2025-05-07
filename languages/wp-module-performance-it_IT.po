@@ -72,10 +72,6 @@ msgid "Optimized"
 msgstr "Ottimizzato"
 
 #: build/performance/performance.min.js:2
-msgid "This is where you can manage performance settings for your website."
-msgstr "Qui puoi gestire le impostazioni delle prestazioni per il tuo sito web."
-
-#: build/performance/performance.min.js:2
 msgid "Exclude from cache"
 msgstr "Escludi dalla cache"
 
@@ -452,3 +448,7 @@ msgstr "Abilita l’ignoramento dei 404 per i file statici"
 #: build/performance/performance.min.js:5
 msgid "Skip 404 saved"
 msgstr "Impostazione “Salta 404” salvata"
+
+#: build/performance/performance.min.js:2
+msgid "Optimize your website by managing cache and performanpnce settings"
+msgstr "Ottimizza il tuo sito web gestendo la cache e le impostazioni delle prestazioninpm"
