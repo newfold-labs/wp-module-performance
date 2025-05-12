@@ -37,7 +37,7 @@
   },
   "require-dev": {
     "newfold-labs/wp-php-standards": "^1.2",
-    "wp-cli/wp-cli-bundle": "^2.11",
+    "wp-cli/wp-cli-bundle": "^2.12",
     "wp-cli/i18n-command": "^2.6",
     "10up/wp_mock": "^1.1"
   },
