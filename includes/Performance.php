@@ -134,19 +134,24 @@ class Performance {
 			add_filter( 'got_rewrite', '__return_true' );
 		}
 
-		add_filter(
-			'mod_rewrite_rules',
-			function ( $content ) {
-				add_action(
-					'shutdown',
-					function () {
-						do_action( 'newfold_update_htaccess' );
-					}
-				);
-
-				return $content;
-			}
-		);
+		if (
+			isset( $_REQUEST['action'], $_REQUEST['plugin'] ) &&
+            'activate' === $_REQUEST['action'] &&
+			$_REQUEST['plugin'] === $this->container->plugin()->basename
+		) {
+			add_filter(
+				'mod_rewrite_rules',
+				function ( $content ) {
+					add_action(
+						'shutdown',
+						function () {
+							do_action( 'newfold_update_htaccess' );
+						}
+					);
+					return $content;
+				}
+			);
+		}
 
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
