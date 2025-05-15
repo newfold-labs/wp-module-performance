@@ -27,6 +27,12 @@ if ( function_exists( 'add_action' ) ) {
 				isset( $_REQUEST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification
 				'activate' === $_REQUEST['action'] // phpcs:ignore WordPress.Security.NonceVerification
 			) {
+				add_action(
+					'activate_jetpack-boost/jetpack-boost.php',
+					function () {
+						remove_action( 'activated_plugin', 'Automattic\\Jetpack_Boost\\jetpack_boost_plugin_activation' );
+					}
+				);
 				PluginInstaller::install( 'jetpack-boost', true );
 			}
 		}
