@@ -136,7 +136,7 @@ class Performance {
 
 		if (
 			isset( $_REQUEST['action'], $_REQUEST['plugin'] ) &&
-            'activate' === $_REQUEST['action'] &&
+			'activate' === $_REQUEST['action'] &&
 			$_REQUEST['plugin'] === $this->container->plugin()->basename
 		) {
 			add_filter(
