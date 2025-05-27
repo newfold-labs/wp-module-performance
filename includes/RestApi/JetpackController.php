@@ -96,10 +96,7 @@ class JetpackController {
 				);
 			}
 
-			if ( 'critical-css' === $field['id'] && 1 === (int) $field['value'] && class_exists( 'Automattic\Jetpack_Boost\Lib\Critical_CSS\Data_Sync_Actions\Regenerate_CSS' ) ) {
-				$css = new Regenerate_CSS();
-				$css->handle( null, null );
-			} elseif ( 'critical-css-premium' === $field['id'] ) {
+			if ( 'critical-css-premium' === $field['id'] ) {
 				$field['id'] = 'critical-css';
 			}
 
