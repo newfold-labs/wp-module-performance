@@ -267,9 +267,9 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 	// Automatically select the Bulk Select button if the URL parameter is set
 	const urlParams = new URLSearchParams( window.location.search );
-	const autoSelect = urlParams.get( 'autoSelectBulk' );
+	const autoSelect = window.location.search.indexOf('autoSelectBulk') >= 0;
 
-	if ( autoSelect === 'true' ) {
+	if ( autoSelect ) {
 		const observer = new MutationObserver( () => {
 			const bulkSelectButton = document.querySelector(
 				'.button.media-button.select-mode-toggle-button'
