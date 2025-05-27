@@ -135,8 +135,7 @@ const JetpackBoost = () => {
 			iframe = document.createElement( 'iframe' );
 			iframe.src = adminUrl;
 			document.body.appendChild( iframe );
-			iframe.style.height = '500px';
-            iframe.style.width = '100%';
+			iframe.style.height = '0';
 			iframe.onload = async function () {
 				try {
 					await new Promise( ( resolve ) => setTimeout( resolve, 500 ) );
