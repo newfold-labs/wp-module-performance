@@ -128,6 +128,22 @@ const JetpackBoost = () => {
 
 	const handleRegenerateClick = async () => {
 		setCssIsGenerating( true );
+
+		const response = await apiFetch( {
+			url: NewfoldRuntime.createApiUrl(
+				'/jetpack-boost/v1/connection'
+			),
+			method: 'GET',
+		} );
+
+		if ( ! response?.connected ) {
+			await apiFetch( {
+				url: NewfoldRuntime.createApiUrl(
+					'/jetpack-boost/v1/connection'
+				),
+				method: 'POST',
+			} );
+		}
 		let iframe;
 		try {
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
