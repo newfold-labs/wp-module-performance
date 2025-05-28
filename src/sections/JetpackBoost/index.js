@@ -137,6 +137,7 @@ const JetpackBoost = () => {
 		} );
 
 		if ( ! response?.connected ) {
+			console.log( 'Not connected, connecting...' );
 			await apiFetch( {
 				url: NewfoldRuntime.createApiUrl(
 					'/jetpack-boost/v1/connection'
@@ -144,6 +145,7 @@ const JetpackBoost = () => {
 				method: 'POST',
 			} );
 		}
+		
 		let iframe;
 		try {
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
