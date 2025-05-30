@@ -253,7 +253,6 @@ class Performance {
 				}
 			}
 
-			$brand = $this->container->get( 'plugin' )['id'];
 			$wp_admin_bar->add_node(
 				array(
 					'id'     => 'nfd_purge_menu-cache_settings',
