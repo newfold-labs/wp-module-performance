@@ -41,6 +41,7 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-hostgator'
+      plugin-branch: 'update/plugin-parity'
     secrets: inherit
 
   web:
@@ -61,6 +62,7 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-crazy-domains'
+      plugin-branch: 'update/plugin-parity'
     secrets: inherit
 
   mojo:
