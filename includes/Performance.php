@@ -271,18 +271,12 @@ class Performance {
 	 * @return void
 	 */
 	public function add_management_page() {
-		$brand = $this->container->get( 'plugin' )['id'];
-
-		// Determine the correct page slug
-		$page_slug = ( 'bluehost' === $brand )
-			? self::PAGE_SLUG
-			: "$brand#/performance";
 
 		add_management_page(
 			__( 'Performance', 'wp-module-performance' ),
 			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
-			$page_slug,
+			self::PAGE_SLUG,
 			array( __CLASS__, 'render_performance_app' )
 		);
 	}
