@@ -130,14 +130,11 @@ const JetpackBoost = () => {
 		setCssIsGenerating( true );
 
 		const response = await apiFetch( {
-			url: NewfoldRuntime.createApiUrl(
-				'/jetpack-boost/v1/connection'
-			),
+			url: NewfoldRuntime.createApiUrl( '/jetpack-boost/v1/connection' ),
 			method: 'GET',
 		} );
 
 		if ( ! response?.connected ) {
-			console.log( 'Not connected, connecting...' );
 			await apiFetch( {
 				url: NewfoldRuntime.createApiUrl(
 					'/jetpack-boost/v1/connection'
@@ -145,7 +142,7 @@ const JetpackBoost = () => {
 				method: 'POST',
 			} );
 		}
-		
+
 		let iframe;
 		try {
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
@@ -156,7 +153,9 @@ const JetpackBoost = () => {
 			iframe.style.height = '0';
 			iframe.onload = async function () {
 				try {
-					await new Promise( ( resolve ) => setTimeout( resolve, 500 ) );
+					await new Promise( ( resolve ) =>
+						setTimeout( resolve, 500 )
+					);
 					const iframeDocument =
 						iframe.contentDocument || iframe.contentWindow.document;
 
@@ -167,7 +166,9 @@ const JetpackBoost = () => {
 					if ( regenerateButton ) {
 						regenerateButton.click();
 					}
-					await new Promise( ( resolve ) => setTimeout( resolve, 300 ) );
+					await new Promise( ( resolve ) =>
+						setTimeout( resolve, 300 )
+					);
 					const progressBar = iframeDocument.querySelector(
 						'div[role="progressbar"]'
 					);
@@ -184,7 +185,7 @@ const JetpackBoost = () => {
 						);
 						return;
 					}
-					
+
 					setCssIsGenerating( false );
 					let observer;
 					const checkProgress = () => {
