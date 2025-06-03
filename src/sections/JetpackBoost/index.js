@@ -128,36 +128,51 @@ const JetpackBoost = () => {
 
 	const handleRegenerateClick = async () => {
 		setCssIsGenerating( true );
-		let iframe;
-		try {
-			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
-			if ( ! sdk.jetpack_boost_connected ) {
-				await apiFetch( {
-					url: NewfoldRuntime.createApiUrl(
-						'/jetpack-boost/v1/connection'
-					),
-					method: 'POST',
-				} );
-			}
+
+		const response = await apiFetch( {
+			url: NewfoldRuntime.createApiUrl( '/jetpack-boost/v1/connection' ),
+			method: 'GET',
+		} );
+
+		if ( ! response?.connected ) {
 			await apiFetch( {
 				url: NewfoldRuntime.createApiUrl(
-					'/newfold-performance/v1/jetpack/regenerate_critical_css'
+					'/jetpack-boost/v1/connection'
 				),
 				method: 'POST',
 			} );
+		}
+
+		let iframe;
+		try {
+			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
 			const adminUrl = `${ siteUrl }/wp-admin/admin.php?page=jetpack-boost`;
 			iframe = document.createElement( 'iframe' );
 			iframe.src = adminUrl;
 			document.body.appendChild( iframe );
 			iframe.style.height = '0';
-			iframe.onload = function () {
+			iframe.onload = async function () {
 				try {
+					await new Promise( ( resolve ) =>
+						setTimeout( resolve, 500 )
+					);
 					const iframeDocument =
 						iframe.contentDocument || iframe.contentWindow.document;
 
+					const regenerateButton = iframeDocument.querySelector(
+						'div[data-testid="critical-css-meta"] button'
+					);
+
+					if ( regenerateButton ) {
+						regenerateButton.click();
+					}
+					await new Promise( ( resolve ) =>
+						setTimeout( resolve, 300 )
+					);
 					const progressBar = iframeDocument.querySelector(
 						'div[role="progressbar"]'
 					);
+
 					if ( ! progressBar ) {
 						iframe?.remove();
 						setCssIsGenerating( false );
