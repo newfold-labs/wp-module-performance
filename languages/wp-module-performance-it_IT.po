@@ -414,6 +414,7 @@ msgstr "Sposta le informazioni di stile importanti all'inizio della pagina, per 
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
+#, js-format
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
 msgstr "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo.%1$s %2$sBoost genererà automaticamente il tuo CSS critico%3$s ogni volta che apporti modifiche alla struttura HTML o CSS del tuo sito."
 
@@ -450,5 +451,5 @@ msgid "Skip 404 saved"
 msgstr "Impostazione “Salta 404” salvata"
 
 #: build/performance/performance.min.js:2
-msgid "Optimize your website by managing cache and performanpnce settings"
-msgstr "Ottimizza il tuo sito web gestendo la cache e le impostazioni delle prestazioninpm"
+msgid "Optimize your website by managing cache and performance settings"
+msgstr ""

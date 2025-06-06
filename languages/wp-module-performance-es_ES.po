@@ -318,6 +318,7 @@ msgstr "Generar CSS crítico automáticamente"
 
 #. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
 #: build/performance/performance.min.js:5
+#, js-format
 msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
 msgstr "Mueve la información de estilo importante al inicio de la página, lo que ayuda a mostrar tu contenido antes para que tus usuarios no tengan que esperar a que se cargue toda la página.%1$s %2$sBoost generará automáticamente tu CSS crítico%3$s cada vez que realices cambios en la estructura HTML o CSS de tu sitio."
 
