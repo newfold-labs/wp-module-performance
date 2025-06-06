@@ -1,311 +1,311 @@
 {
     "translation-revision-date": "2025-03-04 12:44",
-    "generator": "WP-CLI\/2.11.0",
+    "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "it_IT",
+                "lang": "de_DE",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Concatenate CSS": [
-                "Concatena CSS"
+                "CSS zusammenf\u00fchren"
             ],
             "Defer Non-Essential JavaScript": [
-                "Rinvia Javascript Non Essenziale"
+                "Verweilen Sie JavaScript"
             ],
             "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                "Questo sito non si qualifica pi\u00f9 per l'ottimizzazione dell'immagine in quanto ha raggiunto i suoi limiti di utilizzo."
+                "Diese Seite qualifiziert sich nicht mehr f\u00fcr die Bildoptimierung, da sie ihr Nutzungslimit erreicht hat."
             ],
             "Performance": [
-                "Prestazioni"
+                "Leistung"
             ],
             "Exclude from cache": [
-                "Escludi dalla cache"
+                "Vom Cache ausschlie\u00dfen"
             ],
             "Cache Exclusion saved": [
-                "Esclusione dalla cache salvata"
+                "Cache-Ausschluss gespeichert"
             ],
             "Save": [
-                "Salva"
+                "Speichern"
             ],
             "Cache Level": [
-                "Livello di cache"
+                "Cache-Stufe"
             ],
             "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors.": [
-                "Aumenta la velocit\u00e0 e le prestazioni memorizzando una copia dei contenuti, dei file e delle immagini del tuo sito web online, in modo che le pagine del tuo sito web si carichino pi\u00f9 velocemente per i tuoi visitatori."
+                "Steigern Sie Geschwindigkeit und Leistung, indem Sie eine Kopie Ihrer Website-Inhalte, Dateien und Bilder online speichern, damit die Seiten Ihrer Website f\u00fcr Ihre Besucher schneller laden."
             ],
             "Cache setting saved": [
-                "Impostazione della cache salvata"
+                "Cache-Einstellung gespeichert"
             ],
             "Disabled": [
-                "Disabilitato"
+                "Deaktiviert"
             ],
             "No cache enabled. Every page load is fresh. Not recommended.": [
-                "Nessuna cache abilitata. Ogni caricamento di pagina \u00e8 nuovo. Non consigliato."
+                "Kein Cache aktiviert. Jeder Seitenaufruf ist neu. Nicht empfohlen."
             ],
             "Caching disabled.": [
-                "Memorizzazione nella cache disabilitata."
+                "Caching deaktiviert."
             ],
             "Assets Only": [
-                "Solo risorse"
+                "Nur Assets"
             ],
             "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh.": [
-                "Memorizza nella cache risorse statiche come immagini e l'aspetto del tuo sito per 1 ora. Ottimizzato per negozi online e siti di membri che devono essere aggiornati."
+                "Zwischenspeichern Sie statische Assets wie Bilder und das Erscheinungsbild Ihrer Website f\u00fcr 1 Stunde. Optimiert f\u00fcr Online-Shops und Mitgliederseiten, die aktuell sein m\u00fcssen."
             ],
             "Cache enabled for assets only.": [
-                "Cache abilitata solo per le risorse."
+                "Cache nur f\u00fcr Assets aktiviert."
             ],
             "Assets & Web Pages": [
-                "Risorse e pagine web"
+                "Assets & Webseiten"
             ],
             "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly.": [
-                "Memorizza nella cache le risorse statiche per 24 ore e le pagine web per 2 ore. Ottimizzato per siti che cambiano almeno settimanalmente."
+                "Zwischenspeichern Sie statische Assets f\u00fcr 24 Stunden und Webseiten f\u00fcr 2 Stunden. Optimiert f\u00fcr Websites, die sich mindestens w\u00f6chentlich \u00e4ndern."
             ],
             "Cache enabled for assets and pages.": [
-                "Cache abilitata per risorse e pagine."
+                "Cache f\u00fcr Assets und Seiten aktiviert."
             ],
             "Assets & Web Pages - Extended": [
-                "Risorse e pagine web - Esteso"
+                "Assets & Webseiten - Erweitert"
             ],
             "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less.": [
-                "Memorizza nella cache le risorse statiche per 1 settimana e le pagine web per 8 ore. Ottimizzato per siti che si aggiornano poche volte al mese o meno."
+                "Zwischenspeichern Sie statische Assets f\u00fcr 1 Woche und Webseiten f\u00fcr 8 Stunden. Optimiert f\u00fcr Websites, die sich nur wenige Male im Monat oder seltener aktualisieren."
             ],
             "Cache enabled for assets and pages (extended).": [
-                "Cache abilitata per risorse e pagine (estesa)."
+                "Cache f\u00fcr Assets und Seiten aktiviert (erweitert)."
             ],
             "Image Optimization": [
-                "Ottimizzazione delle immagini"
+                "Bildoptimierung"
             ],
             "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.": [
-                "Ottimizziamo automaticamente le tue immagini caricate nel formato WebP per prestazioni pi\u00f9 veloci e dimensioni di file ridotte. Puoi anche scegliere di eliminare le immagini originali per risparmiare spazio di archiviazione."
+                "Wir optimieren Ihre hochgeladenen Bilder automatisch in das WebP-Format f\u00fcr schnellere Performance und reduzierte Dateigr\u00f6\u00dfe. Sie k\u00f6nnen auch w\u00e4hlen, die Originalbilder zu l\u00f6schen, um Speicherplatz zu sparen."
             ],
             "Usage:": [
-                "Utilizzo:"
+                "Nutzung:"
             ],
             "images processed of": [
-                "immagini elaborate su"
+                "verarbeitete Bilder von"
             ],
             "\/month": [
-                "\/mese"
+                "\/Monat"
             ],
             "Loading settings\u2026": [
-                "Caricamento impostazioni\u2026"
+                "Einstellungen werden geladen\u2026"
             ],
             "Oops! Something went wrong. Please try again.": [
-                "Ops! Qualcosa \u00e8 andato storto. Per favore riprova."
+                "Ups! Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
             ],
             "No settings available.": [
-                "Nessuna impostazione disponibile."
+                "Keine Einstellungen verf\u00fcgbar."
             ],
             "Enable Image Optimization": [
-                "Abilita ottimizzazione delle immagini"
+                "Bildoptimierung aktivieren"
             ],
             "Enable or disable image optimization globally.": [
-                "Abilita o disabilita l'ottimizzazione delle immagini a livello globale."
+                "Aktivieren oder deaktivieren Sie die Bildoptimierung global."
             ],
             "Automatically Optimize Uploaded Images": [
-                "Ottimizza automaticamente le immagini caricate"
+                "Hochgeladene Bilder automatisch optimieren"
             ],
             "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.": [
-                "Quando abilitato, tutti i tuoi nuovi caricamenti di immagini saranno automaticamente ottimizzati nel formato WebP, garantendo un caricamento pi\u00f9 veloce delle pagine e dimensioni di file ridotte."
+                "Wenn aktiviert, werden alle Ihre neuen Bilduploads automatisch in das WebP-Format optimiert, was schnelleres Laden der Seite und reduzierte Dateigr\u00f6\u00dfe gew\u00e4hrleistet."
             ],
             "Enable Bulk Optimization of Images": [
-                "Abilita ottimizzazione in blocco delle immagini"
+                "Massenoptimierung von Bildern aktivieren"
             ],
             "When enabled, allows bulk optimization of images in the media library.": [
-                "Quando abilitato, consente l'ottimizzazione in blocco delle immagini nella libreria multimediale."
+                "Wenn aktiviert, erm\u00f6glicht die Massenoptimierung von Bildern in der Medienbibliothek."
             ],
             "Go to Media Library": [
-                "Vai alla libreria multimediale"
+                "Zur Medienbibliothek gehen"
             ],
             "Auto Delete Original Image": [
-                "Elimina automaticamente l'immagine originale"
+                "Originalbild automatisch l\u00f6schen"
             ],
             "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.": [
-                "Quando abilitato, l'immagine originale caricata viene eliminata e sostituita con la versione ottimizzata, contribuendo a risparmiare spazio di archiviazione. Se disabilitato, l'immagine ottimizzata viene salvata come file separato, conservando l'originale."
+                "Wenn aktiviert, wird das urspr\u00fcnglich hochgeladene Bild gel\u00f6scht und durch die optimierte Version ersetzt, was hilft, Speicherplatz zu sparen. Wenn deaktiviert, wird das optimierte Bild als separate Datei gespeichert und das Original beibehalten."
             ],
             "Enable Lazy Loading": [
-                "Abilita caricamento differito"
+                "Lazy Loading aktivieren"
             ],
             "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance.": [
-                "Il caricamento differito ritarda il caricamento delle immagini finch\u00e9 non sono visibili sullo schermo, migliorando la velocit\u00e0 di caricamento delle pagine e le prestazioni."
+                "Lazy Loading verz\u00f6gert das Laden von Bildern, bis sie auf dem Bildschirm sichtbar sind, was die Seitenladegeschwindigkeit und Leistung verbessert."
             ],
             "Prefer Optimized Image When Exists": [
-                "Preferisci immagine ottimizzata quando esiste"
+                "Optimiertes Bild bevorzugen, wenn vorhanden"
             ],
             "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
-                "Quando abilitato, le immagini ottimizzate verranno servite al posto delle immagini originali quando esistono, migliorando le prestazioni."
+                "Wenn aktiviert, werden optimierte Bilder anstelle der Originalbilder ausgeliefert, wenn sie vorhanden sind, was die Leistung verbessert."
             ],
             "Settings updated successfully": [
-                "Impostazioni aggiornate con successo"
+                "Einstellungen erfolgreich aktualisiert"
             ],
             "Your image optimization settings have been saved.": [
-                "Le tue impostazioni di ottimizzazione delle immagini sono state salvate."
+                "Ihre Bildoptimierungseinstellungen wurden gespeichert."
             ],
             "Error Updating Settings": [
-                "Errore durante l'aggiornamento delle impostazioni"
+                "Fehler beim Aktualisieren der Einstellungen"
             ],
             "Something went wrong while updating the settings. Please try again.": [
-                "Qualcosa \u00e8 andato storto durante l'aggiornamento delle impostazioni. Per favore riprova."
+                "Beim Aktualisieren der Einstellungen ist etwas schiefgelaufen. Bitte versuchen Sie es erneut."
             ],
             "Advanced settings": [
-                "Impostazioni avanzate"
+                "Erweiterte Einstellungen"
             ],
             "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be.": [
-                "Funzionalit\u00e0 aggiuntive di velocit\u00e0 e scalabilit\u00e0 alimentate da Jetpack Boost per rendere il tuo sito il pi\u00f9 veloce possibile."
+                "Zus\u00e4tzliche Geschwindigkeits- und Skalierbarkeitsfunktionen, unterst\u00fctzt durch Jetpack Boost, um Ihre Website so schnell wie m\u00f6glich zu machen."
             ],
             "Option saved correctly": [
-                "Opzione salvata correttamente"
+                "Option korrekt gespeichert"
             ],
             "Error saving option": [
-                "Errore durante il salvataggio dell'opzione"
+                "Fehler beim Speichern der Option"
             ],
             "Upgrade to unlock": [
-                "Aggiorna per sbloccare"
+                "Upgrade zum Freischalten"
             ],
             "Install Jetpack Boost to unlock": [
-                "Installa Jetpack Boost per sbloccare"
+                "Installieren Sie Jetpack Boost zum Freischalten"
             ],
             "Installing Jetpack Boost\u2026": [
-                "Installazione di Jetpack Boost\u2026"
+                "Jetpack Boost wird installiert\u2026"
             ],
             "Jetpack Boost is now active": [
-                "Jetpack Boost \u00e8 ora attivo"
+                "Jetpack Boost ist jetzt aktiv"
             ],
             "Activation failed": [
-                "Attivazione fallita"
+                "Aktivierung fehlgeschlagen"
             ],
             "Optimize Critical CSS Loading (manual)": [
-                "Ottimizza il caricamento del CSS critico (manuale)"
+                "Kritisches CSS-Laden optimieren (manuell)"
             ],
             "Generate CSS": [
-                "Genera CSS"
+                "CSS generieren"
             ],
             "Critical CSS generated successfully.": [
-                "CSS critico generato con successo."
+                "Kritisches CSS erfolgreich generiert."
             ],
             "Keep this page opened until the process finish": [
-                "Mantieni questa pagina aperta fino al termine del processo"
+                "Halten Sie diese Seite ge\u00f6ffnet, bis der Prozess abgeschlossen ist"
             ],
             "Error generating Critical CSS, try again": [
-                "Errore durante la generazione del CSS critico, riprova"
+                "Fehler beim Generieren des kritischen CSS, versuchen Sie es erneut"
             ],
             "Optimize Critical CSS Loading (UPGRADED)": [
-                "Ottimizza il caricamento del CSS critico (MIGLIORATO)"
+                "Kritisches CSS-Laden optimieren (UPGRADE)"
             ],
             "Generate Critical CSS Automatically": [
-                "Genera automaticamente CSS critico"
+                "Kritisches CSS automatisch generieren"
             ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
-                "Esegui JavaScript non essenziale dopo che la pagina \u00e8 stata caricata in modo che stili e immagini possano caricarsi pi\u00f9 velocemente."
+                "F\u00fchren Sie nicht essentielles JavaScript aus, nachdem die Seite geladen wurde, damit Stile und Bilder schneller geladen werden k\u00f6nnen."
             ],
             "Concatenate JS": [
-                "Concatena JS"
+                "JS zusammenf\u00fchren"
             ],
             "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                "Gli script sono raggruppati in base alla loro posizione originale, concatenati e minificati per ridurre il tempo di caricamento del sito e ridurre il numero di richieste."
+                "Skripte werden nach ihrer urspr\u00fcnglichen Platzierung gruppiert, zusammengef\u00fchrt und minimiert, um die Ladezeit der Website zu reduzieren und die Anzahl der Anfragen zu verringern."
             ],
             "Exclude JS Strings": [
-                "Escludi stringhe JS"
+                "JS-Strings ausschlie\u00dfen"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                "Gli stili sono raggruppati in base alla loro posizione originale, concatenati e minificati per ridurre il tempo di caricamento del sito e ridurre il numero di richieste."
+                "Stile werden nach ihrer urspr\u00fcnglichen Platzierung gruppiert, zusammengef\u00fchrt und minimiert, um die Ladezeit der Website zu reduzieren und die Anzahl der Anfragen zu verringern."
             ],
             "Exclude CSS Strings": [
-                "Escludi stringhe CSS"
+                "CSS-Strings ausschlie\u00dfen"
             ],
             "Link Prefetch": [
-                "Prefetch dei link"
+                "Link-Vorabruf"
             ],
             "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly.": [
-                "Chiede al browser di scaricare e memorizzare nella cache i link sulla pagina prima che vengano cliccati, in modo che quando vengono cliccati si carichino quasi istantaneamente."
+                "Fordert den Browser auf, Links auf der Seite vorab herunterzuladen und zu cachen, sodass sie beim Anklicken fast sofort geladen werden."
             ],
             "Link prefetching setting saved": [
-                "Impostazione di prefetch dei link salvata"
+                "Link-Vorabruf-Einstellung gespeichert"
             ],
             "Enable link prefetching on desktop": [
-                "Abilita prefetch dei link su desktop"
+                "Link-Vorabruf auf Desktop aktivieren"
             ],
             "Activate on desktop": [
-                "Attiva su desktop"
+                "Auf Desktop aktivieren"
             ],
             "Behavior": [
-                "Comportamento"
+                "Verhalten"
             ],
             "Prefetch on Mouse Down": [
-                "Prefetch al clic del mouse"
+                "Vorabruf bei Mausklick"
             ],
             "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click.": [
-                "Prefetch al clic del mouse: Inizia a caricare la pagina non appena fai clic, per una risposta pi\u00f9 rapida quando rilasci il clic."
+                "Vorabruf bei Mausklick: Beginnt mit dem Laden der Seite, sobald Sie klicken, f\u00fcr schnellere Reaktion beim Loslassen des Klicks."
             ],
             "Prefetch on Mouse Hover (Recommended)": [
-                "Prefetch al passaggio del mouse (Consigliato)"
+                "Vorabruf bei Maus-Hover (Empfohlen)"
             ],
             "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link": [
-                "Prefetch al passaggio del mouse: Inizia a caricare la pagina nel momento in cui il cursore passa sopra un link"
+                "Vorabruf bei Maus-Hover: Beginnt mit dem Laden der Seite, sobald Ihr Cursor \u00fcber einen Link f\u00e4hrt"
             ],
             "Enable link prefetching on mobile": [
-                "Abilita prefetch dei link su mobile"
+                "Link-Vorabruf auf Mobilger\u00e4ten aktivieren"
             ],
             "Activate on mobile": [
-                "Attiva su mobile"
+                "Auf Mobilger\u00e4ten aktivieren"
             ],
             "Prefetch on Touchstart (Recommended)": [
-                "Prefetch al tocco (Consigliato)"
+                "Vorabruf bei Touchstart (Empfohlen)"
             ],
             "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger.": [
-                "Prefetch al tocco: Inizia istantaneamente a caricare la pagina non appena tocchi lo schermo, garantendo una risposta pi\u00f9 rapida quando sollevi il dito."
+                "Vorabruf bei Touchstart: Beginnt sofort mit dem Laden der Seite, sobald Sie den Bildschirm ber\u00fchren, f\u00fcr schnellere Reaktion beim Loslassen."
             ],
             "Prefetch Above the Fold": [
-                "Prefetch sopra la piega"
+                "Vorabruf oberhalb der Falz"
             ],
             "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them.": [
-                "Prefetch sopra la piega: Carica istantaneamente i link nella tua vista corrente, assicurando che siano pronti quando ne hai bisogno."
+                "Vorabruf oberhalb der Falz: L\u00e4dt Links in Ihrer aktuellen Ansicht sofort, damit sie bereit sind, wenn Sie sie brauchen."
             ],
             "Exclude keywords": [
-                "Escludi parole chiave"
+                "Schl\u00fcsselw\u00f6rter ausschlie\u00dfen"
             ],
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
-                "Escludi parole chiave: Un elenco separato da virgole di parole o stringhe che escluderanno un link dall'essere prefetchato. Ad esempio, escludendo \"app\" si impedir\u00e0 che https:\/\/example.com\/apple venga prefetchato."
+                "Schl\u00fcsselw\u00f6rter ausschlie\u00dfen: Eine durch Kommas getrennte Liste von W\u00f6rtern oder Zeichenketten, die einen Link vom Vorabruf ausschlie\u00dfen. Zum Beispiel wird durch den Ausschluss von \"app\" verhindert, dass https:\/\/example.com\/apple vorabgerufen wird."
             ],
             "This setting controls what pages pass a \u201cno-cache\u201d header so that page caching and browser caching is not used.": [
-                "Questa impostazione controlla quali pagine inviano un\u2019intestazione \u201cno-cache\u201d, in modo che non venga utilizzata la cache delle pagine o del browser."
+                "Diese Einstellung legt fest, auf welchen Seiten ein \u201eno-cache\u201c-Header gesendet wird, sodass Seiten- und Browser-Caching nicht verwendet werden."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo."
+                "Verschiebt wichtige Styling-Informationen an den Anfang der Seite, damit der Inhalt schneller angezeigt wird und Nutzer nicht auf das vollst\u00e4ndige Laden der Seite warten m\u00fcssen."
             ],
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo.%1$s %2$sBoost generer\u00e0 automaticamente il tuo CSS critico%3$s ogni volta che apporti modifiche alla struttura HTML o CSS del tuo sito."
+                "Verschiebt wichtige Styling-Informationen an den Anfang der Seite, damit der Inhalt schneller angezeigt wird und Nutzer nicht auf das vollst\u00e4ndige Laden der Seite warten m\u00fcssen.%1$s %2$sBoost generiert automatisch das Critical CSS%3$s, sobald \u00c4nderungen an der HTML- oder CSS-Struktur deiner Website vorgenommen werden."
             ],
             "Clear Cache": [
-                "Svuota la cache"
+                "Cache leeren"
             ],
             "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh.": [
-                "Svuotiamo automaticamente la cache mentre lavori (creando contenuti, modificando impostazioni, installando plugin e altro). Ma puoi anche svuotarla manualmente qui per essere sicuro che sia aggiornata."
+                "Wir leeren deinen Cache automatisch, w\u00e4hrend du arbeitest (beim Erstellen von Inhalten, \u00c4ndern von Einstellungen, Installieren von Plugins und mehr). Du kannst ihn aber auch manuell hier leeren, um sicherzugehen, dass alles aktuell ist."
             ],
             "Clear All Cache Now": [
-                "Svuota tutta la cache ora"
+                "Jetzt gesamten Cache leeren"
             ],
             "Cache cleared": [
-                "Cache svuotata"
+                "Cache geleert"
             ],
             "Skip 404": [
-                "Salta 404"
+                "404 \u00fcberspringen"
             ],
             "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages.": [
-                "Quando abilitata, le risorse statiche come immagini e font useranno una pagina 404 predefinita del server e non quella di WordPress. Le pagine e gli articoli continueranno a utilizzare le pagine 404 di WordPress."
+                "Wenn aktiviert, verwenden statische Ressourcen wie Bilder und Schriftarten eine standardm\u00e4\u00dfige 404-Fehlerseite des Servers und nicht die WordPress-404-Seiten. Seiten und Beitr\u00e4ge nutzen weiterhin die WordPress-404-Seiten."
             ],
             "Enable Skip 404 Handling For Static Files": [
-                "Abilita l\u2019ignoramento dei 404 per i file statici"
+                ",,404-Verarbeitung f\u00fcr statische Dateien \u00fcberspringen\u201c aktivieren"
             ],
             "Skip 404 saved": [
-                "Impostazione \u201cSalta 404\u201d salvata"
+                ",,404 \u00fcberspringen\u201c gespeichert"
             ],
             "Optimize your website by managing cache and performance settings": [
-                "Ottimizza il tuo sito web gestendo la cache e le impostazioni delle prestazioninpm"
+                "Optimieren Sie Ihre Website, indem Sie Cache- und Leistungs-Einstellungen verwalten"
             ]
         }
     }
