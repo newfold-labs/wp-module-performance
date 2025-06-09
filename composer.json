@@ -44,7 +44,7 @@
         "wp-cli/wp-cli-bundle": "^2.8.1|^2.12",
         "wp-cli/i18n-command": "^2.6",
         "10up/wp_mock": "^0.5.0|^1.0.0",
-        "johnpbloch/wordpress": "6.1.7",
+        "johnpbloch/wordpress": "6.8.1",
         "lucatume/wp-browser": "*",
         "phpunit/phpcov": "*"
     },
