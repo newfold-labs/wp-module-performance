@@ -54,6 +54,12 @@ A module for managing caching functionality.
 Features::getInstance();
 ```
 
+## Release
+
+Run the Newfold Prep Release github action to automatically bump the version (either patch, minor or major version), update the build files, and language files all at once. It will create a PR with changed files for manual review. Using this workflow, we can skip all the manual steps below.
+
+## References
+
 [More on Newfold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
 
 [More on the Newfold Features Modules](https://github.com/newfold-labs/wp-module-features)
