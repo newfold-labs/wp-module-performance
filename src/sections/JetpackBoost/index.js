@@ -340,7 +340,7 @@ const JetpackBoost = () => {
 					{ isModuleEnabled && ! isPremiumActive ? (
 						<FeatureUpsell
 							cardText={ upgradeModule }
-							cardLink={ `${ siteUrl }/wp-admin/admin.php?page=jetpack-boost#upgrade` }
+							cardLink={ `${ siteUrl }/wp-admin/admin.php?page=my-jetpack#/add-boost` }
 						>
 							{ cssPremiumField }
 						</FeatureUpsell>
