@@ -12,33 +12,66 @@ class ImageSettings {
 	private const SETTING_KEY = 'nfd_image_optimization';
 
 	/**
-	 * Default settings for image optimization.
+	 * Stores default image optimization settings.
 	 *
 	 * @var array
 	 */
-	private const DEFAULT_SETTINGS = array(
-		'enabled'                            => true,
-		'bulk_optimization'                  => true,
-		'prefer_optimized_image_when_exists' => true,
-		'auto_optimized_uploaded_images'     => array(
-			'enabled'                    => true,
-			'auto_delete_original_image' => false,
-		),
-		'lazy_loading'                       => array(
-			'enabled' => true,
-		),
-		'banned_status'                      => false,
-		'monthly_usage'                      => array(
-			'monthlyRequestCount' => 0,
-			'maxRequestsPerMonth' => 100000,
-		),
-	);
+	private $default_settings = array();
 
 	/**
 	 * Constructor to initialize the settings and the listener.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
-	public function __construct() {
-		$this->register_settings();
+	private static function get_default_settings( $container = null ) {
+		$default = array(
+			'enabled'                            => true,
+			'bulk_optimization'                  => true,
+			'prefer_optimized_image_when_exists' => true,
+			'auto_optimized_uploaded_images'     => array(
+				'enabled'                    => true,
+				'auto_delete_original_image' => false,
+			),
+			'lazy_loading'                       => array(
+				'enabled' => true,
+			),
+			'banned_status'                      => false,
+			'monthly_usage'                      => array(
+				'monthlyRequestCount' => 0,
+				'maxRequestsPerMonth' => 100000,
+			),
+			'cloudflare'                         => array(
+				'polish' => false,
+				'mirage' => false,
+			),
+		);
+
+		// Override with capability-aware defaults
+		if (
+		null !== $container &&
+		$container->has( 'capabilities' )
+		) {
+			$capabilities = $container->get( 'capabilities' );
+
+			$default['cloudflare']['polish'] = (bool) $capabilities->get( 'hasCloudflarePolish' );
+			$default['cloudflare']['mirage'] = (bool) $capabilities->get( 'hasCloudflareMirage' );
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Constructor to initialize the settings and the listener.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
+	 */
+	public function __construct( $container ) {
+		$this->default_settings = self::get_default_settings( $container );
+		$capabilities           = $container->has( 'capabilities' )
+		? $container->get( 'capabilities' )
+		: null;
+		self::maybe_refresh_with_capabilities( $capabilities );
+		$this->register_settings( $container );
 		$this->initialize_settings();
 	}
 
@@ -53,7 +86,7 @@ class ImageSettings {
 				'type'              => 'object',
 				'description'       => __( 'Settings for NFD Image Optimization.', 'wp-module-performance' ),
 				'sanitize_callback' => array( $this, 'sanitize_settings' ),
-				'default'           => self::DEFAULT_SETTINGS,
+				'default'           => $this->default_settings,
 				'show_in_rest'      => array(
 					'schema' => array(
 						'type'                 => 'object',
@@ -61,12 +94,12 @@ class ImageSettings {
 							'enabled'           => array(
 								'type'        => 'boolean',
 								'description' => __( 'Enable image optimization.', 'wp-module-performance' ),
-								'default'     => self::DEFAULT_SETTINGS['enabled'],
+								'default'     => $this->default_settings['enabled'],
 							),
 							'prefer_optimized_image_when_exists' => array(
 								'type'        => 'boolean',
 								'description' => __( 'Prefer WebP format when it exists.', 'wp-module-performance' ),
-								'default'     => self::DEFAULT_SETTINGS['prefer_optimized_image_when_exists'],
+								'default'     => $this->default_settings['prefer_optimized_image_when_exists'],
 							),
 							'auto_optimized_uploaded_images' => array(
 								'type'        => 'object',
@@ -75,12 +108,12 @@ class ImageSettings {
 									'enabled' => array(
 										'type'        => 'boolean',
 										'description' => __( 'Automatically optimize uploaded images.', 'wp-module-performance' ),
-										'default'     => self::DEFAULT_SETTINGS['auto_optimized_uploaded_images']['enabled'],
+										'default'     => $this->default_settings['auto_optimized_uploaded_images']['enabled'],
 									),
 									'auto_delete_original_image' => array(
 										'type'        => 'boolean',
 										'description' => __( 'Delete the original uploaded image after optimization.', 'wp-module-performance' ),
-										'default'     => self::DEFAULT_SETTINGS['auto_optimized_uploaded_images']['auto_delete_original_image'],
+										'default'     => $this->default_settings['auto_optimized_uploaded_images']['auto_delete_original_image'],
 									),
 								),
 							),
@@ -91,19 +124,19 @@ class ImageSettings {
 									'enabled' => array(
 										'type'        => 'boolean',
 										'description' => __( 'Enable lazy loading.', 'wp-module-performance' ),
-										'default'     => self::DEFAULT_SETTINGS['lazy_loading']['enabled'],
+										'default'     => $this->default_settings['lazy_loading']['enabled'],
 									),
 								),
 							),
 							'bulk_optimization' => array(
 								'type'        => 'boolean',
 								'description' => __( 'Enable bulk optimization of images.', 'wp-module-performance' ),
-								'default'     => self::DEFAULT_SETTINGS['bulk_optimization'],
+								'default'     => $this->default_settings['bulk_optimization'],
 							),
 							'banned_status'     => array(
 								'type'        => 'boolean',
 								'description' => __( 'Indicates if the site is banned from image optimization.', 'wp-module-performance' ),
-								'default'     => self::DEFAULT_SETTINGS['banned_status'],
+								'default'     => $this->default_settings['banned_status'],
 							),
 							'monthly_usage'     => array(
 								'type'        => 'object',
@@ -112,15 +145,32 @@ class ImageSettings {
 									'monthlyRequestCount' => array(
 										'type'        => 'integer',
 										'description' => __( 'Number of requests made this month.', 'wp-module-performance' ),
-										'default'     => self::DEFAULT_SETTINGS['monthly_usage']['monthlyRequestCount'],
+										'default'     => $this->default_settings['monthly_usage']['monthlyRequestCount'],
 									),
 									'maxRequestsPerMonth' => array(
 										'type'        => 'integer',
 										'description' => __( 'Maximum allowed requests per month.', 'wp-module-performance' ),
-										'default'     => self::DEFAULT_SETTINGS['monthly_usage']['maxRequestsPerMonth'],
+										'default'     => $this->default_settings['monthly_usage']['maxRequestsPerMonth'],
 									),
 								),
 							),
+							'cloudflare'        => array(
+								'type'        => 'object',
+								'description' => __( 'Cloudflare-related image optimization options.', 'wp-module-performance' ),
+								'properties'  => array(
+									'polish' => array(
+										'type'        => 'boolean',
+										'description' => __( 'Enable Cloudflare Polish optimization.', 'wp-module-performance' ),
+										'default'     => $this->default_settings['cloudflare']['polish'],
+									),
+									'mirage' => array(
+										'type'        => 'boolean',
+										'description' => __( 'Enable Cloudflare Mirage optimization.', 'wp-module-performance' ),
+										'default'     => $this->default_settings['cloudflare']['mirage'],
+									),
+								),
+							),
+
 						),
 						'additionalProperties' => false,
 					),
@@ -136,7 +186,7 @@ class ImageSettings {
 		$current_settings = get_option( self::SETTING_KEY, false );
 
 		if ( false === $current_settings || ! is_array( $current_settings ) ) {
-			add_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+			add_option( self::SETTING_KEY, $this->default_settings );
 		}
 	}
 
@@ -169,7 +219,44 @@ class ImageSettings {
 				'monthlyRequestCount' => isset( $settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $settings['monthly_usage']['monthlyRequestCount'] : ( isset( $existing_settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $existing_settings['monthly_usage']['monthlyRequestCount'] : 0 ),
 				'maxRequestsPerMonth' => isset( $settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $settings['monthly_usage']['maxRequestsPerMonth'] : ( isset( $existing_settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $existing_settings['monthly_usage']['maxRequestsPerMonth'] : 100000 ),
 			),
+			'cloudflare'                         => array(
+				'polish' => isset( $settings['cloudflare']['polish'] )
+							? ! empty( $settings['cloudflare']['polish'] )
+							: ( ! empty( $existing_settings['cloudflare']['polish'] ) ),
+
+				'mirage' => isset( $settings['cloudflare']['mirage'] )
+							? ! empty( $settings['cloudflare']['mirage'] )
+							: ( ! empty( $existing_settings['cloudflare']['mirage'] ) ),
+			),
 		);
+	}
+	/**
+	 * Refreshes legacy settings with Cloudflare feature flags based on capabilities.
+	 *
+	 * @param object|null $capabilities Capabilities object (optional).
+	 */
+	public static function maybe_refresh_with_capabilities( $capabilities ) {
+		$settings = get_option( self::SETTING_KEY, array() );
+
+		// If the option doesn't exist or is empty, use default settings
+		if ( empty( $settings ) || ! is_array( $settings ) ) {
+			$settings = self::get_default_settings();
+		}
+
+		// Only update if Cloudflare keys are unset (i.e. pre-feature rollout)
+		if (
+		! isset( $settings['cloudflare']['polish'] ) &&
+		! isset( $settings['cloudflare']['mirage'] )
+		) {
+			if ( is_object( $capabilities ) ) {
+				$settings['cloudflare'] = array(
+					'polish' => (bool) $capabilities->get( 'hasCloudflarePolish' ),
+					'mirage' => (bool) $capabilities->get( 'hasCloudflareMirage' ),
+				);
+
+				update_option( self::SETTING_KEY, $settings );
+			}
+		}
 	}
 
 	/**
@@ -178,7 +265,7 @@ class ImageSettings {
 	 * @return bool True if optimization is enabled, false otherwise.
 	 */
 	public static function is_optimization_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['enabled'] );
 	}
 
@@ -188,7 +275,7 @@ class ImageSettings {
 	 * @return bool True if auto-optimization is enabled, false otherwise.
 	 */
 	public static function is_auto_optimization_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['auto_optimized_uploaded_images']['enabled'] );
 	}
 
@@ -198,7 +285,7 @@ class ImageSettings {
 	 * @return bool True if auto-deletion is enabled, false otherwise.
 	 */
 	public static function is_auto_delete_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['auto_optimized_uploaded_images']['auto_delete_original_image'] );
 	}
 
@@ -208,7 +295,7 @@ class ImageSettings {
 	 * @return bool True if lazy loading is enabled, false otherwise.
 	 */
 	public static function is_lazy_loading_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['lazy_loading']['enabled'] );
 	}
 
@@ -218,7 +305,7 @@ class ImageSettings {
 	 * @return bool True if bulk optimization is enabled, false otherwise.
 	 */
 	public static function is_bulk_optimization_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['bulk_optimization'] );
 	}
 
@@ -228,7 +315,7 @@ class ImageSettings {
 	 * @return bool True if WebP preference is enabled, false otherwise.
 	 */
 	public static function is_webp_preference_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['prefer_optimized_image_when_exists'] );
 	}
 
@@ -238,7 +325,7 @@ class ImageSettings {
 	 * @return bool True if the site is banned, false otherwise.
 	 */
 	public static function is_banned() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 		return ! empty( $settings['banned_status'] );
 	}
 
@@ -248,7 +335,7 @@ class ImageSettings {
 	 * @return array An array containing `monthlyRequestCount` and `maxRequestsPerMonth`.
 	 */
 	public static function get_monthly_usage() {
-		$settings = get_option( self::SETTING_KEY, self::DEFAULT_SETTINGS );
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
 
 		// Ensure monthly_usage exists and return default values if not set
 		return isset( $settings['monthly_usage'] ) && is_array( $settings['monthly_usage'] )
@@ -270,7 +357,7 @@ class ImageSettings {
 		$settings = get_option( self::SETTING_KEY, array() );
 
 		if ( ! is_array( $settings ) ) {
-			$settings = self::DEFAULT_SETTINGS;
+			$settings = self::get_default_settings();
 		}
 
 		if ( ! isset( $settings['banned_status'] ) ) {
@@ -304,5 +391,27 @@ class ImageSettings {
 		$instance           = new self();
 		$sanitized_settings = $instance->sanitize_settings( $settings );
 		return update_option( self::SETTING_KEY, $sanitized_settings );
+	}
+
+	/**
+	 * Checks if Cloudflare Polish is enabled.
+	 *
+	 * @return bool True if Polish is enabled, false otherwise.
+	 */
+	public static function is_cloudflare_polish_enabled() {
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
+
+		return ! empty( $settings['cloudflare']['polish'] );
+	}
+
+	/**
+	 * Checks if Cloudflare Mirage is enabled.
+	 *
+	 * @return bool True if Mirage is enabled, false otherwise.
+	 */
+	public static function is_cloudflare_mirage_enabled() {
+		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
+
+		return ! empty( $settings['cloudflare']['mirage'] );
 	}
 }

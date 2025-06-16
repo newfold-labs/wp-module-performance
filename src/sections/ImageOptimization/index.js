@@ -1,5 +1,10 @@
 import { useState, useEffect } from '@wordpress/element';
-import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
+import {
+	Alert,
+	Container,
+	ToggleField,
+	FeatureUpsell,
+} from '@newfold/ui-component-library';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { STORE_NAME } from '../../data/constants';
@@ -135,6 +140,12 @@ const ImageOptimization = () => {
 			case 'preferOptimizedImageWhenExists':
 				updated.prefer_optimized_image_when_exists = value;
 				break;
+			case 'cloudflarePolish':
+				updated.cloudflare.polish = value;
+				break;
+			case 'cloudflareMirage':
+				updated.cloudflare.mirage = value;
+				break;
 			default:
 				break;
 		}
@@ -177,7 +188,10 @@ const ImageOptimization = () => {
 		auto_optimized_uploaded_images: auto = {},
 		lazy_loading: lazy = { enabled: true },
 		bulk_optimization: bulk = false,
+		cloudflare = {},
 	} = settings;
+
+	const { mirage = false, polish = false } = cloudflare;
 
 	const { enabled: autoEnabled, auto_delete_original_image: autoDelete } =
 		auto;
@@ -318,6 +332,60 @@ const ImageOptimization = () => {
 							}
 							disabled={ isBanned }
 						/>
+						{ ! NewfoldRuntime.hasCapability(
+							'hasCloudflarePolish'
+						) &&
+							! NewfoldRuntime.hasCapability(
+								'hasCloudflareMirage'
+							) && (
+								<div>
+									<FeatureUpsell
+										cardText="Get advanced image optimization features with Cloudflare Polish & Mirage."
+										cardLink="https://www.bluehost.com"
+									>
+										<ToggleField
+											id="cloudflare-polish"
+											label="Optimize Images via Cloudflare"
+											description="Enables Cloudflare's image compression to reduce load times and bandwidth usage."
+											checked={ false }
+											disabled
+										/>{ ' ' }
+										<ToggleField
+											id="cloudflare-mirage"
+											label="Improve Image Loading on Slow Connections"
+											description="Cloudflare Mirage accelerates image loading for mobile and slow networks."
+											checked={ false }
+											disabled
+										/>{ ' ' }
+									</FeatureUpsell>
+								</div>
+							) }
+						{ NewfoldRuntime.hasCapability(
+							'hasCloudflarePolish'
+						) && (
+							<ToggleField
+								id="cloudflare-polish"
+								label="Optimize Images via Cloudflare"
+								description="Enables Cloudflare's image compression to reduce load times and bandwidth usage."
+								checked={ polish }
+								onChange={ () =>
+									handleToggle( 'cloudflarePolish', ! polish )
+								}
+							/>
+						) }
+						{ NewfoldRuntime.hasCapability(
+							'hasCloudflareMirage'
+						) && (
+							<ToggleField
+								id="cloudflare-mirage"
+								label="Improve Image Loading on Slow Connections"
+								description="Cloudflare Mirage accelerates image loading for mobile and slow networks."
+								checked={ mirage }
+								onChange={ () =>
+									handleToggle( 'cloudflareMirage', ! mirage )
+								}
+							/>
+						) }
 					</>
 				) }
 			</div>

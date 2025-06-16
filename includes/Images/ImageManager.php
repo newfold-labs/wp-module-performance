@@ -20,15 +20,17 @@ class ImageManager {
 	 * @param Container $container Dependency injection container.
 	 */
 	public function __construct( Container $container ) {
-		$this->initialize_settings();
+		$this->initialize_settings( $container );
 		$this->initialize_services( $container );
 	}
 
 	/**
 	 * Initializes the ImageSettings class to register settings.
+	 *
+	 * @param Container $container Dependency injection container.
 	 */
-	private function initialize_settings() {
-		new ImageSettings();
+	private function initialize_settings( Container $container ) {
+		new ImageSettings( $container );
 	}
 
 	/**
@@ -44,6 +46,8 @@ class ImageManager {
 		$this->maybe_initialize_marker();
 		$this->maybe_initialize_image_rewrite_handler( $container );
 		$this->maybe_initialize_image_limit_banner( $container );
+		$this->maybe_initialize_cloudflare_polish( $container );
+		$this->maybe_initialize_cloudflare_mirage( $container );
 	}
 
 	/**
@@ -110,6 +114,24 @@ class ImageManager {
 	private function maybe_initialize_image_limit_banner( $container ) {
 		if ( ImageSettings::is_optimization_enabled() && Permissions::is_authorized_admin() ) {
 			new ImageLimitBanner( $container );
+		}
+	}
+
+	/**
+	 * Initializes CloudflarePolishHandler if the capability is available.
+	 */
+	private function maybe_initialize_cloudflare_polish() {
+		if ( ImageSettings::is_optimization_enabled() ) {
+			new CloudflareFeaturesHandler();
+		}
+	}
+
+	/**
+	 * Initializes CloudflareMirageHandler if the capability is available.
+	 */
+	private function maybe_initialize_cloudflare_mirage() {
+		if ( ImageSettings::is_optimization_enabled() ) {
+			new CloudflareFeaturesHandler();
 		}
 	}
 }
