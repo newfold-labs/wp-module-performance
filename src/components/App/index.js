@@ -22,7 +22,10 @@ import ImageOptimization from '../../sections/ImageOptimization';
 import getAppText from './getAppText';
 
 const App = () => {
+	
 	const { title, description } = getAppText();
+	const hasLinkPrefetchClick = NewfoldRuntime.hasCapability('hasLinkPrefetchClick');
+	const hasLinkPrefetchHover = NewfoldRuntime.hasCapability('hasLinkPrefetchHover');
 
 	useEffect( () => {
 		const brand = NewfoldRuntime.sdk?.plugin?.brand;
@@ -68,12 +71,14 @@ const App = () => {
 					>
 						<JetpackBoost />
 					</Container.Block>
-					<Container.Block
-						separator
-						className="newfold-link-prefetch"
-					>
-						<LinkPrefetch />
-					</Container.Block>
+					{ ( hasLinkPrefetchClick || hasLinkPrefetchHover ) && (
+						<Container.Block
+							separator
+							className="newfold-link-prefetch"
+						>
+							<LinkPrefetch hasLinkPrefetchClick={hasLinkPrefetchClick} hasLinkPrefetchHover={hasLinkPrefetchHover}/>
+						</Container.Block>
+					) }
 					<Container.Block className="newfold-image-optimization">
 						<ImageOptimization />
 					</Container.Block>

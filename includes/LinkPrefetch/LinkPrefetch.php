@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\LinkPrefetch;
 
+use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -59,6 +60,16 @@ class LinkPrefetch {
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
+
+		$capabilities = new SiteCapabilities();
+		$clickEnbaled = $capabilities->get( 'hasLinkPrefetchClick' );
+		$hoverEnbaled = $capabilities->get( 'hasLinkPrefetchHover' );
+
+		if ( ! $clickEnbaled && ! $hoverEnbaled ) {
+			update_option( self::$option_name, self::$default_settings );
+			return;
+		}
+
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		if ( ! is_admin() ) {
