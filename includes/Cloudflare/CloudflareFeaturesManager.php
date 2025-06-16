@@ -1,13 +1,14 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Performance\Images;
+namespace NewfoldLabs\WP\Module\Performance\Cloudflare;
 
+use NewfoldLabs\WP\Module\Performance\Images\ImageSettings;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 
 /**
  * Handles detection and tracking of Cloudflare Polish, Mirage, and Font Optimization.
  */
-class CloudflareFeaturesHandler {
+class CloudflareFeaturesManager {
 
 	private const MARKER = 'Newfold CF Optimization Header';
 
@@ -59,21 +60,21 @@ class CloudflareFeaturesHandler {
 	 * @param mixed $fonts_enabled  Whether font optimization is enabled.
 	 */
 	private function update_htaccess_header( $image_settings, $fonts_enabled ) {
-		$cloudflare = isset( $image_settings['cloudflare'] ) ? $image_settings['cloudflare'] : array();
+		$images_cloudflare = isset( $image_settings['cloudflare'] ) ? $image_settings['cloudflare'] : array();
+		$fonts_cloudflare  = isset( $fonts_enabled['cloudflare'] ) ? $fonts_enabled['cloudflare'] : array();
 
-		$mirage_enabled = ! empty( $cloudflare['mirage'] );
-		$polish_enabled = ! empty( $cloudflare['polish'] );
-		$fonts_enabled  = ! empty( $fonts_enabled );
+		$mirage_enabled     = ! empty( $images_cloudflare['mirage'] );
+		$polish_enabled     = ! empty( $images_cloudflare['polish'] );
+		$fonts_enabled_flag = ! empty( $fonts_cloudflare['fonts'] );
 
 		$mirage_hash = $mirage_enabled ? substr( sha1( 'mirage' ), 0, 8 ) : '';
 		$polish_hash = $polish_enabled ? substr( sha1( 'polish' ), 0, 8 ) : '';
-		$fonts_hash  = $fonts_enabled ? substr( sha1( 'fonts' ), 0, 8 ) : '';
+		$fonts_hash  = $fonts_enabled_flag ? substr( sha1( 'fonts' ), 0, 8 ) : '';
 
 		$header_value = "{$mirage_hash}-{$polish_hash}-{$fonts_hash}";
+		$rules        = array();
 
-		$rules = array();
-
-		if ( $mirage_enabled || $polish_enabled || $fonts_enabled ) {
+		if ( $mirage_enabled || $polish_enabled || $fonts_enabled_flag ) {
 			$rules = array(
 				'<IfModule mod_headers.c>',
 				"\tHeader set X-NFD-CF-Optimization \"{$header_value}\" env=nfd_cf_opt",

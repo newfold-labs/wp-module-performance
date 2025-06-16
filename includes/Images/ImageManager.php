@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use NewfoldLabs\WP\Module\Performance\Cloudflare\CloudflareFeaturesManager;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\RestApi\RestApi;
@@ -121,8 +122,8 @@ class ImageManager {
 	 * Initializes CloudflarePolishHandler if the capability is available.
 	 */
 	private function maybe_initialize_cloudflare_polish() {
-		if ( ImageSettings::is_optimization_enabled() ) {
-			new CloudflareFeaturesHandler();
+		if ( Permissions::rest_is_authorized_admin() && ImageSettings::is_optimization_enabled() ) {
+			new CloudflareFeaturesManager();
 		}
 	}
 
@@ -130,8 +131,8 @@ class ImageManager {
 	 * Initializes CloudflareMirageHandler if the capability is available.
 	 */
 	private function maybe_initialize_cloudflare_mirage() {
-		if ( ImageSettings::is_optimization_enabled() ) {
-			new CloudflareFeaturesHandler();
+		if ( Permissions::rest_is_authorized_admin() && ImageSettings::is_optimization_enabled() ) {
+			new CloudflareFeaturesManager();
 		}
 	}
 }

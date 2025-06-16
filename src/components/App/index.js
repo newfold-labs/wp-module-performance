@@ -20,6 +20,7 @@ import LinkPrefetch from '../../sections/LinkPrefetch';
 import ImageOptimization from '../../sections/ImageOptimization';
 
 import getAppText from './getAppText';
+import FontOptimization from '../../sections/FontOptimization';
 
 const App = () => {
 	const { title, description } = getAppText();
@@ -74,8 +75,14 @@ const App = () => {
 					>
 						<LinkPrefetch />
 					</Container.Block>
-					<Container.Block className="newfold-image-optimization">
+					<Container.Block
+						separator
+						className="newfold-image-optimization"
+					>
 						<ImageOptimization />
+					</Container.Block>
+					<Container.Block className="newfold-font-optimization">
+						<FontOptimization />
 					</Container.Block>
 				</Container>
 			</Page>
