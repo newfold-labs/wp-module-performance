@@ -39,6 +39,12 @@ const ImageOptimization = () => {
 		imageOptimizationUpdatedDescription,
 		imageOptimizationUpdateErrorTitle,
 		imageOptimizationGenericErrorMessage,
+		imageOptimizationUpsellText,
+		imageOptimizationUpsellLink,
+		imageOptimizationPolishLabel,
+		imageOptimizationPolishDescription,
+		imageOptimizationMirageLabel,
+		imageOptimizationMirageDescription,
 	} = getImageOptimizationText();
 
 	const [ settings, setSettings ] = useState( null );
@@ -340,20 +346,28 @@ const ImageOptimization = () => {
 							) && (
 								<div>
 									<FeatureUpsell
-										cardText="Get advanced image optimization features with Cloudflare Polish & Mirage."
-										cardLink="https://www.bluehost.com"
+										cardText={ imageOptimizationUpsellText }
+										cardLink={ imageOptimizationUpsellLink }
 									>
 										<ToggleField
 											id="cloudflare-polish"
-											label="Optimize Images via Cloudflare"
-											description="Enables Cloudflare's image compression to reduce load times and bandwidth usage."
+											label={
+												imageOptimizationPolishLabel
+											}
+											description={
+												imageOptimizationPolishDescription
+											}
 											checked={ false }
 											disabled
 										/>{ ' ' }
 										<ToggleField
 											id="cloudflare-mirage"
-											label="Improve Image Loading on Slow Connections"
-											description="Cloudflare Mirage accelerates image loading for mobile and slow networks."
+											label={
+												imageOptimizationMirageLabel
+											}
+											description={
+												imageOptimizationMirageDescription
+											}
 											checked={ false }
 											disabled
 										/>{ ' ' }
@@ -365,8 +379,10 @@ const ImageOptimization = () => {
 						) && (
 							<ToggleField
 								id="cloudflare-polish"
-								label="Optimize Images via Cloudflare"
-								description="Enables Cloudflare's image compression to reduce load times and bandwidth usage."
+								label={ imageOptimizationPolishLabel }
+								description={
+									imageOptimizationPolishDescription
+								}
 								checked={ polish }
 								onChange={ () =>
 									handleToggle( 'cloudflarePolish', ! polish )
@@ -378,8 +394,10 @@ const ImageOptimization = () => {
 						) && (
 							<ToggleField
 								id="cloudflare-mirage"
-								label="Improve Image Loading on Slow Connections"
-								description="Cloudflare Mirage accelerates image loading for mobile and slow networks."
+								label={ imageOptimizationMirageLabel }
+								description={
+									imageOptimizationMirageDescription
+								}
 								checked={ mirage }
 								onChange={ () =>
 									handleToggle( 'cloudflareMirage', ! mirage )

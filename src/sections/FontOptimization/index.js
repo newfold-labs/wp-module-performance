@@ -9,6 +9,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { STORE_NAME } from '../../data/constants';
 import { NewfoldRuntime } from '@newfold/wp-module-runtime';
+import getFontOptimizationText from './getFontOptimizationText';
 
 const FontOptimization = () => {
 	const [ settings, setSettings ] = useState( null );
@@ -17,6 +18,20 @@ const FontOptimization = () => {
 
 	const { pushNotification } = useDispatch( STORE_NAME );
 	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
+		const {
+		fontOptimizationTitle,
+		fontOptimizationDescription,
+		fontOptimizationLabel,
+		fontOptimizationToggleDescription,
+		fontOptimizationUpsellText,
+		fontOptimizationUpsellLink,
+		fontOptimizationLoading,
+		fontOptimizationError,
+		fontOptimizationUpdatedTitle,
+		fontOptimizationUpdatedDescription,
+		fontOptimizationErrorTitle,
+		fontOptimizationErrorDescription,
+	} = getFontOptimizationText();
 
 	const fetchSettings = async () => {
 		setIsLoading( true );
@@ -42,16 +57,16 @@ const FontOptimization = () => {
 			} );
 			setSettings( newSettings );
 			pushNotification( 'font-opt-updated', {
-				title: 'Fonts optimization updated',
-				description: 'Font optimization setting saved successfully.',
+				title: fontOptimizationUpdatedTitle,
+				description: fontOptimizationUpdatedDescription,
 				variant: 'success',
 				autoDismiss: 5000,
 			} );
 		} catch {
 			setIsError( true );
 			pushNotification( 'font-opt-error', {
-				title: 'Update failed',
-				description: 'Could not save font optimization setting.',
+				title: fontOptimizationErrorTitle,
+				description: fontOptimizationErrorDescription,
 				variant: 'error',
 				autoDismiss: 8000,
 			} );
@@ -74,9 +89,10 @@ const FontOptimization = () => {
 		fetchSettings();
 	}, [] );
 
-	if ( isLoading ) return <p>Loading font optimization settings…</p>;
+	if ( isLoading ) return <p>{ fontOptimizationLoading }</p>;
 	if ( isError )
-		return <Alert variant="error">Error loading settings.</Alert>;
+		return <Alert variant="error">{ fontOptimizationError }</Alert>;
+
 	if ( ! settings ) return null;
 
 	const isEnabled = settings?.cloudflare?.fonts || false;
@@ -85,26 +101,26 @@ const FontOptimization = () => {
 
 	return (
 		<Container.SettingsField
-			title="Font Optimization"
-			description="Improve load times by replacing Google Fonts with optimized local versions."
+			title={ fontOptimizationTitle }
+			description={ fontOptimizationDescription }
 		>
 			{ hasCapability ? (
 				<ToggleField
 					id="cloudflare-fonts"
-					label="Optimize Fonts via Cloudflare"
-					description="Replaces Google Fonts with faster, privacy-friendly versions served locally."
+					label={ fontOptimizationLabel }
+					description={ fontOptimizationToggleDescription }
 					checked={ isEnabled }
 					onChange={ () => handleToggle( ! isEnabled ) }
 				/>
 			) : (
 				<FeatureUpsell
-					cardText="Upgrade to enable font optimization using Cloudflare."
-					cardLink="https://www.bluehost.com"
+					cardText={ fontOptimizationUpsellText }
+					cardLink={ fontOptimizationUpsellLink }
 				>
 					<ToggleField
 						id="cloudflare-fonts"
-						label="Optimize Fonts via Cloudflare"
-						description="Replaces Google Fonts with faster, privacy-friendly versions served locally."
+						label={ fontOptimizationLabel }
+						description={ fontOptimizationToggleDescription }
 						checked={ false }
 						disabled
 					/>
