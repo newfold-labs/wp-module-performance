@@ -19,7 +19,10 @@ class FontSettings {
 	 */
 	private $default_settings = array(
 		'cloudflare' => array(
-			'fonts'        => false,
+			'fonts'        => array(
+				'value'    => false,
+				'user_set' => false,
+			),
 			'last_updated' => 0,
 		),
 	);
@@ -31,8 +34,8 @@ class FontSettings {
 	 */
 	public function __construct( $container = null ) {
 		if ( $container && $container->has( 'capabilities' ) ) {
-			$capabilities                                  = $container->get( 'capabilities' );
-			$this->default_settings['cloudflare']['fonts'] = (bool) $capabilities->get( 'hasCloudflareFonts' );
+			$capabilities = $container->get( 'capabilities' );
+			$this->default_settings['cloudflare']['fonts']['value'] = (bool) $capabilities->get( 'hasCloudflareFonts' );
 		}
 
 		$this->default_settings['cloudflare']['last_updated'] = time();
@@ -62,9 +65,18 @@ class FontSettings {
 								'description' => __( 'Cloudflare-related font optimization settings.', 'wp-module-performance' ),
 								'properties'  => array(
 									'fonts'        => array(
-										'type'        => 'boolean',
+										'type'        => 'object',
 										'description' => __( 'Enable Cloudflare Font Optimization.', 'wp-module-performance' ),
-										'default'     => $this->default_settings['cloudflare']['fonts'],
+										'properties'  => array(
+											'value'    => array(
+												'type'    => 'boolean',
+												'default' => $this->default_settings['cloudflare']['fonts']['value'],
+											),
+											'user_set' => array(
+												'type'    => 'boolean',
+												'default' => $this->default_settings['cloudflare']['fonts']['user_set'],
+											),
+										),
 									),
 									'last_updated' => array(
 										'type'        => 'integer',
@@ -99,14 +111,20 @@ class FontSettings {
 	public function sanitize_settings( $settings ) {
 		$existing = get_option( self::SETTING_KEY, array() );
 
-		$fonts_sanitized = isset( $settings['cloudflare']['fonts'] )
-		? ! empty( $settings['cloudflare']['fonts'] )
-		: ( ! empty( $existing['cloudflare']['fonts'] ) );
+		$fonts_value    = isset( $settings['cloudflare']['fonts']['value'] )
+		? ! empty( $settings['cloudflare']['fonts']['value'] )
+		: ( ! empty( $existing['cloudflare']['fonts']['value'] ) );
+		$fonts_user_set = isset( $settings['cloudflare']['fonts']['user_set'] )
+		? ! empty( $settings['cloudflare']['fonts']['user_set'] )
+		: ( ! empty( $existing['cloudflare']['fonts']['user_set'] ) );
 
 		return array(
 			'cloudflare' => array(
-				'fonts'        => $fonts_sanitized,
-				'last_updated' => time(), // ensures value always changes
+				'fonts'        => array(
+					'value'    => $fonts_value,
+					'user_set' => $fonts_user_set,
+				),
+				'last_updated' => time(),
 			),
 		);
 	}
@@ -119,23 +137,27 @@ class FontSettings {
 	public static function maybe_refresh_with_capabilities( $capabilities ) {
 		$settings = get_option( self::SETTING_KEY, array() );
 
-		// If settings are missing or invalid, fall back to defaults.
-		if ( empty( $settings ) || ! is_array( $settings ) ) {
-			$settings = array(
-				'cloudflare' => array(
-					'fonts'        => false,
-					'last_updated' => time(),
-				),
+		if ( ! isset( $settings['cloudflare']['fonts'] ) ) {
+			$settings['cloudflare']['fonts'] = array(
+				'value'    => false,
+				'user_set' => false,
 			);
 		}
 
-		// Only update if fonts key is not set (i.e. legacy/no-toggle sites).
-		if ( ! isset( $settings['cloudflare']['fonts'] ) && is_object( $capabilities ) ) {
-			$settings['cloudflare']['fonts']        = (bool) $capabilities->get( 'hasCloudflareFonts' );
-			$settings['cloudflare']['last_updated'] = time();
+		if ( is_object( $capabilities ) ) {
+			$has_fonts = (bool) $capabilities->get( 'hasCloudflareFonts' );
 
-			update_option( self::SETTING_KEY, $settings );
+			if ( $settings['cloudflare']['fonts']['user_set'] ) {
+				if ( $settings['cloudflare']['fonts']['value'] && ! $has_fonts ) {
+					$settings['cloudflare']['fonts']['value'] = false;
+				}
+			} elseif ( ! $settings['cloudflare']['fonts']['value'] && $has_fonts ) {
+				$settings['cloudflare']['fonts']['value'] = true;
+			}
 		}
+
+		$settings['cloudflare']['last_updated'] = time();
+		update_option( self::SETTING_KEY, $settings );
 	}
 
 	/**
@@ -144,7 +166,7 @@ class FontSettings {
 	 * @return bool
 	 */
 	public static function is_cloudflare_fonts_enabled() {
-		$settings = get_option( self::SETTING_KEY, array( 'cloudflare' => array( 'fonts' => false ) ) );
-		return ! empty( $settings['cloudflare']['fonts'] );
+		$settings = get_option( self::SETTING_KEY, array( 'cloudflare' => array( 'fonts' => array( 'value' => false ) ) ) );
+		return ! empty( $settings['cloudflare']['fonts']['value'] );
 	}
 }

@@ -147,10 +147,16 @@ const ImageOptimization = () => {
 				updated.prefer_optimized_image_when_exists = value;
 				break;
 			case 'cloudflarePolish':
-				updated.cloudflare.polish = value;
+				updated.cloudflare.polish = {
+					value,
+					user_set: true,
+				};
 				break;
 			case 'cloudflareMirage':
-				updated.cloudflare.mirage = value;
+				updated.cloudflare.mirage = {
+					value,
+					user_set: true,
+				};
 				break;
 			default:
 				break;
@@ -197,7 +203,10 @@ const ImageOptimization = () => {
 		cloudflare = {},
 	} = settings;
 
-	const { mirage = false, polish = false } = cloudflare;
+	const {
+		mirage: { value: mirage = false } = {},
+		polish: { value: polish = false } = {},
+	} = cloudflare;
 
 	const { enabled: autoEnabled, auto_delete_original_image: autoDelete } =
 		auto;

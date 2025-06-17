@@ -18,7 +18,7 @@ const FontOptimization = () => {
 
 	const { pushNotification } = useDispatch( STORE_NAME );
 	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
-		const {
+	const {
 		fontOptimizationTitle,
 		fontOptimizationDescription,
 		fontOptimizationLabel,
@@ -78,7 +78,11 @@ const FontOptimization = () => {
 			...settings,
 			cloudflare: {
 				...( settings.cloudflare || {} ),
-				fonts: value,
+				fonts: {
+					value,
+					user_set: true,
+				},
+				last_updated: Math.floor( Date.now() / 1000 ),
 			},
 		};
 		setSettings( updated );
@@ -95,7 +99,7 @@ const FontOptimization = () => {
 
 	if ( ! settings ) return null;
 
-	const isEnabled = settings?.cloudflare?.fonts || false;
+	const isEnabled = settings?.cloudflare?.fonts?.value || false;
 
 	const hasCapability = NewfoldRuntime.hasCapability( 'hasCloudflareFonts' );
 

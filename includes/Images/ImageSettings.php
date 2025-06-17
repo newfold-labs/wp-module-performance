@@ -41,8 +41,14 @@ class ImageSettings {
 				'maxRequestsPerMonth' => 100000,
 			),
 			'cloudflare'                         => array(
-				'polish' => false,
-				'mirage' => false,
+				'polish' => array(
+					'value'    => false,
+					'user_set' => false,
+				),
+				'mirage' => array(
+					'value'    => false,
+					'user_set' => false,
+				),
 			),
 		);
 
@@ -159,18 +165,37 @@ class ImageSettings {
 								'description' => __( 'Cloudflare-related image optimization options.', 'wp-module-performance' ),
 								'properties'  => array(
 									'polish' => array(
-										'type'        => 'boolean',
+										'type'        => 'object',
 										'description' => __( 'Enable Cloudflare Polish optimization.', 'wp-module-performance' ),
-										'default'     => $this->default_settings['cloudflare']['polish'],
+										'properties'  => array(
+											'value'    => array(
+												'type'    => 'boolean',
+												'default' => $this->default_settings['cloudflare']['polish'],
+											),
+											'user_set' => array(
+												'type'    => 'boolean',
+												'default' => false,
+												'description' => 'Whether the value was explicitly set by the user.',
+											),
+										),
 									),
 									'mirage' => array(
-										'type'        => 'boolean',
+										'type'        => 'object',
 										'description' => __( 'Enable Cloudflare Mirage optimization.', 'wp-module-performance' ),
-										'default'     => $this->default_settings['cloudflare']['mirage'],
+										'properties'  => array(
+											'value'    => array(
+												'type'    => 'boolean',
+												'default' => $this->default_settings['cloudflare']['mirage'],
+											),
+											'user_set' => array(
+												'type'    => 'boolean',
+												'default' => false,
+												'description' => 'Whether the value was explicitly set by the user.',
+											),
+										),
 									),
 								),
 							),
-
 						),
 						'additionalProperties' => false,
 					),
@@ -220,13 +245,18 @@ class ImageSettings {
 				'maxRequestsPerMonth' => isset( $settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $settings['monthly_usage']['maxRequestsPerMonth'] : ( isset( $existing_settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $existing_settings['monthly_usage']['maxRequestsPerMonth'] : 100000 ),
 			),
 			'cloudflare'                         => array(
-				'polish' => isset( $settings['cloudflare']['polish'] )
-							? ! empty( $settings['cloudflare']['polish'] )
-							: ( ! empty( $existing_settings['cloudflare']['polish'] ) ),
-
-				'mirage' => isset( $settings['cloudflare']['mirage'] )
-							? ! empty( $settings['cloudflare']['mirage'] )
-							: ( ! empty( $existing_settings['cloudflare']['mirage'] ) ),
+				'polish' => array(
+					'value'    => isset( $settings['cloudflare']['polish'] )
+						? (bool) $settings['cloudflare']['polish']
+						: (bool) ( $existing_settings['cloudflare']['polish']['value'] ?? false ),
+					'user_set' => array_key_exists( 'polish', $settings['cloudflare'] ),
+				),
+				'mirage' => array(
+					'value'    => isset( $settings['cloudflare']['mirage'] )
+					? (bool) $settings['cloudflare']['mirage']
+					: (bool) ( $existing_settings['cloudflare']['mirage']['value'] ?? false ),
+					'user_set' => array_key_exists( 'mirage', $settings['cloudflare'] ),
+				),
 			),
 		);
 	}
@@ -244,21 +274,48 @@ class ImageSettings {
 			$settings = self::get_default_settings();
 		}
 
-		// Only update if Cloudflare keys are unset (i.e. pre-feature rollout)
-		if (
-		! isset( $settings['cloudflare']['polish'] ) &&
-		! isset( $settings['cloudflare']['mirage'] )
-		) {
-			if ( is_object( $capabilities ) ) {
-				$settings['cloudflare'] = array(
-					'polish' => (bool) $capabilities->get( 'hasCloudflarePolish' ),
-					'mirage' => (bool) $capabilities->get( 'hasCloudflareMirage' ),
-				);
+		if ( ! isset( $settings['cloudflare']['polish'] ) || ! is_array( $settings['cloudflare']['polish'] ) ) {
+			$settings['cloudflare']['polish'] = array(
+				'value'    => false,
+				'user_set' => false,
+			);
+		}
+		if ( ! isset( $settings['cloudflare']['mirage'] ) || ! is_array( $settings['cloudflare']['mirage'] ) ) {
+			$settings['cloudflare']['mirage'] = array(
+				'value'    => false,
+				'user_set' => false,
+			);
+		}
 
-				update_option( self::SETTING_KEY, $settings );
+		if ( is_object( $capabilities ) ) {
+			$has_polish = (bool) $capabilities->get( 'hasCloudflarePolish' );
+			$has_mirage = (bool) $capabilities->get( 'hasCloudflareMirage' );
+
+			// Polish
+			if ( $settings['cloudflare']['polish']['user_set'] ) {
+				if ( $settings['cloudflare']['polish']['value'] && ! $has_polish ) {
+					// User enabled but capability is gone — disable it
+					$settings['cloudflare']['polish']['value'] = false;
+				}
+			} elseif ( ! $settings['cloudflare']['polish']['value'] && $has_polish ) {
+					// Not user set — follow capability
+				$settings['cloudflare']['polish']['value'] = true;
+
+			}
+
+			// Mirage
+			if ( $settings['cloudflare']['mirage']['user_set'] ) {
+				if ( $settings['cloudflare']['mirage']['value'] && ! $has_mirage ) {
+					$settings['cloudflare']['mirage']['value'] = false;
+				}
+			} elseif ( ! $settings['cloudflare']['mirage']['value'] && $has_mirage ) {
+					$settings['cloudflare']['mirage']['value'] = true;
 			}
 		}
+
+		update_option( self::SETTING_KEY, $settings );
 	}
+
 
 	/**
 	 * Checks if image optimization is enabled.
