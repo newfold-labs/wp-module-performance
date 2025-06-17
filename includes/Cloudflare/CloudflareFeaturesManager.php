@@ -18,8 +18,11 @@ class CloudflareFeaturesManager {
 	 */
 	public function __construct() {
 		add_action( 'update_option_nfd_image_optimization', array( $this, 'on_image_optimization_change' ), 10, 2 );
+		add_action( 'add_option_nfd_image_optimization', array( $this, 'on_image_optimization_change' ), 10, 2 );
 		add_action( 'update_option_nfd_fonts_optimization', array( $this, 'on_fonts_optimization_change' ), 10, 2 );
+		add_action( 'add_option_nfd_fonts_optimization', array( $this, 'on_fonts_optimization_change' ), 10, 2 );
 		add_action( 'update_option_nfd_site_capabilities', array( $this, 'on_site_capabilities_change' ), 10, 2 );
+		add_action( 'add_option_nfd_site_capabilities', array( $this, 'on_site_capabilities_change' ), 10, 2 );
 	}
 
 	/**
@@ -80,7 +83,7 @@ class CloudflareFeaturesManager {
 			$rules = array(
 				'# BEGIN Newfold CF Optimization Header',
 				'<IfModule mod_headers.c>',
-				"\tHeader set Set-Cookie \"nfd-enable-google-font-replace=true; path=/; Max-Age=86400; HttpOnly\" env=nfd_cf_opt",
+				"\tHeader set Set-Cookie \"nfd-enable-cf-opt={$header_value}; path=/; Max-Age=86400; HttpOnly\" env=nfd_cf_opt",
 				'</IfModule>',
 				'# Exclude admin and API paths',
 				'SetEnvIf Request_URI "^/wp-admin/" no_nfd_cf',
@@ -88,7 +91,7 @@ class CloudflareFeaturesManager {
 				'SetEnvIf Request_URI "^/xmlrpc.php" no_nfd_cf',
 				'SetEnvIf Request_URI "^/wp-login.php" no_nfd_cf',
 				'SetEnvIf Request_URI "^/admin-ajax.php" no_nfd_cf',
-				'# Apply CF header on all non-admin, non-API requests',
+				'# Apply CF cookie on all non-admin, non-API requests',
 				'SetEnvIf Request_URI ".*" nfd_cf_opt=!no_nfd_cf',
 				'# END Newfold CF Optimization Header',
 			);
