@@ -39,6 +39,20 @@ class LinkPrefetch {
 	public static $option_name = 'nfd_link_prefetch_settings';
 
 	/**
+	 * Site capabilities for link prefetch Click.
+	 *
+	 * @var bool
+	 */
+	public static $has_link_prefetch_click = false;
+
+	/**
+	 * Site capabilities for link prefetch Hover.
+	 *
+	 * @var bool
+	 */
+	public static $has_link_prefetch_hover = false;
+
+	/**
 	 * Default settings.
 	 *
 	 * @var array
@@ -62,11 +76,12 @@ class LinkPrefetch {
 		$this->container = $container;
 
 		$capabilities = new SiteCapabilities();
-		$clickEnbaled = $capabilities->get( 'hasLinkPrefetchClick' );
-		$hoverEnbaled = $capabilities->get( 'hasLinkPrefetchHover' );
 
-		if ( ! $clickEnbaled && ! $hoverEnbaled ) {
-			update_option( self::$option_name, self::$default_settings );
+		$this::$has_link_prefetch_click = $capabilities->get( 'hasLinkPrefetchClick' );
+		$this::$has_link_prefetch_hover = $capabilities->get( 'hasLinkPrefetchHover' );
+
+		if ( ! $this::$has_link_prefetch_click && ! $this::$has_link_prefetch_hover ) {
+			delete_option( self::$option_name );
 			return;
 		}
 
@@ -85,6 +100,9 @@ class LinkPrefetch {
 	 * @return array Modified runtime object.
 	 */
 	public function add_to_runtime( $sdk ) {
+
+		self::$default_settings['behavior'] = $this::$has_link_prefetch_click && $this::$has_link_prefetch_hover ? 'mouseHover' : 'mouseDown';
+
 		$values = array(
 			'settings' => get_option( self::$option_name, self::$default_settings ),
 		);
