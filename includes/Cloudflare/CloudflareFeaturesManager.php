@@ -81,7 +81,6 @@ class CloudflareFeaturesManager {
 
 		if ( $mirage_enabled || $polish_enabled || $fonts_enabled_flag ) {
 			$rules = array(
-				'# BEGIN Newfold CF Optimization Header',
 				'<IfModule mod_headers.c>',
 				"\tHeader set Set-Cookie \"nfd-enable-cf-opt={$header_value}; path=/; Max-Age=86400; HttpOnly\" env=nfd_cf_opt",
 				'</IfModule>',
@@ -93,7 +92,6 @@ class CloudflareFeaturesManager {
 				'SetEnvIf Request_URI "^/admin-ajax.php" no_nfd_cf',
 				'# Apply CF cookie on all non-admin, non-API requests',
 				'SetEnvIf Request_URI ".*" nfd_cf_opt=!no_nfd_cf',
-				'# END Newfold CF Optimization Header',
 			);
 		}
 
