@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Cloudflare;
 
+use NewfoldLabs\WP\Module\Performance\Fonts\FontSettings;
 use NewfoldLabs\WP\Module\Performance\Images\ImageSettings;
 use WP_Forge\WP_Htaccess_Manager\htaccess;
 
@@ -50,6 +51,7 @@ class CloudflareFeaturesManager {
 	public function on_site_capabilities_change( $old_value, $new_value ) {
 		if ( is_array( $new_value ) ) {
 			ImageSettings::maybe_refresh_with_capabilities( $new_value );
+			FontSettings::maybe_refresh_with_capabilities( $new_value );
 		}
 	}
 
@@ -76,12 +78,19 @@ class CloudflareFeaturesManager {
 
 		if ( $mirage_enabled || $polish_enabled || $fonts_enabled_flag ) {
 			$rules = array(
+				'# BEGIN Newfold CF Optimization Header',
 				'<IfModule mod_headers.c>',
-				"\tHeader set X-NFD-CF-Optimization \"{$header_value}\" env=nfd_cf_opt",
+				"\tHeader set Set-Cookie \"nfd-enable-google-font-replace=true; path=/; Max-Age=86400; HttpOnly\" env=nfd_cf_opt",
 				'</IfModule>',
-				'# Match static asset requests',
-				'SetEnvIf Request_URI "\\.(jpe?g|png|gif|webp|woff2?|ttf|otf|eot|css)$" nfd_cf_opt',
-				'SetEnvIf Request_URI "fonts.googleapis.com" nfd_cf_opt',
+				'# Exclude admin and API paths',
+				'SetEnvIf Request_URI "^/wp-admin/" no_nfd_cf',
+				'SetEnvIf Request_URI "^/wp-json/" no_nfd_cf',
+				'SetEnvIf Request_URI "^/xmlrpc.php" no_nfd_cf',
+				'SetEnvIf Request_URI "^/wp-login.php" no_nfd_cf',
+				'SetEnvIf Request_URI "^/admin-ajax.php" no_nfd_cf',
+				'# Apply CF header on all non-admin, non-API requests',
+				'SetEnvIf Request_URI ".*" nfd_cf_opt=!no_nfd_cf',
+				'# END Newfold CF Optimization Header',
 			);
 		}
 

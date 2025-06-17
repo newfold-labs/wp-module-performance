@@ -230,6 +230,7 @@ class ImageSettings {
 			),
 		);
 	}
+
 	/**
 	 * Refreshes legacy settings with Cloudflare feature flags based on capabilities.
 	 *

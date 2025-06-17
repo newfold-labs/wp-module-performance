@@ -112,6 +112,33 @@ class FontSettings {
 	}
 
 	/**
+	 * Refreshes legacy font settings based on Cloudflare capabilities.
+	 *
+	 * @param object|null $capabilities Optional capabilities object.
+	 */
+	public static function maybe_refresh_with_capabilities( $capabilities ) {
+		$settings = get_option( self::SETTING_KEY, array() );
+
+		// If settings are missing or invalid, fall back to defaults.
+		if ( empty( $settings ) || ! is_array( $settings ) ) {
+			$settings = array(
+				'cloudflare' => array(
+					'fonts'        => false,
+					'last_updated' => time(),
+				),
+			);
+		}
+
+		// Only update if fonts key is not set (i.e. legacy/no-toggle sites).
+		if ( ! isset( $settings['cloudflare']['fonts'] ) && is_object( $capabilities ) ) {
+			$settings['cloudflare']['fonts']        = (bool) $capabilities->get( 'hasCloudflareFonts' );
+			$settings['cloudflare']['last_updated'] = time();
+
+			update_option( self::SETTING_KEY, $settings );
+		}
+	}
+
+	/**
 	 * Checks if Cloudflare font optimization is enabled.
 	 *
 	 * @return bool
