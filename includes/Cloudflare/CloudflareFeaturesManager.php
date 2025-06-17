@@ -21,8 +21,7 @@ class CloudflareFeaturesManager {
 		add_action( 'add_option_nfd_image_optimization', array( $this, 'on_image_optimization_change' ), 10, 2 );
 		add_action( 'update_option_nfd_fonts_optimization', array( $this, 'on_fonts_optimization_change' ), 10, 2 );
 		add_action( 'add_option_nfd_fonts_optimization', array( $this, 'on_fonts_optimization_change' ), 10, 2 );
-		add_action( 'update_option_nfd_site_capabilities', array( $this, 'on_site_capabilities_change' ), 10, 2 );
-		add_action( 'add_option_nfd_site_capabilities', array( $this, 'on_site_capabilities_change' ), 10, 2 );
+		add_action( 'set_transient_nfd_site_capabilities', array( $this, 'on_site_capabilities_change' ), 10, 2 );
 	}
 
 	/**
@@ -46,15 +45,17 @@ class CloudflareFeaturesManager {
 	}
 
 	/**
-	 * Handles site capabilities change and triggers a settings refresh.
+	 * Callback for when the `nfd_site_capabilities` transient is set.
 	 *
-	 * @param mixed $old_value Previous value.
-	 * @param mixed $new_value New value.
+	 * Triggers a refresh of image and font optimization settings based on updated site capabilities.
+	 *
+	 * @param mixed $value      The value being set in the transient.
+	 * @param int   $expiration The expiration time in seconds.
 	 */
-	public function on_site_capabilities_change( $old_value, $new_value ) {
-		if ( is_array( $new_value ) ) {
-			ImageSettings::maybe_refresh_with_capabilities( $new_value );
-			FontSettings::maybe_refresh_with_capabilities( $new_value );
+	public function on_site_capabilities_change( $value, $expiration ) {
+		if ( is_array( $value ) ) {
+			ImageSettings::maybe_refresh_with_capabilities( $value );
+			FontSettings::maybe_refresh_with_capabilities( $value );
 		}
 	}
 
@@ -68,9 +69,9 @@ class CloudflareFeaturesManager {
 		$images_cloudflare = isset( $image_settings['cloudflare'] ) ? $image_settings['cloudflare'] : array();
 		$fonts_cloudflare  = isset( $fonts_enabled['cloudflare'] ) ? $fonts_enabled['cloudflare'] : array();
 
-		$mirage_enabled     = ! empty( $images_cloudflare['mirage'] );
-		$polish_enabled     = ! empty( $images_cloudflare['polish'] );
-		$fonts_enabled_flag = ! empty( $fonts_cloudflare['fonts'] );
+		$mirage_enabled     = ! empty( $images_cloudflare['mirage']['value'] );
+		$polish_enabled     = ! empty( $images_cloudflare['polish']['value'] );
+		$fonts_enabled_flag = ! empty( $fonts_cloudflare['fonts']['value'] );
 
 		$mirage_hash = $mirage_enabled ? substr( sha1( 'mirage' ), 0, 8 ) : '';
 		$polish_hash = $polish_enabled ? substr( sha1( 'polish' ), 0, 8 ) : '';

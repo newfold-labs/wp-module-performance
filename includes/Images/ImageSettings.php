@@ -59,8 +59,8 @@ class ImageSettings {
 		) {
 			$capabilities = $container->get( 'capabilities' );
 
-			$default['cloudflare']['polish'] = (bool) $capabilities->get( 'hasCloudflarePolish' );
-			$default['cloudflare']['mirage'] = (bool) $capabilities->get( 'hasCloudflareMirage' );
+			$default['cloudflare']['polish']['value'] = (bool) $capabilities->get( 'hasCloudflarePolish' );
+			$default['cloudflare']['mirage']['value'] = (bool) $capabilities->get( 'hasCloudflareMirage' );
 		}
 
 		return $default;
@@ -170,7 +170,7 @@ class ImageSettings {
 										'properties'  => array(
 											'value'    => array(
 												'type'    => 'boolean',
-												'default' => $this->default_settings['cloudflare']['polish'],
+												'default' => $this->default_settings['cloudflare']['polish']['value'],
 											),
 											'user_set' => array(
 												'type'    => 'boolean',
@@ -185,7 +185,7 @@ class ImageSettings {
 										'properties'  => array(
 											'value'    => array(
 												'type'    => 'boolean',
-												'default' => $this->default_settings['cloudflare']['mirage'],
+												'default' => $this->default_settings['cloudflare']['mirage']['value'],
 											),
 											'user_set' => array(
 												'type'    => 'boolean',
@@ -246,14 +246,14 @@ class ImageSettings {
 			),
 			'cloudflare'                         => array(
 				'polish' => array(
-					'value'    => isset( $settings['cloudflare']['polish'] )
-						? (bool) $settings['cloudflare']['polish']
+					'value'    => isset( $settings['cloudflare']['polish']['value'] )
+						? (bool) $settings['cloudflare']['polish']['value']
 						: (bool) ( $existing_settings['cloudflare']['polish']['value'] ?? false ),
 					'user_set' => array_key_exists( 'polish', $settings['cloudflare'] ),
 				),
 				'mirage' => array(
-					'value'    => isset( $settings['cloudflare']['mirage'] )
-					? (bool) $settings['cloudflare']['mirage']
+					'value'    => isset( $settings['cloudflare']['mirage']['value'] )
+					? (bool) $settings['cloudflare']['mirage']['value']
 					: (bool) ( $existing_settings['cloudflare']['mirage']['value'] ?? false ),
 					'user_set' => array_key_exists( 'mirage', $settings['cloudflare'] ),
 				),
@@ -287,9 +287,9 @@ class ImageSettings {
 			);
 		}
 
-		if ( is_object( $capabilities ) ) {
-			$has_polish = (bool) $capabilities->get( 'hasCloudflarePolish' );
-			$has_mirage = (bool) $capabilities->get( 'hasCloudflareMirage' );
+		if ( is_array( $capabilities ) ) {
+			$has_polish = (bool) $capabilities['hasCloudflarePolish'] ?? false;
+			$has_mirage = (bool) $capabilities['hasCloudflareMirage'] ?? false;
 
 			// Polish
 			if ( $settings['cloudflare']['polish']['user_set'] ) {

@@ -10,6 +10,7 @@ use NewfoldLabs\WP\Module\Performance\Services\I18nService;
 use NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch;
 use NewfoldLabs\WP\Module\Performance\Cache\Cache;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
+use NewfoldLabs\WP\Module\Performance\Cloudflare\CloudflareFeaturesManager;
 use NewfoldLabs\WP\Module\Performance\Fonts\FontManager;
 use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
@@ -65,6 +66,7 @@ class Performance {
 		new Skip404( $container );
 		new PerformanceWPCLI();
 		new Constants( $container );
+		new CloudflareFeaturesManager( $container );
 		new ImageManager( $container );
 		new FontManager( $container );
 		new HealthChecks( $container );

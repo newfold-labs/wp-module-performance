@@ -2,7 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
-use NewfoldLabs\WP\Module\Performance\Cloudflare\CloudflareFeaturesManager;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Images\RestApi\RestApi;
@@ -47,8 +46,6 @@ class ImageManager {
 		$this->maybe_initialize_marker();
 		$this->maybe_initialize_image_rewrite_handler( $container );
 		$this->maybe_initialize_image_limit_banner( $container );
-		$this->maybe_initialize_cloudflare_polish( $container );
-		$this->maybe_initialize_cloudflare_mirage( $container );
 	}
 
 	/**
@@ -115,24 +112,6 @@ class ImageManager {
 	private function maybe_initialize_image_limit_banner( $container ) {
 		if ( ImageSettings::is_optimization_enabled() && Permissions::is_authorized_admin() ) {
 			new ImageLimitBanner( $container );
-		}
-	}
-
-	/**
-	 * Initializes CloudflarePolishHandler if the capability is available.
-	 */
-	private function maybe_initialize_cloudflare_polish() {
-		if ( Permissions::rest_is_authorized_admin() && ImageSettings::is_optimization_enabled() ) {
-			new CloudflareFeaturesManager();
-		}
-	}
-
-	/**
-	 * Initializes CloudflareMirageHandler if the capability is available.
-	 */
-	private function maybe_initialize_cloudflare_mirage() {
-		if ( Permissions::rest_is_authorized_admin() && ImageSettings::is_optimization_enabled() ) {
-			new CloudflareFeaturesManager();
 		}
 	}
 }

@@ -144,8 +144,8 @@ class FontSettings {
 			);
 		}
 
-		if ( is_object( $capabilities ) ) {
-			$has_fonts = (bool) $capabilities->get( 'hasCloudflareFonts' );
+		if ( is_array( $capabilities ) ) {
+			$has_fonts = (bool) $capabilities['hasCloudflareFonts'] ?? false;
 
 			if ( $settings['cloudflare']['fonts']['user_set'] ) {
 				if ( $settings['cloudflare']['fonts']['value'] && ! $has_fonts ) {
