@@ -212,14 +212,18 @@ const LinkPrefetch = ( { hasLinkPrefetchClick, hasLinkPrefetchHover } ) => {
 					}
 					className="nfd-mb-6"
 				>
-					<SelectField.Option
-						label={ linkPrefetchBehaviorMobileTouchstartLabel }
-						value="touchstart"
-					/>
-					<SelectField.Option
-						label={ linkPrefetchBehaviorMobileViewportLabel }
-						value="viewport"
-					/>
+					{ hasLinkPrefetchClick && (
+						<SelectField.Option
+							label={ linkPrefetchBehaviorMobileTouchstartLabel }
+							value="touchstart"
+						/>
+					)}
+					{ hasLinkPrefetchHover && (
+						<SelectField.Option
+							label={ linkPrefetchBehaviorMobileViewportLabel }
+							value="viewport"
+						/>
+					)}
 				</SelectField>
 			) }
 
