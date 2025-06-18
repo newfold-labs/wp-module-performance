@@ -82,17 +82,23 @@ class CloudflareFeaturesManager {
 
 		if ( $mirage_enabled || $polish_enabled || $fonts_enabled_flag ) {
 			$rules = array(
-				'<IfModule mod_headers.c>',
-				"\tHeader set Set-Cookie \"nfd-enable-cf-opt={$header_value}; path=/; Max-Age=86400; HttpOnly\" env=nfd_cf_opt",
+				'<IfModule mod_rewrite.c>',
+				"\tRewriteEngine On",
+				'',
+				"\t# don’t flag any admin or API endpoints",
+				"\tRewriteCond %{REQUEST_URI} !/wp-admin/       [NC]",
+				"\tRewriteCond %{REQUEST_URI} !/wp-login\\.php  [NC]",
+				"\tRewriteCond %{REQUEST_URI} !/wp-json/        [NC]",
+				"\tRewriteCond %{REQUEST_URI} !/xmlrpc\\.php     [NC]",
+				"\tRewriteCond %{REQUEST_URI} !/admin-ajax\\.php [NC]",
+				'',
+				"\t# if we passed all those, set our CF_OPT flag",
+				"\tRewriteRule .* - [E=CF_OPT:1]",
 				'</IfModule>',
-				'# Exclude admin and API paths',
-				'SetEnvIf Request_URI "^/wp-admin/" no_nfd_cf',
-				'SetEnvIf Request_URI "^/wp-json/" no_nfd_cf',
-				'SetEnvIf Request_URI "^/xmlrpc.php" no_nfd_cf',
-				'SetEnvIf Request_URI "^/wp-login.php" no_nfd_cf',
-				'SetEnvIf Request_URI "^/admin-ajax.php" no_nfd_cf',
-				'# Apply CF cookie on all non-admin, non-API requests',
-				'SetEnvIf Request_URI ".*" nfd_cf_opt=!no_nfd_cf',
+				'',
+				'<IfModule mod_headers.c>',
+				"\tHeader set Set-Cookie \"nfd-enable-cf-opt={$header_value}; path=/; Max-Age=86400; HttpOnly\" env=CF_OPT",
+				'</IfModule>',
 			);
 		}
 
