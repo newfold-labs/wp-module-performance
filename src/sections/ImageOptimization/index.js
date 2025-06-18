@@ -1,5 +1,10 @@
 import { useState, useEffect } from '@wordpress/element';
-import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
+import {
+	Alert,
+	Container,
+	ToggleField,
+	FeatureUpsell,
+} from '@newfold/ui-component-library';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { STORE_NAME } from '../../data/constants';
@@ -34,6 +39,12 @@ const ImageOptimization = () => {
 		imageOptimizationUpdatedDescription,
 		imageOptimizationUpdateErrorTitle,
 		imageOptimizationGenericErrorMessage,
+		imageOptimizationUpsellText,
+		imageOptimizationUpsellLink,
+		imageOptimizationPolishLabel,
+		imageOptimizationPolishDescription,
+		imageOptimizationMirageLabel,
+		imageOptimizationMirageDescription,
 	} = getImageOptimizationText();
 
 	const [ settings, setSettings ] = useState( null );
@@ -135,6 +146,18 @@ const ImageOptimization = () => {
 			case 'preferOptimizedImageWhenExists':
 				updated.prefer_optimized_image_when_exists = value;
 				break;
+			case 'cloudflarePolish':
+				updated.cloudflare.polish = {
+					value,
+					user_set: true,
+				};
+				break;
+			case 'cloudflareMirage':
+				updated.cloudflare.mirage = {
+					value,
+					user_set: true,
+				};
+				break;
 			default:
 				break;
 		}
@@ -177,7 +200,13 @@ const ImageOptimization = () => {
 		auto_optimized_uploaded_images: auto = {},
 		lazy_loading: lazy = { enabled: true },
 		bulk_optimization: bulk = false,
+		cloudflare = {},
 	} = settings;
+
+	const {
+		mirage: { value: mirage = false } = {},
+		polish: { value: polish = false } = {},
+	} = cloudflare;
 
 	const { enabled: autoEnabled, auto_delete_original_image: autoDelete } =
 		auto;
@@ -318,6 +347,72 @@ const ImageOptimization = () => {
 							}
 							disabled={ isBanned }
 						/>
+						{ ! NewfoldRuntime.hasCapability(
+							'hasCloudflarePolish'
+						) &&
+							! NewfoldRuntime.hasCapability(
+								'hasCloudflareMirage'
+							) && (
+								<div>
+									<FeatureUpsell
+										cardText={ imageOptimizationUpsellText }
+										cardLink={ imageOptimizationUpsellLink }
+									>
+										<ToggleField
+											id="cloudflare-polish"
+											label={
+												imageOptimizationPolishLabel
+											}
+											description={
+												imageOptimizationPolishDescription
+											}
+											checked={ false }
+											disabled
+										/>{ ' ' }
+										<ToggleField
+											id="cloudflare-mirage"
+											label={
+												imageOptimizationMirageLabel
+											}
+											description={
+												imageOptimizationMirageDescription
+											}
+											checked={ false }
+											disabled
+										/>{ ' ' }
+									</FeatureUpsell>
+								</div>
+							) }
+						{ NewfoldRuntime.hasCapability(
+							'hasCloudflarePolish'
+						) && (
+							<ToggleField
+								id="cloudflare-polish"
+								label={ imageOptimizationPolishLabel }
+								description={
+									imageOptimizationPolishDescription
+								}
+								checked={ polish }
+								onChange={ () =>
+									handleToggle( 'cloudflarePolish', ! polish )
+								}
+							/>
+						) }
+						{ NewfoldRuntime.hasCapability(
+							'hasCloudflareMirage'
+						) && (
+							<ToggleField
+								id="cloudflare-mirage"
+								label={ imageOptimizationMirageLabel }
+								description={
+									imageOptimizationMirageDescription
+								}
+								checked={ mirage }
+								onChange={ () =>
+									handleToggle( 'cloudflareMirage', ! mirage )
+								}
+							/>
+						) }
 					</>
 				) }
 			</div>
