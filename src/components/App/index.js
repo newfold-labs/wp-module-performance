@@ -25,8 +25,8 @@ const App = () => {
 	const { title, description } = getAppText();
 	const capabilities = NewfoldRuntime.capabilities || {};
 
-	const hasLinkPrefetchClick = capabilities.hasOwnProperty('hasLinkPrefetchClick') ? capabilities.hasLinkPrefetchClick : null;
-	const hasLinkPrefetchHover = capabilities.hasOwnProperty('hasLinkPrefetchHover') ? capabilities.hasLinkPrefetchHover : null;
+	const hasLinkPrefetchClick = capabilities.hasOwnProperty('hasLinkPrefetchClick') ? capabilities.hasLinkPrefetchClick : true;
+	const hasLinkPrefetchHover = capabilities.hasOwnProperty('hasLinkPrefetchHover') ? capabilities.hasLinkPrefetchHover : true;
 
 	useEffect( () => {
 		const brand = NewfoldRuntime.sdk?.plugin?.brand;
