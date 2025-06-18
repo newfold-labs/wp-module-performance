@@ -20,15 +20,17 @@ class ImageManager {
 	 * @param Container $container Dependency injection container.
 	 */
 	public function __construct( Container $container ) {
-		$this->initialize_settings();
+		$this->initialize_settings( $container );
 		$this->initialize_services( $container );
 	}
 
 	/**
 	 * Initializes the ImageSettings class to register settings.
+	 *
+	 * @param Container $container Dependency injection container.
 	 */
-	private function initialize_settings() {
-		new ImageSettings();
+	private function initialize_settings( Container $container ) {
+		new ImageSettings( $container );
 	}
 
 	/**
