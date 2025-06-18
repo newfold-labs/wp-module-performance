@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750256352">
-  <project timestamp="1750256352">
+<coverage generated="1750256639">
+  <project timestamp="1750256639">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -2486,45 +2486,52 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/LinkPrefetch/LinkPrefetch.php">
       <class name="NewfoldLabs\WP\Module\Performance\LinkPrefetch\LinkPrefetch" namespace="global">
-        <metrics complexity="11" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="36" coveredelements="0"/>
+        <metrics complexity="17" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="0" elements="43" coveredelements="0"/>
       </class>
-      <line num="60" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="61" type="stmt" count="0"/>
-      <line num="62" type="stmt" count="0"/>
-      <line num="63" type="stmt" count="0"/>
-      <line num="64" type="stmt" count="0"/>
-      <line num="65" type="stmt" count="0"/>
-      <line num="76" type="method" name="add_to_runtime" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="77" type="stmt" count="0"/>
+      <line num="75" type="method" name="__construct" visibility="public" complexity="6" crap="42" count="0"/>
+      <line num="76" type="stmt" count="0"/>
       <line num="78" type="stmt" count="0"/>
-      <line num="79" type="stmt" count="0"/>
       <line num="80" type="stmt" count="0"/>
-      <line num="88" type="method" name="enqueue_scripts" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="83" type="stmt" count="0"/>
+      <line num="84" type="stmt" count="0"/>
+      <line num="85" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
       <line num="89" type="stmt" count="0"/>
       <line num="90" type="stmt" count="0"/>
       <line num="91" type="stmt" count="0"/>
-      <line num="93" type="stmt" count="0"/>
-      <line num="94" type="stmt" count="0"/>
-      <line num="95" type="stmt" count="0"/>
-      <line num="96" type="stmt" count="0"/>
-      <line num="97" type="stmt" count="0"/>
-      <line num="98" type="stmt" count="0"/>
-      <line num="99" type="stmt" count="0"/>
-      <line num="100" type="stmt" count="0"/>
-      <line num="101" type="stmt" count="0"/>
-      <line num="102" type="stmt" count="0"/>
-      <line num="103" type="stmt" count="0"/>
+      <line num="102" type="method" name="add_to_runtime" visibility="public" complexity="3" crap="12" count="0"/>
       <line num="104" type="stmt" count="0"/>
-      <line num="105" type="stmt" count="0"/>
-      <line num="116" type="method" name="add_defer" visibility="public" complexity="3" crap="12" count="0"/>
-      <line num="117" type="stmt" count="0"/>
+      <line num="106" type="stmt" count="0"/>
+      <line num="107" type="stmt" count="0"/>
+      <line num="108" type="stmt" count="0"/>
+      <line num="109" type="stmt" count="0"/>
+      <line num="117" type="method" name="enqueue_scripts" visibility="public" complexity="3" crap="12" count="0"/>
       <line num="118" type="stmt" count="0"/>
+      <line num="119" type="stmt" count="0"/>
       <line num="120" type="stmt" count="0"/>
-      <line num="128" type="method" name="get_settings" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="122" type="stmt" count="0"/>
+      <line num="123" type="stmt" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="125" type="stmt" count="0"/>
+      <line num="126" type="stmt" count="0"/>
+      <line num="127" type="stmt" count="0"/>
+      <line num="128" type="stmt" count="0"/>
       <line num="129" type="stmt" count="0"/>
-      <line num="139" type="method" name="update_settings" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="140" type="stmt" count="0"/>
-      <metrics loc="143" ncloc="78" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="36" coveredelements="0"/>
+      <line num="130" type="stmt" count="0"/>
+      <line num="131" type="stmt" count="0"/>
+      <line num="132" type="stmt" count="0"/>
+      <line num="133" type="stmt" count="0"/>
+      <line num="134" type="stmt" count="0"/>
+      <line num="145" type="method" name="add_defer" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="146" type="stmt" count="0"/>
+      <line num="147" type="stmt" count="0"/>
+      <line num="149" type="stmt" count="0"/>
+      <line num="157" type="method" name="get_settings" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="158" type="stmt" count="0"/>
+      <line num="168" type="method" name="update_settings" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="169" type="stmt" count="0"/>
+      <metrics loc="172" ncloc="97" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="0" elements="43" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php">
       <class name="NewfoldLabs\WP\Module\Performance\LinkPrefetch\WPCLI\LinkPrefetchCommandHandler" namespace="global">
@@ -3393,6 +3400,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="70" loc="7833" ncloc="5230" classes="67" methods="313" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2669" coveredstatements="92" elements="2982" coveredelements="120"/>
+    <metrics files="70" loc="7862" ncloc="5249" classes="67" methods="313" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2676" coveredstatements="92" elements="2989" coveredelements="120"/>
   </project>
 </coverage>
