@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\LinkPrefetch;
 
+use NewfoldLabs\WP\Module\Data\SiteCapabilities;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -38,6 +39,20 @@ class LinkPrefetch {
 	public static $option_name = 'nfd_link_prefetch_settings';
 
 	/**
+	 * Site capabilities for link prefetch Click.
+	 *
+	 * @var bool
+	 */
+	public static $has_link_prefetch_click = false;
+
+	/**
+	 * Site capabilities for link prefetch Hover.
+	 *
+	 * @var bool
+	 */
+	public static $has_link_prefetch_hover = false;
+
+	/**
 	 * Default settings.
 	 *
 	 * @var array
@@ -59,6 +74,17 @@ class LinkPrefetch {
 	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
+
+		$capabilities = ( new SiteCapabilities() )->all();
+
+		$this::$has_link_prefetch_click = array_key_exists( 'hasLinkPrefetchClick', $capabilities ) ? $capabilities['hasLinkPrefetchClick'] : null;
+		$this::$has_link_prefetch_hover = array_key_exists( 'hasLinkPrefetchHover', $capabilities ) ? $capabilities['hasLinkPrefetchHover'] : null;
+
+		if ( false === $this::$has_link_prefetch_click && false === $this::$has_link_prefetch_hover ) {
+			delete_option( self::$option_name );
+			return;
+		}
+
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		if ( ! is_admin() ) {
@@ -74,6 +100,9 @@ class LinkPrefetch {
 	 * @return array Modified runtime object.
 	 */
 	public function add_to_runtime( $sdk ) {
+
+		self::$default_settings['behavior'] = $this::$has_link_prefetch_click && $this::$has_link_prefetch_hover ? 'mouseHover' : 'mouseDown';
+
 		$values = array(
 			'settings' => get_option( self::$option_name, self::$default_settings ),
 		);
