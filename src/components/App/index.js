@@ -72,7 +72,7 @@ const App = () => {
 					>
 						<JetpackBoost />
 					</Container.Block>
-					{ ( false !== hasLinkPrefetchClick && false !== hasLinkPrefetchHover ) && (
+					{ ( false !== hasLinkPrefetchClick || false !== hasLinkPrefetchHover ) && (
 						<Container.Block
 							separator
 							className="newfold-link-prefetch"
