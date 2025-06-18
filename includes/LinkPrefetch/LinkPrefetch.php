@@ -75,12 +75,12 @@ class LinkPrefetch {
 	public function __construct( Container $container ) {
 		$this->container = $container;
 
-		$capabilities = new SiteCapabilities();
+		$capabilities = ( new SiteCapabilities() )->all();
 
-		$this::$has_link_prefetch_click = $capabilities->get( 'hasLinkPrefetchClick' );
-		$this::$has_link_prefetch_hover = $capabilities->get( 'hasLinkPrefetchHover' );
+		$this::$has_link_prefetch_click = array_key_exists( 'hasLinkPrefetchClick', $capabilities ) ? $capabilities['hasLinkPrefetchClick'] : null;
+		$this::$has_link_prefetch_hover = array_key_exists( 'hasLinkPrefetchHover', $capabilities ) ? $capabilities['hasLinkPrefetchHover'] : null;
 
-		if ( ! $this::$has_link_prefetch_click && ! $this::$has_link_prefetch_hover ) {
+		if ( false === $this::$has_link_prefetch_click && false === $this::$has_link_prefetch_hover ) {
 			delete_option( self::$option_name );
 			return;
 		}
