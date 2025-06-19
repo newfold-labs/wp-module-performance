@@ -77,7 +77,7 @@ class CloudflareFeaturesManager {
 		$polish_hash = $polish_enabled ? substr( sha1( 'polish' ), 0, 8 ) : '';
 		$fonts_hash  = $fonts_enabled_flag ? substr( sha1( 'fonts' ), 0, 8 ) : '';
 
-		$header_value = "{$mirage_hash}-{$polish_hash}-{$fonts_hash}";
+		$header_value = "{$mirage_hash}{$polish_hash}{$fonts_hash}";
 		$rules        = array();
 
 		if ( $mirage_enabled || $polish_enabled || $fonts_enabled_flag ) {

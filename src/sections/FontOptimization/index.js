@@ -118,6 +118,7 @@ const FontOptimization = () => {
 				/>
 			) : (
 				<FeatureUpsell
+					className={ 'nfd-font-optimization-upsell' }
 					cardText={ fontOptimizationUpsellText }
 					cardLink={ fontOptimizationUpsellLink }
 				>

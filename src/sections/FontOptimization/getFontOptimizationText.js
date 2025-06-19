@@ -19,7 +19,7 @@ const getFontOptimizationText = () => ( {
 		'wp-module-performance'
 	),
 	fontOptimizationUpsellLink: __(
-		'https://www.bluehost.com',
+		'https://www.bluehost.com/hosting/shared',
 		'wp-module-performance'
 	),
 	fontOptimizationLoading: __(
