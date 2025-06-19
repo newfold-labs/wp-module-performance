@@ -4,7 +4,6 @@ import '../../styles/styles.css';
 
 // Newfold
 import { Container, Root, Page, Title } from '@newfold/ui-component-library';
-import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 
 // WordPress
 import { useEffect } from '@wordpress/element';
@@ -23,7 +22,12 @@ import getAppText from './getAppText';
 import FontOptimization from '../../sections/FontOptimization';
 
 const App = () => {
+	
 	const { title, description } = getAppText();
+	const capabilities = NewfoldRuntime.capabilities || {};
+
+	const hasLinkPrefetchClick = capabilities.hasOwnProperty('hasLinkPrefetchClick') ? capabilities.hasLinkPrefetchClick : true;
+	const hasLinkPrefetchHover = capabilities.hasOwnProperty('hasLinkPrefetchHover') ? capabilities.hasLinkPrefetchHover : true;
 
 	useEffect( () => {
 		const brand = NewfoldRuntime.sdk?.plugin?.brand;
@@ -80,12 +84,14 @@ const App = () => {
 					>
 						<JetpackBoost />
 					</Container.Block>
-					<Container.Block
-						separator
-						className="newfold-link-prefetch"
-					>
-						<LinkPrefetch />
-					</Container.Block>
+					{ ( false !== hasLinkPrefetchClick || false !== hasLinkPrefetchHover ) && (
+						<Container.Block
+							separator
+							className="newfold-link-prefetch"
+						>
+							<LinkPrefetch hasLinkPrefetchClick={hasLinkPrefetchClick} hasLinkPrefetchHover={hasLinkPrefetchHover}/>
+						</Container.Block>
+					) }
 					<Container.Block
 						separator
 						className="newfold-image-optimization"

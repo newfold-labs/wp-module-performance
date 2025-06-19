@@ -26,7 +26,7 @@ const useUpdateEffect = ( effect, deps ) => {
 	}, deps );
 };
 
-const LinkPrefetch = () => {
+const LinkPrefetch = ( { hasLinkPrefetchClick, hasLinkPrefetchHover } ) => {
 	const {
 		linkPrefetchTitle,
 		linkPrefetchDescription,
@@ -149,14 +149,18 @@ const LinkPrefetch = () => {
 					}
 					className="nfd-mb-6"
 				>
-					<SelectField.Option
-						label={ linkPrefetchBehaviorMouseHoverLabel }
-						value="mouseHover"
-					/>
-					<SelectField.Option
-						label={ linkPrefetchBehaviorMouseDownLabel }
-						value="mouseDown"
-					/>
+					{ hasLinkPrefetchHover && (
+						<SelectField.Option
+							label={ linkPrefetchBehaviorMouseHoverLabel }
+							value="mouseHover"
+						/>
+					)}
+					{ hasLinkPrefetchClick && (
+						<SelectField.Option
+							label={ linkPrefetchBehaviorMouseDownLabel }
+							value="mouseDown"
+						/>
+					) }
 				</SelectField>
 			) }
 
@@ -208,14 +212,18 @@ const LinkPrefetch = () => {
 					}
 					className="nfd-mb-6"
 				>
-					<SelectField.Option
-						label={ linkPrefetchBehaviorMobileTouchstartLabel }
-						value="touchstart"
-					/>
-					<SelectField.Option
-						label={ linkPrefetchBehaviorMobileViewportLabel }
-						value="viewport"
-					/>
+					{ hasLinkPrefetchClick && (
+						<SelectField.Option
+							label={ linkPrefetchBehaviorMobileTouchstartLabel }
+							value="touchstart"
+						/>
+					)}
+					{ hasLinkPrefetchHover && (
+						<SelectField.Option
+							label={ linkPrefetchBehaviorMobileViewportLabel }
+							value="viewport"
+						/>
+					)}
 				</SelectField>
 			) }
 
