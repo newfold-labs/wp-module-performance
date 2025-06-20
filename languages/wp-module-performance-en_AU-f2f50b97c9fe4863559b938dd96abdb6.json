@@ -306,6 +306,57 @@
             ],
             "Optimize your website by managing cache and performance settings": [
                 "Optimize your website by managing cache and performance settings"
+            ],
+            "Font Optimization": [
+                ""
+            ],
+            "Improve load times by replacing Google Fonts with optimized local versions.": [
+                ""
+            ],
+            "Optimize Fonts via Cloudflare": [
+                ""
+            ],
+            "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
+                ""
+            ],
+            "Upgrade to enable font optimization using Cloudflare.": [
+                ""
+            ],
+            "https:\/\/www.bluehost.com\/hosting\/shared": [
+                ""
+            ],
+            "Loading font optimization settings\u2026": [
+                ""
+            ],
+            "Error loading settings.": [
+                ""
+            ],
+            "Fonts optimization updated": [
+                ""
+            ],
+            "Font optimization setting saved successfully.": [
+                ""
+            ],
+            "Update failed": [
+                ""
+            ],
+            "Could not save font optimization setting.": [
+                ""
+            ],
+            "Optimize Images via Cloudflare": [
+                ""
+            ],
+            "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
+                ""
+            ],
+            "Improve Image Loading on Slow Connections": [
+                ""
+            ],
+            "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
+                ""
+            ],
+            "Get advanced image optimization features with Cloudflare Polish & Mirage.": [
+                ""
             ]
         }
     }
