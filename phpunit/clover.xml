@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750406305">
-  <project timestamp="1750406305">
+<coverage generated="1750408069">
+  <project timestamp="1750408069">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -1966,7 +1966,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Images/ImageSettings.php">
       <class name="NewfoldLabs\WP\Module\Performance\Images\ImageSettings" namespace="global">
-        <metrics complexity="63" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="264" coveredstatements="0" elements="282" coveredelements="0"/>
+        <metrics complexity="65" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="264" coveredstatements="0" elements="282" coveredelements="0"/>
       </class>
       <line num="26" type="method" name="get_default_settings" visibility="private" complexity="3" crap="12" count="0"/>
       <line num="27" type="stmt" count="0"/>
@@ -2132,7 +2132,7 @@
       <line num="211" type="stmt" count="0"/>
       <line num="213" type="stmt" count="0"/>
       <line num="214" type="stmt" count="0"/>
-      <line num="224" type="method" name="sanitize_settings" visibility="public" complexity="15" crap="240" count="0"/>
+      <line num="224" type="method" name="sanitize_settings" visibility="public" complexity="17" crap="306" count="0"/>
       <line num="225" type="stmt" count="0"/>
       <line num="227" type="stmt" count="0"/>
       <line num="228" type="stmt" count="0"/>
