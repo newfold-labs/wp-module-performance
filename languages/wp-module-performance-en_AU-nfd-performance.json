@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2025-03-04 18:16+0530",
+    "translation-revision-date": "2025-03-04 18:17+0530",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -7,7 +7,7 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "en_GB",
+                "lang": "en_AU",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Concatenate CSS": [
@@ -21,30 +21,6 @@
             ],
             "Performance": [
                 "Performance"
-            ],
-            "Image Optimization": [
-                "Image Optimisation"
-            ],
-            "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.": [
-                "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
-            ],
-            "Enable Image Optimization": [
-                "Enable Image Optimisation"
-            ],
-            "Enable or disable image optimization globally.": [
-                "Enable or disable image optimisation globally."
-            ],
-            "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.": [
-                "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
-            ],
-            "When enabled, allows bulk optimization of images in the media library.": [
-                "When enabled, allows bulk optimisation of images in the media library."
-            ],
-            "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.": [
-                "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
-            ],
-            "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
-                "When enabled, optimised images will be served in place of original images when they exist, improving performance."
             ],
             "Exclude from cache": [
                 "Exclude from cache"
@@ -100,6 +76,12 @@
             "Cache enabled for assets and pages (extended).": [
                 "Cache enabled for assets and pages (extended)."
             ],
+            "Image Optimization": [
+                "Image Optimisation"
+            ],
+            "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space.": [
+                "We automatically optimise your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+            ],
             "Usage:": [
                 "Usage:"
             ],
@@ -118,17 +100,32 @@
             "No settings available.": [
                 "No settings available."
             ],
+            "Enable Image Optimization": [
+                "Enable Image Optimisation"
+            ],
+            "Enable or disable image optimization globally.": [
+                "Enable or disable image optimisation globally."
+            ],
             "Automatically Optimize Uploaded Images": [
                 "Automatically Optimise Uploaded Images"
             ],
+            "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes.": [
+                "When enabled, all your new image uploads will be automatically optimised to WebP format, ensuring faster page loading and reduced file sizes."
+            ],
             "Enable Bulk Optimization of Images": [
                 "Enable Bulk Optimisation of Images"
+            ],
+            "When enabled, allows bulk optimization of images in the media library.": [
+                "When enabled, allows bulk optimisation of images in the media library."
             ],
             "Go to Media Library": [
                 "Go to Media Library"
             ],
             "Auto Delete Original Image": [
                 "Auto Delete Original Image"
+            ],
+            "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original.": [
+                "When enabled, the original uploaded image is deleted and replaced with the optimised version, helping to save storage space. If disabled, the optimised image is saved as a separate file, retaining the original."
             ],
             "Enable Lazy Loading": [
                 "Enable Lazy Loading"
@@ -138,6 +135,9 @@
             ],
             "Prefer Optimized Image When Exists": [
                 "Prefer Optimised Image When Exists"
+            ],
+            "When enabled, optimized images will be served in place of original images when they exist, improving performance.": [
+                "When enabled, optimised images will be served in place of original images when they exist, improving performance."
             ],
             "Settings updated successfully": [
                 "Settings updated successfully"
@@ -188,7 +188,7 @@
                 "Critical CSS generated successfully."
             ],
             "Keep this page opened until the process finish": [
-                "Keep this page open until the process finishes"
+                "Keep this page opened until the process finish"
             ],
             "Error generating Critical CSS, try again": [
                 "Error generating Critical CSS, try again"
@@ -308,55 +308,55 @@
                 "Optimize your website by managing cache and performance settings"
             ],
             "Font Optimization": [
-                ""
+                "Font Optimisation"
             ],
             "Improve load times by replacing Google Fonts with optimized local versions.": [
-                ""
+                "Improve load times by replacing Google Fonts with optimised local versions."
             ],
             "Optimize Fonts via Cloudflare": [
-                ""
+                "Optimise Fonts via Cloudflare"
             ],
             "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                ""
+                "Replaces Google Fonts with faster, privacy-friendly versions served locally."
             ],
             "Upgrade to enable font optimization using Cloudflare.": [
-                ""
+                "Upgrade to enable font optimisation using Cloudflare."
             ],
             "https:\/\/www.bluehost.com\/hosting\/shared": [
-                ""
+                "https:\/\/www.bluehost.com\/hosting\/shared"
             ],
             "Loading font optimization settings\u2026": [
-                ""
+                "Loading font optimisation settings\u2026"
             ],
             "Error loading settings.": [
-                ""
+                "Error loading settings."
             ],
             "Fonts optimization updated": [
-                ""
+                "Fonts optimisation updated"
             ],
             "Font optimization setting saved successfully.": [
-                ""
+                "Font optimisation setting saved successfully."
             ],
             "Update failed": [
-                ""
+                "Update failed"
             ],
             "Could not save font optimization setting.": [
-                ""
+                "Could not save font optimisation setting."
             ],
             "Optimize Images via Cloudflare": [
-                ""
+                "Optimise Images via Cloudflare"
             ],
             "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                ""
+                "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
             ],
             "Improve Image Loading on Slow Connections": [
-                ""
+                "Improve Image Loading on Slow Connections"
             ],
             "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                ""
+                "Cloudflare Mirage accelerates image loading for mobile and slow networks."
             ],
             "Get advanced image optimization features with Cloudflare Polish & Mirage.": [
-                ""
+                "Get advanced image optimisation features with Cloudflare Polish & Mirage."
             ]
         }
     }

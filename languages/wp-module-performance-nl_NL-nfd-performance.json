@@ -308,55 +308,55 @@
                 "Optimaliseer je website door cache- en prestatie-instellingen te beheren"
             ],
             "Font Optimization": [
-                ""
+                "Lettertype-optimalisatie"
             ],
             "Improve load times by replacing Google Fonts with optimized local versions.": [
-                ""
+                "Verbeter laadtijden door Google Fonts te vervangen door geoptimaliseerde lokale versies."
             ],
             "Optimize Fonts via Cloudflare": [
-                ""
+                "Optimaliseer lettertypen via Cloudflare"
             ],
             "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                ""
+                "Vervangt Google Fonts door snellere, privacyvriendelijke lokale versies."
             ],
             "Upgrade to enable font optimization using Cloudflare.": [
-                ""
+                "Upgrade vereist om lettertype-optimalisatie via Cloudflare in te schakelen."
             ],
             "https:\/\/www.bluehost.com\/hosting\/shared": [
-                ""
+                "https:\/\/www.bluehost.com\/hosting\/shared"
             ],
             "Loading font optimization settings\u2026": [
-                ""
+                "Lettertype-optimalisatie-instellingen laden\u2026"
             ],
             "Error loading settings.": [
-                ""
+                "Fout bij het laden van instellingen."
             ],
             "Fonts optimization updated": [
-                ""
+                "Lettertype-optimalisatie bijgewerkt"
             ],
             "Font optimization setting saved successfully.": [
-                ""
+                "Lettertype-optimalisatie-instelling succesvol opgeslagen."
             ],
             "Update failed": [
-                ""
+                "Bijwerken mislukt"
             ],
             "Could not save font optimization setting.": [
-                ""
+                "Kon de lettertype-optimalisatie-instelling niet opslaan."
             ],
             "Optimize Images via Cloudflare": [
-                ""
+                "Optimaliseer afbeeldingen via Cloudflare"
             ],
             "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                ""
+                "Schakelt Cloudflare-beeldcompressie in om laadtijden en bandbreedtegebruik te verminderen."
             ],
             "Improve Image Loading on Slow Connections": [
-                ""
+                "Afbeelding laden bij trage verbindingen verbeteren"
             ],
             "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                ""
+                "Cloudflare Mirage versnelt het laden van afbeeldingen op mobiele en trage netwerken."
             ],
             "Get advanced image optimization features with Cloudflare Polish & Mirage.": [
-                ""
+                "Krijg geavanceerde beeldoptimalisatiefuncties met Cloudflare Polish en Mirage."
             ]
         }
     }

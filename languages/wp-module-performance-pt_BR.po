@@ -451,68 +451,68 @@ msgstr "Otimize seu site gerenciando o cache e as configurações de desempenho"
 
 #: build/performance/performance.min.js:2
 msgid "Font Optimization"
-msgstr ""
+msgstr "Otimização de fontes"
 
 #: build/performance/performance.min.js:2
 msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr ""
+msgstr "Melhore os tempos de carregamento substituindo o Google Fonts por versões locais otimizadas."
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Fonts via Cloudflare"
-msgstr ""
+msgstr "Otimizar fontes via Cloudflare"
 
 #: build/performance/performance.min.js:2
 msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr ""
+msgstr "Substitui o Google Fonts por versões locais mais rápidas e que respeitam a privacidade."
 
 #: build/performance/performance.min.js:2
 msgid "Upgrade to enable font optimization using Cloudflare."
-msgstr ""
+msgstr "Faça o upgrade para habilitar a otimização de fontes usando o Cloudflare."
 
 #: build/performance/performance.min.js:2
 msgid "https://www.bluehost.com/hosting/shared"
-msgstr ""
+msgstr "https://www.bluehost.com/hosting/shared"
 
 #: build/performance/performance.min.js:2
 msgid "Loading font optimization settings…"
-msgstr ""
+msgstr "Carregando configurações de otimização de fontes…"
 
 #: build/performance/performance.min.js:2
 msgid "Error loading settings."
-msgstr ""
+msgstr "Erro ao carregar configurações."
 
 #: build/performance/performance.min.js:2
 msgid "Fonts optimization updated"
-msgstr ""
+msgstr "Otimização de fontes atualizada"
 
 #: build/performance/performance.min.js:2
 msgid "Font optimization setting saved successfully."
-msgstr ""
+msgstr "Configuração de otimização de fontes salva com sucesso."
 
 #: build/performance/performance.min.js:2
 msgid "Update failed"
-msgstr ""
+msgstr "Falha na atualização"
 
 #: build/performance/performance.min.js:2
 msgid "Could not save font optimization setting."
-msgstr ""
+msgstr "Não foi possível salvar a configuração de otimização de fontes."
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Images via Cloudflare"
-msgstr ""
+msgstr "Otimizar imagens via Cloudflare"
 
 #: build/performance/performance.min.js:2
 msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr ""
+msgstr "Ativa a compressão de imagens do Cloudflare para reduzir tempos de carregamento e uso de largura de banda."
 
 #: build/performance/performance.min.js:2
 msgid "Improve Image Loading on Slow Connections"
-msgstr ""
+msgstr "Melhorar o carregamento de imagens em conexões lentas"
 
 #: build/performance/performance.min.js:2
 msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr ""
+msgstr "Cloudflare Mirage acelera o carregamento de imagens em redes móveis e lentas."
 
 #: build/performance/performance.min.js:2
 msgid "Get advanced image optimization features with Cloudflare Polish & Mirage."
-msgstr ""
+msgstr "Obtenha recursos avançados de otimização de imagem com Cloudflare Polish e Mirage."

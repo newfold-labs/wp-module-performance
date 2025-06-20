@@ -308,55 +308,55 @@
                 "Otimize seu site gerenciando o cache e as configura\u00e7\u00f5es de desempenho"
             ],
             "Font Optimization": [
-                ""
+                "Otimiza\u00e7\u00e3o de fontes"
             ],
             "Improve load times by replacing Google Fonts with optimized local versions.": [
-                ""
+                "Melhore os tempos de carregamento substituindo o Google Fonts por vers\u00f5es locais otimizadas."
             ],
             "Optimize Fonts via Cloudflare": [
-                ""
+                "Otimizar fontes via Cloudflare"
             ],
             "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                ""
+                "Substitui o Google Fonts por vers\u00f5es locais mais r\u00e1pidas e que respeitam a privacidade."
             ],
             "Upgrade to enable font optimization using Cloudflare.": [
-                ""
+                "Fa\u00e7a o upgrade para habilitar a otimiza\u00e7\u00e3o de fontes usando o Cloudflare."
             ],
             "https:\/\/www.bluehost.com\/hosting\/shared": [
-                ""
+                "https:\/\/www.bluehost.com\/hosting\/shared"
             ],
             "Loading font optimization settings\u2026": [
-                ""
+                "Carregando configura\u00e7\u00f5es de otimiza\u00e7\u00e3o de fontes\u2026"
             ],
             "Error loading settings.": [
-                ""
+                "Erro ao carregar configura\u00e7\u00f5es."
             ],
             "Fonts optimization updated": [
-                ""
+                "Otimiza\u00e7\u00e3o de fontes atualizada"
             ],
             "Font optimization setting saved successfully.": [
-                ""
+                "Configura\u00e7\u00e3o de otimiza\u00e7\u00e3o de fontes salva com sucesso."
             ],
             "Update failed": [
-                ""
+                "Falha na atualiza\u00e7\u00e3o"
             ],
             "Could not save font optimization setting.": [
-                ""
+                "N\u00e3o foi poss\u00edvel salvar a configura\u00e7\u00e3o de otimiza\u00e7\u00e3o de fontes."
             ],
             "Optimize Images via Cloudflare": [
-                ""
+                "Otimizar imagens via Cloudflare"
             ],
             "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                ""
+                "Ativa a compress\u00e3o de imagens do Cloudflare para reduzir tempos de carregamento e uso de largura de banda."
             ],
             "Improve Image Loading on Slow Connections": [
-                ""
+                "Melhorar o carregamento de imagens em conex\u00f5es lentas"
             ],
             "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                ""
+                "Cloudflare Mirage acelera o carregamento de imagens em redes m\u00f3veis e lentas."
             ],
             "Get advanced image optimization features with Cloudflare Polish & Mirage.": [
-                ""
+                "Obtenha recursos avan\u00e7ados de otimiza\u00e7\u00e3o de imagem com Cloudflare Polish e Mirage."
             ]
         }
     }

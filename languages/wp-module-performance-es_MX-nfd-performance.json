@@ -308,55 +308,55 @@
                 "Optimiza tu sitio web gestionando la cach\u00e9 y la configuraci\u00f3n de rendimiento"
             ],
             "Font Optimization": [
-                ""
+                "Optimizaci\u00f3n de fuentes"
             ],
             "Improve load times by replacing Google Fonts with optimized local versions.": [
-                ""
+                "Mejora los tiempos de carga reemplazando Google Fonts por versiones locales optimizadas."
             ],
             "Optimize Fonts via Cloudflare": [
-                ""
+                "Optimizar fuentes con Cloudflare"
             ],
             "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                ""
+                "Reemplaza Google Fonts por versiones locales m\u00e1s r\u00e1pidas y amigables con la privacidad."
             ],
             "Upgrade to enable font optimization using Cloudflare.": [
-                ""
+                "Actualiza para habilitar la optimizaci\u00f3n de fuentes con Cloudflare."
             ],
             "https:\/\/www.bluehost.com\/hosting\/shared": [
-                ""
+                "https:\/\/www.bluehost.com\/hosting\/shared"
             ],
             "Loading font optimization settings\u2026": [
-                ""
+                "Cargando ajustes de optimizaci\u00f3n de fuentes\u2026"
             ],
             "Error loading settings.": [
-                ""
+                "Error al cargar los ajustes."
             ],
             "Fonts optimization updated": [
-                ""
+                "Optimizaci\u00f3n de fuentes actualizada"
             ],
             "Font optimization setting saved successfully.": [
-                ""
+                "Ajuste de optimizaci\u00f3n de fuentes guardado exitosamente."
             ],
             "Update failed": [
-                ""
+                "Actualizaci\u00f3n fallida"
             ],
             "Could not save font optimization setting.": [
-                ""
+                "No se pudo guardar el ajuste de optimizaci\u00f3n de fuentes."
             ],
             "Optimize Images via Cloudflare": [
-                ""
+                "Optimizar im\u00e1genes con Cloudflare"
             ],
             "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                ""
+                "Activa la compresi\u00f3n de im\u00e1genes de Cloudflare para reducir tiempos de carga y uso de ancho de banda."
             ],
             "Improve Image Loading on Slow Connections": [
-                ""
+                "Mejorar la carga de im\u00e1genes en conexiones lentas"
             ],
             "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                ""
+                "Cloudflare Mirage acelera la carga de im\u00e1genes en redes m\u00f3viles y lentas."
             ],
             "Get advanced image optimization features with Cloudflare Polish & Mirage.": [
-                ""
+                "Obt\u00e9n funciones avanzadas de optimizaci\u00f3n de imagen con Cloudflare Polish y Mirage."
             ]
         }
     }
