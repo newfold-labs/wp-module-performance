@@ -249,13 +249,13 @@ class ImageSettings {
 					'value'    => isset( $settings['cloudflare']['polish']['value'] )
 						? (bool) $settings['cloudflare']['polish']['value']
 						: (bool) ( $existing_settings['cloudflare']['polish']['value'] ?? false ),
-					'user_set' => array_key_exists( 'polish', $settings['cloudflare'] ),
+					'user_set' => is_array( $settings['cloudflare'] ) && array_key_exists( 'polish', $settings['cloudflare'] ),
 				),
 				'mirage' => array(
 					'value'    => isset( $settings['cloudflare']['mirage']['value'] )
 					? (bool) $settings['cloudflare']['mirage']['value']
 					: (bool) ( $existing_settings['cloudflare']['mirage']['value'] ?? false ),
-					'user_set' => array_key_exists( 'mirage', $settings['cloudflare'] ),
+					'user_set' => is_array( $settings['cloudflare'] ) && array_key_exists( 'mirage', $settings['cloudflare'] ),
 				),
 			),
 		);
