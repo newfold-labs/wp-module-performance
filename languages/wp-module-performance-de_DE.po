@@ -456,68 +456,68 @@ msgstr "Optimieren Sie Ihre Website, indem Sie Cache- und Leistungs-Einstellunge
 
 #: build/performance/performance.min.js:2
 msgid "Font Optimization"
-msgstr ""
+msgstr "Schriftarten-Optimierung"
 
 #: build/performance/performance.min.js:2
 msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr ""
+msgstr "Verbessern Sie die Ladezeiten, indem Sie Google Fonts durch optimierte lokale Versionen ersetzen."
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Fonts via Cloudflare"
-msgstr ""
+msgstr "Schriftarten über Cloudflare optimieren"
 
 #: build/performance/performance.min.js:2
 msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr ""
+msgstr "Ersetzt Google Fonts durch schnellere, datenschutzfreundliche lokale Versionen."
 
 #: build/performance/performance.min.js:2
 msgid "Upgrade to enable font optimization using Cloudflare."
-msgstr ""
+msgstr "Upgrade erforderlich, um die Schriftarten-Optimierung über Cloudflare zu aktivieren."
 
 #: build/performance/performance.min.js:2
 msgid "https://www.bluehost.com/hosting/shared"
-msgstr ""
+msgstr "https://www.bluehost.com/hosting/shared"
 
 #: build/performance/performance.min.js:2
 msgid "Loading font optimization settings…"
-msgstr ""
+msgstr "Lade Einstellungen zur Schriftarten-Optimierung…"
 
 #: build/performance/performance.min.js:2
 msgid "Error loading settings."
-msgstr ""
+msgstr "Fehler beim Laden der Einstellungen."
 
 #: build/performance/performance.min.js:2
 msgid "Fonts optimization updated"
-msgstr ""
+msgstr "Schriftarten-Optimierung aktualisiert"
 
 #: build/performance/performance.min.js:2
 msgid "Font optimization setting saved successfully."
-msgstr ""
+msgstr "Einstellung zur Schriftarten-Optimierung erfolgreich gespeichert."
 
 #: build/performance/performance.min.js:2
 msgid "Update failed"
-msgstr ""
+msgstr "Aktualisierung fehlgeschlagen"
 
 #: build/performance/performance.min.js:2
 msgid "Could not save font optimization setting."
-msgstr ""
+msgstr "Die Einstellung zur Schriftarten-Optimierung konnte nicht gespeichert werden."
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Images via Cloudflare"
-msgstr ""
+msgstr "Bilder über Cloudflare optimieren"
 
 #: build/performance/performance.min.js:2
 msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr ""
+msgstr "Aktiviert die Bildkomprimierung von Cloudflare, um Ladezeiten und Bandbreitennutzung zu reduzieren."
 
 #: build/performance/performance.min.js:2
 msgid "Improve Image Loading on Slow Connections"
-msgstr ""
+msgstr "Bildladen bei langsamen Verbindungen verbessern"
 
 #: build/performance/performance.min.js:2
 msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr ""
+msgstr "Cloudflare Mirage beschleunigt das Laden von Bildern auf mobilen Geräten und langsamen Netzwerken."
 
 #: build/performance/performance.min.js:2
 msgid "Get advanced image optimization features with Cloudflare Polish & Mirage."
-msgstr ""
+msgstr "Erhalten Sie erweiterte Bildoptimierungsfunktionen mit Cloudflare Polish & Mirage."
