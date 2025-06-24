@@ -79,21 +79,18 @@ class Skip404Controller {
 
 			switch ( $field['id'] ) {
 				case 'skip404':
-					$result = update_option( Skip404::OPTION_NAME, $field['value'] );
+					$bool_value = filter_var( $field['value'], FILTER_VALIDATE_BOOLEAN );
+					update_option( Skip404::OPTION_NAME, $bool_value );
 					break;
 
 				default:
-					break;
-			}
-
-			if ( false === $result ) {
-				return new \WP_REST_Response(
-					array(
-						'success' => false,
-						'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ),
-					),
-					500
-				);
+					return new \WP_REST_Response(
+						array(
+							'success' => false,
+							'error'   => __( 'Invalid field ID provided.', 'wp-module-performance' ),
+						),
+						400
+					);
 			}
 
 			// Success response.
