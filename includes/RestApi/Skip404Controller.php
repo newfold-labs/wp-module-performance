@@ -79,34 +79,44 @@ class Skip404Controller {
 
 			switch ( $field['id'] ) {
 				case 'skip404':
-					$result = update_option( Skip404::OPTION_NAME, $field['value'] );
+					$bool_value    = filter_var( $field['value'], FILTER_VALIDATE_BOOLEAN );
+					$current_value = get_option( Skip404::OPTION_NAME, 'not_set' );
+					if ( 'not_set' === $current_value ) {
+						add_option( Skip404::OPTION_NAME, $bool_value );
+						break;
+					}
+					if ( $current_value !== $bool_value ) {
+						$result = update_option( Skip404::OPTION_NAME, $bool_value );
+						if ( false === $result ) {
+							return new \WP_REST_Response(
+								array(
+									'success' => false,
+									'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ),
+								),
+								500
+							);
+						}
+					}
 					break;
-
 				default:
-					break;
+					return new \WP_REST_Response(
+						array(
+							'success' => false,
+							'error'   => __( 'Invalid field ID provided.', 'wp-module-performance' ),
+						),
+						400
+					);
 			}
 
-			if ( false === $result ) {
-				return new \WP_REST_Response(
-					array(
-						'success' => false,
-						'error'   => __( 'An error occurred while updating the option.', 'wp-module-performance' ),
-					),
-					500
-				);
-			}
-
-			// Success response.
 			return new \WP_REST_Response(
 				array(
 					'success'        => true,
 					'updated_option' => $field['id'],
-					'updated_value'  => $field['value'],
+					'updated_value'  => isset( $bool_value ) ? $bool_value : $field['value'],
 				),
 				200
 			);
 		} catch ( \Exception $e ) {
-			// Exceptions handling.
 			return new \WP_REST_Response(
 				array(
 					'success' => false,
