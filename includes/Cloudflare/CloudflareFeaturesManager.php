@@ -82,20 +82,25 @@ class CloudflareFeaturesManager {
 
 		if ( $mirage_enabled || $polish_enabled || $fonts_enabled_flag ) {
 			$rules = array(
+				'# BEGIN Newfold CF Optimization Header',
 				'<IfModule mod_rewrite.c>',
 				"\tRewriteEngine On",
-				"\t# don’t flag any admin or API endpoints",
+				"\t# Skip setting for admin/API routes",
 				"\tRewriteCond %{REQUEST_URI} !/wp-admin/       [NC]",
-				"\tRewriteCond %{REQUEST_URI} !/wp-login\\.php  [NC]",
+				"\tRewriteCond %{REQUEST_URI} !/wp-login\\.php   [NC]",
 				"\tRewriteCond %{REQUEST_URI} !/wp-json/        [NC]",
 				"\tRewriteCond %{REQUEST_URI} !/xmlrpc\\.php     [NC]",
 				"\tRewriteCond %{REQUEST_URI} !/admin-ajax\\.php [NC]",
-				"\t# if we passed all those, set our CF_OPT flag",
+				"\t# Skip if cookie is already present in the request",
+				"\tRewriteCond %{HTTP_COOKIE} !(^|;\\s*)nfd-enable-cf-opt= [NC]",
+				"\t# Set env var if we passed all conditions",
 				"\tRewriteRule .* - [E=CF_OPT:1]",
 				'</IfModule>',
 				'<IfModule mod_headers.c>',
+				"\t# Set cookie only if env var is present (i.e., no cookie yet)",
 				"\tHeader set Set-Cookie \"nfd-enable-cf-opt={$header_value}; path=/; Max-Age=86400; HttpOnly\" env=CF_OPT",
 				'</IfModule>',
+				'# END Newfold CF Optimization Header',
 			);
 		}
 
