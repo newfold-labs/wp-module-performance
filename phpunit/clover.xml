@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750754919">
-  <project timestamp="1750754919">
+<coverage generated="1750779191">
+  <project timestamp="1750779191">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -3156,7 +3156,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/RestApi/Skip404Controller.php">
       <class name="NewfoldLabs\WP\Module\Performance\RestApi\Skip404Controller" namespace="global">
-        <metrics complexity="9" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="62" coveredelements="0"/>
+        <metrics complexity="12" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="72" coveredstatements="0" elements="74" coveredelements="0"/>
       </class>
       <line num="32" type="method" name="register_routes" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="33" type="stmt" count="0"/>
@@ -3172,7 +3172,7 @@
       <line num="43" type="stmt" count="0"/>
       <line num="44" type="stmt" count="0"/>
       <line num="45" type="stmt" count="0"/>
-      <line num="54" type="method" name="set_options" visibility="public" complexity="8" crap="72" count="0"/>
+      <line num="54" type="method" name="set_options" visibility="public" complexity="11" crap="132" count="0"/>
       <line num="56" type="stmt" count="0"/>
       <line num="58" type="stmt" count="0"/>
       <line num="59" type="stmt" count="0"/>
@@ -3195,7 +3195,10 @@
       <line num="81" type="stmt" count="0"/>
       <line num="82" type="stmt" count="0"/>
       <line num="83" type="stmt" count="0"/>
+      <line num="84" type="stmt" count="0"/>
+      <line num="85" type="stmt" count="0"/>
       <line num="86" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
       <line num="89" type="stmt" count="0"/>
       <line num="90" type="stmt" count="0"/>
       <line num="91" type="stmt" count="0"/>
@@ -3204,8 +3207,8 @@
       <line num="94" type="stmt" count="0"/>
       <line num="95" type="stmt" count="0"/>
       <line num="96" type="stmt" count="0"/>
+      <line num="97" type="stmt" count="0"/>
       <line num="100" type="stmt" count="0"/>
-      <line num="101" type="stmt" count="0"/>
       <line num="102" type="stmt" count="0"/>
       <line num="103" type="stmt" count="0"/>
       <line num="104" type="stmt" count="0"/>
@@ -3213,14 +3216,23 @@
       <line num="106" type="stmt" count="0"/>
       <line num="107" type="stmt" count="0"/>
       <line num="108" type="stmt" count="0"/>
-      <line num="110" type="stmt" count="0"/>
       <line num="111" type="stmt" count="0"/>
       <line num="112" type="stmt" count="0"/>
       <line num="113" type="stmt" count="0"/>
       <line num="114" type="stmt" count="0"/>
       <line num="115" type="stmt" count="0"/>
       <line num="116" type="stmt" count="0"/>
-      <metrics loc="120" ncloc="92" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="62" coveredelements="0"/>
+      <line num="117" type="stmt" count="0"/>
+      <line num="118" type="stmt" count="0"/>
+      <line num="119" type="stmt" count="0"/>
+      <line num="120" type="stmt" count="0"/>
+      <line num="121" type="stmt" count="0"/>
+      <line num="122" type="stmt" count="0"/>
+      <line num="123" type="stmt" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="125" type="stmt" count="0"/>
+      <line num="126" type="stmt" count="0"/>
+      <metrics loc="130" ncloc="104" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="72" coveredstatements="0" elements="74" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Services/EventService.php">
       <class name="NewfoldLabs\WP\Module\Performance\Services\EventService" namespace="global">
@@ -3403,6 +3415,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="70" loc="7865" ncloc="5252" classes="67" methods="313" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2679" coveredstatements="92" elements="2992" coveredelements="120"/>
+    <metrics files="70" loc="7875" ncloc="5264" classes="67" methods="313" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2691" coveredstatements="92" elements="3004" coveredelements="120"/>
   </project>
 </coverage>
