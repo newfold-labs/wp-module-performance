@@ -100,7 +100,6 @@ class CloudflareFeaturesManager {
 				"\tHeader set Set-Cookie \"nfd-enable-cf-opt={$header_value}; path=/; Max-Age=86400; HttpOnly\" env=CF_OPT",
 				'</IfModule>',
 			);
-
 		}
 
 		$htaccess = new htaccess( self::MARKER );
