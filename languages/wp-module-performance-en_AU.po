@@ -466,14 +466,6 @@ msgid "Replaces Google Fonts with faster, privacy-friendly versions served local
 msgstr "Replaces Google Fonts with faster, privacy-friendly versions served locally."
 
 #: build/performance/performance.min.js:2
-msgid "Upgrade to enable font optimization using Cloudflare."
-msgstr "Upgrade to enable font optimisation using Cloudflare."
-
-#: build/performance/performance.min.js:2
-msgid "https://www.bluehost.com/hosting/shared"
-msgstr "https://www.bluehost.com/hosting/shared"
-
-#: build/performance/performance.min.js:2
 msgid "Loading font optimization settings…"
 msgstr "Loading font optimisation settings…"
 
@@ -512,7 +504,3 @@ msgstr "Improve Image Loading on Slow Connections"
 #: build/performance/performance.min.js:2
 msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
 msgstr "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-
-#: build/performance/performance.min.js:2
-msgid "Get advanced image optimization features with Cloudflare Polish & Mirage."
-msgstr "Get advanced image optimisation features with Cloudflare Polish & Mirage."
