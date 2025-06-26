@@ -14,14 +14,6 @@ const getFontOptimizationText = () => ( {
 		'Replaces Google Fonts with faster, privacy-friendly versions served locally.',
 		'wp-module-performance'
 	),
-	fontOptimizationUpsellText: __(
-		'Upgrade to enable font optimization using Cloudflare.',
-		'wp-module-performance'
-	),
-	fontOptimizationUpsellLink: __(
-		'https://www.bluehost.com/hosting/shared',
-		'wp-module-performance'
-	),
 	fontOptimizationLoading: __(
 		'Loading font optimization settings…',
 		'wp-module-performance'

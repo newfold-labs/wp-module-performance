@@ -123,14 +123,6 @@ const getImageOptimizationText = () => ( {
 		'Cloudflare Mirage accelerates image loading for mobile and slow networks.',
 		'wp-module-performance'
 	),
-	imageOptimizationUpsellText: __(
-		'Get advanced image optimization features with Cloudflare Polish & Mirage.',
-		'wp-module-performance'
-	),
-	imageOptimizationUpsellLink: __(
-		'https://www.bluehost.com/hosting/shared',
-		'wp-module-performance'
-	),
 } );
 
 export default getImageOptimizationText;
