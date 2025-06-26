@@ -97,11 +97,11 @@ const FontOptimization = () => {
 	const hasCapability = NewfoldRuntime.hasCapability( 'hasCloudflareFonts' );
 
 	return (
-		<Container.SettingsField
-			title={ fontOptimizationTitle }
-			description={ fontOptimizationDescription }
-		>
-			{ hasCapability && (
+		hasCapability && (
+			<Container.SettingsField
+				title={ fontOptimizationTitle }
+				description={ fontOptimizationDescription }
+			>
 				<ToggleField
 					id="cloudflare-fonts"
 					label={ fontOptimizationLabel }
@@ -109,8 +109,8 @@ const FontOptimization = () => {
 					checked={ isEnabled }
 					onChange={ () => handleToggle( ! isEnabled ) }
 				/>
-			) }
-		</Container.SettingsField>
+			</Container.SettingsField>
+		)
 	);
 };
 
