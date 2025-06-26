@@ -1,10 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
-import {
-	Alert,
-	Container,
-	ToggleField,
-	FeatureUpsell,
-} from '@newfold/ui-component-library';
+import { Alert, Container, ToggleField } from '@newfold/ui-component-library';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { STORE_NAME } from '../../data/constants';
@@ -39,8 +34,6 @@ const ImageOptimization = () => {
 		imageOptimizationUpdatedDescription,
 		imageOptimizationUpdateErrorTitle,
 		imageOptimizationGenericErrorMessage,
-		imageOptimizationUpsellText,
-		imageOptimizationUpsellLink,
 		imageOptimizationPolishLabel,
 		imageOptimizationPolishDescription,
 		imageOptimizationMirageLabel,
@@ -237,13 +230,8 @@ const ImageOptimization = () => {
 		return `${ window.location.origin }${ basePath }/wp-admin/upload.php?autoSelectBulk`;
 	};
 
-	const hasPolish = capabilityKeyExists( 'hasCloudflarePolish' );
-	const hasMirage = capabilityKeyExists( 'hasCloudflareMirage' );
 	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
 	const mirageEnabled = isCapabilityEnabled( 'hasCloudflareMirage' );
-	const showNothing = ! hasPolish && ! hasMirage;
-	const showUpsell =
-		( hasPolish || hasMirage ) && ! polishEnabled && ! mirageEnabled;
 	const showToggles = polishEnabled || mirageEnabled;
 
 	return (
@@ -377,35 +365,8 @@ const ImageOptimization = () => {
 							}
 							disabled={ isBanned }
 						/>
-						{ ! showNothing && showUpsell && (
-							<div>
-								<FeatureUpsell
-									cardText={ imageOptimizationUpsellText }
-									cardLink={ imageOptimizationUpsellLink }
-								>
-									<ToggleField
-										id="cloudflare-polish"
-										label={ imageOptimizationPolishLabel }
-										description={
-											imageOptimizationPolishDescription
-										}
-										checked={ false }
-										disabled
-									/>{ ' ' }
-									<ToggleField
-										id="cloudflare-mirage"
-										label={ imageOptimizationMirageLabel }
-										description={
-											imageOptimizationMirageDescription
-										}
-										checked={ false }
-										disabled
-									/>{ ' ' }
-								</FeatureUpsell>
-							</div>
-						) }
 
-						{ ! showNothing && showToggles && (
+						{ showToggles && (
 							<>
 								{ polishEnabled && (
 									<ToggleField

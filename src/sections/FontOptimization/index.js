@@ -1,10 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
-import {
-	ToggleField,
-	Container,
-	FeatureUpsell,
-	Alert,
-} from '@newfold/ui-component-library';
+import { ToggleField, Container, Alert } from '@newfold/ui-component-library';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { STORE_NAME } from '../../data/constants';
@@ -23,8 +18,6 @@ const FontOptimization = () => {
 		fontOptimizationDescription,
 		fontOptimizationLabel,
 		fontOptimizationToggleDescription,
-		fontOptimizationUpsellText,
-		fontOptimizationUpsellLink,
 		fontOptimizationLoading,
 		fontOptimizationError,
 		fontOptimizationUpdatedTitle,
@@ -108,7 +101,7 @@ const FontOptimization = () => {
 			title={ fontOptimizationTitle }
 			description={ fontOptimizationDescription }
 		>
-			{ hasCapability ? (
+			{ hasCapability && (
 				<ToggleField
 					id="cloudflare-fonts"
 					label={ fontOptimizationLabel }
@@ -116,20 +109,6 @@ const FontOptimization = () => {
 					checked={ isEnabled }
 					onChange={ () => handleToggle( ! isEnabled ) }
 				/>
-			) : (
-				<FeatureUpsell
-					className={ 'nfd-font-optimization-upsell' }
-					cardText={ fontOptimizationUpsellText }
-					cardLink={ fontOptimizationUpsellLink }
-				>
-					<ToggleField
-						id="cloudflare-fonts"
-						label={ fontOptimizationLabel }
-						description={ fontOptimizationToggleDescription }
-						checked={ false }
-						disabled
-					/>
-				</FeatureUpsell>
 			) }
 		</Container.SettingsField>
 	);
