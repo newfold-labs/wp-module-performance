@@ -24,12 +24,14 @@ describe(
 		} );
 
 		it( 'Shows Font Optimization section when capability is true and toggle is enabled', () => {
-			setSiteCapabilities( { hasCloudflareFonts: true } );
-
+			// Visit the performance page to set the initial capabilities
 			cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
 			cy.get( '#nfd-performance', { timeout: 10000 } ).should(
 				'be.visible'
 			);
+
+			setSiteCapabilities( { hasCloudflareFonts: true } );
+			cy.reload();
 
 			performancePageLocators.getFontToggle().should( 'exist' );
 			performancePageLocators
