@@ -106,6 +106,27 @@ class performancePage {
 		this.getDesktopToggle().should( 'have.attr', 'aria-checked', 'true' );
 	}
 
+	linkPrefetchCapabilityCheck( type ) {
+		this.getDropDownForLinkPrefetch().click();
+		this.getDropDownForLinkPrefetch()
+		.invoke( 'text' )
+		.then( ( buttonLabel ) => {
+			if ( 'onlyMouseDown' === type ) {
+				cy.get('[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li')
+				.should('have.length', 1)
+				.invoke('text')
+				.then(itemText => {
+					const trimmedText = itemText.trim();
+					cy.log('Found element text:', trimmedText);
+					expect(trimmedText).to.equal('Prefetch on Mouse Down');
+				});
+			} else {
+				cy.get('[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li')
+				.should('have.length', 2);
+			}
+		});
+	}
+
 	compareDropdownLabelAndSelectedOption() {
 		// Get the text from the dropdown button label
 		this.getDropDownForLinkPrefetch()
