@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750952727">
-  <project timestamp="1750952727">
+<coverage generated="1751284504">
+  <project timestamp="1751284504">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -1969,7 +1969,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Images/ImageSettings.php">
       <class name="NewfoldLabs\WP\Module\Performance\Images\ImageSettings" namespace="global">
-        <metrics complexity="65" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="264" coveredstatements="0" elements="282" coveredelements="0"/>
+        <metrics complexity="64" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="264" coveredstatements="0" elements="282" coveredelements="0"/>
       </class>
       <line num="26" type="method" name="get_default_settings" visibility="private" complexity="3" crap="12" count="0"/>
       <line num="27" type="stmt" count="0"/>
@@ -2005,15 +2005,15 @@
       <line num="62" type="stmt" count="0"/>
       <line num="63" type="stmt" count="0"/>
       <line num="66" type="stmt" count="0"/>
-      <line num="74" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="74" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="75" type="stmt" count="0"/>
       <line num="76" type="stmt" count="0"/>
       <line num="77" type="stmt" count="0"/>
-      <line num="78" type="stmt" count="0"/>
-      <line num="79" type="stmt" count="0"/>
-      <line num="80" type="stmt" count="0"/>
-      <line num="81" type="stmt" count="0"/>
-      <line num="87" type="method" name="register_settings" visibility="private" complexity="1" crap="2" count="0"/>
+      <line num="83" type="method" name="register_settings" visibility="private" complexity="1" crap="2" count="0"/>
+      <line num="84" type="stmt" count="0"/>
+      <line num="85" type="stmt" count="0"/>
+      <line num="86" type="stmt" count="0"/>
+      <line num="87" type="stmt" count="0"/>
       <line num="88" type="stmt" count="0"/>
       <line num="89" type="stmt" count="0"/>
       <line num="90" type="stmt" count="0"/>
@@ -2127,18 +2127,18 @@
       <line num="198" type="stmt" count="0"/>
       <line num="199" type="stmt" count="0"/>
       <line num="200" type="stmt" count="0"/>
-      <line num="201" type="stmt" count="0"/>
-      <line num="202" type="stmt" count="0"/>
-      <line num="203" type="stmt" count="0"/>
-      <line num="204" type="stmt" count="0"/>
-      <line num="210" type="method" name="initialize_settings" visibility="private" complexity="3" crap="12" count="0"/>
-      <line num="211" type="stmt" count="0"/>
-      <line num="213" type="stmt" count="0"/>
-      <line num="214" type="stmt" count="0"/>
-      <line num="224" type="method" name="sanitize_settings" visibility="public" complexity="17" crap="306" count="0"/>
-      <line num="225" type="stmt" count="0"/>
+      <line num="206" type="method" name="initialize_settings" visibility="private" complexity="3" crap="12" count="0"/>
+      <line num="207" type="stmt" count="0"/>
+      <line num="209" type="stmt" count="0"/>
+      <line num="210" type="stmt" count="0"/>
+      <line num="220" type="method" name="sanitize_settings" visibility="public" complexity="17" crap="306" count="0"/>
+      <line num="221" type="stmt" count="0"/>
+      <line num="223" type="stmt" count="0"/>
+      <line num="224" type="stmt" count="0"/>
       <line num="227" type="stmt" count="0"/>
       <line num="228" type="stmt" count="0"/>
+      <line num="229" type="stmt" count="0"/>
+      <line num="230" type="stmt" count="0"/>
       <line num="231" type="stmt" count="0"/>
       <line num="232" type="stmt" count="0"/>
       <line num="233" type="stmt" count="0"/>
