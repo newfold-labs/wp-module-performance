@@ -73,10 +73,6 @@ class ImageSettings {
 	 */
 	public function __construct( $container ) {
 		$this->default_settings = self::get_default_settings( $container );
-		$capabilities           = $container->has( 'capabilities' )
-		? $container->get( 'capabilities' )
-		: null;
-		self::maybe_refresh_with_capabilities( $capabilities );
 		$this->register_settings( $container );
 		$this->initialize_settings();
 	}
@@ -249,13 +245,17 @@ class ImageSettings {
 					'value'    => isset( $settings['cloudflare']['polish']['value'] )
 						? (bool) $settings['cloudflare']['polish']['value']
 						: (bool) ( $existing_settings['cloudflare']['polish']['value'] ?? false ),
-					'user_set' => is_array( $settings['cloudflare'] ) && array_key_exists( 'polish', $settings['cloudflare'] ),
+					'user_set' => isset( $settings['cloudflare']['mirage']['user_set'] )
+					? (bool) $settings['cloudflare']['mirage']['user_set']
+					: (bool) ( $existing_settings['cloudflare']['mirage']['user_set'] ?? false ),
 				),
 				'mirage' => array(
 					'value'    => isset( $settings['cloudflare']['mirage']['value'] )
 					? (bool) $settings['cloudflare']['mirage']['value']
 					: (bool) ( $existing_settings['cloudflare']['mirage']['value'] ?? false ),
-					'user_set' => is_array( $settings['cloudflare'] ) && array_key_exists( 'mirage', $settings['cloudflare'] ),
+					'user_set' => isset( $settings['cloudflare']['mirage']['user_set'] )
+					? (bool) $settings['cloudflare']['mirage']['user_set']
+					: (bool) ( $existing_settings['cloudflare']['mirage']['user_set'] ?? false ),
 				),
 			),
 		);
