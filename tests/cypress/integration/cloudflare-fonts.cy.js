@@ -81,7 +81,7 @@ describe(
 				.click()
 				.should( 'have.attr', 'aria-checked', 'false' );
 
-			assertHtaccessHasNoRule();
+			assertHtaccessHasNoRule( '04d3b602' );
 
 			// Toggle ON again
 			performancePageLocators

@@ -71,7 +71,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 			.click()
 			.should( 'have.attr', 'aria-checked', 'false' );
 
-		assertHtaccessHasNoRule();
+		assertHtaccessHasNoRule( '63a6825d' );
 
 		// Toggle ON again
 		performancePageLocators

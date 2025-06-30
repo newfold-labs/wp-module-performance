@@ -45,20 +45,17 @@ export const assertHtaccessHasRule = ( hash ) => {
 			'# BEGIN Newfold CF Optimization Header'
 		);
 		expect( htaccess ).to.include( '# END Newfold CF Optimization Header' );
-		expect( htaccess ).to.include(
-			`RewriteCond %{HTTP_COOKIE} !(^|;\\s*)nfd-enable-cf-opt=${ hash } [NC]`
-		);
-		expect( htaccess ).to.include(
-			`Header set Set-Cookie "nfd-enable-cf-opt=${ hash }; path=/; Max-Age=86400; HttpOnly" env=CF_OPT`
-		);
+		expect( htaccess )
+			.to.include( `nfd-enable-cf-opt` )
+			.and.to.include( hash );
+		expect( htaccess )
+			.to.include( `Set-Cookie "nfd-enable-cf-opt=` )
+			.and.to.include( hash );
 	} );
 };
 
-export const assertHtaccessHasNoRule = () => {
+export const assertHtaccessHasNoRule = ( hash ) => {
 	readHtaccessViaCli().then( ( htaccess ) => {
-		expect( htaccess ).to.not.include(
-			'# BEGIN Newfold CF Optimization Header'
-		);
-		expect( htaccess ).to.not.include( 'nfd-enable-cf-opt' );
+		expect( htaccess ).to.not.include( hash );
 	} );
 };

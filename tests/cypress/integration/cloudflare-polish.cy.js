@@ -70,7 +70,7 @@ describe( 'Cloudflare Polish Toggle', { testIsolation: true }, () => {
 			.click()
 			.should( 'have.attr', 'aria-checked', 'false' );
 
-		assertHtaccessHasNoRule();
+		assertHtaccessHasNoRule( '27cab0f2' );
 
 		performancePageLocators
 			.getPolishToggle()
