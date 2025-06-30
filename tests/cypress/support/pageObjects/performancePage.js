@@ -86,6 +86,10 @@ class performancePage {
 		return cy.get( '[data-id="cloudflare-fonts"]' );
 	}
 
+	getPolishToggle() {
+		return cy.get( '[data-id="cloudflare-polish"]' );
+	}
+
 	interceptRequest( method, url, alias ) {
 		cy.intercept( method, url ).as( alias );
 	}
