@@ -87,7 +87,7 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 
 	it( 'hasLinkPrefetchClick capability', () => {
 		cy.exec(
-				`npx wp-env run cli wp option update nfd_link_prefetch_settings '{"activeOnDesktop": true, "behavior": "mouseDown"}' --format=json`	
+			`npx wp-env run cli wp option update nfd_link_prefetch_settings '{"activeOnDesktop": true, "behavior": "mouseDown"}' --format=json`
 		);
 		cy.exec(
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": false}' --format=json`	
@@ -100,7 +100,7 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 
 	it( 'hasLinkPrefetchHover capability', () => {
 		cy.exec(
-				`npx wp-env run cli wp option update nfd_link_prefetch_settings '{"activeOnDesktop": true, "behavior": "mouseHover"}' --format=json`	
+			`npx wp-env run cli wp option update nfd_link_prefetch_settings '{"activeOnDesktop": true, "behavior": "mouseHover"}' --format=json`	
 		);
 		cy.exec(
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": true}' --format=json`	
