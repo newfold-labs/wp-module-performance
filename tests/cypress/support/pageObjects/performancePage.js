@@ -53,6 +53,43 @@ class performancePage {
 	getListItems() {
 		return cy.get( 'ul.nfd-select__options > li' );
 	}
+
+	getMirageToggle() {
+		return cy.get( '[data-id="cloudflare-mirage"]' );
+	}
+
+	enableMirageToggle() {
+		this.getMirageToggle().then( ( $el ) => {
+			if ( $el.attr( 'aria-checked' ) === 'false' ) {
+				cy.wrap( $el ).click();
+			}
+		} );
+		this.getMirageToggle().should( 'have.attr', 'aria-checked', 'true' );
+	}
+
+	disableMirageToggle() {
+		this.getMirageToggle().then( ( $el ) => {
+			if ( $el.attr( 'aria-checked' ) === 'true' ) {
+				cy.wrap( $el ).click();
+			}
+		} );
+		this.getMirageToggle().should( 'have.attr', 'aria-checked', 'false' );
+	}
+
+	assertMirageToggle( expectedState = 'true' ) {
+		this.getMirageToggle()
+			.should( 'exist' )
+			.and( 'have.attr', 'aria-checked', expectedState );
+	}
+
+	getFontToggle() {
+		return cy.get( '[data-id="cloudflare-fonts"]' );
+	}
+
+	getPolishToggle() {
+		return cy.get( '[data-id="cloudflare-polish"]' );
+	}
+
 	interceptRequest( method, url, alias ) {
 		cy.intercept( method, url ).as( alias );
 	}
