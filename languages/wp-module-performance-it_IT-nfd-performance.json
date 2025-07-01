@@ -319,12 +319,6 @@
             "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
                 "Sostituisce Google Fonts con versioni locali pi\u00f9 veloci e rispettose della privacy."
             ],
-            "Upgrade to enable font optimization using Cloudflare.": [
-                "Aggiorna per abilitare l\u2019ottimizzazione dei font con Cloudflare."
-            ],
-            "https:\/\/www.bluehost.com\/hosting\/shared": [
-                "https:\/\/www.bluehost.com\/hosting\/shared"
-            ],
             "Loading font optimization settings\u2026": [
                 "Caricamento impostazioni ottimizzazione font\u2026"
             ],
@@ -354,9 +348,6 @@
             ],
             "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
                 "Cloudflare Mirage accelera il caricamento delle immagini su reti mobili e lente."
-            ],
-            "Get advanced image optimization features with Cloudflare Polish & Mirage.": [
-                "Ottieni funzionalit\u00e0 avanzate di ottimizzazione immagine con Cloudflare Polish e Mirage."
             ]
         }
     }
