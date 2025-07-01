@@ -3,7 +3,7 @@
   "description": "Module to manage performance settings in newfold plugins",
   "license": "GPL-2.0-or-later",
   "private": true,
-  "version": "3.2.4",
+  "version": "3.2.5",
   "contributors": [
     "Abdulrahman Al Ani (https://alani.dev/)",
     "Evan Mullins (https://evanmullins.com)",
