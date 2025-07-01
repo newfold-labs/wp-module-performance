@@ -84,4 +84,39 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 			data.requestCount
 		);
 	} );
+
+	it( 'hasLinkPrefetchClick capability', () => {
+		cy.exec(
+			`npx wp-env run cli wp option update nfd_link_prefetch_settings '{"activeOnDesktop": true, "behavior": "mouseDown"}' --format=json`
+		);
+		cy.exec(
+			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": false}' --format=json`	
+		);
+		cy.reload();
+		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
+		performanceLocators.verifyIfToggleIsEnabled();
+		performanceLocators.linkPrefetchCapabilityCheck('onlyMouseDown');
+	} );
+
+	it( 'hasLinkPrefetchHover capability', () => {
+		cy.exec(
+			`npx wp-env run cli wp option update nfd_link_prefetch_settings '{"activeOnDesktop": true, "behavior": "mouseHover"}' --format=json`	
+		);
+		cy.exec(
+			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": true}' --format=json`	
+		);
+		cy.reload();
+		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
+		performanceLocators.verifyIfToggleIsEnabled();
+		performanceLocators.linkPrefetchCapabilityCheck('both');
+	} );
+
+	it( 'LinkPrefetch Capabilities to false', () => {
+		cy.exec(
+			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": false, "hasLinkPrefetchHover": false}' --format=json`	
+		);
+		cy.reload();
+		cy.get( performanceLocators._linkPrefetchText ).should( 'not.exist' );
+	} );
+
 } );
