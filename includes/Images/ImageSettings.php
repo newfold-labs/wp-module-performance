@@ -441,12 +441,13 @@ class ImageSettings {
 	/**
 	 * Updates the image optimization settings.
 	 *
-	 * @param array $settings The new settings array.
+	 * @param array                               $settings  The new settings array.
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 *
 	 * @return bool true if the settings were updated successfully, false otherwise.
 	 */
-	public static function update( $settings ) {
-		$instance           = new self();
+	public static function update( $settings, $container ) {
+		$instance           = new self( $container );
 		$sanitized_settings = $instance->sanitize_settings( $settings );
 		return update_option( self::SETTING_KEY, $sanitized_settings );
 	}

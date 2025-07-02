@@ -11,6 +11,24 @@ use NewfoldLabs\WP\Module\Performance\Services\EventService;
 class ImageService {
 
 	/**
+	 * Dependency injection container.
+	 *
+	 * @var \NewfoldLabs\WP\Container\Container
+	 */
+	protected $container;
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
+	 */
+	public function __construct( $container ) {
+		$this->container = $container;
+	}
+
+
+	/**
 	 * Cloudflare Worker URL for image optimization.
 	 */
 	private const WORKER_URL = 'https://hiive.cloud/workers/image-optimization';
@@ -100,7 +118,7 @@ class ImageService {
 				'monthlyRequestCount' => $monthly_request_count,
 				'maxRequestsPerMonth' => $monthly_limit,
 			);
-			ImageSettings::update( $settings );
+			ImageSettings::update( $settings, $this->container );
 		}
 
 		// Handle errors from the HTTP request
@@ -219,7 +237,7 @@ class ImageService {
 		$settings['bulk_optimization'] = false;
 		$settings['auto_optimized_uploaded_images']['enabled']                    = false;
 		$settings['auto_optimized_uploaded_images']['auto_delete_original_image'] = false;
-		ImageSettings::update( $settings );
+		ImageSettings::update( $settings, $this->container );
 	}
 
 	/**
@@ -488,7 +506,7 @@ class ImageService {
 
 		$settings                  = ImageSettings::get( false );
 		$settings['monthly_usage'] = $body;
-		ImageSettings::update( $settings );
+		ImageSettings::update( $settings, $this->container );
 
 		return $body;
 	}

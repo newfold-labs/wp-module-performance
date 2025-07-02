@@ -39,10 +39,10 @@ class ImageManager {
 	 * @param Container $container Dependency injection container.
 	 */
 	private function initialize_services( Container $container ) {
-		$this->initialize_upload_listener();
+		$this->initialize_upload_listener( $container );
 		$this->maybe_initialize_lazy_loader();
 		$this->maybe_initialize_bulk_optimizer();
-		$this->maybe_initialize_rest_api();
+		$this->maybe_initialize_rest_api( $container );
 		$this->maybe_initialize_marker();
 		$this->maybe_initialize_image_rewrite_handler( $container );
 		$this->maybe_initialize_image_limit_banner( $container );
@@ -50,9 +50,11 @@ class ImageManager {
 
 	/**
 	 * Initializes the ImageUploadListener if auto-optimization is enabled.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
-	private function initialize_upload_listener() {
-		new ImageUploadListener( ImageSettings::is_auto_delete_enabled() );
+	private function initialize_upload_listener( $container ) {
+		new ImageUploadListener( ImageSettings::is_auto_delete_enabled(), $container );
 	}
 
 	/**
@@ -75,10 +77,12 @@ class ImageManager {
 
 	/**
 	 * Initializes the REST API routes if accessed via REST and user is an admin.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
-	private function maybe_initialize_rest_api() {
+	private function maybe_initialize_rest_api( $container ) {
 		if ( Permissions::rest_is_authorized_admin() ) {
-			new RestApi();
+			new RestApi( $container );
 		}
 	}
 

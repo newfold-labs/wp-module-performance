@@ -26,10 +26,11 @@ class ImageUploadListener {
 	/**
 	 * Constructor to initialize the listener.
 	 *
-	 * @param bool $delete_original Whether to delete the original file after optimization.
+	 * @param bool                                $delete_original Whether to delete the original file after optimization.
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
-	public function __construct( $delete_original = false ) {
-		$this->image_service   = new ImageService();
+	public function __construct( $delete_original = false, $container ) {
+		$this->image_service   = new ImageService( $container );
 		$this->delete_original = $delete_original;
 		$this->register_hooks();
 	}
