@@ -113,7 +113,7 @@ class ImageService {
 		$monthly_request_count = ( '' !== $monthly_request_count ) ? intval( $monthly_request_count ) : null;
 		$monthly_limit         = ( '' !== $monthly_limit ) ? intval( $monthly_limit ) : null;
 		if ( null !== $monthly_request_count && null !== $monthly_limit ) {
-			$settings                  = ImageSettings::get();
+			$settings                  = ImageSettings::get( $this->container, true );
 			$settings['monthly_usage'] = array(
 				'monthlyRequestCount' => $monthly_request_count,
 				'maxRequestsPerMonth' => $monthly_limit,
@@ -232,7 +232,7 @@ class ImageService {
 	 * Permanently ban the site from accessing image optimization.
 	 */
 	private function ban_site() {
-		$settings                      = ImageSettings::get();
+		$settings                      = ImageSettings::get( $this->container, true );
 		$settings['banned_status']     = true;
 		$settings['bulk_optimization'] = false;
 		$settings['auto_optimized_uploaded_images']['enabled']                    = false;
@@ -504,7 +504,7 @@ class ImageService {
 			);
 		}
 
-		$settings                  = ImageSettings::get( false );
+		$settings                  = ImageSettings::get( $this->container, false );
 		$settings['monthly_usage'] = $body;
 		ImageSettings::update( $settings, $this->container );
 
