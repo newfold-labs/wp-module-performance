@@ -17,7 +17,6 @@ class ImageService {
 	 */
 	protected $container;
 
-
 	/**
 	 * Constructor.
 	 *
@@ -26,7 +25,6 @@ class ImageService {
 	public function __construct( $container ) {
 		$this->container = $container;
 	}
-
 
 	/**
 	 * Cloudflare Worker URL for image optimization.
