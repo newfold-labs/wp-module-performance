@@ -6,6 +6,12 @@ namespace NewfoldLabs\WP\Module\Performance\Images\RestApi;
  * Instantiate controllers and register routes.
  */
 final class RestApi {
+	/**
+	 * Dependency injection container.
+	 *
+	 * @var \NewfoldLabs\WP\Container\Container
+	 */
+	protected $container;
 
 	/**
 	 * List of custom REST API controllers
@@ -18,9 +24,12 @@ final class RestApi {
 
 
 	/**
-	 * Setup the custom REST API
+	 * Setup the custom REST API.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
-	public function __construct() {
+	public function __construct( $container ) {
+		$this->container = $container;
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 
@@ -34,7 +43,7 @@ final class RestApi {
 			 *
 			 * @var $instance WP_REST_Controller
 			 */
-			$instance = new $controller();
+			$instance = new $controller( $this->container );
 			$instance->register_routes();
 		}
 	}
