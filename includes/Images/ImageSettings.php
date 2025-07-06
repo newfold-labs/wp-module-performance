@@ -72,7 +72,6 @@ class ImageSettings {
 	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
 	public function __construct( $container ) {
-		$this->container        = $container;
 		$this->default_settings = self::get_default_settings( $container );
 		$this->register_settings( $container );
 		$this->initialize_settings();
