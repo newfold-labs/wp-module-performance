@@ -100,13 +100,31 @@ class LinkPrefetch {
 	 * @return array Modified runtime object.
 	 */
 	public function add_to_runtime( $sdk ) {
+		$current_settings = get_option( self::$option_name, false );
 
-		self::$default_settings['behavior'] = $this::$has_link_prefetch_click && $this::$has_link_prefetch_hover ? 'mouseHover' : 'mouseDown';
+		if ( false === $current_settings ) {
+			if ( $this::$has_link_prefetch_click || $this::$has_link_prefetch_hover ) {
+				self::$default_settings['activeOnDesktop'] = true;
+				self::$default_settings['activeOnMobile']  = true;
+			}
 
-		$values = array(
-			'settings' => get_option( self::$option_name, self::$default_settings ),
+			if ( $this::$has_link_prefetch_click ) {
+				self::$default_settings['behavior']       = 'mouseDown';
+				self::$default_settings['mobileBehavior'] = 'touchstart';
+			}
+
+			if ( $this::$has_link_prefetch_hover ) {
+				self::$default_settings['behavior']       = 'mouseHover';
+				self::$default_settings['mobileBehavior'] = 'viewport';
+			}
+
+			$current_settings = self::$default_settings;
+		}
+
+		return array_merge(
+			$sdk,
+			array( 'linkPrefetch' => array( 'settings' => $current_settings ) )
 		);
-		return array_merge( $sdk, array( 'linkPrefetch' => $values ) );
 	}
 
 	/**
