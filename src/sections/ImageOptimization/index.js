@@ -122,6 +122,16 @@ const ImageOptimization = () => {
 				updated.bulk_optimization = value;
 				updated.lazy_loading.enabled = value;
 				updated.prefer_optimized_image_when_exists = value;
+				updated.cloudflare = {
+					polish: {
+						value,
+						user_set: true,
+					},
+					mirage: {
+						value,
+						user_set: true,
+					},
+				};
 				break;
 			case 'autoOptimizeEnabled':
 				updated.auto_optimized_uploaded_images.enabled = value;

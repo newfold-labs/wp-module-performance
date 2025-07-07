@@ -10,6 +10,12 @@ use NewfoldLabs\WP\Module\Performance\Images\ImageSettings;
  * Provides REST API for single media item optimization.
  */
 class ImagesController {
+	/**
+	 * Dependency injection container.
+	 *
+	 * @var \NewfoldLabs\WP\Container\Container
+	 */
+	protected $container;
 
 	/**
 	 * The REST route namespace.
@@ -24,6 +30,15 @@ class ImagesController {
 	 * @var string
 	 */
 	protected $rest_base = '/images';
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
+	 */
+	public function __construct( $container ) {
+		$this->container = $container;
+	}
 
 	/**
 	 * Registers API routes.
@@ -74,7 +89,7 @@ class ImagesController {
 			);
 		}
 
-		$image_service    = new ImageService();
+		$image_service    = new ImageService( $this->container );
 		$delete_original  = ImageSettings::is_auto_delete_enabled();
 		$optimized_result = $image_service->optimize_image( $image_url, $file_path );
 

@@ -11,6 +11,22 @@ use NewfoldLabs\WP\Module\Performance\Services\EventService;
 class ImageService {
 
 	/**
+	 * Dependency injection container.
+	 *
+	 * @var \NewfoldLabs\WP\Container\Container
+	 */
+	protected $container;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
+	 */
+	public function __construct( $container ) {
+		$this->container = $container;
+	}
+
+	/**
 	 * Cloudflare Worker URL for image optimization.
 	 */
 	private const WORKER_URL = 'https://hiive.cloud/workers/image-optimization';
@@ -95,12 +111,12 @@ class ImageService {
 		$monthly_request_count = ( '' !== $monthly_request_count ) ? intval( $monthly_request_count ) : null;
 		$monthly_limit         = ( '' !== $monthly_limit ) ? intval( $monthly_limit ) : null;
 		if ( null !== $monthly_request_count && null !== $monthly_limit ) {
-			$settings                  = ImageSettings::get();
+			$settings                  = ImageSettings::get( $this->container, true );
 			$settings['monthly_usage'] = array(
 				'monthlyRequestCount' => $monthly_request_count,
 				'maxRequestsPerMonth' => $monthly_limit,
 			);
-			ImageSettings::update( $settings );
+			ImageSettings::update( $settings, $this->container );
 		}
 
 		// Handle errors from the HTTP request
@@ -214,12 +230,12 @@ class ImageService {
 	 * Permanently ban the site from accessing image optimization.
 	 */
 	private function ban_site() {
-		$settings                      = ImageSettings::get();
+		$settings                      = ImageSettings::get( $this->container, true );
 		$settings['banned_status']     = true;
 		$settings['bulk_optimization'] = false;
 		$settings['auto_optimized_uploaded_images']['enabled']                    = false;
 		$settings['auto_optimized_uploaded_images']['auto_delete_original_image'] = false;
-		ImageSettings::update( $settings );
+		ImageSettings::update( $settings, $this->container );
 	}
 
 	/**
@@ -486,9 +502,9 @@ class ImageService {
 			);
 		}
 
-		$settings                  = ImageSettings::get( false );
+		$settings                  = ImageSettings::get( $this->container, false );
 		$settings['monthly_usage'] = $body;
-		ImageSettings::update( $settings );
+		ImageSettings::update( $settings, $this->container );
 
 		return $body;
 	}
