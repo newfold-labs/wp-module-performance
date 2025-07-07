@@ -4,7 +4,7 @@ class performancePage {
 	// in site-info box
 	_visitSiteButton = '#wp-admin-bar-view-site a';
 	// sample page link on front end of site
-	_samplePageButton = '.wp-block-pages-list__item__link[href*="sample-page"]';
+	_samplePageButton = 'main a';
 	_linkPrefetchText = '[data-cy="link-prefetch-settings"]';
 	_dropDownForLinkPrefetch =
 		'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label';
@@ -27,7 +27,7 @@ class performancePage {
 	}
 
 	getSamplePageButton() {
-		return cy.get( this._samplePageButton ).first();
+		return cy.get( this._samplePageButton ).eq( 1 );
 	}
 
 	getMouseHoverElement() {
@@ -146,22 +146,27 @@ class performancePage {
 	linkPrefetchCapabilityCheck( type ) {
 		this.getDropDownForLinkPrefetch().click();
 		this.getDropDownForLinkPrefetch()
-		.invoke( 'text' )
-		.then( ( buttonLabel ) => {
-			if ( 'onlyMouseDown' === type ) {
-				cy.get('[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li')
-				.should('have.length', 1)
-				.invoke('text')
-				.then(itemText => {
-					const trimmedText = itemText.trim();
-					cy.log('Found element text:', trimmedText);
-					expect(trimmedText).to.equal('Prefetch on Mouse Down');
-				});
-			} else {
-				cy.get('[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li')
-				.should('have.length', 2);
-			}
-		});
+			.invoke( 'text' )
+			.then( ( buttonLabel ) => {
+				if ( 'onlyMouseDown' === type ) {
+					cy.get(
+						'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li'
+					)
+						.should( 'have.length', 1 )
+						.invoke( 'text' )
+						.then( ( itemText ) => {
+							const trimmedText = itemText.trim();
+							cy.log( 'Found element text:', trimmedText );
+							expect( trimmedText ).to.equal(
+								'Prefetch on Mouse Down'
+							);
+						} );
+				} else {
+					cy.get(
+						'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li'
+					).should( 'have.length', 2 );
+				}
+			} );
 	}
 
 	compareDropdownLabelAndSelectedOption() {
