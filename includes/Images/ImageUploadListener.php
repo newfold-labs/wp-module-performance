@@ -26,8 +26,8 @@ class ImageUploadListener {
 	/**
 	 * Constructor to initialize the listener.
 	 *
-	 * @param bool                                $delete_original Whether to delete the original file after optimization.
 	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
+	 * @param bool                                $delete_original Whether to delete the original file after optimization.
 	 */
 	public function __construct( $container, $delete_original = false ) {
 		$this->image_service   = new ImageService( $container );
