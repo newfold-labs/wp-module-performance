@@ -288,8 +288,8 @@ class ImageSettings {
 		}
 
 		if ( is_array( $capabilities ) ) {
-			$has_polish = (bool) $capabilities['hasCloudflarePolish'] ?? false;
-			$has_mirage = (bool) $capabilities['hasCloudflareMirage'] ?? false;
+			$has_polish = isset( $capabilities['hasCloudflarePolish'] ) ? (bool) $capabilities['hasCloudflarePolish'] : false;
+			$has_mirage = isset( $capabilities['hasCloudflareMirage'] ) ? (bool) $capabilities['hasCloudflareMirage'] : false;
 
 			// Polish
 			if ( $settings['cloudflare']['polish']['user_set'] ) {
