@@ -54,7 +54,7 @@ class ImageManager {
 	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
 	private function initialize_upload_listener( $container ) {
-		new ImageUploadListener( ImageSettings::is_auto_delete_enabled(), $container );
+		new ImageUploadListener( $container, ImageSettings::is_auto_delete_enabled() );
 	}
 
 	/**
