@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751884342">
-  <project timestamp="1751884342">
+<coverage generated="1752131918">
+  <project timestamp="1752131918">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -971,7 +971,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Fonts/FontSettings.php">
       <class name="NewfoldLabs\WP\Module\Performance\Fonts\FontSettings" namespace="global">
-        <metrics complexity="18" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="84" coveredstatements="0" elements="90" coveredelements="0"/>
+        <metrics complexity="19" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="84" coveredstatements="0" elements="90" coveredelements="0"/>
       </class>
       <line num="35" type="method" name="__construct" visibility="public" complexity="3" crap="12" count="0"/>
       <line num="36" type="stmt" count="0"/>
@@ -1044,7 +1044,7 @@
       <line num="127" type="stmt" count="0"/>
       <line num="128" type="stmt" count="0"/>
       <line num="129" type="stmt" count="0"/>
-      <line num="137" type="method" name="maybe_refresh_with_capabilities" visibility="public" complexity="8" crap="72" count="0"/>
+      <line num="137" type="method" name="maybe_refresh_with_capabilities" visibility="public" complexity="9" crap="90" count="0"/>
       <line num="138" type="stmt" count="0"/>
       <line num="140" type="stmt" count="0"/>
       <line num="141" type="stmt" count="0"/>
@@ -1971,7 +1971,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Images/ImageSettings.php">
       <class name="NewfoldLabs\WP\Module\Performance\Images\ImageSettings" namespace="global">
-        <metrics complexity="64" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="264" coveredstatements="0" elements="282" coveredelements="0"/>
+        <metrics complexity="66" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="264" coveredstatements="0" elements="282" coveredelements="0"/>
       </class>
       <line num="26" type="method" name="get_default_settings" visibility="private" complexity="3" crap="12" count="0"/>
       <line num="27" type="stmt" count="0"/>
@@ -2172,7 +2172,7 @@
       <line num="259" type="stmt" count="0"/>
       <line num="260" type="stmt" count="0"/>
       <line num="261" type="stmt" count="0"/>
-      <line num="269" type="method" name="maybe_refresh_with_capabilities" visibility="public" complexity="18" crap="342" count="0"/>
+      <line num="269" type="method" name="maybe_refresh_with_capabilities" visibility="public" complexity="20" crap="420" count="0"/>
       <line num="270" type="stmt" count="0"/>
       <line num="273" type="stmt" count="0"/>
       <line num="274" type="stmt" count="0"/>
