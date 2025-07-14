@@ -77,10 +77,10 @@ class LinkPrefetch {
 
 		$capabilities = ( new SiteCapabilities() )->all();
 
-		$this::$has_link_prefetch_click = array_key_exists( 'hasLinkPrefetchClick', $capabilities ) ? $capabilities['hasLinkPrefetchClick'] : null;
-		$this::$has_link_prefetch_hover = array_key_exists( 'hasLinkPrefetchHover', $capabilities ) ? $capabilities['hasLinkPrefetchHover'] : null;
+		self::$has_link_prefetch_click = array_key_exists( 'hasLinkPrefetchClick', $capabilities ) ? $capabilities['hasLinkPrefetchClick'] : null;
+		self::$has_link_prefetch_hover = array_key_exists( 'hasLinkPrefetchHover', $capabilities ) ? $capabilities['hasLinkPrefetchHover'] : null;
 
-		if ( false === $this::$has_link_prefetch_click && false === $this::$has_link_prefetch_hover ) {
+		if ( false === self::$has_link_prefetch_click && false === self::$has_link_prefetch_hover ) {
 			delete_option( self::$option_name );
 			return;
 		}
@@ -93,6 +93,39 @@ class LinkPrefetch {
 	}
 
 	/**
+	 * Retrieves the current plugin settings from the options table.
+	 * If no settings are stored, returns and saves the default settings
+	 * based on feature flags.
+	 *
+	 * @return array The current or default settings.
+	 */
+	public function get_current_settings() {
+		$current_settings = get_option( self::$option_name, false );
+		if ( false !== $current_settings ) {
+			return $current_settings;
+		}
+
+		$final_settings = self::$default_settings;
+		if ( self::$has_link_prefetch_click || self::$has_link_prefetch_hover ) {
+			$final_settings['activeOnDesktop'] = true;
+			$final_settings['activeOnMobile']  = true;
+		}
+
+		if ( self::$has_link_prefetch_click ) {
+			$final_settings['behavior']       = 'mouseDown';
+			$final_settings['mobileBehavior'] = 'touchstart';
+		}
+
+		if ( self::$has_link_prefetch_hover ) {
+			$final_settings['behavior']       = 'mouseHover';
+			$final_settings['mobileBehavior'] = 'viewport';
+		}
+
+		update_option( self::$option_name, $final_settings );
+		return $final_settings;
+	}
+
+	/**
 	 * Adds values to the runtime object.
 	 *
 	 * @param array $sdk The runtime object.
@@ -100,26 +133,7 @@ class LinkPrefetch {
 	 * @return array Modified runtime object.
 	 */
 	public function add_to_runtime( $sdk ) {
-		$current_settings = get_option( self::$option_name, false );
-
-		if ( false === $current_settings ) {
-			if ( $this::$has_link_prefetch_click || $this::$has_link_prefetch_hover ) {
-				self::$default_settings['activeOnDesktop'] = true;
-				self::$default_settings['activeOnMobile']  = true;
-			}
-
-			if ( $this::$has_link_prefetch_click ) {
-				self::$default_settings['behavior']       = 'mouseDown';
-				self::$default_settings['mobileBehavior'] = 'touchstart';
-			}
-
-			if ( $this::$has_link_prefetch_hover ) {
-				self::$default_settings['behavior']       = 'mouseHover';
-				self::$default_settings['mobileBehavior'] = 'viewport';
-			}
-
-			$current_settings = self::$default_settings;
-		}
+		$current_settings = $this->get_current_settings();
 
 		return array_merge(
 			$sdk,
@@ -133,10 +147,7 @@ class LinkPrefetch {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$settings = get_option( self::$option_name, self::$default_settings );
-		if ( ! $settings['activeOnDesktop'] && ! $settings['activeOnMobile'] ) {
-			return;
-		}
+		$settings             = $this->get_current_settings();
 		$settings['isMobile'] = wp_is_mobile();
 		wp_enqueue_script(
 			'linkprefetcher',
