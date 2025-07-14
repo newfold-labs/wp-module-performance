@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance\Images\WPCLI;
 
 use NewfoldLabs\WP\Module\Performance\NFD_WPCLI;
 use NewfoldLabs\WP\Module\Performance\Images\ImageSettings;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Handles WP-CLI commands for Image Optimization settings.
@@ -16,6 +17,21 @@ class ImageCommandHandler {
 	 * @var array
 	 */
 	private const VALID_STATUSES = array( 'on', 'off' );
+
+	/**
+	 * Container.
+	 *
+	 * @var object Container
+	 */
+	private $container;
+
+
+	/**
+	 * Class constructor.
+	 */
+	public function __construct() {
+		$this->container = container();
+	}
 
 	/**
 	 * Toggles the bulk optimization setting.
@@ -149,9 +165,9 @@ class ImageCommandHandler {
 	public function all( $args ) {
 		$status   = $this->validate_status( isset( $args[0] ) ? $args[0] : null );
 		$enabled  = ( 'on' === $status );
-		$settings = ImageSettings::get();
+		$settings = ImageSettings::get( $this->container );
 		$this->set_all_values( $settings, $enabled );
-		ImageSettings::update( $settings );
+		ImageSettings::update( $settings, $this->container );
 		/* translators: %s is the on/off status. */
 		NFD_WPCLI::success( sprintf( __( 'All image optimization settings have been turned %s.', 'wp-module-performance' ), $status ) );
 	}
@@ -166,7 +182,7 @@ class ImageCommandHandler {
 	 */
 	private function toggle_setting( $setting, $status ) {
 		$enabled  = ( 'on' === $status );
-		$settings = ImageSettings::get();
+		$settings = ImageSettings::get( $this->container );
 
 		// If a feature is turned on (except for the "all" command), enable overall image optimization.
 		if ( $enabled ) {
@@ -184,7 +200,7 @@ class ImageCommandHandler {
 			$settings['auto_optimized_uploaded_images']['auto_delete_original_image'] = false;
 		}
 
-		ImageSettings::update( $settings );
+		ImageSettings::update( $settings, $this->container );
 
 		NFD_WPCLI::success(
 			sprintf(
