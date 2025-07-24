@@ -18,7 +18,7 @@ class PersistentObjectCacheHealthCheck extends HealthCheck {
 		$this->description  = esc_html__( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'wp-module-performance' );
 		$this->actions      = sprintf(
 			'<a href="%1$s" target="_blank" rel="noopener">%2$s</a><span class="screen-reader-text"> (%3$s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
-			buildlink('https://www.bluehost.com/help/article/object-caching' ),
+			buildLink( 'https://www.bluehost.com/help/article/object-caching' ),
 			esc_html__( 'Learn more about object caching', 'wp-module-performance' ),
 			__( 'opens in a new tab', 'wp-module-performance' )
 		);

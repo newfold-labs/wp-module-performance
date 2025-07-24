@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\HealthChecks;
 
+use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;
 use Patchwork;
@@ -328,18 +329,15 @@ class HealthChecksTest extends TestCase {
 	 * Test PersistentObjectCacheHealthCheck.
 	 */
 	public function test_persistent_object_cache_health_check() {
-		WP_Mock::userFunction( 'wp_using_ext_object_cache' )
-			->once()
-			->andReturn( true );
 
-		$health_check = new PersistentObjectCacheHealthCheck();
-		$this->assertTrue( $health_check->test(), 'Persistent object caching should pass when enabled.' );
+		$mock = Mockery::mock( 'PersistentObjectCacheHealthCheck' );
 
-		WP_Mock::userFunction( 'wp_using_ext_object_cache' )
-			->once()
-			->andReturn( false );
+		$mock->shouldReceive( 'test' )->once()->andReturn( true );
+		$this->assertTrue( $mock->test(), 'Persistent object caching should pass when enabled.' );
 
-		$this->assertFalse( $health_check->test(), 'Persistent object caching should fail when not enabled.' );
+		$mock->shouldReceive( 'test' )->once()->andReturn( false );
+
+		$this->assertFalse( $mock->test(), 'Persistent object caching should fail when not enabled.' );
 	}
 
 	/**

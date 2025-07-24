@@ -1,6 +1,7 @@
 <?php
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
+
 use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 /**
