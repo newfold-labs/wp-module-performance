@@ -10,14 +10,14 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2025-03-04 12:44\n"
 "Language: it_IT\n"
-"X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: wp-module-performance\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: wp-module-performance\n"
-"X-Crowdin-Project-ID: 767577\n"
-"X-Crowdin-Language: it\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
 "X-Crowdin-File-ID: 15\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-Project: wp-module-performance\n"
+"X-Crowdin-Project-ID: 767577\n"
+"X-Domain: wp-module-performance\n"
+"X-Generator: WP-CLI 2.11.0\n"
 
 #: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
@@ -452,7 +452,7 @@ msgstr "Impostazione “Salta 404” salvata"
 
 #: build/performance/performance.min.js:2
 msgid "Optimize your website by managing cache and performance settings"
-msgstr ""
+msgstr "Ottimizza il tuo sito web gestendo la cache e le impostazioni delle prestazioni"
 
 #: build/performance/performance.min.js:2
 msgid "Font Optimization"

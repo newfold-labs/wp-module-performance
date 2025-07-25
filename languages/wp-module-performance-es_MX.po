@@ -11,8 +11,8 @@ msgstr ""
 "PO-Revision-Date: 2025-02-14 12:57+0000\n"
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
 "X-Domain: wp-module-performance\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: build/performance/performance.min.js:2
 msgid "Performance"
