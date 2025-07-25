@@ -237,7 +237,8 @@ const ImageOptimization = () => {
 
 	const mediaLibraryLink = () => {
 		const basePath = window.location.pathname.split( '/wp-admin' )[ 0 ];
-		return `${ window.location.origin }${ basePath }/wp-admin/upload.php?autoSelectBulk`;
+        const mediaLink = `${ window.location.origin }${ basePath }/wp-admin/upload.php?autoSelectBulk`;
+		return window.NewfoldRuntime.linkTracker.addUtmParams( mediaLink );
 	};
 
 	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
