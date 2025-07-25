@@ -148,7 +148,7 @@ const JetpackBoost = () => {
 			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
 			const adminUrl = `${ siteUrl }/wp-admin/admin.php?page=jetpack-boost`;
 			iframe = document.createElement( 'iframe' );
-			iframe.src = adminUrl;
+			iframe.src = window.NewfoldRuntime.linkTracker.addUtmParams( adminUrl );
 			document.body.appendChild( iframe );
 			iframe.style.height = '0';
 			iframe.onload = async function () {
@@ -340,7 +340,7 @@ const JetpackBoost = () => {
 					{ isModuleEnabled && ! isPremiumActive ? (
 						<FeatureUpsell
 							cardText={ upgradeModule }
-							cardLink={ `${ siteUrl }/wp-admin/admin.php?page=my-jetpack#/add-boost` }
+							cardLink={ window.NewfoldRuntime.linkTracker.addUtmParams( `${ siteUrl }/wp-admin/admin.php?page=my-jetpack#/add-boost` )}
 						>
 							{ cssPremiumField }
 						</FeatureUpsell>

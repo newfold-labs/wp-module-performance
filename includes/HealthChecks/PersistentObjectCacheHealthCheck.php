@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\HealthChecks;
 
+use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 /**
  * Health check for persistent object cache.
  */

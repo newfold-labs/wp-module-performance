@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
+use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
+
 /**
  * Displays admin notices for rate limits and bans in the WP Admin area.
  */
@@ -64,7 +66,7 @@ class ImageLimitBanner {
 	 * Displays the permanent ban banner.
 	 */
 	private function display_ban_banner() {
-		$support_link = admin_url( "admin.php?page={$this->brand}#/help" );
+		$support_link = buildLink( admin_url( "admin.php?page={$this->brand}#/help" ) );
 
 		echo '<div class="notice notice-error">';
 		echo '<p>';
