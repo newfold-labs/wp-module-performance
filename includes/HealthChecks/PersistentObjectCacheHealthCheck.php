@@ -2,7 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance\HealthChecks;
 
-use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 /**
  * Health check for persistent object cache.
  */
@@ -16,12 +15,6 @@ class PersistentObjectCacheHealthCheck extends HealthCheck {
 		$this->passing_text = esc_html__( 'Object caching is enabled', 'wp-module-performance' );
 		$this->failing_text = esc_html__( 'Object caching is disabled', 'wp-module-performance' );
 		$this->description  = esc_html__( 'Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud.', 'wp-module-performance' );
-		$this->actions      = sprintf(
-			'<a href="%1$s" target="_blank" rel="noopener">%2$s</a><span class="screen-reader-text"> (%3$s)</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
-			buildLink( 'https://www.bluehost.com/help/article/object-caching' ),
-			esc_html__( 'Learn more about object caching', 'wp-module-performance' ),
-			__( 'opens in a new tab', 'wp-module-performance' )
-		);
 	}
 
 	/**
