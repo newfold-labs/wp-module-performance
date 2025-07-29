@@ -36,7 +36,6 @@ class ImageLimitBanner {
 
 		// Check for permanent ban.
 		$is_banned = ImageSettings::is_banned();
-		$is_banned = true;
 		if ( $is_banned ) {
 			$this->display_ban_banner();
 		}
