@@ -14,7 +14,6 @@ use NewfoldLabs\WP\Module\Performance\Cloudflare\CloudflareFeaturesManager;
 use NewfoldLabs\WP\Module\Performance\Fonts\FontManager;
 use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
-use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
@@ -242,7 +241,7 @@ class Performance {
 						'id'     => 'nfd_purge_menu-purge_all',
 						'title'  => __( 'Purge All', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   => buildLink( add_query_arg( array( self::PURGE_ALL => true ) ) ),
+						'href'   =>  apply_filters( 'nfd_build_url', add_query_arg( array( self::PURGE_ALL => true ) ) ),
 					)
 				);
 
@@ -252,7 +251,7 @@ class Performance {
 							'id'     => 'nfd_purge_menu-purge_single',
 							'title'  => __( 'Purge This Page', 'wp-module-performance' ),
 							'parent' => 'nfd_purge_menu',
-							'href'   => buildLink( add_query_arg( array( self::PURGE_URL => true ) ) ),
+							'href'   =>  apply_filters( 'nfd_build_url', add_query_arg( array( self::PURGE_URL => true ) ) ),
 						)
 					);
 				}
@@ -263,7 +262,7 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   => buildLink( admin_url( 'tools.php?page=' . self::PAGE_SLUG ) ),
+					'href'   =>  apply_filters( 'nfd_build_url', admin_url( 'tools.php?page=' . self::PAGE_SLUG ) ),
 				)
 			);
 		}

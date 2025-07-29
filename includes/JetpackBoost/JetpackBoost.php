@@ -6,8 +6,6 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use Automattic\Jetpack\My_Jetpack\Products\Boost;
-use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
-
 
 /**
  * Handles link prefetch functionality.
@@ -88,7 +86,7 @@ class JetpackBoost {
 	 */
 	public function prefetch_jetpack_boost() {
 		if ( is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) ) {
-			$admin_url = buildLink( admin_url( 'admin.php?page=jetpack-boost' ) );
+			$admin_url = apply_filters( 'nfd_build_url', admin_url( 'admin.php?page=jetpack-boost' ) );
 			echo '<link rel="prefetch" href="' . esc_url( $admin_url ) . '">' . "\n";
 		}
 	}
