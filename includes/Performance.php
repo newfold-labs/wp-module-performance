@@ -241,7 +241,7 @@ class Performance {
 						'id'     => 'nfd_purge_menu-purge_all',
 						'title'  => __( 'Purge All', 'wp-module-performance' ),
 						'parent' => 'nfd_purge_menu',
-						'href'   =>  apply_filters( 'nfd_build_url', add_query_arg( array( self::PURGE_ALL => true ) ) ),
+						'href'   => apply_filters( 'nfd_build_url', add_query_arg( array( self::PURGE_ALL => true ) ) ),
 					)
 				);
 
@@ -251,7 +251,7 @@ class Performance {
 							'id'     => 'nfd_purge_menu-purge_single',
 							'title'  => __( 'Purge This Page', 'wp-module-performance' ),
 							'parent' => 'nfd_purge_menu',
-							'href'   =>  apply_filters( 'nfd_build_url', add_query_arg( array( self::PURGE_URL => true ) ) ),
+							'href'   => apply_filters( 'nfd_build_url', add_query_arg( array( self::PURGE_URL => true ) ) ),
 						)
 					);
 				}
@@ -262,7 +262,7 @@ class Performance {
 					'id'     => 'nfd_purge_menu-cache_settings',
 					'title'  => __( 'Cache Settings', 'wp-module-performance' ),
 					'parent' => 'nfd_purge_menu',
-					'href'   =>  apply_filters( 'nfd_build_url', admin_url( 'tools.php?page=' . self::PAGE_SLUG ) ),
+					'href'   => apply_filters( 'nfd_build_url', admin_url( 'tools.php?page=' . self::PAGE_SLUG ) ),
 				)
 			);
 		}
