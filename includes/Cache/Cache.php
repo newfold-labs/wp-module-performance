@@ -38,8 +38,6 @@ class Cache {
 
 		$this->hooks();
 
-		add_action( 'plugins_loaded', array( $this, 'hooks2' ) );
-
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
 
@@ -47,13 +45,7 @@ class Cache {
 	 * Add hooks.
 	 */
 	public function hooks() {
-
 		add_action( 'after_mod_rewrite_rules', array( $this, 'on_rewrite' ) );
-
-		add_action( 'newfold_container_set', array( $this, 'plugin_hooks' ) );
-		add_action( 'plugins_loaded', array( $this, 'hooks' ) );
-
-		add_action( 'newfold_container_set', array( $this, 'plugin_hooks' ) );
 	}
 
 	/**
