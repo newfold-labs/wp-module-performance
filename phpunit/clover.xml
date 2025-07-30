@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1753690512">
-  <project timestamp="1753690512">
+<coverage generated="1753872000">
+  <project timestamp="1753872000">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -122,7 +122,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cache/Cache.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cache\Cache" namespace="global">
-        <metrics complexity="7" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="29" coveredelements="0"/>
+        <metrics complexity="7" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="25" coveredelements="0"/>
       </class>
       <line num="27" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="28" type="stmt" count="0"/>
@@ -133,27 +133,23 @@
       <line num="37" type="stmt" count="0"/>
       <line num="39" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
-      <line num="43" type="stmt" count="0"/>
-      <line num="49" type="method" name="hooks" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="51" type="stmt" count="0"/>
-      <line num="53" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
-      <line num="56" type="stmt" count="0"/>
-      <line num="62" type="method" name="on_rewrite" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="63" type="stmt" count="0"/>
-      <line num="71" type="method" name="on_cache_level_change" visibility="public" complexity="3" crap="12" count="0"/>
-      <line num="77" type="stmt" count="0"/>
-      <line num="78" type="stmt" count="0"/>
-      <line num="81" type="stmt" count="0"/>
-      <line num="82" type="stmt" count="0"/>
-      <line num="83" type="stmt" count="0"/>
-      <line num="93" type="method" name="add_to_runtime" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="95" type="stmt" count="0"/>
-      <line num="96" type="stmt" count="0"/>
-      <line num="97" type="stmt" count="0"/>
-      <line num="98" type="stmt" count="0"/>
-      <line num="100" type="stmt" count="0"/>
-      <metrics loc="103" ncloc="67" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="29" coveredelements="0"/>
+      <line num="47" type="method" name="hooks" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="48" type="stmt" count="0"/>
+      <line num="54" type="method" name="on_rewrite" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="55" type="stmt" count="0"/>
+      <line num="63" type="method" name="on_cache_level_change" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="69" type="stmt" count="0"/>
+      <line num="70" type="stmt" count="0"/>
+      <line num="73" type="stmt" count="0"/>
+      <line num="74" type="stmt" count="0"/>
+      <line num="75" type="stmt" count="0"/>
+      <line num="85" type="method" name="add_to_runtime" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="87" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
+      <line num="89" type="stmt" count="0"/>
+      <line num="90" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="0"/>
+      <metrics loc="95" ncloc="59" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="25" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cache/CacheExclusion.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion" namespace="global">
@@ -3436,6 +3432,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="70" loc="7967" ncloc="5307" classes="67" methods="317" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2708" coveredstatements="92" elements="3025" coveredelements="120"/>
+    <metrics files="70" loc="7959" ncloc="5299" classes="67" methods="317" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2704" coveredstatements="92" elements="3021" coveredelements="120"/>
   </project>
 </coverage>
