@@ -61,13 +61,6 @@ class Cache {
 	 * @param int|null $cacheLevel The cache level.
 	 */
 	public function on_cache_level_change( $cacheLevel ) {
-		/**
-		 * Respone Header Manager from container
-		 *
-		 * @var ResponseHeaderManager $responseHeaderManager
-		 */
-		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
-		$responseHeaderManager->add_header( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
 
 		// Remove the old option from EPC, if it exists.
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {

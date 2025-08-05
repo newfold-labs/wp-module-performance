@@ -3,7 +3,6 @@
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Skip404 as BurstSkip404;
 use NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser as BurstBrowser;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser as CacheBrowser;
-use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 
 $newfold_burst_safety_mode = function_exists( 'get_option' ) ? (bool) get_option( 'newfold_burst_safety_mode', false ) : false;
 $newfold_cache_level       = function_exists( 'newfold_cache_level' ) ? (int) get_option( 'newfold_cache_level', 0 ) : 0;
@@ -13,9 +12,6 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\Performance' ) ) {
 	if ( $newfold_burst_safety_mode ) {
 		$browser = new CacheBrowser();
 		$browser::maybeAddRules( $newfold_cache_level );
-
-		$response_header_manager = new ResponseHeaderManager();
-		$response_header_manager->add_header( 'X-Newfold-Cache-Level', $newfold_cache_level );
 
 		delete_option( 'newfold_burst_safety_mode' );
 	}
