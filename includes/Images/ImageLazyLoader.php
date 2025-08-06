@@ -117,6 +117,33 @@ class ImageLazyLoader {
 	}
 
 	/**
+	 * Cleans up content by replacing specific patterns with replacements.
+	 * This method is used to sanitize or modify content before lazy loading is applied.
+	 *
+	 * @param string $pattern Regular expression pattern to match.
+	 * @param string $search String to search for in the content.
+	 * @param string $replace String to replace the search string with.
+	 * @param string $content The content to be cleaned.
+	 * @return string The cleaned content.
+	 */
+	public function cleanContent( $pattern, $search, $replace, $content ) {
+
+		if ( empty( $content ) || empty( $pattern ) || empty( $search ) ) {
+			return $content;
+		}
+
+		$content = preg_replace_callback(
+			$pattern,
+			function ( $matches ) use ( $search, $replace ) {
+				$cleanedIframe = str_replace( $search, $replace, $matches[0] );
+				return $cleanedIframe;
+			},
+			$content
+		);
+		return $content;
+	}
+
+	/**
 	 * Applies lazy loading to images in HTML content.
 	 * Skips images with specified exclusion classes or attributes.
 	 *
@@ -134,6 +161,15 @@ class ImageLazyLoader {
 		libxml_use_internal_errors( true );
 
 		try {
+			if ( function_exists( 'et_setup_theme' ) ) {
+				$content = $this->cleanContent(
+					'/<iframe(.*?)<\/iframe>/s',
+					'<!-- [et_pb_line_break_holder] -->',
+					'',
+					$content
+				);
+			}
+
 			// Attempt to parse the HTML content using htmlentities for encoding.
 			$content = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>' . $content . '</body></html>';
 			if ( ! $doc->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD ) ) {
