@@ -86,7 +86,7 @@ class JetpackBoost {
 	 */
 	public function prefetch_jetpack_boost() {
 		if ( is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) ) {
-			$admin_url = admin_url( 'admin.php?page=jetpack-boost' );
+			$admin_url = apply_filters( 'nfd_build_url', admin_url( 'admin.php?page=jetpack-boost' ) );
 			echo '<link rel="prefetch" href="' . esc_url( $admin_url ) . '">' . "\n";
 		}
 	}
