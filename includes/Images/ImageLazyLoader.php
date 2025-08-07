@@ -126,7 +126,7 @@ class ImageLazyLoader {
 	 * @param string $content The content to be cleaned.
 	 * @return string The cleaned content.
 	 */
-	public function cleanContent( $pattern, $search, $replace, $content ) {
+	public function clean_content( $pattern, $search, $replace, $content ) {
 
 		if ( empty( $content ) || empty( $pattern ) || empty( $search ) ) {
 			return $content;
@@ -162,7 +162,7 @@ class ImageLazyLoader {
 
 		try {
 			if ( function_exists( 'et_setup_theme' ) ) {
-				$content = $this->cleanContent(
+				$content = $this->clean_content(
 					'/<iframe(.*?)<\/iframe>/s',
 					'<!-- [et_pb_line_break_holder] -->',
 					'',
