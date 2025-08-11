@@ -31,7 +31,7 @@
     "autoprefixer": "^10.4.21",
     "chalk": "^5.5.0",
     "css-minimizer-webpack-plugin": "^7.0.2",
-    "cypress": "^14.5.3",
+    "cypress": "^14.5.4",
     "cypress-axe": "^1.6.0",
     "glob": "^11.0.3",
     "postcss": "^8.5.6",
