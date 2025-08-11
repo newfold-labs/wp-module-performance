@@ -27,7 +27,7 @@
     "@testing-library/cypress": "^10.0.3",
     "@wordpress/env": "^10.27.0",
     "@wordpress/i18n": "^5.26.0",
-    "@wordpress/scripts": "^30.20.0",
+    "@wordpress/scripts": "^30.21.0",
     "autoprefixer": "^10.4.21",
     "chalk": "^5.5.0",
     "css-minimizer-webpack-plugin": "^7.0.2",
