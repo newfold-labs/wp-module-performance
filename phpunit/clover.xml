@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1755177220">
-  <project timestamp="1755177220">
+<coverage generated="1755177310">
+  <project timestamp="1755177310">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
