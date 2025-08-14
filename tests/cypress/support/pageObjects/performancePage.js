@@ -51,7 +51,7 @@ class performancePage {
 	}
 
 	getListItems() {
-		return cy.get( 'ul.nfd-select__options > li' );
+		return cy.get( '.nfd-select__options > .nfd-select__option' );
 	}
 
 	getMirageToggle() {
@@ -150,7 +150,7 @@ class performancePage {
 			.then( ( buttonLabel ) => {
 				if ( 'onlyMouseDown' === type ) {
 					cy.get(
-						'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li'
+						'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > .nfd-select__option'
 					)
 						.should( 'have.length', 1 )
 						.invoke( 'text' )
@@ -163,7 +163,7 @@ class performancePage {
 						} );
 				} else {
 					cy.get(
-						'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > li'
+						'[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > .nfd-select__option'
 					).should( 'have.length', 2 );
 				}
 			} );
