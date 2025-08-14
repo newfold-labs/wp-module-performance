@@ -38,7 +38,6 @@ if ( function_exists( 'add_action' ) ) {
 		}
 	);
 }
-
 new CacheFeatureHooks();
 
 require_once __DIR__ . '/includes/BurstSafetyMode/init.php';

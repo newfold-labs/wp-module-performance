@@ -64,7 +64,7 @@ class ImageLimitBanner {
 	 * Displays the permanent ban banner.
 	 */
 	private function display_ban_banner() {
-		$support_link = admin_url( "admin.php?page={$this->brand}#/help" );
+		$support_link = apply_filters( 'nfd_build_url', admin_url( "admin.php?page={$this->brand}#/help" ) );
 
 		echo '<div class="notice notice-error">';
 		echo '<p>';
