@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1754940184">
-  <project timestamp="1754940184">
+<coverage generated="1755177189">
+  <project timestamp="1755177189">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="0" elements="27" coveredelements="0"/>
@@ -1299,7 +1299,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/HealthChecks/PersistentObjectCacheHealthCheck.php">
       <class name="NewfoldLabs\WP\Module\Performance\HealthChecks\PersistentObjectCacheHealthCheck" namespace="global">
-        <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+        <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="8" coveredelements="8"/>
       </class>
       <line num="12" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="13" type="stmt" count="1"/>
@@ -1307,15 +1307,9 @@
       <line num="15" type="stmt" count="1"/>
       <line num="16" type="stmt" count="1"/>
       <line num="17" type="stmt" count="1"/>
-      <line num="18" type="stmt" count="1"/>
-      <line num="19" type="stmt" count="1"/>
-      <line num="20" type="stmt" count="1"/>
-      <line num="21" type="stmt" count="1"/>
-      <line num="22" type="stmt" count="1"/>
-      <line num="23" type="stmt" count="1"/>
-      <line num="31" type="method" name="test" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="32" type="stmt" count="1"/>
-      <metrics loc="35" ncloc="23" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+      <line num="25" type="method" name="test" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="26" type="stmt" count="1"/>
+      <metrics loc="29" ncloc="17" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="8" coveredelements="8"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/HealthChecks/PostRevisionsHealthCheck.php">
       <class name="NewfoldLabs\WP\Module\Performance\HealthChecks\PostRevisionsHealthCheck" namespace="global">
@@ -3432,6 +3426,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="70" loc="7959" ncloc="5299" classes="67" methods="317" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2704" coveredstatements="92" elements="3021" coveredelements="120"/>
+    <metrics files="70" loc="7953" ncloc="5293" classes="67" methods="317" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2698" coveredstatements="86" elements="3015" coveredelements="114"/>
   </project>
 </coverage>
