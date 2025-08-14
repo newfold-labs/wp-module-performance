@@ -51,7 +51,7 @@ class performancePage {
 	}
 
 	getListItems() {
-		return cy.get( 'ul.nfd-select__options > li' );
+		return cy.get( '.nfd-select__options > .nfd-select__option' );
 	}
 
 	getMirageToggle() {
