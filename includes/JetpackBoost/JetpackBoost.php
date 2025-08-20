@@ -97,8 +97,9 @@ class JetpackBoost {
 	 * @return void
 	 */
 	public function handle_jetpack_boost_default_values() {
-		if ( $this->container->has( 'isFreshInstallation' ) && $this->container->get( 'isFreshInstallation' ) && is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) ) {
+		if ( $this->container->has( 'isFreshInstallation' ) && $this->container->get( 'isFreshInstallation' ) && is_plugin_active( 'jetpack-boost/jetpack-boost.php' ) && ! get_option( 'nfd_jetpack_boost_status_render-blocking-js_init', false ) ) {
 			update_option( 'jetpack_boost_status_render-blocking-js', true );
+			update_option( 'nfd_jetpack_boost_status_render-blocking-js_init', true );
 		}
 	}
 }
