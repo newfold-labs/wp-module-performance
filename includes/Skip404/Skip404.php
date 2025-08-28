@@ -1,15 +1,31 @@
 <?php
+/**
+ * Skip404
+ *
+ * Manages registration/unregistration of a .htaccess fragment that prevents
+ * WordPress 404 handling for static-file requests when the path looks like
+ * a static asset but the file/dir isn't present. Uses the centralized
+ * HtaccessApi fragment registry to ensure safe, debounced writes.
+ *
+ * @package NewfoldLabs\WP\Module\Performance\Skip404
+ * @since 1.0.0
+ */
 
 namespace NewfoldLabs\WP\Module\Performance\Skip404;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
-
-use function WP_Forge\WP_Htaccess_Manager\addContent;
-use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
+use NewfoldLabs\WP\Module\Htaccess\Api as HtaccessApi;
+use NewfoldLabs\WP\Module\Performance\Skip404\Fragments\Skip404Fragment;
 
 /**
  * Handles Skip 404 functionality.
+ *
+ * Registers/unregisters a fragment that short-circuits requests for typical
+ * static extensions (css/js/images, etc.) so Apache stops rewrite processing
+ * early instead of punting them into WP's 404 handler.
+ *
+ * @since 1.0.0
  */
 class Skip404 {
 
@@ -28,13 +44,23 @@ class Skip404 {
 	const OPTION_NAME = 'newfold_skip_404_handling';
 
 	/**
-	 * The file marker name.
+	 * Human-friendly marker text printed in BEGIN/END comments.
+	 *
+	 * @var string
 	 */
 	const MARKER = 'Newfold Skip 404 Handling for Static Files';
 
+	/**
+	 * Globally-unique fragment identifier used by the registry.
+	 *
+	 * @var string
+	 */
+	const FRAGMENT_ID = 'nfd.skip404.static';
 
 	/**
 	 * Constructor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param Container $container The dependency injection container.
 	 */
@@ -54,44 +80,52 @@ class Skip404 {
 		register_deactivation_hook( $container->plugin()->file, array( $this, 'on_deactivation' ) );
 	}
 
-
 	/**
-	 * Perform actions on enabling/disabling Performance feature
+	 * Perform actions on enabling/disabling Performance feature.
 	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
-	public function handle_actions_on_plugins_loaded() {
+	public function handle_actions_on_plugins_loaded(): void {
 		add_action( 'newfold/features/action/onEnable:performance', array( $this, 'on_activation' ) );
 		add_action( 'newfold/features/action/onDisable:performance', array( $this, 'on_deactivation' ) );
 	}
 
 	/**
-	 * Detect if the feature needs to be performed or not
+	 * Detect if the feature needs to be performed or not.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param Container $container Dependency injection container.
-	 *
 	 * @return bool
 	 */
-	public static function is_active( Container $container ) {
+	public static function is_active( Container $container ): bool {
 		return (bool) $container->has( 'isApache' ) && $container->get( 'isApache' );
 	}
 
 	/**
-	 * Get value for SKIP404 option
+	 * Get value for SKIP404 option.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
-	public static function get_value() {
+	public static function get_value(): bool {
 		return (bool) get_option( self::OPTION_NAME, true );
 	}
 
 	/**
 	 * When updating .htaccess, also update our rules as appropriate.
+	 *
+	 * Also cleans up an older EPC option if set.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
-	public function on_update_htaccess() {
+	public function on_update_htaccess(): void {
 		self::maybe_add_rules( self::get_value() );
 
-		// Remove the old option from EPC, if it exists
+		// Remove the old option from EPC, if it exists.
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'epc_skip_404_handling', 0 ) ) ) {
 			update_option( 'epc_skip_404_handling', 0 );
 			delete_option( 'epc_skip_404_handling' );
@@ -101,58 +135,70 @@ class Skip404 {
 	/**
 	 * Conditionally add or remove .htaccess rules based on option value.
 	 *
-	 * @param bool|null $shouldSkip404Handling if should skip 404 handling.
+	 * @since 1.0.0
+	 *
+	 * @param bool|null $should_skip_404_handling If we should enable Skip 404.
+	 * @return void
 	 */
-	public static function maybe_add_rules( $shouldSkip404Handling ) {
-		(bool) $shouldSkip404Handling ? self::add_rules() : self::remove_rules();
+	public static function maybe_add_rules( $should_skip_404_handling ): void {
+		(bool) $should_skip_404_handling ? self::add_rules() : self::remove_rules();
 	}
 
 	/**
-	 * Add our rules to the .htacces file.
+	 * Register (or replace) our fragment with the current settings.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
-	public static function add_rules() {
-		$content = <<<HTACCESS
-            <IfModule mod_rewrite.c>
-                RewriteEngine On
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteCond %{REQUEST_FILENAME} !-d
-                RewriteCond %{REQUEST_URI} !(robots\.txt|ads\.txt|[a-z0-9_\-]*sitemap[a-z0-9_\.\-]*\.(xml|xsl|html)(\.gz)?)
-                RewriteCond %{REQUEST_URI} \.(css|htc|less|js|js2|js3|js4|html|htm|rtf|rtx|txt|xsd|xsl|xml|asf|asx|wax|wmv|wmx|avi|avif|avifs|bmp|class|divx|doc|docx|eot|exe|gif|gz|gzip|ico|jpg|jpeg|jpe|webp|json|mdb|mid|midi|mov|qt|mp3|m4a|mp4|m4v|mpeg|mpg|mpe|webm|mpp|otf|_otf|odb|odc|odf|odg|odp|ods|odt|ogg|ogv|pdf|png|pot|pps|ppt|pptx|ra|ram|svg|svgz|swf|tar|tif|tiff|ttf|ttc|_ttf|wav|wma|wri|woff|woff2|xla|xls|xlsx|xlt|xlw|zip)$ [NC]
-                RewriteRule .* - [L]
-            </IfModule>
-            HTACCESS; // phpcs:ignore Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsedHeredocCloser
-
-		addContent( self::MARKER, $content );
+	public static function add_rules(): void {
+		HtaccessApi::register(
+			new Skip404Fragment(
+				self::FRAGMENT_ID,
+				self::MARKER
+			),
+			true // queue apply to coalesce writes
+		);
 	}
 
 	/**
-	 * Remove our rules from the .htaccess file.
+	 * Unregister our fragment.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
-	public static function remove_rules() {
-		removeMarkers( self::MARKER );
+	public static function remove_rules(): void {
+		HtaccessApi::unregister( self::FRAGMENT_ID );
 	}
 
 	/**
 	 * Handle activation logic.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
-	public static function on_activation() {
+	public static function on_activation(): void {
 		self::maybe_add_rules( self::get_value() );
 	}
 
 	/**
 	 * Handle deactivation logic.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
-	public static function on_deactivation() {
+	public static function on_deactivation(): void {
 		self::remove_rules();
 	}
 
 	/**
 	 * Add to Newfold SDK runtime.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $sdk SDK data.
 	 * @return array SDK data.
 	 */
-	public function add_to_runtime( $sdk ) {
+	public function add_to_runtime( $sdk ): array {
 		$values = array(
 			'is_active' => $this->get_value(),
 		);
