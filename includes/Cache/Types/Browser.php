@@ -4,29 +4,45 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;
-use WP_Forge\WP_Htaccess_Manager\htaccess;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
+use NewfoldLabs\WP\Module\Htaccess\Api as HtaccessApi;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
-use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 
 /**
  * Browser cache type.
+ *
+ * Migrated to new Htaccess Fragment approach:
+ *   - Writes are performed by registering/unregistering a fragment.
+ *   - Content is rendered by the BrowserCacheFragment class.
+ *
+ * @package NewfoldLabs\WP\Module\Performance\Cache\Types
+ * @since 1.0.0
  */
 class Browser extends CacheBase {
+
 	/**
-	 * The file marker name.
+	 * Human-friendly marker label used in BEGIN/END comments rendered
+	 * by the fragment. Preserved for readability and parity.
 	 *
 	 * @var string
 	 */
 	const MARKER = 'Newfold Browser Cache';
 
 	/**
+	 * Registry identifier for this fragment.
+	 * Must be globally unique across fragments.
+	 *
+	 * @var string
+	 */
+	const FRAGMENT_ID = 'nfd.cache.browser';
+
+	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
 	 * @param Container $container Dependency injection container.
-	 *
 	 * @return bool
 	 */
 	public static function should_enable( Container $container ) {
@@ -35,11 +51,12 @@ class Browser extends CacheBase {
 
 	/**
 	 * Constructor.
+	 *
+	 * Registers option listeners and filters that keep the fragment in sync
+	 * with cache level and exclusion changes.
 	 */
 	public function __construct() {
-
 		new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( __CLASS__, 'maybeAddRules' ) );
-
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
@@ -47,13 +64,17 @@ class Browser extends CacheBase {
 
 	/**
 	 * When updating .htaccess, also update our rules as appropriate.
+	 *
+	 * @return void
 	 */
 	public function on_rewrite() {
 		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
-	 * Manage on exlcusion option change.
+	 * Handle exclusion option change: refresh the fragment.
+	 *
+	 * @return void
 	 */
 	public static function exclusionChange() {
 		self::maybeAddRules( get_cache_level() );
@@ -62,77 +83,60 @@ class Browser extends CacheBase {
 	/**
 	 * Determine whether to add or remove rules based on caching level.
 	 *
-	 * @param int|null $cacheLevel The caching level.
+	 * @param int|null $cache_level The caching level.
+	 * @return void
 	 */
-	public static function maybeAddRules( $cacheLevel ) {
-		absint( $cacheLevel ) > 0 ? self::addRules( $cacheLevel ) : self::removeRules();
+	public static function maybeAddRules( $cache_level ) {
+		absint( $cache_level ) > 0 ? self::addRules( $cache_level ) : self::removeRules();
 	}
 
 	/**
-	 * Remove our rules from the .htaccess file.
+	 * Remove our rules by unregistering the fragment.
+	 *
+	 * @return void
 	 */
 	public static function removeRules() {
-		removeMarkers( self::MARKER );
+		HtaccessApi::unregister( self::FRAGMENT_ID );
 	}
 
 	/**
-	 * Add our rules to the .htaccess file.
+	 * Add (or replace) our rules by registering a fragment.
 	 *
-	 * @param int $cacheLevel The caching level.
-	 *
-	 * @return bool
+	 * @param int $cache_level The caching level (1–3).
+	 * @return void
 	 */
-	public static function addRules( $cacheLevel ) {
+	public static function addRules( $cache_level ) {
 
-		$fileTypeExpirations = self::getFileTypeExpirations( $cacheLevel );
+		// Build exclusion pattern (same logic as before).
+		$exclusion_pattern = '';
+		$cache_exclusion   = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
 
-		$tab = "\t";
-
-		$rules[] = '<IfModule mod_expires.c>';
-		$rules[] = "{$tab}ExpiresActive On";
-
-		foreach ( $fileTypeExpirations as $file_type => $expiration ) {
-			if ( 'default' === $file_type ) {
-				$rules[] = "{$tab}ExpiresDefault \"access plus {$expiration}\"";
-			} else {
-				$rules[] = "{$tab}ExpiresByType {$file_type} \"access plus {$expiration}\"";
-			}
-		}
-		$rules[] = '</IfModule>';
-
-		$cache_exclusion = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
 		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
-			$cache_exclusion_parameters = array_map( 'trim', explode( ',', sanitize_text_field( get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' ) ) ) );
-			$cache_exclusion_parameters = implode( '|', $cache_exclusion_parameters );
-
-			// Add the cache exclusion rules.
-			$rules[] = '<IfModule mod_rewrite.c>';
-			$rules[] = 'RewriteEngine On';
-			$rules[] = "RewriteCond %{REQUEST_URI} ^/({$cache_exclusion_parameters}) [NC]";
-			$rules[] = '<IfModule mod_headers.c>';
-			$rules[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
-			$rules[] = 'Header set Pragma "no-cache"';
-			$rules[] = 'Header set Expires 0';
-			$rules[] = '</IfModule>';
-			$rules[] = '</IfModule>';
-			// Add the end of the rules about cache exclusion.
+			$parts             = array_map( 'trim', explode( ',', sanitize_text_field( $cache_exclusion ) ) );
+			$exclusion_pattern = implode( '|', array_filter( $parts ) );
 		}
 
-		$htaccess = new htaccess( self::MARKER );
-
-		return $htaccess->addContent( $rules );
+		// Register (or replace) a fragment with the current settings.
+		HtaccessApi::register(
+			new BrowserCacheFragment(
+				self::FRAGMENT_ID,
+				self::MARKER,
+				absint( $cache_level ),
+				$exclusion_pattern
+			),
+			true // queue apply
+		);
 	}
 
 	/**
 	 * Get the filetype expirations based on the current caching level.
 	 *
-	 * @param int $cacheLevel The caching level.
-	 *
-	 * @return string[]
+	 * @param int $cache_level The caching level.
+	 * @return array<string,string> Map of mime-type => TTL (human string).
 	 */
-	protected static function getFileTypeExpirations( int $cacheLevel ) {
+	public static function getFileTypeExpirations( int $cache_level ) {
 
-		switch ( $cacheLevel ) {
+		switch ( $cache_level ) {
 			case 3:
 				return array(
 					'default'         => '1 week',
@@ -182,6 +186,8 @@ class Browser extends CacheBase {
 
 	/**
 	 * Handle activation logic.
+	 *
+	 * @return void
 	 */
 	public static function on_activation() {
 		self::maybeAddRules( get_cache_level() );
@@ -189,6 +195,8 @@ class Browser extends CacheBase {
 
 	/**
 	 * Handle deactivation logic.
+	 *
+	 * @return void
 	 */
 	public static function on_deactivation() {
 		self::removeRules();
