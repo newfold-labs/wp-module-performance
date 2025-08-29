@@ -7,13 +7,13 @@ use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
-use WP_Forge\WP_Htaccess_Manager\htaccess;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment;
+use NewfoldLabs\WP\Module\Htaccess\Api as HtaccessApi;
 use wpscholar\Url;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 use function NewfoldLabs\WP\Module\Performance\remove_directory;
 use function NewfoldLabs\WP\Module\Performance\should_cache_pages;
-use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
 use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
 /**
@@ -28,17 +28,24 @@ class File extends CacheBase implements Purgeable {
 	const CACHE_DIR = WP_CONTENT_DIR . '/newfold-page-cache/';
 
 	/**
-	 * The file marker name.
+	 * Human-friendly marker label used in BEGIN/END comments.
 	 *
 	 * @var string
 	 */
 	const MARKER = 'Newfold File Cache';
 
 	/**
+	 * Registry identifier for this fragment.
+	 * Must be globally unique across fragments.
+	 *
+	 * @var string
+	 */
+	const FRAGMENT_ID = 'nfd.cache.file';
+
+	/**
 	 * Whether or not the code for this cache type should be loaded.
 	 *
 	 * @param Container $container Dependency injection container.
-	 *
 	 * @return bool
 	 */
 	public static function should_enable( Container $container ) {
@@ -57,7 +64,9 @@ class File extends CacheBase implements Purgeable {
 	}
 
 	/**
-	 * Manage on exlcusion option change.
+	 * Manage on exclusion option change.
+	 *
+	 * @return void
 	 */
 	public static function exclusionChange() {
 		self::maybeAddRules( get_cache_level() );
@@ -65,58 +74,73 @@ class File extends CacheBase implements Purgeable {
 
 	/**
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
+	 *
+	 * @return void
 	 */
 	public function on_rewrite() {
 		self::maybeAddRules( get_cache_level() );
 	}
 
 	/**
-	 * Determine whether to add or remove rules based on caching level.
+	 * Determine whether to add or remove rules based on caching level and brand.
 	 *
-	 * @param  int $cacheLevel  The caching level.
+	 * @param int $cache_level The caching level.
+	 * @return void
 	 */
-	public static function maybeAddRules( $cacheLevel ) {
+	public static function maybeAddRules( $cache_level ) {
 		$brand = getContainer()->plugin()->brand;
-		absint( $cacheLevel ) > 1 && 'bluehost' !== $brand && 'hostgator' !== $brand ? self::addRules() : self::removeRules();
+
+		if ( absint( $cache_level ) > 1 && 'bluehost' !== $brand && 'hostgator' !== $brand ) {
+			self::addRules();
+		} else {
+			self::removeRules();
+		}
 	}
 
 	/**
-	 * Add our content to the .htaccess file.
+	 * Register (or replace) our fragment with current settings.
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public static function addRules() {
-		$base = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
-		$path = str_replace( get_home_path(), '/', self::CACHE_DIR );
+		// Compute base path and relative cache directory path for rewrite rules.
+		$base_path      = (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+		$rel_cache_path = str_replace( trailingslashit( get_home_path() ), '/', trailingslashit( self::CACHE_DIR ) );
 
-		$content = <<<HTACCESS
-<IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteBase {$base}
-	RewriteRule ^{$path}/ - [L]
-	RewriteCond %{REQUEST_METHOD} !POST
-	RewriteCond %{QUERY_STRING} !.*=.*
-	RewriteCond %{HTTP_COOKIE} !(wordpress_test_cookie|comment_author|wp\-postpass|wordpress_logged_in|wptouch_switch_toggle|wp_woocommerce_session_) [NC]
-	RewriteCond %{HTTP:Cache-Control} ^((?!no-cache).)*$
-	RewriteCond %{DOCUMENT_ROOT}{$path}/$1/_index.html -f
-	RewriteRule ^(.*)\$ {$path}/$1/_index.html [L]
-</IfModule>
-HTACCESS;
+		// Build optional exclusion pattern (pipe-separated).
+		$exclusion_pattern = '';
+		$cache_exclusion   = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
 
-		$htaccess = new htaccess( self::MARKER );
+		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
+			$parts             = array_map( 'trim', explode( ',', sanitize_text_field( $cache_exclusion ) ) );
+			$exclusion_pattern = implode( '|', array_filter( $parts ) );
+		}
 
-		return $htaccess->addContent( $content );
+		HtaccessApi::register(
+			new FileCacheFragment(
+				self::FRAGMENT_ID,
+				self::MARKER,
+				$base_path,
+				$rel_cache_path,
+				$exclusion_pattern
+			),
+			true // queue apply
+		);
 	}
 
 	/**
-	 * Remove our content from the .htaccess file.
+	 * Unregister our fragment.
+	 *
+	 * @return void
 	 */
 	public static function removeRules() {
-		removeMarkers( self::MARKER );
+		HtaccessApi::unregister( self::FRAGMENT_ID );
 	}
 
 	/**
 	 * Initiate the generation of a page cache for a given request, if necessary.
+	 *
+	 * @return void
 	 */
 	public function maybeGeneratePageCache() {
 		if ( $this->isCacheable() ) {
@@ -132,7 +156,6 @@ HTACCESS;
 	 * Write page content to cache.
 	 *
 	 * @param  string $content  Page content to be cached.
-	 *
 	 * @return string
 	 */
 	public function write( $content ) {
@@ -158,7 +181,6 @@ HTACCESS;
 			}
 
 			$wp_filesystem->put_contents( $file, $content, FS_CHMOD_FILE );
-
 		}
 
 		return $content;
@@ -233,15 +255,13 @@ HTACCESS;
 	 * @return bool
 	 */
 	public function shouldCache() {
-
 		// If page caching is disabled, then don't cache
 		if ( ! should_cache_pages() ) {
 			return false;
 		}
 
-		// Check cache exclusion.
+		// Check cache exclusion (application-level).
 		$cache_exclusion_parameters = $this->exclusions();
-
 		if ( ! empty( $cache_exclusion_parameters ) ) {
 			foreach ( $cache_exclusion_parameters as $param ) {
 				if ( stripos( $_SERVER['REQUEST_URI'], $param ) !== false ) {
@@ -250,7 +270,7 @@ HTACCESS;
 			}
 		}
 
-		// Don't cache if a file exists and hasn't expired
+		// Don't cache if a file exists and hasn't expired.
 		$file = $this->getStorageFileForRequest();
 		if ( file_exists( $file ) && filemtime( $file ) + $this->getExpirationTimeframe() > time() ) {
 			return false;
@@ -266,8 +286,8 @@ HTACCESS;
 	 */
 	protected function exclusions() {
 		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
-		$cache_exclusion_option = array_map( 'trim', explode( ',', get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
-		return array_merge( $default, $cache_exclusion_option );
+		$cache_exclusion_option = array_map( 'trim', explode( ',', (string) get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
+		return array_merge( $default, array_filter( $cache_exclusion_option ) );
 	}
 
 	/**
@@ -288,6 +308,8 @@ HTACCESS;
 
 	/**
 	 * Purge everything from the cache.
+	 *
+	 * @return void
 	 */
 	public function purge_all() {
 		remove_directory( self::CACHE_DIR );
@@ -297,6 +319,7 @@ HTACCESS;
 	 * Purge a specific URL from the cache.
 	 *
 	 * @param string $url the url to purge.
+	 * @return void
 	 */
 	public function purge_url( $url ) {
 		$path = $this->getStoragePathForRequest();
@@ -321,9 +344,9 @@ HTACCESS;
 		static $path;
 
 		if ( ! isset( $path ) ) {
-			$url      = new Url();
-			$basePath = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
-			$path     = trailingslashit( self::CACHE_DIR . str_replace( $basePath, '', esc_url( $url->path ) ) );
+			$url       = new Url();
+			$base_path = (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+			$path      = trailingslashit( self::CACHE_DIR . str_replace( $base_path, '', esc_url( $url->path ) ) );
 		}
 
 		return $path;
@@ -340,6 +363,8 @@ HTACCESS;
 
 	/**
 	 * Handle activation logic.
+	 *
+	 * @return void
 	 */
 	public static function on_activation() {
 		self::maybeAddRules( get_cache_level() );
@@ -347,13 +372,14 @@ HTACCESS;
 
 	/**
 	 * Handle deactivation logic.
+	 *
+	 * @return void
 	 */
 	public static function on_deactivation() {
-
-		// Remove file cache rules from .htaccess
+		// Remove file cache rules from .htaccess via fragment unregister.
 		self::removeRules();
 
-		// Remove all statically cached files
+		// Remove all statically cached files.
 		remove_directory( self::CACHE_DIR );
 	}
 }
