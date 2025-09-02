@@ -34,7 +34,8 @@
 	z-index: 10;
 }
 
-.nfd-performance-jetpack-boost-container-options .automatic-critical-css .nfd-feature-upsell .nfd-button--upsell {
+.nfd-performance-jetpack-boost-container-options .automatic-critical-css .nfd-feature-upsell .nfd-button--upsell,
+.nfd-performance-jetpack-boost-container-options .generate-css .nfd-feature-upsell .nfd-button--upsell {
 	top: 0;
 	right: 0;
 	position: absolute;

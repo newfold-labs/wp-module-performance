@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-import { useRef, useState } from '@wordpress/element';
+import { useRef, useState, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import parse from 'html-react-parser';
 
@@ -17,6 +17,7 @@ import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 import { STORE_NAME } from '../../data/constants';
 import getJetpackBoostText from './getJetpackBoostText';
 import InstallActivatePluginButton from './InstallActivatePluginButton';
+import DisableComingSoonButton from './DisableComingSoonButton';
 
 const JetpackBoost = () => {
 	const {
@@ -48,6 +49,28 @@ const JetpackBoost = () => {
 	const siteUrl = currentUrl.split( '/wp-admin/' )[ 0 ];
 	const sdk = NewfoldRuntime.sdk?.jetpackboost || {};
 
+	const [isComingSoonActive, setIsComingSoonActive] = useState( false );
+	
+	useEffect( () => {
+			apiFetch( {
+				url: NewfoldRuntime.createApiUrl(
+					'/newfold-coming-soon/v1/status'
+				),
+				method: 'GET',
+			} )
+				.then( (response) => {
+					if ( response.hasOwnProperty( 'comingSoon' ) ) {
+						setIsComingSoonActive(response.comingSoon);
+					} else {
+						setIsComingSoonActive(false);
+					}
+				} )
+				.catch( () => {
+					setIsComingSoonActive(false);
+				} )
+	}, [] );
+
+	
 	const isPremiumActive = sdk.jetpack_premium_is_active || false;
 	const [ isModuleEnabled, setIsModuleEnabled ] = useState(
 		sdk.is_active || false
@@ -256,6 +279,21 @@ const JetpackBoost = () => {
 		/>
 	);
 
+	const cssGenerateField = (
+		<ToggleField
+			id="critical-css"
+			label={ jetpackBoostCriticalCssTitle }
+			description={ parse(
+				jetpackBoostCriticalCssDescription
+			) }
+			checked={ !! settings[ 'critical-css' ] }
+			onChange={ ( value ) =>
+				handleOnChangeOption( value, 'critical-css' )
+			}
+			disabled={ isComingSoonActive }
+		/>
+	);
+
 	return (
 		<Container.SettingsField
 			title={ performanceAdvancedSettingsTitle }
@@ -285,21 +323,18 @@ const JetpackBoost = () => {
 				) }
 
 				{ ! isPremiumActive && (
-					<div className="section" style={ { marginBottom: '20px' } }>
-						<ToggleField
-							id="critical-css"
-							label={ jetpackBoostCriticalCssTitle }
-							description={ parse(
-								jetpackBoostCriticalCssDescription
+					<div className="section generate-css" style={ { marginBottom: '20px' } }>
+						{ isComingSoonActive ? (
+							<DisableComingSoonButton setIsComingSoonActive={setIsComingSoonActive}>
+								{ cssPremiumField }
+							</DisableComingSoonButton>
+							) : (
+								cssGenerateField
 							) }
-							checked={ !! settings[ 'critical-css' ] }
-							onChange={ ( value ) =>
-								handleOnChangeOption( value, 'critical-css' )
-							}
-						/>
 						<div>
 							{ settings[ 'critical-css' ] &&
-								progressBarValue === null && (
+								progressBarValue === null &&
+								!isComingSoonActive &&  (
 									<Button
 										size="small"
 										variant="secondary"
