@@ -103,6 +103,10 @@ const getJetpackBoostText = () => ( {
 		'Exclude CSS Strings',
 		'wp-module-performance'
 	),
+	jetpackBoostDisableComingSoonLabel: __(
+		'Disable Coming Soon',
+		'wp-module-performance'
+	)
 } );
 
 export default getJetpackBoostText;
