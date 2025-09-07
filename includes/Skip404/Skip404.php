@@ -70,25 +70,7 @@ class Skip404 {
 		new OptionListener( self::OPTION_NAME, array( __CLASS__, 'maybe_add_rules' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_update_htaccess' ) );
-
-		add_action( 'newfold_container_set', array( $this, 'handle_actions_newfold_container_set' ) );
-		add_action( 'plugins_loaded', array( $this, 'handle_actions_on_plugins_loaded' ) );
-
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
-
-		register_activation_hook( $container->plugin()->file, array( $this, 'on_activation' ) );
-		register_deactivation_hook( $container->plugin()->file, array( $this, 'on_deactivation' ) );
-	}
-
-	/**
-	 * Perform actions on enabling/disabling Performance feature.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function handle_actions_on_plugins_loaded(): void {
-		add_action( 'newfold/features/action/onEnable:performance', array( $this, 'on_activation' ) );
-		add_action( 'newfold/features/action/onDisable:performance', array( $this, 'on_deactivation' ) );
 	}
 
 	/**
@@ -168,26 +150,6 @@ class Skip404 {
 	 */
 	public static function remove_rules(): void {
 		HtaccessApi::unregister( self::FRAGMENT_ID );
-	}
-
-	/**
-	 * Handle activation logic.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public static function on_activation(): void {
-		self::maybe_add_rules( self::get_value() );
-	}
-
-	/**
-	 * Handle deactivation logic.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public static function on_deactivation(): void {
-		self::remove_rules();
 	}
 
 	/**

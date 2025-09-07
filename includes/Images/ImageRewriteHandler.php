@@ -67,7 +67,7 @@ class ImageRewriteHandler {
 	 */
 	public function __construct() {
 		// Listen to image optimization settings changes.
-		add_action( 'update_option_nfd_image_optimization', array( $this, 'on_image_setting_change' ), 10, 2 );
+		add_action( 'update_option_nfd_image_optimization', array( __CLASS__, 'on_image_setting_change' ), 10, 2 );
 	}
 
 	/**
@@ -80,7 +80,7 @@ class ImageRewriteHandler {
 	 *
 	 * @return void
 	 */
-	public function add_missing_image_rule(): void {
+	public static function add_missing_image_rule(): void {
 		HtaccessApi::register(
 			new MissingImageRedirectFragment(
 				self::FRAGMENT_ID_MISSING,
@@ -100,7 +100,7 @@ class ImageRewriteHandler {
 	 *
 	 * @return void
 	 */
-	public function add_existing_image_rule(): void {
+	public static function add_existing_image_rule(): void {
 		HtaccessApi::register(
 			new ExistingImageRedirectFragment(
 				self::FRAGMENT_ID_EXISTING,
@@ -117,7 +117,7 @@ class ImageRewriteHandler {
 	 *
 	 * @return void
 	 */
-	public function remove_rules(): void {
+	public static function remove_rules(): void {
 		HtaccessApi::unregister( self::FRAGMENT_ID_MISSING );
 		HtaccessApi::unregister( self::FRAGMENT_ID_EXISTING );
 	}
@@ -132,9 +132,8 @@ class ImageRewriteHandler {
 	 *
 	 * @return void
 	 */
-	public function on_activation(): void {
-		$this->add_missing_image_rule();
-		$this->add_existing_image_rule();
+	public static function on_activation(): void {
+		self::apply_rules_from_option();
 	}
 
 	/**
@@ -144,8 +143,8 @@ class ImageRewriteHandler {
 	 *
 	 * @return void
 	 */
-	public function on_deactivation(): void {
-		$this->remove_rules();
+	public static function on_deactivation(): void {
+		self::remove_rules();
 	}
 
 	/**
@@ -164,25 +163,41 @@ class ImageRewriteHandler {
 	 * @param mixed $new_value New settings value.
 	 * @return void
 	 */
-	public function on_image_setting_change( $old_value, $new_value ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
+	public static function on_image_setting_change( $old_value, $new_value ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
 		// Remove rules if the entire feature is disabled.
 		if ( empty( $new_value['enabled'] ) ) {
-			$this->remove_rules();
+			self::remove_rules();
 			return;
 		}
 
 		// Missing-image redirect toggle (auto-delete original images).
 		if ( ! empty( $new_value['auto_optimized_uploaded_images']['auto_delete_original_image'] ) ) {
-			$this->add_missing_image_rule();
+			self::add_missing_image_rule();
 		} else {
 			HtaccessApi::unregister( self::FRAGMENT_ID_MISSING );
 		}
 
 		// Prefer-optimized-image toggle.
 		if ( ! empty( $new_value['prefer_optimized_image_when_exists'] ) ) {
-			$this->add_existing_image_rule();
+			self::add_existing_image_rule();
 		} else {
 			HtaccessApi::unregister( self::FRAGMENT_ID_EXISTING );
 		}
+	}
+
+	/**
+	 * Apply rules based on the current `nfd_image_optimization` option value.
+	 *
+	 * Static helper intended for use on activation or boot to sync .htaccess
+	 * fragments with the saved settings, performing the same logic as
+	 * on_image_setting_change().
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public static function apply_rules_from_option(): void {
+		$current = get_option( 'nfd_image_optimization', array() );
+		self::on_image_setting_change( null, is_array( $current ) ? $current : array() );
 	}
 }
