@@ -138,11 +138,7 @@ class Performance {
 			add_filter( 'got_rewrite', '__return_true' );
 		}
 
-		if (
-			isset( $_REQUEST['action'], $_REQUEST['plugin'] ) &&
-			'activate' === $_REQUEST['action'] &&
-			$_REQUEST['plugin'] === $this->container->plugin()->basename
-		) {
+		if ( isset( $_REQUEST['action'], $_REQUEST['plugin'] ) && 'activate' === $_REQUEST['action'] && $_REQUEST['plugin'] === $this->container->plugin()->basename ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			add_filter(
 				'mod_rewrite_rules',
 				function ( $content ) {
@@ -159,7 +155,7 @@ class Performance {
 
 		add_filter( 'action_scheduler_retention_period', array( $this, 'nfd_asr_default' ) );
 		add_filter( 'action_scheduler_cleanup_batch_size', array( $this, 'nfd_as_cleanup_batch_size' ) );
-		add_filter( 'newfold/performance/images/initialize_lazy_loader', array( $this, 'initialize_lazy_loader' ) , 10, 1 );
+		add_filter( 'newfold_performance_images_initialize_lazy_loader', array( $this, 'initialize_lazy_loader' ), 10, 1 );
 	}
 
 	/**
@@ -366,9 +362,8 @@ class Performance {
 	 * @return bool
 	 */
 	public function initialize_lazy_loader( $initialized ) {
-
-		if( isset( $_REQUEST['action'] ) && strpos( $_REQUEST['action'],'bh_pdf_invoices_') !== false ) {
-			$initialized= false;
+		if ( isset( $_REQUEST['action'] ) && strpos( $_REQUEST['action'], 'bh_pdf_invoices_' ) !== false ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended 
+			$initialized = false;
 		}
 		return $initialized;
 	}

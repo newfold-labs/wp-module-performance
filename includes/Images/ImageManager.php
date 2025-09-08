@@ -61,7 +61,7 @@ class ImageManager {
 	 * Initializes the ImageLazyLoader if lazy loading is enabled.
 	 */
 	private function maybe_initialize_lazy_loader() {
-		if ( apply_filters('newfold/performance/images/initialize_lazy_loader', ImageSettings::is_optimization_enabled() && ImageSettings::is_lazy_loading_enabled() ) ) {
+		if ( apply_filters( 'newfold_performance_images_initialize_lazy_loader', ImageSettings::is_optimization_enabled() && ImageSettings::is_lazy_loading_enabled() ) ) {
 			new ImageLazyLoader();
 		}
 	}
