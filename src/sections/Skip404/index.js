@@ -19,9 +19,12 @@ const Skip404 = () => {
 	const [ skip404, setSkip404 ] = useState(
 		NewfoldRuntime?.sdk?.skip404?.is_active ?? false
 	);
+	const [ updating, setUpdating ] = useState( false );
+
 	const { pushNotification } = useDispatch( STORE_NAME );
 
 	const handleSkip404Change = () => {
+		setUpdating( true );
 		const newValue = ! skip404;
 
 		const apiUrl = NewfoldRuntime.createApiUrl(
@@ -39,6 +42,7 @@ const Skip404 = () => {
 			},
 		} )
 			.then( () => {
+				setUpdating( false );
 				pushNotification( 'skip404-change-notice', {
 					title: skip404NoticeTitle,
 					variant: 'success',
@@ -46,6 +50,7 @@ const Skip404 = () => {
 				} );
 			} )
 			.catch( () => {
+				setUpdating( false );
 				pushNotification( 'skip404-change-notice', {
 					title: optionNotSet,
 					variant: 'error',
@@ -66,6 +71,7 @@ const Skip404 = () => {
 				label={ skip404OptionLabel }
 				checked={ skip404 }
 				onChange={ handleSkip404Change }
+				disabled={ updating }
 			/>
 		</Container.SettingsField>
 	);
