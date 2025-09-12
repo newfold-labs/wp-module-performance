@@ -26,11 +26,11 @@ jobs:
   bluehost:
     name: Bluehost Build and Test
     needs: setup
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@develop
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-bluehost'
+      plugin-repo: 'newfold-labs/wp-plugin-bluehost@develop'
     secrets: inherit
 
   hostgator:
