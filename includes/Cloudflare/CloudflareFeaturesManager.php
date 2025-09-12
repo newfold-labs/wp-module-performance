@@ -95,6 +95,7 @@ class CloudflareFeaturesManager {
 		if ( is_array( $value ) ) {
 			ImageSettings::maybe_refresh_with_capabilities( $value );
 			FontSettings::maybe_refresh_with_capabilities( $value );
+			$this->update_htaccess_header( get_option( 'nfd_image_optimization', array() ), get_option( 'nfd_fonts_optimization', array() ) );
 		}
 	}
 
@@ -125,9 +126,11 @@ class CloudflareFeaturesManager {
 		$fonts_hash   = $fonts_enabled_flag ? substr( sha1( 'fonts' ), 0, 8 ) : '';
 		$header_value = "{$mirage_hash}{$polish_hash}{$fonts_hash}";
 
-		// If no features enabled, remove the fragment.
+		// Remove any existing fragment first to avoid duplicates.
+		HtaccessApi::unregister( self::FRAGMENT_ID );
+
+		// If no features enabled, return.
 		if ( '' === $header_value ) {
-			HtaccessApi::unregister( self::FRAGMENT_ID );
 			return;
 		}
 
