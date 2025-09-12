@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1757575267">
-  <project timestamp="1757575267">
+<coverage generated="1757682600">
+  <project timestamp="1757682600">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="3" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="16" coveredelements="0"/>
@@ -916,7 +916,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cloudflare/CloudflareFeaturesManager.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cloudflare\CloudflareFeaturesManager" namespace="global">
-        <metrics complexity="12" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="35" coveredelements="0"/>
+        <metrics complexity="12" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="36" coveredelements="0"/>
       </class>
       <line num="50" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="51" type="stmt" count="0"/>
@@ -932,28 +932,29 @@
       <line num="95" type="stmt" count="0"/>
       <line num="96" type="stmt" count="0"/>
       <line num="97" type="stmt" count="0"/>
-      <line num="114" type="method" name="update_htaccess_header" visibility="private" complexity="7" crap="56" count="0"/>
-      <line num="115" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="115" type="method" name="update_htaccess_header" visibility="private" complexity="7" crap="56" count="0"/>
       <line num="116" type="stmt" count="0"/>
-      <line num="118" type="stmt" count="0"/>
+      <line num="117" type="stmt" count="0"/>
       <line num="119" type="stmt" count="0"/>
       <line num="120" type="stmt" count="0"/>
-      <line num="123" type="stmt" count="0"/>
+      <line num="121" type="stmt" count="0"/>
       <line num="124" type="stmt" count="0"/>
       <line num="125" type="stmt" count="0"/>
       <line num="126" type="stmt" count="0"/>
-      <line num="129" type="stmt" count="0"/>
+      <line num="127" type="stmt" count="0"/>
       <line num="130" type="stmt" count="0"/>
-      <line num="131" type="stmt" count="0"/>
-      <line num="135" type="stmt" count="0"/>
-      <line num="136" type="stmt" count="0"/>
-      <line num="137" type="stmt" count="0"/>
+      <line num="133" type="stmt" count="0"/>
+      <line num="134" type="stmt" count="0"/>
       <line num="138" type="stmt" count="0"/>
       <line num="139" type="stmt" count="0"/>
       <line num="140" type="stmt" count="0"/>
       <line num="141" type="stmt" count="0"/>
       <line num="142" type="stmt" count="0"/>
-      <metrics loc="145" ncloc="67" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="35" coveredelements="0"/>
+      <line num="143" type="stmt" count="0"/>
+      <line num="144" type="stmt" count="0"/>
+      <line num="145" type="stmt" count="0"/>
+      <metrics loc="148" ncloc="69" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="36" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cloudflare/Fragments/CloudflareOptimizationHeaderFragment.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cloudflare\Fragments\CloudflareOptimizationHeaderFragment" namespace="global">
@@ -3641,6 +3642,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="76" loc="9142" ncloc="5644" classes="73" methods="354" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2840" coveredstatements="86" elements="3194" coveredelements="114"/>
+    <metrics files="76" loc="9145" ncloc="5646" classes="73" methods="354" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2841" coveredstatements="86" elements="3195" coveredelements="114"/>
   </project>
 </coverage>
