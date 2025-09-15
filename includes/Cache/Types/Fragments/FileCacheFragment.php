@@ -162,4 +162,14 @@ final class FileCacheFragment implements Fragment {
 
 		return implode( "\n", $lines );
 	}
+
+	/**
+	 * Optional regex patches (none for this fragment).
+	 *
+	 * @param Context $context Context snapshot (unused).
+	 * @return array
+	 */
+	public function patches( $context ) {
+		return array();
+	}
 }
