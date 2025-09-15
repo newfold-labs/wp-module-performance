@@ -131,10 +131,13 @@ final class Skip404Fragment implements Fragment {
 	 * @param Context $context Context snapshot (unused).
 	 * @return array
 	 */
-	public function patches( $context ) {
+	public function patches( $context ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		$id = $this->id;
 
+		// Self-contained snippet: includes !-f and !-d so it never catches real files/dirs.
 		$snippet  = "# NFD PATCH {$id} BEGIN\n";
+		$snippet .= "RewriteCond %{REQUEST_FILENAME} !-f\n";
+		$snippet .= "RewriteCond %{REQUEST_FILENAME} !-d\n";
 		$snippet .= "RewriteCond %{REQUEST_URI} !(robots\\.txt|ads\\.txt|[a-z0-9_\\-]*sitemap[a-z0-9_\\.\\-]*\\.(xml|xsl|html)(\\.gz)?)\n";
 		$snippet .= "RewriteCond %{REQUEST_URI} \\.(css|htc|less|js|js2|js3|js4|html|htm|rtf|rtx|txt|xsd|xsl|xml|asf|asx|wax|wmv|wmx|avi|avif|avifs|bmp|class|divx|doc|docx|eot|exe|gif|gz|gzip|ico|jpg|jpeg|jpe|webp|json|mdb|mid|midi|mov|qt|mp3|m4a|mp4|m4v|mpeg|mpg|mpe|webm|mpp|otf|_otf|odb|odc|odf|odg|odp|ods|odt|ogg|ogv|pdf|png|pot|pps|ppt|pptx|ra|ram|svg|svgz|swf|tar|tif|tiff|ttf|ttc|_ttf|wav|wma|wri|woff|woff2|xla|xls|xlsx|xlt|xlw|zip)$ [NC]\n";
 		$snippet .= "RewriteRule .* - [L]\n";
@@ -143,10 +146,9 @@ final class Skip404Fragment implements Fragment {
 		return array(
 			array(
 				'scope'       => 'wp_block',
-				// Collapse ANY number of blank lines before the WP rule to exactly one,
-				// then insert the snippet with no extra blank line above it.
-				'pattern'     => '~\n+[ \t]*(RewriteRule\s+\.\s+/index\.php\s+\[L\]\s*)$~m',
-				'replacement' => "\n" . $snippet . '$1',
+				// Find the two WP guards as a unit, and insert our snippet BEFORE them.
+				'pattern'     => '~^(?=[ \t]*RewriteCond[^\n]*%{REQUEST_FILENAME}\s+!-f\s*\R[ \t]*RewriteCond[^\n]*%{REQUEST_FILENAME}\s+!-d\s*\R)~m',
+				'replacement' => $snippet,
 				'limit'       => 1,
 			),
 		);
