@@ -111,6 +111,30 @@ const ImageOptimization = () => {
 		}
 	};
 
+	function capabilityKeyExists( key ) {
+		if (
+			typeof window.NewfoldRuntime !== 'undefined' &&
+			window.NewfoldRuntime.capabilities &&
+			Object.prototype.hasOwnProperty.call(
+				window.NewfoldRuntime.capabilities,
+				key
+			)
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	function isCapabilityEnabled( key ) {
+		return (
+			capabilityKeyExists( key ) &&
+			window.NewfoldRuntime.capabilities[ key ] === true
+		);
+	}
+
+	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
+	const mirageEnabled = isCapabilityEnabled( 'hasCloudflareMirage' );
+
 	const handleToggle = ( field, value ) => {
 		if ( isBanned ) return;
 
@@ -128,11 +152,11 @@ const ImageOptimization = () => {
 				updated.prefer_optimized_image_when_exists = value;
 				updated.cloudflare = {
 					polish: {
-						value,
+						value: value && polishEnabled,
 						user_set: true,
 					},
 					mirage: {
-						value,
+						value: value && mirageEnabled,
 						user_set: true,
 					},
 				};
@@ -192,27 +216,6 @@ const ImageOptimization = () => {
 		fetchSettings();
 	}, [] );
 
-	function capabilityKeyExists( key ) {
-		if (
-			typeof window.NewfoldRuntime !== 'undefined' &&
-			window.NewfoldRuntime.capabilities &&
-			Object.prototype.hasOwnProperty.call(
-				window.NewfoldRuntime.capabilities,
-				key
-			)
-		) {
-			return true;
-		}
-		return false;
-	}
-
-	function isCapabilityEnabled( key ) {
-		return (
-			capabilityKeyExists( key ) &&
-			window.NewfoldRuntime.capabilities[ key ] === true
-		);
-	}
-
 	if ( isLoading ) return <p>{ imageOptimizationLoadingMessage }</p>;
 
 	if ( isError )
@@ -255,8 +258,6 @@ const ImageOptimization = () => {
 		);
 	};
 
-	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
-	const mirageEnabled = isCapabilityEnabled( 'hasCloudflareMirage' );
 	const beingEnabled = updating === 'enabled';
 	const showToggles = polishEnabled || mirageEnabled;
 
