@@ -103,12 +103,6 @@ class PerformanceLifecycleHooks {
 		// Image rewrite rules.
 		ImageRewriteHandler::on_activation();
 
-		// Add/refresh cache-level response header.
-		$response_header_manager = $this->get_response_header_manager();
-		if ( $response_header_manager ) {
-			$response_header_manager->add_header( 'X-Newfold-Cache-Level', absint( get_cache_level() ) );
-		}
-
 		// Skip404 rules based on current option value.
 		Skip404::maybe_add_rules( Skip404::get_value() );
 	}
@@ -140,19 +134,9 @@ class PerformanceLifecycleHooks {
 	/**
 	 * On cache level change, update the response header and clean up legacy EPC option.
 	 *
-	 * @param int|null $cache_level The cache level.
 	 * @return void
 	 */
-	public function on_cache_level_change( $cache_level ) {
-		/**
-		 * Response Header Manager from container.
-		 *
-		 * @var \NewfoldLabs\WP\Module\Performance\ResponseHeaderManager $response_header_manager
-		 */
-		$response_header_manager = $this->get_response_header_manager();
-		if ( $response_header_manager ) {
-			$response_header_manager->add_header( 'X-Newfold-Cache-Level', absint( $cache_level ) );
-		}
+	public function on_cache_level_change() {
 
 		// Remove the old option from EPC, if it exists.
 		if ( $this->container && $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {

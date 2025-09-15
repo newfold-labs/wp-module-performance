@@ -53,9 +53,6 @@ class Browser {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$responseHeaderManager = new ResponseHeaderManager();
-		$responseHeaderManager->add_header( 'X-Newfold-Cache-Level', BURST_SAFETY_CACHE_LEVEL );
-
 		self::addRules();
 	}
 
