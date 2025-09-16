@@ -105,6 +105,9 @@ class PerformanceLifecycleHooks {
 
 		// Skip404 rules based on current option value.
 		Skip404::maybe_add_rules( Skip404::get_value() );
+
+		// Ensure EPC is off and removes its rules
+		$this->nfd_force_disable_epc_options();
 	}
 
 	/**
@@ -129,6 +132,9 @@ class PerformanceLifecycleHooks {
 
 		// Remove Skip404 rules.
 		Skip404::remove_rules();
+
+		// Hand settings back to EPC to match the brand plugin's current values
+		$this->nfd_sync_epc_from_brand();
 	}
 
 	/**
@@ -152,5 +158,59 @@ class PerformanceLifecycleHooks {
 	 */
 	protected function get_response_header_manager() {
 		return new ResponseHeaderManager();
+	}
+
+	/**
+	 * Force Endurance Page Cache off by clamping its options to 0.
+	 * Triggers EPC to remove its own rules, then tidies the options.
+	 */
+	private function nfd_force_disable_epc_options(): void {
+		$changed = false;
+
+		// Clamp EPC options to 0 so its own code tears down rules.
+		if ( (int) get_option( 'endurance_cache_level', 0 ) !== 0 ) {
+			update_option( 'endurance_cache_level', 0 );
+			$changed = true;
+		}
+		if ( (int) get_option( 'epc_skip_404_handling', 0 ) !== 0 ) {
+			update_option( 'epc_skip_404_handling', 0 );
+			$changed = true;
+		}
+
+		// If anything changed, write .htaccess once and tidy options.
+		if ( $changed ) {
+			if ( ! function_exists( 'save_mod_rewrite_rules' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/misc.php';
+			}
+			// Causes WP to regenerate rules; EPC listeners (if loaded) have just been triggered by the updates above.
+			save_mod_rewrite_rules();
+
+			// Optional cleanup so these don't linger in the DB.
+			delete_option( 'endurance_cache_level' );
+			delete_option( 'epc_skip_404_handling' );
+		}
+	}
+
+	/**
+	 * When the brand plugin is deactivated, mirror its current settings into EPC.
+	 * - EPC cache level (endurance_cache_level) is set to the current brand cache level (0–3).
+	 * - EPC skip404 (epc_skip_404_handling) is set to the current brand skip404 value (0/1).
+	 */
+	private function nfd_sync_epc_from_brand(): void {
+		// Clamp to EPC's range 0–3
+		$brand_level = (int) max( 0, min( 3, get_cache_level() ) );
+
+		// Brand Skip404: true/false -> EPC 1/0
+		$brand_skip404 = Skip404::get_value() ? 1 : 0;
+
+		// Write EPC options to reflect the brand plugin's current state
+		update_option( 'endurance_cache_level', $brand_level );
+		update_option( 'epc_skip_404_handling', $brand_skip404 );
+
+		// Ask WP to regenerate .htaccess so EPC can add/remove its own rules accordingly
+		if ( ! function_exists( 'save_mod_rewrite_rules' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/misc.php';
+		}
+		save_mod_rewrite_rules();
 	}
 }
