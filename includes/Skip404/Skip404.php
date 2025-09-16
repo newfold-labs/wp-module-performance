@@ -69,6 +69,36 @@ class Skip404 {
 
 		new OptionListener( self::OPTION_NAME, array( __CLASS__, 'maybe_add_rules' ) );
 
+		// Bootstrap-register into the in-memory registry (no write) in maintenance contexts.
+		// Admin (runs for real wp-admin screens)
+		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+
+		// REST (runs when REST is bootstrapped; constants definitely set)
+		add_action( 'rest_api_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+
+		// AJAX (runs on admin-ajax.php requests)
+		add_action(
+			'init',
+			function () {
+				if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+					\NewfoldLabs\WP\Module\Performance\Skip404\Skip404::bootstrap_register();
+				}
+			},
+			5
+		);
+
+		// CRON/CLI (admin_init doesn’t fire there)
+		add_action(
+			'init',
+			function () {
+				if ( ( function_exists( 'wp_doing_cron' ) && wp_doing_cron() )
+					|| ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+						\NewfoldLabs\WP\Module\Performance\Skip404\Skip404::bootstrap_register();
+				}
+			},
+			5
+		);
+
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_update_htaccess' ) );
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
@@ -166,5 +196,25 @@ class Skip404 {
 		);
 
 		return array_merge( $sdk, array( 'skip404' => $values ) );
+	}
+
+	/**
+	 * Populate the registry so reconciliation/apply can “see” this fragment
+	 * in admin, cron, CLI, REST and AJAX requests. No writes are queued.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public static function bootstrap_register(): void {
+		// Respect the feature toggle; if disabled, don't register.
+		if ( false === self::get_value() ) {
+			return;
+		}
+
+		// Register into the in-memory registry ONLY (no apply/write).
+		HtaccessApi::register(
+			new Skip404Fragment( self::FRAGMENT_ID, self::MARKER ),
+			false
+		);
 	}
 }

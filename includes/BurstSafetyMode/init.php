@@ -13,10 +13,6 @@ if ( class_exists( 'NewfoldLabs\WP\Module\Performance\Performance' ) ) {
 	if ( $newfold_burst_safety_mode ) {
 		$browser = new CacheBrowser();
 		$browser::maybeAddRules( $newfold_cache_level );
-
-		$response_header_manager = new ResponseHeaderManager();
-		$response_header_manager->add_header( 'X-Newfold-Cache-Level', $newfold_cache_level );
-
 		delete_option( 'newfold_burst_safety_mode' );
 	}
 } elseif ( ! $newfold_burst_safety_mode && defined( 'BLUEHOST_PLUGIN_DIR' ) ) {

@@ -23,7 +23,6 @@ A module for managing caching functionality.
 - Users can toggle the 'Skip 404 handling for static files' option.
 - Users can use the 'Purge All' and 'Purge This Page' options in the WordPress admin bar to initiate a purge request.
 - The cache purging service ensures that all active types of caching are purged when a purge request is made. The user can make purge requests, or a purge might happen when certain events happen in WordPress. For example, when a post changes status, that page is purged from the cache. Updates to a nav menu will result in a full site purge request.
-- The response header manager uses `.htaccess` to set a `X-Newfold-Cache-Level` header for debugging purposes.
 
 ## Critical Paths
 
