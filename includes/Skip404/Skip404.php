@@ -69,8 +69,35 @@ class Skip404 {
 
 		new OptionListener( self::OPTION_NAME, array( __CLASS__, 'maybe_add_rules' ) );
 
-		// Bootstrap-register into the in-memory registry for admin/cron/CLI (no write).
+		// Bootstrap-register into the in-memory registry (no write) in maintenance contexts.
+		// Admin (runs for real wp-admin screens)
 		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+
+		// REST (runs when REST is bootstrapped; constants definitely set)
+		add_action( 'rest_api_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+
+		// AJAX (runs on admin-ajax.php requests)
+		add_action(
+			'init',
+			function () {
+				if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+					\NewfoldLabs\WP\Module\Performance\Skip404\Skip404::bootstrap_register();
+				}
+			},
+			5
+		);
+
+		// CRON/CLI (admin_init doesn’t fire there)
+		add_action(
+			'init',
+			function () {
+				if ( ( function_exists( 'wp_doing_cron' ) && wp_doing_cron() )
+					|| ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+						\NewfoldLabs\WP\Module\Performance\Skip404\Skip404::bootstrap_register();
+				}
+			},
+			5
+		);
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_update_htaccess' ) );
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
@@ -172,30 +199,22 @@ class Skip404 {
 	}
 
 	/**
-	 * Populate the registry so reconciliation can “see” this fragment.
-	 * No writes are queued; saved state remains the source of truth.
+	 * Populate the registry so reconciliation/apply can “see” this fragment
+	 * in admin, cron, CLI, REST and AJAX requests. No writes are queued.
 	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
 	public static function bootstrap_register(): void {
-		// Only maintenance contexts (avoid frontend overhead).
-		if ( ! ( is_admin() || wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) ) ) {
-			return;
-		}
-
-		// Respect feature toggle; if disabled, don’t register.
+		// Respect the feature toggle; if disabled, don't register.
 		if ( false === self::get_value() ) {
 			return;
 		}
 
-		// Register the fragment into the in-memory registry ONLY (no apply).
+		// Register into the in-memory registry ONLY (no apply/write).
 		HtaccessApi::register(
-			new Skip404Fragment(
-				self::FRAGMENT_ID,
-				self::MARKER
-			),
-			false // IMPORTANT: do NOT queue an apply
+			new Skip404Fragment( self::FRAGMENT_ID, self::MARKER ),
+			false
 		);
 	}
 }
