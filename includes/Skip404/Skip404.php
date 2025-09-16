@@ -69,6 +69,9 @@ class Skip404 {
 
 		new OptionListener( self::OPTION_NAME, array( __CLASS__, 'maybe_add_rules' ) );
 
+		// Bootstrap-register into the in-memory registry for admin/cron/CLI (no write).
+		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_update_htaccess' ) );
 		add_filter( 'newfold-runtime', array( $this, 'add_to_runtime' ), 100 );
 	}
@@ -166,5 +169,33 @@ class Skip404 {
 		);
 
 		return array_merge( $sdk, array( 'skip404' => $values ) );
+	}
+
+	/**
+	 * Populate the registry so reconciliation can “see” this fragment.
+	 * No writes are queued; saved state remains the source of truth.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public static function bootstrap_register(): void {
+		// Only maintenance contexts (avoid frontend overhead).
+		if ( ! ( is_admin() || wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) ) ) {
+			return;
+		}
+
+		// Respect feature toggle; if disabled, don’t register.
+		if ( false === self::get_value() ) {
+			return;
+		}
+
+		// Register the fragment into the in-memory registry ONLY (no apply).
+		HtaccessApi::register(
+			new Skip404Fragment(
+				self::FRAGMENT_ID,
+				self::MARKER
+			),
+			false // IMPORTANT: do NOT queue an apply
+		);
 	}
 }
