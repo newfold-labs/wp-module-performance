@@ -87,7 +87,7 @@ class Performance {
 		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
 		add_action( 'admin_init', array( __CLASS__, 'handle_performance_redirect' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'add_dummy_performance_menu_link' ) );
-		
+
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
 	}
@@ -358,7 +358,7 @@ class Performance {
 
 			$screen = \get_current_screen();
 			if (
-				isset( $screen->id ) && 
+				isset( $screen->id ) &&
 				(
 					false !== strpos( $screen->id, self::PAGE_SLUG ) ||
 					false !== strpos( $screen->id, 'tools' ) ||
