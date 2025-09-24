@@ -10,8 +10,8 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 		cy.setPermalinkStructure();
 		data = fixturePath;
 		cy.login( Cypress.env( 'wpUsername' ), Cypress.env( 'wpPassword' ) );
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
 		performanceLocators = new performancePageLocators();
+		performanceLocators.visitPerformancePage();
 	} );
 
 	it( 'Is Accessible', () => {

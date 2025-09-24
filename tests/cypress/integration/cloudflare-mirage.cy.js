@@ -20,7 +20,8 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Shows Mirage section when capability is true and toggle is enabled', () => {
 		setSiteCapabilities( { hasCloudflareMirage: true } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performanceLocators.visitPerformancePage();
+
 		cy.get( '#nfd-performance', { timeout: 10000 } ).should( 'be.visible' );
 
 		performancePageLocators.getMirageToggle().should( 'exist' );
@@ -34,7 +35,8 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Does not show Mirage section when capability is false', () => {
 		setSiteCapabilities( { hasCloudflareMirage: false } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performanceLocators.visitPerformancePage();
+
 		cy.get( '#nfd-performance', { timeout: 10000 } ).should( 'be.visible' );
 
 		performancePageLocators.getMirageToggle().should( 'not.exist' );
@@ -43,7 +45,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Writes correct rewrite rules to .htaccess when Mirage is enabled', () => {
 		setSiteCapabilities( { hasCloudflareMirage: true } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performanceLocators.visitPerformancePage();
 
 		performancePageLocators
 			.getMirageToggle()
@@ -56,7 +58,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Toggles Mirage on/off and updates .htaccess accordingly', () => {
 		setSiteCapabilities( { hasCloudflareMirage: true } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performanceLocators.visitPerformancePage();
 
 		performancePageLocators
 			.getMirageToggle()
@@ -83,7 +85,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	} );
 
 	after( () => {
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performanceLocators.visitPerformancePage();
 
 		cy.get( 'body' ).then( ( $body ) => {
 			if ( $body.find( '[data-id="cloudflare-mirage"]' ).length > 0 ) {
