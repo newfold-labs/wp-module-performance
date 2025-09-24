@@ -85,7 +85,9 @@ class Performance {
 		add_action( 'load-tools_page_' . self::PAGE_SLUG, array( __CLASS__, 'initialize_performance_app' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'initialize_performance_app' ) );
 		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
-
+		add_action( 'admin_init', array( __CLASS__, 'handle_performance_redirect' ) );
+		add_action( 'admin_menu', array( __CLASS__, 'add_dummy_performance_menu_link' ) );
+		
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
 	}
@@ -367,5 +369,54 @@ class Performance {
 				wp_enqueue_style( self::PAGE_SLUG );
 			}
 		}
+	}
+
+	/**
+	 * Register dummy performance menu page for redirect purposes
+	 */
+	public static function add_dummy_performance_menu_link() {
+		add_submenu_page(
+			'', // Using empty string as parent, so it won't appear in any menu
+			'Old Performance',
+			'',
+			'manage_options',
+			self::PAGE_SLUG,
+			array( __CLASS__, 'old_performance_redirect' ),
+		);
+	}
+
+	/**
+	 * Handle performance redirect from old URL.
+	 * This runs on admin_init to catch the redirect before headers are sent.
+	 *
+	 * @return void
+	 */
+	public static function handle_performance_redirect() {
+		if (
+			is_admin() &&
+			isset( $_GET['page'] ) &&
+			self::PAGE_SLUG === $_GET['page']
+		) {
+			$new_url = admin_url( 'admin.php?page=' . container()->plugin()->id . '#/settings/performance' );
+			wp_safe_redirect( $new_url );
+			exit;
+		}
+	}
+
+	/**
+	 * Redirects the user to the new performance page.
+	 * This is the callback for the dummy menu page.
+	 *
+	 * @return void
+	 */
+	public static function old_performance_redirect() {
+		// Fallback: redirect using JavaScript if headers already sent
+		$new_url = admin_url( 'admin.php?page=' . container()->plugin()->id . '#/settings/performance' );
+		?>
+		<script>
+			window.location.href = '<?php echo esc_js( $new_url ); ?>';
+		</script>
+		<p>Redirecting to new performance page...</p>
+		<?php
 	}
 }
