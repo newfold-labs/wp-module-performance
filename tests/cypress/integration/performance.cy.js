@@ -1,5 +1,5 @@
 // <reference types="Cypress" />
-import performancePageLocators from '../support/pageObjects/performancePage';
+import PerformancePage from '../support/pageObjects/performancePage';
 
 describe( 'Performance Page', { testIsolation: true }, () => {
 	const fixturePath = require( '../fixtures/performanceModule.json' );
@@ -10,7 +10,7 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 		cy.setPermalinkStructure();
 		data = fixturePath;
 		cy.login( Cypress.env( 'wpUsername' ), Cypress.env( 'wpPassword' ) );
-		performancePageLocators = new performancePageLocators();
+		performancePageLocators = new PerformancePage();
 		performancePageLocators.visitPerformancePage();
 	} );
 
