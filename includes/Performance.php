@@ -271,7 +271,7 @@ class Performance {
 	}
 
 	/**
-	 * Adds the Performance module to the WordPress Tools > Site Health menu.
+	 * Adds the Performance module to the WordPress Tools menu.
 	 *
 	 * @return void
 	 */
@@ -281,7 +281,7 @@ class Performance {
 			__( 'Performance', 'wp-module-performance' ),
 			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
-			self::PAGE_SLUG,
+			container()->plugin()->id . '#/settings/performance',
 			array( __CLASS__, 'render_performance_app' )
 		);
 	}
@@ -294,9 +294,9 @@ class Performance {
 	 */
 	public function add_nfd_subnav( $subnav ) {
 		$performance = array(
-			'route'    => self::PAGE_SLUG,
+			'route'    => container()->plugin()->id . '#/settings/performance',
 			'title'    => __( 'Performance', 'wp-module-performance' ),
-			'priority' => 30,
+			'priority' => 61,
 		);
 		array_push( $subnav, $performance );
 		return $subnav;
