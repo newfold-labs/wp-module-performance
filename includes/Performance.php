@@ -16,6 +16,7 @@ use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Main class for the performance module.
@@ -82,6 +83,7 @@ class Performance {
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_management_page' ) );
 		add_action( 'load-tools_page_' . self::PAGE_SLUG, array( __CLASS__, 'initialize_performance_app' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'initialize_performance_app' ) );
 		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
@@ -352,8 +354,18 @@ class Performance {
 				$asset['version']
 			);
 
-			wp_enqueue_script( self::PAGE_SLUG );
-			wp_enqueue_style( self::PAGE_SLUG );
+			$screen = \get_current_screen();
+			if (
+				isset( $screen->id ) && 
+				(
+					false !== strpos( $screen->id, self::PAGE_SLUG ) ||
+					false !== strpos( $screen->id, 'tools' ) ||
+					false !== strpos( $screen->id, 'bluehost' )
+				)
+			) {
+				wp_enqueue_script( self::PAGE_SLUG );
+				wp_enqueue_style( self::PAGE_SLUG );
+			}
 		}
 	}
 }
