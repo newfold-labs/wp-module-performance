@@ -20,7 +20,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Shows Mirage section when capability is true and toggle is enabled', () => {
 		setSiteCapabilities( { hasCloudflareMirage: true } );
 
-		performanceLocators.visitPerformancePage();
+		performancePageLocators.visitPerformancePage();
 
 		cy.get( '#nfd-performance', { timeout: 10000 } ).should( 'be.visible' );
 
@@ -35,7 +35,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Does not show Mirage section when capability is false', () => {
 		setSiteCapabilities( { hasCloudflareMirage: false } );
 
-		performanceLocators.visitPerformancePage();
+		performancePageLocators.visitPerformancePage();
 
 		cy.get( '#nfd-performance', { timeout: 10000 } ).should( 'be.visible' );
 
@@ -45,7 +45,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Writes correct rewrite rules to .htaccess when Mirage is enabled', () => {
 		setSiteCapabilities( { hasCloudflareMirage: true } );
 
-		performanceLocators.visitPerformancePage();
+		performancePageLocators.visitPerformancePage();
 
 		performancePageLocators
 			.getMirageToggle()
@@ -58,7 +58,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	it( 'Toggles Mirage on/off and updates .htaccess accordingly', () => {
 		setSiteCapabilities( { hasCloudflareMirage: true } );
 
-		performanceLocators.visitPerformancePage();
+		performancePageLocators.visitPerformancePage();
 
 		performancePageLocators
 			.getMirageToggle()
@@ -85,7 +85,7 @@ describe( 'Cloudflare Mirage Toggle', { testIsolation: true }, () => {
 	} );
 
 	after( () => {
-		performanceLocators.visitPerformancePage();
+		performancePageLocators.visitPerformancePage();
 
 		cy.get( 'body' ).then( ( $body ) => {
 			if ( $body.find( '[data-id="cloudflare-mirage"]' ).length > 0 ) {

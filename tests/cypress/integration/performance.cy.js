@@ -3,15 +3,15 @@ import performancePageLocators from '../support/pageObjects/performancePage';
 
 describe( 'Performance Page', { testIsolation: true }, () => {
 	const fixturePath = require( '../fixtures/performanceModule.json' );
-	let performanceLocators;
+	let performancePageLocators;
 	let data;
 
 	beforeEach( () => {
 		cy.setPermalinkStructure();
 		data = fixturePath;
 		cy.login( Cypress.env( 'wpUsername' ), Cypress.env( 'wpPassword' ) );
-		performanceLocators = new performancePageLocators();
-		performanceLocators.visitPerformancePage();
+		performancePageLocators = new performancePageLocators();
+		performancePageLocators.visitPerformancePage();
 	} );
 
 	it( 'Is Accessible', () => {
@@ -66,25 +66,25 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": true}' --format=json`
 		);
 		cy.reload();
-		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
-		performanceLocators.verifyIfToggleIsEnabled();
-		performanceLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
+		performancePageLocators.verifyIfLinkPreFetchIsDisplayed();
+		performancePageLocators.verifyIfToggleIsEnabled();
+		performancePageLocators.interceptCallForMouseDownWithoutExcludeRunTimeURL(
 			data.statusCode
 		);
 	} );
 
 	it( 'Mouse Down-> with exclude:Extract RunTime Link value>>Verify if "Link Prefetch" is displayed and intercept the network call', () => {
-		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
-		performanceLocators.verifyIfToggleIsEnabled();
-		performanceLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
+		performancePageLocators.verifyIfLinkPreFetchIsDisplayed();
+		performancePageLocators.verifyIfToggleIsEnabled();
+		performancePageLocators.interceptCallForMouseDownWithExcludeRunTimeURL(
 			data.requestCount
 		);
 	} );
 
 	it( 'Mouse Hover-> with exclude:Verify if "Link Prefetch" is displayed and intercept network call', () => {
-		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
-		performanceLocators.verifyIfToggleIsEnabled();
-		performanceLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
+		performancePageLocators.verifyIfLinkPreFetchIsDisplayed();
+		performancePageLocators.verifyIfToggleIsEnabled();
+		performancePageLocators.interceptCallForMouseHoverWithExcludeRunTimeURL(
 			data.requestCount
 		);
 	} );
@@ -97,9 +97,9 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": false}' --format=json`
 		);
 		cy.reload();
-		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
-		performanceLocators.verifyIfToggleIsEnabled();
-		performanceLocators.linkPrefetchCapabilityCheck( 'onlyMouseDown' );
+		performancePageLocators.verifyIfLinkPreFetchIsDisplayed();
+		performancePageLocators.verifyIfToggleIsEnabled();
+		performancePageLocators.linkPrefetchCapabilityCheck( 'onlyMouseDown' );
 	} );
 
 	it( 'hasLinkPrefetchHover capability', () => {
@@ -110,9 +110,9 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": true, "hasLinkPrefetchHover": true}' --format=json`
 		);
 		cy.reload();
-		performanceLocators.verifyIfLinkPreFetchIsDisplayed();
-		performanceLocators.verifyIfToggleIsEnabled();
-		performanceLocators.linkPrefetchCapabilityCheck( 'both' );
+		performancePageLocators.verifyIfLinkPreFetchIsDisplayed();
+		performancePageLocators.verifyIfToggleIsEnabled();
+		performancePageLocators.linkPrefetchCapabilityCheck( 'both' );
 	} );
 
 	it( 'LinkPrefetch Capabilities to false', () => {
@@ -120,6 +120,6 @@ describe( 'Performance Page', { testIsolation: true }, () => {
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasLinkPrefetchClick": false, "hasLinkPrefetchHover": false}' --format=json`
 		);
 		cy.reload();
-		cy.get( performanceLocators._linkPrefetchText ).should( 'not.exist' );
+		cy.get( performancePageLocators._linkPrefetchText ).should( 'not.exist' );
 	} );
 } );
