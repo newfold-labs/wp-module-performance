@@ -13,6 +13,14 @@ class performancePage {
 	_excludeKeywordInputField = '[data-cy="link-prefetch-ignore-keywords"]';
 	_desktopToggle = '[data-cy="link-prefetch-active-desktop-toggle"]';
 
+	visitPerformancePage() {
+		cy.visit(
+			'/wp-admin/admin.php?page=' +
+			Cypress.env( 'pluginId' ) +
+			'#/settings/performance'
+		);
+	}
+
 	//All the methods related to performance page.
 	getLinkPrefetchText() {
 		return cy.get( this._linkPrefetchText );
