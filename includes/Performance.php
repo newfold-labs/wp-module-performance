@@ -362,7 +362,7 @@ class Performance {
 				(
 					false !== strpos( $screen->id, self::PAGE_SLUG ) ||
 					false !== strpos( $screen->id, 'tools' ) ||
-					false !== strpos( $screen->id, 'bluehost' )
+					false !== strpos( $screen->id, container()->plugin()->id )
 				)
 			) {
 				wp_enqueue_script( self::PAGE_SLUG );
@@ -381,7 +381,7 @@ class Performance {
 			'',
 			'manage_options',
 			self::PAGE_SLUG,
-			array( __CLASS__, 'old_performance_redirect' ),
+			array( __CLASS__, 'old_performance_redirect' )
 		);
 	}
 
