@@ -62,7 +62,7 @@ export const PerformancePortalApp = () => {
 		if ( current ) {
 			updateContainer( current );
 		}
-	}, [ container ] );
+	}, [] );
 
 	if ( ! container ) {
 		return null;
