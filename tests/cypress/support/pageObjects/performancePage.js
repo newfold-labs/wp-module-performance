@@ -19,6 +19,7 @@ class performancePage {
 			Cypress.env( 'pluginId' ) +
 			'#/settings/performance'
 		);
+		cy.reload( true ); // Force reload to ensure the page is loaded with fresh data/capabilities
 	}
 
 	//All the methods related to performance page.
