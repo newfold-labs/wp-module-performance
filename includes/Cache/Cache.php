@@ -52,23 +52,13 @@ class Cache {
 	 * When updating mod rewrite rules, also update our rewrites as appropriate.
 	 */
 	public function on_rewrite() {
-		$this->on_cache_level_change( get_cache_level() );
+		$this->on_cache_level_change();
 	}
 
 	/**
 	 * On cache level change, update the response headers.
-	 *
-	 * @param int|null $cacheLevel The cache level.
 	 */
-	public function on_cache_level_change( $cacheLevel ) {
-		/**
-		 * Respone Header Manager from container
-		 *
-		 * @var ResponseHeaderManager $responseHeaderManager
-		 */
-		$responseHeaderManager = $this->container->get( 'responseHeaderManager' );
-		$responseHeaderManager->add_header( 'X-Newfold-Cache-Level', absint( $cacheLevel ) );
-
+	public function on_cache_level_change() {
 		// Remove the old option from EPC, if it exists.
 		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
 			update_option( 'endurance_cache_level', 0 );

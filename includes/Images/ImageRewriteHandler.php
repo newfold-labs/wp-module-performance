@@ -1,117 +1,203 @@
 <?php
+/**
+ * ImageRewriteHandler
+ *
+ * Manages registration/unregistration of .htaccess fragments that redirect image
+ * requests to their optimized WebP counterparts. Uses the centralized
+ * HtaccessApi fragment registry to ensure safe, debounced writes.
+ *
+ * @package NewfoldLabs\WP\Module\Performance\Images
+ * @since 1.0.0
+ */
 
 namespace NewfoldLabs\WP\Module\Performance\Images;
 
-use WP_Forge\WP_Htaccess_Manager\htaccess;
-use function WP_Forge\WP_Htaccess_Manager\removeMarkers;
+use NewfoldLabs\WP\Module\Htaccess\Api as HtaccessApi;
+use NewfoldLabs\WP\Module\Performance\Images\Fragments\MissingImageRedirectFragment;
+use NewfoldLabs\WP\Module\Performance\Images\Fragments\ExistingImageRedirectFragment;
 
 /**
  * Handles the management of .htaccess rules for optimized image redirects.
+ *
+ * This class listens for image optimization option changes and registers or
+ * unregisters the appropriate fragments that:
+ *  - Prefer WebP when the original exists and a .webp variant is available.
+ *  - Serve a .webp file if the original asset is missing but the .webp exists.
+ *
+ * @since 1.0.0
  */
 class ImageRewriteHandler {
 
 	/**
-	 * Marker for missing image redirect rules.
+	 * Human-friendly marker for the "missing image → .webp" rule block.
+	 *
+	 * Printed in the BEGIN/END comments inside the .htaccess file.
+	 *
+	 * @var string
 	 */
 	const MISSING_IMAGE_MARKER = 'Newfold WebP Missing Image Redirect';
 
 	/**
-	 * Marker for existing image redirect rules.
+	 * Human-friendly marker for the "existing image → prefer .webp" rule block.
+	 *
+	 * Printed in the BEGIN/END comments inside the .htaccess file.
+	 *
+	 * @var string
 	 */
 	const EXISTING_IMAGE_MARKER = 'Newfold WebP Existing Image Redirect';
 
 	/**
-	 * Constructor to set up listeners.
+	 * Globally-unique fragment ID for the "missing image → .webp" rules.
+	 *
+	 * @var string
+	 */
+	const FRAGMENT_ID_MISSING = 'nfd.images.webp.missing';
+
+	/**
+	 * Globally-unique fragment ID for the "existing image → prefer .webp" rules.
+	 *
+	 * @var string
+	 */
+	const FRAGMENT_ID_EXISTING = 'nfd.images.webp.existing';
+
+	/**
+	 * Constructor. Hooks settings listener.
+	 *
+	 * @since 1.0.0
 	 */
 	public function __construct() {
-		add_action( 'update_option_nfd_image_optimization', array( $this, 'on_image_setting_change' ), 10, 2 );
+		// Listen to image optimization settings changes.
+		add_action( 'update_option_nfd_image_optimization', array( __CLASS__, 'on_image_setting_change' ), 10, 2 );
 	}
 
 	/**
-	 * Add the missing image redirect rule to .htaccess.
+	 * Register the "missing image → .webp" fragment.
+	 *
+	 * This fragment rewrites requests for non-existent original images to a .webp
+	 * counterpart when it exists on disk.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
-	public function add_missing_image_rule() {
-		$rules = array(
-			'<IfModule mod_rewrite.c>',
-			"\tRewriteEngine On",
-			"\tRewriteCond %{REQUEST_FILENAME} !-f",
-			"\tRewriteCond %{REQUEST_FILENAME} !-d",
-			"\tRewriteCond %{REQUEST_URI} (.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ [NC]",
-			"\tRewriteCond %{DOCUMENT_ROOT}%1.webp -f",
-			"\tRewriteRule ^(.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ $1.webp [T=image/webp,E=WEBP_REDIRECT:1,L]",
-			'</IfModule>',
+	public static function add_missing_image_rule(): void {
+		HtaccessApi::register(
+			new MissingImageRedirectFragment(
+				self::FRAGMENT_ID_MISSING,
+				self::MISSING_IMAGE_MARKER
+			),
+			true // queue apply to coalesce writes
 		);
-
-		$htaccess = new htaccess( self::MISSING_IMAGE_MARKER );
-		return $htaccess->addContent( $rules );
 	}
 
 	/**
-	 * Add the existing image redirect rule to .htaccess.
+	 * Register the "existing image → prefer .webp" fragment.
+	 *
+	 * This fragment rewrites requests for existing original images to a .webp
+	 * counterpart when it exists (prefers optimized variant).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
-	public function add_existing_image_rule() {
-		$rules = array(
-			'<IfModule mod_rewrite.c>',
-			"\tRewriteEngine On",
-			"\tRewriteCond %{REQUEST_FILENAME} -f",
-			"\tRewriteCond %{REQUEST_URI} (.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ [NC]",
-			"\tRewriteCond %{DOCUMENT_ROOT}%1.webp -f",
-			"\tRewriteRule ^(.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ $1.webp [T=image/webp,E=WEBP_REDIRECT:1,L]",
-			'</IfModule>',
+	public static function add_existing_image_rule(): void {
+		HtaccessApi::register(
+			new ExistingImageRedirectFragment(
+				self::FRAGMENT_ID_EXISTING,
+				self::EXISTING_IMAGE_MARKER
+			),
+			true // queue apply to coalesce writes
 		);
-
-		$htaccess = new htaccess( self::EXISTING_IMAGE_MARKER );
-		return $htaccess->addContent( $rules );
 	}
 
 	/**
-	 * Remove both rules from the .htaccess file.
+	 * Unregister both image redirect fragments.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
-	public function remove_rules() {
-		removeMarkers( self::MISSING_IMAGE_MARKER );
-		removeMarkers( self::EXISTING_IMAGE_MARKER );
+	public static function remove_rules(): void {
+		HtaccessApi::unregister( self::FRAGMENT_ID_MISSING );
+		HtaccessApi::unregister( self::FRAGMENT_ID_EXISTING );
 	}
 
 	/**
-	 * Activate the rules when needed.
+	 * Activation hook: ensure relevant fragments are registered.
+	 *
+	 * Note: This registers both fragments; runtime settings may later
+	 * unregister one/both via on_image_setting_change().
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
-	public function on_activation() {
-		$this->add_missing_image_rule();
-		$this->add_existing_image_rule();
+	public static function on_activation(): void {
+		self::apply_rules_from_option();
 	}
 
 	/**
-	 * Deactivate the rules when needed.
+	 * Deactivation hook: remove all related fragments.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
-	public function on_deactivation() {
-		$this->remove_rules();
+	public static function on_deactivation(): void {
+		self::remove_rules();
 	}
 
 	/**
 	 * Handle changes to image optimization settings.
 	 *
-	 * @param array $old_value The previous settings (not used).
-	 * @param array $new_value The updated settings.
+	 * Expects the `nfd_image_optimization` option to be an associative array:
+	 * - enabled (bool): master switch for image optimization features.
+	 * - auto_optimized_uploaded_images['auto_delete_original_image'] (bool):
+	 *     If true, enable "missing image → .webp" rewrite.
+	 * - prefer_optimized_image_when_exists (bool):
+	 *     If true, enable "existing image → prefer .webp" rewrite.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param mixed $old_value Previous settings value (unused by this handler).
+	 * @param mixed $new_value New settings value.
+	 * @return void
 	 */
-	public function on_image_setting_change( $old_value, $new_value ) {
-		// If the image optimization is disabled, remove all rules and return.
+	public static function on_image_setting_change( $old_value, $new_value ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterface
+		// Remove rules if the entire feature is disabled.
 		if ( empty( $new_value['enabled'] ) ) {
-			$this->remove_rules();
+			self::remove_rules();
 			return;
 		}
 
-		// Handle 'auto_delete_original_image' setting.
+		// Missing-image redirect toggle (auto-delete original images).
 		if ( ! empty( $new_value['auto_optimized_uploaded_images']['auto_delete_original_image'] ) ) {
-			$this->add_missing_image_rule();
+			self::add_missing_image_rule();
 		} else {
-			removeMarkers( self::MISSING_IMAGE_MARKER );
+			HtaccessApi::unregister( self::FRAGMENT_ID_MISSING );
 		}
 
-		// Handle 'prefer_optimized_image_when_exists' setting.
+		// Prefer-optimized-image toggle.
 		if ( ! empty( $new_value['prefer_optimized_image_when_exists'] ) ) {
-			$this->add_existing_image_rule();
+			self::add_existing_image_rule();
 		} else {
-			removeMarkers( self::EXISTING_IMAGE_MARKER );
+			HtaccessApi::unregister( self::FRAGMENT_ID_EXISTING );
 		}
+	}
+
+	/**
+	 * Apply rules based on the current `nfd_image_optimization` option value.
+	 *
+	 * Static helper intended for use on activation or boot to sync .htaccess
+	 * fragments with the saved settings, performing the same logic as
+	 * on_image_setting_change().
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public static function apply_rules_from_option(): void {
+		$current = get_option( 'nfd_image_optimization', array() );
+		self::on_image_setting_change( null, is_array( $current ) ? $current : array() );
 	}
 }

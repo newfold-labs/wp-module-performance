@@ -2,7 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Performance;
 
-use NewfoldLabs\WP\Module\Performance\Cache\CacheFeatureHooks;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 use function NewfoldLabs\WP\ModuleLoader\container;
@@ -38,6 +37,7 @@ if ( function_exists( 'add_action' ) ) {
 		}
 	);
 }
-new CacheFeatureHooks();
+
+new PerformanceLifecycleHooks();
 
 require_once __DIR__ . '/includes/BurstSafetyMode/init.php';

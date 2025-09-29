@@ -48,6 +48,7 @@ const ImageOptimization = () => {
 		monthlyRequestCount: 0,
 		maxRequestsPerMonth: 100000,
 	} );
+	const [ updating, setUpdating ] = useState( false );
 
 	const { pushNotification } = useDispatch( STORE_NAME );
 	const apiUrl = NewfoldRuntime.createApiUrl( '/wp/v2/settings' );
@@ -91,6 +92,7 @@ const ImageOptimization = () => {
 					maxRequestsPerMonth: 100000,
 				}
 			);
+			setUpdating( '' );
 			pushNotification( 'img-opt-updated', {
 				title: imageOptimizationUpdatedTitle,
 				description: imageOptimizationUpdatedDescription,
@@ -99,6 +101,7 @@ const ImageOptimization = () => {
 			} );
 		} catch {
 			setIsError( true );
+			setUpdating( '' );
 			pushNotification( 'img-opt-error', {
 				title: imageOptimizationUpdateErrorTitle,
 				description: imageOptimizationGenericErrorMessage,
@@ -108,6 +111,30 @@ const ImageOptimization = () => {
 		}
 	};
 
+	function capabilityKeyExists( key ) {
+		if (
+			typeof window.NewfoldRuntime !== 'undefined' &&
+			window.NewfoldRuntime.capabilities &&
+			Object.prototype.hasOwnProperty.call(
+				window.NewfoldRuntime.capabilities,
+				key
+			)
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	function isCapabilityEnabled( key ) {
+		return (
+			capabilityKeyExists( key ) &&
+			window.NewfoldRuntime.capabilities[ key ] === true
+		);
+	}
+
+	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
+	const mirageEnabled = isCapabilityEnabled( 'hasCloudflareMirage' );
+
 	const handleToggle = ( field, value ) => {
 		if ( isBanned ) return;
 
@@ -115,6 +142,7 @@ const ImageOptimization = () => {
 
 		switch ( field ) {
 			case 'enabled':
+				setUpdating( 'enabled' );
 				updated.enabled = value;
 				updated.auto_optimized_uploaded_images.enabled = value;
 				updated.auto_optimized_uploaded_images.auto_delete_original_image =
@@ -124,38 +152,45 @@ const ImageOptimization = () => {
 				updated.prefer_optimized_image_when_exists = value;
 				updated.cloudflare = {
 					polish: {
-						value,
+						value: value && polishEnabled,
 						user_set: true,
 					},
 					mirage: {
-						value,
+						value: value && mirageEnabled,
 						user_set: true,
 					},
 				};
 				break;
 			case 'autoOptimizeEnabled':
+				setUpdating( 'autoOptimizeEnabled' );
 				updated.auto_optimized_uploaded_images.enabled = value;
 				break;
 			case 'bulkOptimize':
+				setUpdating( 'bulkOptimize' );
 				updated.bulk_optimization = value;
 				break;
 			case 'lazyLoading':
+				setUpdating( 'lazyLoading' );
 				updated.lazy_loading.enabled = value;
 				break;
 			case 'autoDeleteOriginalImage':
+				setUpdating( 'autoDeleteOriginalImage' );
 				updated.auto_optimized_uploaded_images.auto_delete_original_image =
 					value;
 				break;
 			case 'preferOptimizedImageWhenExists':
+				setUpdating( 'preferOptimizedImageWhenExists' );
 				updated.prefer_optimized_image_when_exists = value;
 				break;
 			case 'cloudflarePolish':
+				setUpdating( 'cloudflarePolish' );
 				updated.cloudflare.polish = {
 					value,
 					user_set: true,
 				};
 				break;
 			case 'cloudflareMirage':
+				setUpdating( 'cloudflareMirage' );
 				updated.cloudflare.mirage = {
 					value,
 					user_set: true,
@@ -180,27 +215,6 @@ const ImageOptimization = () => {
 	useEffect( () => {
 		fetchSettings();
 	}, [] );
-
-	function capabilityKeyExists( key ) {
-		if (
-			typeof window.NewfoldRuntime !== 'undefined' &&
-			window.NewfoldRuntime.capabilities &&
-			Object.prototype.hasOwnProperty.call(
-				window.NewfoldRuntime.capabilities,
-				key
-			)
-		) {
-			return true;
-		}
-		return false;
-	}
-
-	function isCapabilityEnabled( key ) {
-		return (
-			capabilityKeyExists( key ) &&
-			window.NewfoldRuntime.capabilities[ key ] === true
-		);
-	}
 
 	if ( isLoading ) return <p>{ imageOptimizationLoadingMessage }</p>;
 
@@ -237,12 +251,14 @@ const ImageOptimization = () => {
 
 	const mediaLibraryLink = () => {
 		const basePath = window.location.pathname.split( '/wp-admin' )[ 0 ];
-        const mediaLink = `${ window.location.origin }${ basePath }/wp-admin/upload.php?autoSelectBulk`;
-		return window.NewfoldRuntime?.linkTracker?.addUtmParams( mediaLink ) || mediaLink;
+		const mediaLink = `${ window.location.origin }${ basePath }/wp-admin/upload.php?autoSelectBulk`;
+		return (
+			window.NewfoldRuntime?.linkTracker?.addUtmParams( mediaLink ) ||
+			mediaLink
+		);
 	};
 
-	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
-	const mirageEnabled = isCapabilityEnabled( 'hasCloudflareMirage' );
+	const beingEnabled = updating === 'enabled';
 	const showToggles = polishEnabled || mirageEnabled;
 
 	return (
@@ -280,7 +296,7 @@ const ImageOptimization = () => {
 					description={ imageOptimizationEnabledDescription }
 					checked={ enabled }
 					onChange={ () => handleToggle( 'enabled', ! enabled ) }
-					disabled={ isBanned }
+					disabled={ isBanned || updating === 'enabled' }
 				/>
 
 				{ enabled && (
@@ -298,7 +314,11 @@ const ImageOptimization = () => {
 									! autoEnabled
 								)
 							}
-							disabled={ isBanned }
+							disabled={
+								isBanned ||
+								beingEnabled ||
+								updating === 'autoOptimizeEnabled'
+							}
 						/>
 
 						<ToggleField
@@ -329,7 +349,11 @@ const ImageOptimization = () => {
 							onChange={ () =>
 								handleToggle( 'bulkOptimize', ! bulk )
 							}
-							disabled={ isBanned }
+							disabled={
+								isBanned ||
+								beingEnabled ||
+								updating === 'bulkOptimize'
+							}
 						/>
 
 						<ToggleField
@@ -345,7 +369,11 @@ const ImageOptimization = () => {
 									! preferOptimized
 								)
 							}
-							disabled={ isBanned }
+							disabled={
+								isBanned ||
+								beingEnabled ||
+								updating === 'preferOptimizedImageWhenExists'
+							}
 						/>
 
 						<ToggleField
@@ -361,7 +389,12 @@ const ImageOptimization = () => {
 									! autoDelete
 								)
 							}
-							disabled={ ( ! autoEnabled && ! bulk ) || isBanned }
+							disabled={
+								( ! autoEnabled && ! bulk ) ||
+								isBanned ||
+								beingEnabled ||
+								updating === 'autoDeleteOriginalImage'
+							}
 						/>
 
 						<ToggleField
@@ -374,7 +407,11 @@ const ImageOptimization = () => {
 							onChange={ () =>
 								handleToggle( 'lazyLoading', ! lazy.enabled )
 							}
-							disabled={ isBanned }
+							disabled={
+								isBanned ||
+								beingEnabled ||
+								updating === 'lazyLoading'
+							}
 						/>
 
 						{ showToggles && (
@@ -393,6 +430,10 @@ const ImageOptimization = () => {
 												! polish
 											)
 										}
+										disabled={
+											beingEnabled ||
+											updating === 'cloudflarePolish'
+										}
 									/>
 								) }
 								{ mirageEnabled && (
@@ -408,6 +449,10 @@ const ImageOptimization = () => {
 												'cloudflareMirage',
 												! mirage
 											)
+										}
+										disabled={
+											beingEnabled ||
+											updating === 'cloudflareMirage'
 										}
 									/>
 								) }

@@ -16,6 +16,7 @@ use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Main class for the performance module.
@@ -82,7 +83,10 @@ class Performance {
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_management_page' ) );
 		add_action( 'load-tools_page_' . self::PAGE_SLUG, array( __CLASS__, 'initialize_performance_app' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'initialize_performance_app' ) );
 		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
+		add_action( 'admin_init', array( __CLASS__, 'handle_performance_redirect' ) );
+		add_action( 'admin_menu', array( __CLASS__, 'add_dummy_performance_menu_link' ) );
 
 		! defined( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR' ) && define( 'NFD_PERFORMANCE_PLUGIN_LANGUAGES_DIR', dirname( $container->plugin()->file ) . '/vendor/newfold-labs/wp-module-performance/languages' );
 		new I18nService( $container );
@@ -266,7 +270,7 @@ class Performance {
 	}
 
 	/**
-	 * Adds the Performance module to the WordPress Tools > Site Health menu.
+	 * Adds the Performance module to the WordPress Tools menu.
 	 *
 	 * @return void
 	 */
@@ -276,7 +280,7 @@ class Performance {
 			__( 'Performance', 'wp-module-performance' ),
 			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
-			self::PAGE_SLUG,
+			container()->plugin()->id . '#/settings/performance',
 			array( __CLASS__, 'render_performance_app' )
 		);
 	}
@@ -289,9 +293,9 @@ class Performance {
 	 */
 	public function add_nfd_subnav( $subnav ) {
 		$performance = array(
-			'route'    => self::PAGE_SLUG,
+			'route'    => container()->plugin()->id . '#/settings/performance',
 			'title'    => __( 'Performance', 'wp-module-performance' ),
-			'priority' => 30,
+			'priority' => 61,
 		);
 		array_push( $subnav, $performance );
 		return $subnav;
@@ -349,8 +353,18 @@ class Performance {
 				$asset['version']
 			);
 
-			wp_enqueue_script( self::PAGE_SLUG );
-			wp_enqueue_style( self::PAGE_SLUG );
+			$screen = \get_current_screen();
+			if (
+				isset( $screen->id ) &&
+				(
+					false !== strpos( $screen->id, self::PAGE_SLUG ) ||
+					false !== strpos( $screen->id, 'tools' ) ||
+					false !== strpos( $screen->id, container()->plugin()->id )
+				)
+			) {
+				wp_enqueue_script( self::PAGE_SLUG );
+				wp_enqueue_style( self::PAGE_SLUG );
+			}
 		}
 	}
 
@@ -366,5 +380,54 @@ class Performance {
 			$initialized = false;
 		}
 		return $initialized;
+	}
+
+	/**
+	 * Register dummy performance menu page for redirect purposes
+	 */
+	public static function add_dummy_performance_menu_link() {
+		add_submenu_page(
+			'', // Using empty string as parent, so it won't appear in any menu
+			'Old Performance',
+			'',
+			'manage_options',
+			self::PAGE_SLUG,
+			array( __CLASS__, 'old_performance_redirect' )
+		);
+	}
+
+	/**
+	 * Handle performance redirect from old URL.
+	 * This runs on admin_init to catch the redirect before headers are sent.
+	 *
+	 * @return void
+	 */
+	public static function handle_performance_redirect() {
+		if (
+			is_admin() &&
+			isset( $_GET['page'] ) &&
+			self::PAGE_SLUG === $_GET['page']
+		) {
+			$new_url = admin_url( 'admin.php?page=' . container()->plugin()->id . '#/settings/performance' );
+			wp_safe_redirect( $new_url );
+			exit;
+		}
+	}
+
+	/**
+	 * Redirects the user to the new performance page.
+	 * This is the callback for the dummy menu page.
+	 *
+	 * @return void
+	 */
+	public static function old_performance_redirect() {
+		// Fallback: redirect using JavaScript if headers already sent
+		$new_url = admin_url( 'admin.php?page=' . container()->plugin()->id . '#/settings/performance' );
+		?>
+		<script>
+			window.location.href = '<?php echo esc_js( $new_url ); ?>';
+		</script>
+		<p>Redirecting to new performance page...</p>
+		<?php
 	}
 }

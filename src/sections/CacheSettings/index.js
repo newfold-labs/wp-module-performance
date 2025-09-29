@@ -24,6 +24,7 @@ const CacheSettings = () => {
 
 	const runtimeLevel = NewfoldRuntime?.sdk?.cache?.level ?? 0;
 	const [ cacheLevel, setCacheLevel ] = useState( runtimeLevel );
+	const [ updating, setUpdating ] = useState( false );
 
 	const { pushNotification, setCacheLevel: dispatchSetCacheLevel } =
 		useDispatch( STORE_NAME );
@@ -39,6 +40,7 @@ const CacheSettings = () => {
 
 	const handleCacheLevelChange = ( e ) => {
 		const selectedLevel = parseInt( e.target.value, 10 );
+		setUpdating( true );
 
 		apiFetch( {
 			url: apiUrl,
@@ -46,10 +48,12 @@ const CacheSettings = () => {
 			data: { cacheLevel: selectedLevel },
 		} )
 			.then( () => {
+				setUpdating( false );
 				setCacheLevel( selectedLevel );
 				dispatchSetCacheLevel( selectedLevel );
 			} )
 			.catch( ( err ) => {
+				setUpdating( false );
 				pushNotification( 'cache-level-error', {
 					title: 'Failed to update cache level',
 					description: err.message || 'Something went wrong.',
@@ -89,6 +93,7 @@ const CacheSettings = () => {
 								value={ value }
 								name="cache-level"
 								onChange={ handleCacheLevelChange }
+								disabled={ updating }
 							/>
 							<div className="nfd-radio__description">
 								{ optionDescription }
