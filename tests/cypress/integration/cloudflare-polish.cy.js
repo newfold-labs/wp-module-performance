@@ -20,7 +20,7 @@ describe( 'Cloudflare Polish Toggle', { testIsolation: true }, () => {
 	it( 'Shows Polish section when capability is true and toggle is enabled', () => {
 		setSiteCapabilities( { hasCloudflarePolish: true } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performancePageLocators.visitPerformancePage();
 		cy.get( '#nfd-performance', { timeout: 10000 } ).should( 'be.visible' );
 
 		performancePageLocators.getPolishToggle().should( 'exist' );
@@ -34,7 +34,7 @@ describe( 'Cloudflare Polish Toggle', { testIsolation: true }, () => {
 	it( 'Does not show Polish section when capability is false', () => {
 		setSiteCapabilities( { hasCloudflarePolish: false } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performancePageLocators.visitPerformancePage();
 		cy.get( '#nfd-performance', { timeout: 10000 } ).should( 'be.visible' );
 
 		performancePageLocators.getPolishToggle().should( 'not.exist' );
@@ -43,7 +43,7 @@ describe( 'Cloudflare Polish Toggle', { testIsolation: true }, () => {
 	it( 'Writes correct rewrite rules to .htaccess when Polish is enabled', () => {
 		setSiteCapabilities( { hasCloudflarePolish: true } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performancePageLocators.visitPerformancePage();
 
 		performancePageLocators
 			.getPolishToggle()
@@ -56,7 +56,7 @@ describe( 'Cloudflare Polish Toggle', { testIsolation: true }, () => {
 	it( 'Toggles Polish on/off and updates .htaccess accordingly', () => {
 		setSiteCapabilities( { hasCloudflarePolish: true } );
 
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performancePageLocators.visitPerformancePage();
 
 		performancePageLocators
 			.getPolishToggle()
@@ -81,7 +81,7 @@ describe( 'Cloudflare Polish Toggle', { testIsolation: true }, () => {
 	} );
 
 	after( () => {
-		cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+		performancePageLocators.visitPerformancePage();
 
 		cy.get( 'body' ).then( ( $body ) => {
 			if ( $body.find( '[data-id="cloudflare-polish"]' ).length > 0 ) {
