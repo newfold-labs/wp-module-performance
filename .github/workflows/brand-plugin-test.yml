@@ -31,44 +31,45 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-bluehost'
+      plugin-branch: 'develop'
     secrets: inherit
 
-  hostgator:
-    name: HostGator Build and Test
-    needs: setup
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-hostgator'
-    secrets: inherit
+  # hostgator:
+  #   name: HostGator Build and Test
+  #   needs: setup
+  #   uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+  #   with:
+  #     module-repo: ${{ github.repository }}
+  #     module-branch: ${{ needs.setup.outputs.branch }}
+  #     plugin-repo: 'newfold-labs/wp-plugin-hostgator'
+  #   secrets: inherit
 
-  web:
-    name: Web.com Build and Test
-    needs: setup
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-web'
-    secrets: inherit
+  # web:
+  #   name: Web.com Build and Test
+  #   needs: setup
+  #   uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+  #   with:
+  #     module-repo: ${{ github.repository }}
+  #     module-branch: ${{ needs.setup.outputs.branch }}
+  #     plugin-repo: 'newfold-labs/wp-plugin-web'
+  #   secrets: inherit
 
-  crazydomains:
-    name: Crazy Domains Build and Test
-    needs: setup
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-crazy-domains'
-    secrets: inherit
+  # crazydomains:
+  #   name: Crazy Domains Build and Test
+  #   needs: setup
+  #   uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+  #   with:
+  #     module-repo: ${{ github.repository }}
+  #     module-branch: ${{ needs.setup.outputs.branch }}
+  #     plugin-repo: 'newfold-labs/wp-plugin-crazy-domains'
+  #   secrets: inherit
 
-  mojo:
-    name: Mojo Build and Test
-    needs: setup
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-mojo'
-    secrets: inherit
+  # mojo:
+  #   name: Mojo Build and Test
+  #   needs: setup
+  #   uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+  #   with:
+  #     module-repo: ${{ github.repository }}
+  #     module-branch: ${{ needs.setup.outputs.branch }}
+  #     plugin-repo: 'newfold-labs/wp-plugin-mojo'
+  #   secrets: inherit

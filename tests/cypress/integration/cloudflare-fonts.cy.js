@@ -25,7 +25,7 @@ describe(
 
 		it( 'Shows Font Optimization section when capability is true and toggle is enabled', () => {
 			// Visit the performance page to set the initial capabilities
-			cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+			performancePageLocators.visitPerformancePage();
 			cy.get( '#nfd-performance', { timeout: 10000 } ).should(
 				'be.visible'
 			);
@@ -44,7 +44,8 @@ describe(
 		it( 'Does not show Font Optimization section when capability is false', () => {
 			setSiteCapabilities( { hasCloudflareFonts: false } );
 
-			cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+			performancePageLocators.visitPerformancePage();
+
 			cy.get( '#nfd-performance', { timeout: 10000 } ).should(
 				'be.visible'
 			);
@@ -55,7 +56,7 @@ describe(
 		it( 'Writes correct rewrite rules to .htaccess when Font Optimization is enabled', () => {
 			setSiteCapabilities( { hasCloudflareFonts: true } );
 
-			cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+			performancePageLocators.visitPerformancePage();
 
 			performancePageLocators
 				.getFontToggle()
@@ -68,7 +69,7 @@ describe(
 		it( 'Toggles Font Optimization on/off and updates .htaccess accordingly', () => {
 			setSiteCapabilities( { hasCloudflareFonts: true } );
 
-			cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+			performancePageLocators.visitPerformancePage();
 
 			performancePageLocators
 				.getFontToggle()
@@ -95,7 +96,7 @@ describe(
 		} );
 
 		after( () => {
-			cy.visit( '/wp-admin/admin.php?page=nfd-performance' );
+			performancePageLocators.visitPerformancePage();
 
 			cy.get( 'body' ).then( ( $body ) => {
 				if ( $body.find( '[data-id="cloudflare-fonts"]' ).length > 0 ) {
