@@ -416,6 +416,10 @@ msgid "Exclude CSS Strings"
 msgstr ""
 
 #: build/performance/performance.min.js:5
+msgid "Disable Coming Soon"
+msgstr ""
+
+#: build/performance/performance.min.js:5
 msgid "Link Prefetch"
 msgstr ""
 
