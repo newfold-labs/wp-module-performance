@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1759840992">
-  <project timestamp="1759840992">
+<coverage generated="1760445177">
+  <project timestamp="1760445177">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="3" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
@@ -99,15 +99,21 @@
       <line num="23" type="stmt" count="0"/>
       <line num="24" type="stmt" count="0"/>
       <line num="25" type="stmt" count="0"/>
+      <line num="26" type="stmt" count="0"/>
       <line num="27" type="stmt" count="0"/>
       <line num="28" type="stmt" count="0"/>
       <line num="29" type="stmt" count="0"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
       <line num="33" type="stmt" count="0"/>
+      <line num="34" type="stmt" count="0"/>
       <line num="35" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="38" type="stmt" count="0"/>
+      <line num="39" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
-      <metrics loc="43" ncloc="42" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="23" coveredelements="0"/>
+      <line num="43" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <metrics loc="49" ncloc="48" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="29" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cache/Cache.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cache\Cache" namespace="global">
@@ -3738,6 +3744,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="76" loc="9370" ncloc="5793" classes="73" methods="366" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2925" coveredstatements="86" elements="3291" coveredelements="114"/>
+    <metrics files="76" loc="9376" ncloc="5799" classes="73" methods="366" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2931" coveredstatements="86" elements="3297" coveredelements="114"/>
   </project>
 </coverage>
