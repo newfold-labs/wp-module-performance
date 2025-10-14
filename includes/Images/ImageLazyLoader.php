@@ -156,65 +156,42 @@ class ImageLazyLoader {
 			return $content;
 		}
 
-		$doc = new DOMDocument();
-		// Suppress warnings from invalid or malformed HTML.
-		libxml_use_internal_errors( true );
+		$exclusion_classes    = self::$exclusions['classes'];
+		$exclusion_attributes = self::$exclusions['attributes'];
 
-		try {
-			if ( function_exists( 'et_setup_theme' ) ) {
-				$content = $this->clean_content(
-					'/<iframe(.*?)<\/iframe>/s',
-					'<!-- [et_pb_line_break_holder] -->',
-					'',
-					$content
-				);
-			}
+		$content = preg_replace_callback(
+			'/<img\b([^>]*)>/i',
+			function ( $matches ) use ( $exclusion_classes, $exclusion_attributes ) {
+				$img_tag = $matches[0];
 
-			// Attempt to parse the HTML content using htmlentities for encoding.
-			$content = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>' . $content . '</body></html>';
-			if ( ! $doc->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD ) ) {
-				return $content;
-			}
-		} catch ( Exception $e ) {
-			return $content;
-		} finally {
-			// Clear any errors collected during parsing to free memory.
-			libxml_clear_errors();
-		}
-
-		$images = $doc->getElementsByTagName( 'img' );
-
-		foreach ( $images as $image ) {
-			$skip = false;
-
-			// Check if the image has an excluded class.
-			foreach ( self::$exclusions['classes'] as $class ) {
-				if ( $image->hasAttribute( 'class' ) && strpos( $image->getAttribute( 'class' ), $class ) !== false ) {
-					$skip = true;
-					break;
+				// check for exclusion classes
+				if ( preg_match( '/class=["\']([^"\']+)["\']/', $img_tag, $class_match ) ) {
+					$classes = explode( ' ', $class_match[1] );
+					foreach ( $exclusion_classes as $excluded ) {
+						if ( in_array( $excluded, $classes, true ) ) {
+							return $img_tag;
+						}
+					}
 				}
-			}
 
-			// Check if the image has an excluded attribute.
-			foreach ( self::$exclusions['attributes'] as $attr ) {
-				if ( $image->hasAttribute( $attr ) ) {
-					$skip = true;
-					break;
+				// Check for exclusion attributes
+				foreach ( $exclusion_attributes as $excluded_attr ) {
+					if ( preg_match( '/' . preg_quote( $excluded_attr, '/' ) . '(\s*=\s*["\'][^"\']*["\'])?/', $img_tag ) ) {
+						return $img_tag;
+					}
 				}
-			}
 
-			if ( $skip ) {
-				continue;
-			}
+				// Not add lazy if already present
+				if ( preg_match( '/\bloading\s*=\s*["\']?lazy["\']?/i', $img_tag ) ) {
+					return $img_tag;
+				}
 
-			// Add the loading="lazy" attribute if not already present.
-			if ( ! $image->hasAttribute( 'loading' ) ) {
-				$image->setAttribute( 'loading', 'lazy' );
-			}
-		}
+				// add loading="lazy" attribute
+				return preg_replace( '/<img\b/', '<img loading="lazy"', $img_tag, 1 );
+			},
+			$content
+		);
 
-		// Extract the body content and return it.
-		$body = $doc->getElementsByTagName( 'body' )->item( 0 );
-		return $body ? $doc->saveHTML( $body ) : $content;
+		return $content;
 	}
 }
