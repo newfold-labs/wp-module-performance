@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1760445177">
-  <project timestamp="1760445177">
+<coverage generated="1760511709">
+  <project timestamp="1760511709">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="3" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
@@ -2880,7 +2880,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Performance.php">
       <class name="NewfoldLabs\WP\Module\Performance\Performance" namespace="global">
-        <metrics complexity="41" methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="169" coveredstatements="0" elements="184" coveredelements="0"/>
+        <metrics complexity="44" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="171" coveredstatements="0" elements="187" coveredelements="0"/>
       </class>
       <line num="59" type="method" name="__construct" visibility="public" complexity="4" crap="20" count="0"/>
       <line num="61" type="stmt" count="0"/>
@@ -2927,9 +2927,11 @@
       <line num="134" type="stmt" count="0"/>
       <line num="141" type="stmt" count="0"/>
       <line num="142" type="stmt" count="0"/>
+      <line num="145" type="stmt" count="0"/>
       <line num="146" type="stmt" count="0"/>
       <line num="147" type="stmt" count="0"/>
       <line num="148" type="stmt" count="0"/>
+      <line num="149" type="stmt" count="0"/>
       <line num="150" type="stmt" count="0"/>
       <line num="151" type="stmt" count="0"/>
       <line num="152" type="stmt" count="0"/>
@@ -2938,35 +2940,35 @@
       <line num="155" type="stmt" count="0"/>
       <line num="156" type="stmt" count="0"/>
       <line num="157" type="stmt" count="0"/>
-      <line num="158" type="stmt" count="0"/>
-      <line num="159" type="stmt" count="0"/>
       <line num="160" type="stmt" count="0"/>
       <line num="161" type="stmt" count="0"/>
-      <line num="164" type="stmt" count="0"/>
-      <line num="165" type="stmt" count="0"/>
-      <line num="173" type="method" name="remove_epc_settings" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="162" type="stmt" count="0"/>
+      <line num="170" type="method" name="remove_epc_settings" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="171" type="stmt" count="0"/>
       <line num="174" type="stmt" count="0"/>
+      <line num="175" type="stmt" count="0"/>
+      <line num="176" type="stmt" count="0"/>
       <line num="177" type="stmt" count="0"/>
       <line num="178" type="stmt" count="0"/>
-      <line num="179" type="stmt" count="0"/>
-      <line num="180" type="stmt" count="0"/>
-      <line num="181" type="stmt" count="0"/>
-      <line num="194" type="method" name="nfd_asr_default" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="195" type="stmt" count="0"/>
-      <line num="208" type="method" name="nfd_as_cleanup_batch_size" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="214" type="stmt" count="0"/>
+      <line num="191" type="method" name="nfd_asr_default" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="192" type="stmt" count="0"/>
+      <line num="205" type="method" name="nfd_as_cleanup_batch_size" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="211" type="stmt" count="0"/>
+      <line num="212" type="stmt" count="0"/>
       <line num="215" type="stmt" count="0"/>
-      <line num="218" type="stmt" count="0"/>
-      <line num="226" type="method" name="admin_bar_menu" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="229" type="stmt" count="0"/>
+      <line num="223" type="method" name="admin_bar_menu" visibility="public" complexity="5" crap="30" count="0"/>
+      <line num="226" type="stmt" count="0"/>
+      <line num="227" type="stmt" count="0"/>
       <line num="230" type="stmt" count="0"/>
+      <line num="231" type="stmt" count="0"/>
+      <line num="232" type="stmt" count="0"/>
       <line num="233" type="stmt" count="0"/>
       <line num="234" type="stmt" count="0"/>
       <line num="235" type="stmt" count="0"/>
       <line num="236" type="stmt" count="0"/>
-      <line num="237" type="stmt" count="0"/>
       <line num="238" type="stmt" count="0"/>
       <line num="239" type="stmt" count="0"/>
+      <line num="240" type="stmt" count="0"/>
       <line num="241" type="stmt" count="0"/>
       <line num="242" type="stmt" count="0"/>
       <line num="243" type="stmt" count="0"/>
@@ -2974,99 +2976,100 @@
       <line num="245" type="stmt" count="0"/>
       <line num="246" type="stmt" count="0"/>
       <line num="247" type="stmt" count="0"/>
-      <line num="248" type="stmt" count="0"/>
       <line num="249" type="stmt" count="0"/>
       <line num="250" type="stmt" count="0"/>
+      <line num="251" type="stmt" count="0"/>
       <line num="252" type="stmt" count="0"/>
       <line num="253" type="stmt" count="0"/>
       <line num="254" type="stmt" count="0"/>
       <line num="255" type="stmt" count="0"/>
       <line num="256" type="stmt" count="0"/>
       <line num="257" type="stmt" count="0"/>
-      <line num="258" type="stmt" count="0"/>
-      <line num="259" type="stmt" count="0"/>
-      <line num="260" type="stmt" count="0"/>
+      <line num="261" type="stmt" count="0"/>
+      <line num="262" type="stmt" count="0"/>
+      <line num="263" type="stmt" count="0"/>
       <line num="264" type="stmt" count="0"/>
       <line num="265" type="stmt" count="0"/>
       <line num="266" type="stmt" count="0"/>
       <line num="267" type="stmt" count="0"/>
       <line num="268" type="stmt" count="0"/>
-      <line num="269" type="stmt" count="0"/>
-      <line num="270" type="stmt" count="0"/>
-      <line num="271" type="stmt" count="0"/>
-      <line num="280" type="method" name="add_management_page" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="277" type="method" name="add_management_page" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="279" type="stmt" count="0"/>
+      <line num="280" type="stmt" count="0"/>
+      <line num="281" type="stmt" count="0"/>
       <line num="282" type="stmt" count="0"/>
       <line num="283" type="stmt" count="0"/>
       <line num="284" type="stmt" count="0"/>
       <line num="285" type="stmt" count="0"/>
-      <line num="286" type="stmt" count="0"/>
-      <line num="287" type="stmt" count="0"/>
-      <line num="288" type="stmt" count="0"/>
-      <line num="297" type="method" name="add_nfd_subnav" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="294" type="method" name="add_nfd_subnav" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="295" type="stmt" count="0"/>
+      <line num="296" type="stmt" count="0"/>
+      <line num="297" type="stmt" count="0"/>
       <line num="298" type="stmt" count="0"/>
       <line num="299" type="stmt" count="0"/>
       <line num="300" type="stmt" count="0"/>
       <line num="301" type="stmt" count="0"/>
-      <line num="302" type="stmt" count="0"/>
-      <line num="303" type="stmt" count="0"/>
-      <line num="304" type="stmt" count="0"/>
-      <line num="312" type="method" name="render_performance_app" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="309" type="method" name="render_performance_app" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="310" type="stmt" count="0"/>
+      <line num="311" type="stmt" count="0"/>
+      <line num="312" type="stmt" count="0"/>
       <line num="313" type="stmt" count="0"/>
       <line num="314" type="stmt" count="0"/>
       <line num="315" type="stmt" count="0"/>
       <line num="316" type="stmt" count="0"/>
-      <line num="317" type="stmt" count="0"/>
-      <line num="318" type="stmt" count="0"/>
-      <line num="319" type="stmt" count="0"/>
-      <line num="327" type="method" name="initialize_performance_app" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="328" type="stmt" count="0"/>
-      <line num="336" type="method" name="register_performance_assets" visibility="public" complexity="6" crap="42" count="0"/>
-      <line num="337" type="stmt" count="0"/>
+      <line num="324" type="method" name="initialize_performance_app" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="325" type="stmt" count="0"/>
+      <line num="333" type="method" name="register_performance_assets" visibility="public" complexity="6" crap="42" count="0"/>
+      <line num="334" type="stmt" count="0"/>
+      <line num="335" type="stmt" count="0"/>
+      <line num="336" type="stmt" count="0"/>
       <line num="338" type="stmt" count="0"/>
       <line num="339" type="stmt" count="0"/>
       <line num="341" type="stmt" count="0"/>
       <line num="342" type="stmt" count="0"/>
+      <line num="343" type="stmt" count="0"/>
       <line num="344" type="stmt" count="0"/>
       <line num="345" type="stmt" count="0"/>
       <line num="346" type="stmt" count="0"/>
       <line num="347" type="stmt" count="0"/>
-      <line num="348" type="stmt" count="0"/>
       <line num="349" type="stmt" count="0"/>
       <line num="350" type="stmt" count="0"/>
+      <line num="351" type="stmt" count="0"/>
       <line num="352" type="stmt" count="0"/>
       <line num="353" type="stmt" count="0"/>
       <line num="354" type="stmt" count="0"/>
-      <line num="355" type="stmt" count="0"/>
       <line num="356" type="stmt" count="0"/>
-      <line num="357" type="stmt" count="0"/>
-      <line num="359" type="stmt" count="0"/>
+      <line num="358" type="stmt" count="0"/>
+      <line num="360" type="stmt" count="0"/>
       <line num="361" type="stmt" count="0"/>
-      <line num="363" type="stmt" count="0"/>
-      <line num="364" type="stmt" count="0"/>
+      <line num="362" type="stmt" count="0"/>
       <line num="365" type="stmt" count="0"/>
-      <line num="368" type="stmt" count="0"/>
-      <line num="369" type="stmt" count="0"/>
-      <line num="377" type="method" name="add_dummy_performance_menu_link" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="378" type="stmt" count="0"/>
+      <line num="366" type="stmt" count="0"/>
+      <line num="378" type="method" name="initialize_lazy_loader" visibility="public" complexity="3" crap="12" count="0"/>
       <line num="379" type="stmt" count="0"/>
       <line num="380" type="stmt" count="0"/>
-      <line num="381" type="stmt" count="0"/>
       <line num="382" type="stmt" count="0"/>
-      <line num="383" type="stmt" count="0"/>
-      <line num="384" type="stmt" count="0"/>
-      <line num="385" type="stmt" count="0"/>
-      <line num="394" type="method" name="handle_performance_redirect" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="388" type="method" name="add_dummy_performance_menu_link" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="389" type="stmt" count="0"/>
+      <line num="390" type="stmt" count="0"/>
+      <line num="391" type="stmt" count="0"/>
+      <line num="392" type="stmt" count="0"/>
+      <line num="393" type="stmt" count="0"/>
+      <line num="394" type="stmt" count="0"/>
+      <line num="395" type="stmt" count="0"/>
       <line num="396" type="stmt" count="0"/>
-      <line num="397" type="stmt" count="0"/>
-      <line num="398" type="stmt" count="0"/>
-      <line num="400" type="stmt" count="0"/>
-      <line num="401" type="stmt" count="0"/>
-      <line num="402" type="stmt" count="0"/>
-      <line num="412" type="method" name="old_performance_redirect" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="414" type="stmt" count="0"/>
-      <line num="416" type="stmt" count="0"/>
-      <line num="417" type="stmt" count="0"/>
-      <metrics loc="423" ncloc="299" classes="1" methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="169" coveredstatements="0" elements="184" coveredelements="0"/>
+      <line num="405" type="method" name="handle_performance_redirect" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="407" type="stmt" count="0"/>
+      <line num="408" type="stmt" count="0"/>
+      <line num="409" type="stmt" count="0"/>
+      <line num="411" type="stmt" count="0"/>
+      <line num="412" type="stmt" count="0"/>
+      <line num="413" type="stmt" count="0"/>
+      <line num="423" type="method" name="old_performance_redirect" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="425" type="stmt" count="0"/>
+      <line num="427" type="stmt" count="0"/>
+      <line num="428" type="stmt" count="0"/>
+      <metrics loc="434" ncloc="301" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="171" coveredstatements="0" elements="187" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/PerformanceFeature.php">
       <class name="NewfoldLabs\WP\Module\Performance\PerformanceFeature" namespace="global">
@@ -3744,6 +3747,6 @@
       <line num="171" type="stmt" count="0"/>
       <metrics loc="173" ncloc="106" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
     </file>
-    <metrics files="76" loc="9376" ncloc="5799" classes="73" methods="366" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2931" coveredstatements="86" elements="3297" coveredelements="114"/>
+    <metrics files="76" loc="9387" ncloc="5801" classes="73" methods="367" coveredmethods="28" conditionals="0" coveredconditionals="0" statements="2933" coveredstatements="86" elements="3300" coveredelements="114"/>
   </project>
 </coverage>
