@@ -326,7 +326,7 @@ const JetpackBoost = () => {
 					<div className="section generate-css" style={ { marginBottom: '20px' } }>
 						{ isComingSoonActive ? (
 							<DisableComingSoonButton setIsComingSoonActive={setIsComingSoonActive}>
-								{ cssPremiumField }
+								{ cssGenerateField }
 							</DisableComingSoonButton>
 							) : (
 								cssGenerateField
