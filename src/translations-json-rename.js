@@ -7,6 +7,7 @@
  */
 
 const fs = require("fs");
+const path = require("path");
 const { globSync } = require("glob");
 
 let chalk;
@@ -16,7 +17,7 @@ let chalk;
   const RENAMED = chalk.reset.inverse.bold.green(" RENAMED ");
   const ERROR = chalk.reset.inverse.bold.red(" ERROR ");
 
-  const files = globSync("languages/*.json");
+  const files = globSync(path.join(__dirname, '../languages/*.json'));
   console.log("Renaming json files");
   if (files.length) {
     files.forEach((file) => {

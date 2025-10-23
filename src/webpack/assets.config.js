@@ -7,7 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 // Absolute paths for source and output directories (based on project root)
-const assetsPath = path.resolve(process.cwd(), "assets");
+const assetsPath = path.resolve(process.cwd(), "src/assets");
 const buildPath = path.resolve(process.cwd(), "build/assets");
 
 /**
