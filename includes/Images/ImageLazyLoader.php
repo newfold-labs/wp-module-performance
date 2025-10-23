@@ -151,44 +151,43 @@ class ImageLazyLoader {
 	 * @return string Modified HTML content with lazy loading applied, or original content on error.
 	 */
 	public function apply_lazy_loading( $content ) {
+		// Return unmodified content if it is empty.
 		if ( empty( $content ) ) {
 			return $content;
 		}
 
-		// Remove all comments using clean_content (placeholder Divi + numeric ones)
-		$content = $this->clean_content(
-			'/.*/s', // match everything
-			'/<!--\s*\[et_pb_line_break_holder\]\s*-->|<!--\d+_\d+-\d+-->/',
-			'',
-			$content
-		);
+		$exclusion_classes    = self::$exclusions['classes'];
+		$exclusion_attributes = self::$exclusions['attributes'];
 
-		// Apply loading="lazy" to images using regex, avoiding DOMDocument
 		$content = preg_replace_callback(
-			'/<img\b[^>]*>/i',
-			function ( $matches ) {
-				$img = $matches[0];
+			'/<img\b([^>]*)>/i',
+			function ( $matches ) use ( $exclusion_classes, $exclusion_attributes ) {
+				$img_tag = $matches[0];
 
-				// Check for excluded classes
-				foreach ( ImageLazyLoader::$exclusions['classes'] as $class ) {
-					if ( stripos( $img, $class ) !== false ) {
-						return $img;
+				// check for exclusion classes
+				if ( preg_match( '/class=["\']([^"\']+)["\']/', $img_tag, $class_match ) ) {
+					$classes = explode( ' ', $class_match[1] );
+					foreach ( $exclusion_classes as $excluded ) {
+						if ( in_array( $excluded, $classes, true ) ) {
+							return $img_tag;
+						}
 					}
 				}
 
-				// CHeck for excluded attributes
-				foreach ( ImageLazyLoader::$exclusions['attributes'] as $attr ) {
-					if ( stripos( $img, $attr ) !== false ) {
-						return $img;
+				// Check for exclusion attributes
+				foreach ( $exclusion_attributes as $excluded_attr ) {
+					if ( preg_match( '/' . preg_quote( $excluded_attr, '/' ) . '(\s*=\s*["\'][^"\']*["\'])?/', $img_tag ) ) {
+						return $img_tag;
 					}
 				}
 
-				// Add loading="lazy" if not set
-				if ( stripos( $img, 'loading=' ) === false ) {
-					$img = str_replace( '<img', '<img loading="lazy"', $img );
+				// Not add lazy if already present
+				if ( preg_match( '/\bloading\s*=\s*["\']?lazy["\']?/i', $img_tag ) ) {
+					return $img_tag;
 				}
 
-				return $img;
+				// add loading="lazy" attribute
+				return preg_replace( '/<img\b/', '<img loading="lazy"', $img_tag, 1 );
 			},
 			$content
 		);
