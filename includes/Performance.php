@@ -82,7 +82,6 @@ class Performance {
 
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100 );
 		add_action( 'admin_menu', array( $this, 'add_management_page' ) );
-		add_action( 'load-tools_page_' . self::PAGE_SLUG, array( __CLASS__, 'initialize_performance_app' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'initialize_performance_app' ) );
 		add_filter( 'nfd_plugin_subnav', array( $this, 'add_nfd_subnav' ) );
 		add_action( 'admin_init', array( __CLASS__, 'handle_performance_redirect' ) );
