@@ -311,21 +311,6 @@ class Performance {
 	}
 
 	/**
-	 * Outputs the HTML container for the Performance module's React application.
-	 *
-	 * @return void
-	 */
-	public static function render_performance_app() {
-		echo PHP_EOL;
-		echo '<!-- NFD:PERFORMANCE -->';
-		echo PHP_EOL;
-		echo '<div id="' . esc_attr( self::PAGE_SLUG ) . '" class="' . esc_attr( self::PAGE_SLUG ) . '-container"></div>';
-		echo PHP_EOL;
-		echo '<!-- /NFD:PERFORMANCE -->';
-		echo PHP_EOL;
-	}
-
-	/**
 	 * Initializes the Performance module by registering and enqueuing its assets.
 	 *
 	 * @return void
