@@ -280,9 +280,19 @@ class Performance {
 			__( 'Performance', 'wp-module-performance' ),
 			__( 'Performance', 'wp-module-performance' ),
 			'manage_options',
-			container()->plugin()->id . '#/settings/performance',
-			array( __CLASS__, 'render_performance_app' )
+			self::PAGE_SLUG,
+			array( __CLASS__, 'tools_performance' )
 		);
+	}
+
+	/**
+	 * Redirects to the plugin performance page.
+	 * This is the callback for the tools performance page.
+	 *
+	 * @return void
+	 */
+	public static function tools_performance() {
+		wp_safe_redirect( admin_url( 'admin.php?page=' . container()->plugin()->id . '#/settings/performance' ) );
 	}
 
 	/**
