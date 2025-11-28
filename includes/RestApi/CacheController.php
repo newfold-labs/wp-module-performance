@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Performance\RestApi;
 
-use NewfoldLabs\WP\Module\ECommerce\Permissions;
+use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\Cache\CachePurgingService;
