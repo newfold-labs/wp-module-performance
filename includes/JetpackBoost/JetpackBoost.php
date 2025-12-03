@@ -44,7 +44,7 @@ class JetpackBoost {
 	public function add_to_runtime( $sdk ) {
 		$is_jetpack_boost_enabled = is_plugin_active( 'jetpack-boost/jetpack-boost.php' );
 
-		if ( isset( $_GET['page'] ) && 'nfd-performance' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['page'] ) && 'bluehost' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			delete_option( 'jb_get_started' );
 		}
 
