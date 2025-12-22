@@ -17,6 +17,7 @@ const {
 	cacheExclusionDescription,
 	cacheExclusionSaved,
 	cacheExclusionSaveButton,
+	cacheExclusionInvalidInput
 } = getCacheExclusionText();
 
 // Custom hook to mimic componentDidUpdate behavior
@@ -68,24 +69,28 @@ const CacheExclusion = () => {
 	};
 
 	const handleSave = () => {
-		const isValid = /^[a-z0-9,-]+$/.test(currentValue);
+		const rules = currentValue.replace(/\s+/g, '').replace(/,$/, "");
+		const isValid = /^[a-z0-9,-]+$/.test(rules);
+		
 		if ( ! isValid ) {
-			setIsError( 'Invalid input. Please use only lowercase letters, numbers, commas, and hyphens.' );
+			setIsError( cacheExclusionInvalidInput );
 			return;
 		}
 
 		apiFetch( {
 			url: apiUrl,
 			method: 'POST',
-			data: { cacheExclusion: currentValue },
+			data: { cacheExclusion: rules },
 		} )
 			.then( () => {
 				setIsSaved( true );
-				setCacheExclusion( currentValue );
+				setCacheExclusion( rules );
+				setCurrentValue( rules );
 				setIsEdited( false );
 			} )
 			.catch( ( error ) => {
 				setIsError( error.message );
+				setCurrentValue( rules );
 			} );
 	};
 
