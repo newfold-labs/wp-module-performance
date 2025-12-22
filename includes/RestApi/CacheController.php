@@ -94,7 +94,7 @@ class CacheController {
 					400
 				);
 			}
-			$result          = update_option( CacheExclusion::OPTION_CACHE_EXCLUSION, $cache_exclusion );
+			$result = update_option( CacheExclusion::OPTION_CACHE_EXCLUSION, $cache_exclusion );
 		} elseif ( $request->has_param( 'cacheLevel' ) ) {
 			$cache_level = $request->get_param( 'cacheLevel' );
 			$result      = update_option( CacheManager::OPTION_CACHE_LEVEL, $cache_level );
