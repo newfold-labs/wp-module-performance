@@ -68,6 +68,12 @@ const CacheExclusion = () => {
 	};
 
 	const handleSave = () => {
+		const isValid = /^[a-z0-9,-]+$/.test(currentValue);
+		if ( ! isValid ) {
+			setIsError( 'Invalid input. Please use only lowercase letters, numbers, commas, and hyphens.' );
+			return;
+		}
+
 		apiFetch( {
 			url: apiUrl,
 			method: 'POST',
