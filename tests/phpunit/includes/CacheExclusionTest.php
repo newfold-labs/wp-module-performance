@@ -1,4 +1,6 @@
 <?php
+// phpcs:disable
+
 namespace {
 	if ( ! class_exists( 'WP_REST_Request' ) ) {
 		class WP_REST_Request {
@@ -118,3 +120,4 @@ namespace NewfoldLabs\WP\Module\Performance\Cache {
 		}
 	}
 }
+// phpcs:enable
