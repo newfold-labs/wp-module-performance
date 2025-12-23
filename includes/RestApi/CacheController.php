@@ -84,7 +84,17 @@ class CacheController {
 
 		if ( $request->has_param( 'cacheExclusion' ) ) {
 			$cache_exclusion = $request->get_param( 'cacheExclusion' );
-			$result          = update_option( CacheExclusion::OPTION_CACHE_EXCLUSION, $cache_exclusion );
+			$validate_regex  = '/^[a-z0-9,-]+$/';
+			if ( ! preg_match( $validate_regex, $cache_exclusion ) ) {
+				return new \WP_REST_Response(
+					array(
+						'result'  => false,
+						'message' => 'Invalid cache exclusion format.',
+					),
+					400
+				);
+			}
+			$result = update_option( CacheExclusion::OPTION_CACHE_EXCLUSION, $cache_exclusion );
 		} elseif ( $request->has_param( 'cacheLevel' ) ) {
 			$cache_level = $request->get_param( 'cacheLevel' );
 			$result      = update_option( CacheManager::OPTION_CACHE_LEVEL, $cache_level );
