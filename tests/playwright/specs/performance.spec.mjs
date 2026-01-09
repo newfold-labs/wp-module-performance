@@ -1,19 +1,14 @@
 import { test, expect } from '@playwright/test';
 import {
   a11y,
-  FIXTURES,
   SELECTORS,
   setupAndNavigate,
-  setSiteCapabilities,
   setLinkPrefetchSettings,
   setLinkPrefetchCapabilities,
   expectNotification,
   verifyLinkPrefetchDisplayed,
   ensureLinkPrefetchToggleEnabled,
   checkLinkPrefetchCapabilities,
-  navigateToPerformancePage,
-  waitForPerformancePage,
-  auth,
 } from '../helpers/index.mjs';
 
 test.describe('Performance Page', () => {
@@ -44,9 +39,8 @@ test.describe('Performance Page', () => {
     
     // Disable cache
     await page.locator(SELECTORS.cacheLevelOff).check();
-    await page.waitForTimeout(250);
     
-    // Verify clear cache button is disabled
+    // Verify clear cache button is disabled (auto-waits for state)
     const clearCacheButton = page.locator(SELECTORS.clearCacheButton);
     await clearCacheButton.scrollIntoViewIfNeeded();
     await expect(clearCacheButton).toBeDisabled();
@@ -55,7 +49,7 @@ test.describe('Performance Page', () => {
     await page.locator(SELECTORS.cacheLevelOn).check();
     
     // Verify clear cache button is enabled
-    await expect(clearCacheButton).not.toBeDisabled();
+    await expect(clearCacheButton).toBeEnabled();
     
     // Verify notification appears
     await expectNotification(page, 'Cache');

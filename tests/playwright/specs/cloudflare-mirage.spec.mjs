@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import {
-  SELECTORS,
+  CLOUDFLARE_HASHES,
   setSiteCapabilities,
   clearSiteCapabilities,
   clearImageOptimizationOption,
@@ -61,7 +61,7 @@ test.describe('Cloudflare Mirage Toggle', () => {
     await verifyCloudflareToggleState(page, 'mirage', 'true');
 
     // Check .htaccess has the rule
-    await assertHtaccessHasRule('63a6825d');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.mirage);
   });
 
   test('Toggles Mirage on/off and updates .htaccess accordingly', async ({ page }) => {
@@ -72,14 +72,14 @@ test.describe('Cloudflare Mirage Toggle', () => {
 
     // Verify initially enabled
     await verifyCloudflareToggleState(page, 'mirage', 'true');
-    await assertHtaccessHasRule('63a6825d');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.mirage);
 
     // Toggle OFF
     await setCloudflareToggle(page, 'mirage', false);
-    await assertHtaccessHasNoRule('63a6825d');
+    await assertHtaccessHasNoRule(CLOUDFLARE_HASHES.mirage);
 
     // Toggle ON again
     await setCloudflareToggle(page, 'mirage', true);
-    await assertHtaccessHasRule('63a6825d');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.mirage);
   });
 });

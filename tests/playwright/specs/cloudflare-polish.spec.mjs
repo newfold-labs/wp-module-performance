@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import {
-  SELECTORS,
+  CLOUDFLARE_HASHES,
   setSiteCapabilities,
   clearSiteCapabilities,
   clearImageOptimizationOption,
@@ -61,7 +61,7 @@ test.describe('Cloudflare Polish Toggle', () => {
     await verifyCloudflareToggleState(page, 'polish', 'true');
 
     // Check .htaccess has the rule
-    await assertHtaccessHasRule('27cab0f2');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.polish);
   });
 
   test('Toggles Polish on/off and updates .htaccess accordingly', async ({ page }) => {
@@ -72,14 +72,14 @@ test.describe('Cloudflare Polish Toggle', () => {
 
     // Verify initially enabled
     await verifyCloudflareToggleState(page, 'polish', 'true');
-    await assertHtaccessHasRule('27cab0f2');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.polish);
 
     // Toggle OFF
     await setCloudflareToggle(page, 'polish', false);
-    await assertHtaccessHasNoRule('27cab0f2');
+    await assertHtaccessHasNoRule(CLOUDFLARE_HASHES.polish);
 
     // Toggle ON again
     await setCloudflareToggle(page, 'polish', true);
-    await assertHtaccessHasRule('27cab0f2');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.polish);
   });
 });

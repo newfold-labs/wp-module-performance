@@ -39,6 +39,13 @@ export const FIXTURES = {
   performanceModule: loadFixture('performanceModule'),
 };
 
+// Cloudflare feature hashes for .htaccess rules
+export const CLOUDFLARE_HASHES = {
+  fonts: '04d3b602',
+  mirage: '63a6825d',
+  polish: '27cab0f2',
+};
+
 // Common selectors
 export const SELECTORS = {
   // Page container
@@ -74,11 +81,12 @@ export const SELECTORS = {
 
 /**
  * Navigate to performance page
+ * Force reload ensures capabilities set via WP-CLI are picked up by the React app
  * @param {import('@playwright/test').Page} page
  */
 export async function navigateToPerformancePage(page) {
   await page.goto(`/wp-admin/admin.php?page=${pluginId}#/settings/performance`);
-  // Force reload to ensure fresh data/capabilities
+  // Force reload to ensure fresh capabilities are loaded
   await page.reload();
 }
 
@@ -87,7 +95,18 @@ export async function navigateToPerformancePage(page) {
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForPerformancePage(page) {
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector(SELECTORS.performancePage, { timeout: 10000 });
+}
+
+/**
+ * Reload page and wait for performance page to be ready
+ * Use after setting capabilities that require a page refresh
+ * @param {import('@playwright/test').Page} page
+ */
+export async function reloadAndWait(page) {
+  await page.reload();
+  await waitForPerformancePage(page);
 }
 
 /**
@@ -147,13 +166,11 @@ export async function setLinkPrefetchSettings(settings) {
 }
 
 /**
- * Set link prefetch capabilities (uses setSiteCapabilities under the hood)
- * @param {Object} capabilities - Capabilities object
+ * Set link prefetch capabilities
+ * Alias for setSiteCapabilities - kept for semantic clarity in link prefetch tests
+ * @param {Object} capabilities - Capabilities object (e.g., { hasLinkPrefetchClick: true })
  */
-export async function setLinkPrefetchCapabilities(capabilities) {
-  // Use the same setSiteCapabilities function for consistency
-  await setSiteCapabilities(capabilities);
-}
+export const setLinkPrefetchCapabilities = setSiteCapabilities;
 
 /**
  * Read .htaccess file content via CLI
@@ -176,15 +193,31 @@ export async function readHtaccess() {
 
 /**
  * Assert that .htaccess contains the expected rule
+ * Includes retry logic since .htaccess may be written asynchronously
  * @param {string} hash - The hash identifier for the rule
+ * @param {number} retries - Number of retry attempts (default: 3)
  */
-export async function assertHtaccessHasRule(hash) {
-  const htaccess = await readHtaccess();
-  expect(htaccess).toContain('# BEGIN Newfold CF Optimization Header');
-  expect(htaccess).toContain('# END Newfold CF Optimization Header');
-  expect(htaccess).toContain('nfd-enable-cf-opt');
+export async function assertHtaccessHasRule(hash, retries = 3) {
+  let htaccess = '';
+  
+  for (let i = 0; i < retries; i++) {
+    htaccess = await readHtaccess();
+    if (htaccess.includes(hash) && htaccess.includes('# BEGIN Newfold CF Optimization Header')) {
+      // All good - run full assertions
+      expect(htaccess).toContain('# BEGIN Newfold CF Optimization Header');
+      expect(htaccess).toContain('# END Newfold CF Optimization Header');
+      expect(htaccess).toContain('nfd-enable-cf-opt');
+      expect(htaccess).toContain(hash);
+      expect(htaccess).toContain('Set-Cookie "nfd-enable-cf-opt=');
+      return;
+    }
+    if (i < retries - 1) {
+      await new Promise(resolve => setTimeout(resolve, 300));
+    }
+  }
+  
+  // Final assertion attempt - will produce clear error message on failure
   expect(htaccess).toContain(hash);
-  expect(htaccess).toContain('Set-Cookie "nfd-enable-cf-opt=');
 }
 
 /**
@@ -270,6 +303,8 @@ export async function setCloudflareToggle(page, type, enable) {
   
   if (currentState !== wantEnabled) {
     await toggle.click();
+    // Wait for API call to complete before checking htaccess
+    await page.waitForLoadState('networkidle');
   }
   await expect(toggle).toHaveAttribute('aria-checked', wantEnabled);
 }

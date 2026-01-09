@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import {
-  SELECTORS,
-  setupAndNavigate,
+  CLOUDFLARE_HASHES,
   setSiteCapabilities,
   clearSiteCapabilities,
   clearFontOptimizationOption,
@@ -27,7 +26,7 @@ test.describe('Cloudflare Font Optimization Toggle', () => {
   });
 
   test('Shows Font Optimization section when capability is true and toggle is enabled', async ({ page }) => {
-    // Visit page first to initialize, then set capability, then reload (matching Cypress pattern)
+    // Visit page first to initialize, then set capability, then reload
     await navigateToPerformancePage(page);
     await waitForPerformancePage(page);
 
@@ -65,7 +64,7 @@ test.describe('Cloudflare Font Optimization Toggle', () => {
     await verifyCloudflareToggleState(page, 'fonts', 'true');
 
     // Check .htaccess has the rule
-    await assertHtaccessHasRule('04d3b602');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.fonts);
   });
 
   test('Toggles Font Optimization on/off and updates .htaccess accordingly', async ({ page }) => {
@@ -76,14 +75,14 @@ test.describe('Cloudflare Font Optimization Toggle', () => {
 
     // Verify initially enabled
     await verifyCloudflareToggleState(page, 'fonts', 'true');
-    await assertHtaccessHasRule('04d3b602');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.fonts);
 
     // Toggle OFF
     await setCloudflareToggle(page, 'fonts', false);
-    await assertHtaccessHasNoRule('04d3b602');
+    await assertHtaccessHasNoRule(CLOUDFLARE_HASHES.fonts);
 
     // Toggle ON again
     await setCloudflareToggle(page, 'fonts', true);
-    await assertHtaccessHasRule('04d3b602');
+    await assertHtaccessHasRule(CLOUDFLARE_HASHES.fonts);
   });
 });
