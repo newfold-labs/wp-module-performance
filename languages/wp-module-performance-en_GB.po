@@ -10,9 +10,9 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2025-03-04 18:16+0530\n"
 "Language: en_GB\n"
-"X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: wp-module-performance\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: wp-module-performance\n"
+"X-Generator: WP-CLI 2.11.0\n"
 
 #: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
@@ -504,3 +504,7 @@ msgstr "Improve Image Loading on Slow Connections"
 #: build/performance/performance.min.js:2
 msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
 msgstr "Cloudflare Mirage accelerates image loading for mobile and slow networks."
+
+#: build/performance/performance.min.js:5
+msgid "Disable Coming Soon"
+msgstr "Disable Coming Soon"
