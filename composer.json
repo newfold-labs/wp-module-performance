@@ -37,7 +37,7 @@
         "wp-forge/wp-htaccess-manager": "^1.0",
         "wpscholar/url": "^1.2",
         "newfold-labs/wp-module-features": "^1.5",
-        "newfold-labs/wp-module-installer": "^1.6",
+        "newfold-labs/wp-module-installer": "^1.7",
         "newfold-labs/wp-module-htaccess": "^1.0"
     },
     "require-dev": {
@@ -45,7 +45,7 @@
         "wp-cli/wp-cli-bundle": "^2.8.1|^2.12",
         "wp-cli/i18n-command": "^2.6",
         "10up/wp_mock": "^0.5.0|^1.0.0",
-        "johnpbloch/wordpress": "6.8.3",
+        "johnpbloch/wordpress": "6.9.0",
         "lucatume/wp-browser": "*",
         "phpunit/phpcov": "*"
     },
