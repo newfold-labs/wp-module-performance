@@ -12,7 +12,7 @@ use NewfoldLabs\WP\Module\Performance\RestApi\RestApi;
 class RestApiWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * rest_api_init registers newfold-performance REST routes.
+	 * Rest_api_init registers newfold-performance REST routes.
 	 *
 	 * @return void
 	 */

@@ -22,7 +22,7 @@ class PermissionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * rest_is_authorized_admin returns false when not logged in.
+	 * Rest_is_authorized_admin returns false when not logged in.
 	 *
 	 * @return void
 	 */
@@ -32,7 +32,7 @@ class PermissionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * rest_is_authorized_admin returns true for administrator.
+	 * Rest_is_authorized_admin returns true for administrator.
 	 *
 	 * @return void
 	 */
@@ -43,7 +43,7 @@ class PermissionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * rest_can_upload_media returns true for administrator.
+	 * Rest_can_upload_media returns true for administrator.
 	 *
 	 * @return void
 	 */
