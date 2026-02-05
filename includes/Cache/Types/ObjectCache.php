@@ -87,8 +87,9 @@ class ObjectCache {
 		if ( ! is_readable( $path ) ) {
 			return false;
 		}
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local file header read, not remote.
 		$content = @file_get_contents( $path, false, null, 0, self::HEADER_READ_BYTES );
-		if ( $content === false || $content === '' ) {
+		if ( false === $content || '' === $content ) {
 			return false;
 		}
 		return strpos( $content, self::DROPIN_HEADER_IDENTIFIER ) !== false;
@@ -101,9 +102,9 @@ class ObjectCache {
 	 */
 	public static function get_state() {
 		$available = self::is_available();
-		$path     = self::get_drop_in_path();
-		$exists   = file_exists( $path );
-		$ours     = $exists && self::is_our_drop_in( $path );
+		$path      = self::get_drop_in_path();
+		$exists    = file_exists( $path );
+		$ours      = $exists && self::is_our_drop_in( $path );
 
 		return array(
 			'available'   => $available,
@@ -142,7 +143,7 @@ class ObjectCache {
 		$response = wp_remote_get(
 			self::DROPIN_URL,
 			array(
-				'timeout'    => 15,
+				'timeout'   => 15,
 				'sslverify' => true,
 			)
 		);
@@ -155,7 +156,7 @@ class ObjectCache {
 		}
 
 		$code = wp_remote_retrieve_response_code( $response );
-		if ( $code !== 200 ) {
+		if ( 200 !== $code ) {
 			return array(
 				'success' => false,
 				'message' => sprintf(
@@ -185,7 +186,8 @@ class ObjectCache {
 		}
 
 		// Fallback to file_put_contents if WP_Filesystem failed (e.g. direct method not available).
-		if ( @file_put_contents( $path, $body ) !== false ) {
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Intentional fallback after WP_Filesystem.
+		if ( false !== @file_put_contents( $path, $body ) ) {
 			update_option( self::OPTION_ENABLED_PREFERENCE, true );
 			return array( 'success' => true );
 		}
@@ -236,6 +238,7 @@ class ObjectCache {
 			return array( 'success' => true );
 		}
 
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.unlink_unlink -- Intentional fallback after WP_Filesystem.
 		if ( @unlink( $path ) ) {
 			if ( $clear_preference ) {
 				// Store false (do not delete option) so maybe_restore_on_activation knows user turned off.
@@ -326,6 +329,7 @@ class ObjectCache {
 			update_option( self::OPTION_ENABLED_PREFERENCE, false );
 			return;
 		}
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.unlink_unlink -- Intentional fallback after WP_Filesystem.
 		if ( @unlink( $path ) ) {
 			update_option( self::OPTION_ENABLED_PREFERENCE, false );
 		}

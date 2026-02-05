@@ -78,7 +78,7 @@ class PerformanceLifecycleHooks {
 			return;
 		}
 		$this->plugin_hooks_done = true;
-		$this->container = $container;
+		$this->container         = $container;
 
 		register_activation_hook(
 			$container->plugin()->file,
