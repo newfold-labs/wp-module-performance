@@ -4,8 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b52370cbd95b22d566a326deaf35939",
+    "content-hash": "e21815b9d6cea22aa34ed81fb6458f5e",
     "packages": [
+        {
+            "name": "colinmollenhour/credis",
+            "version": "v1.16.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/colinmollenhour/credis.git",
+                "reference": "db2c0323292e360fdba39bf98c7a405fe3cb05b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/colinmollenhour/credis/zipball/db2c0323292e360fdba39bf98c7a405fe3cb05b0",
+                "reference": "db2c0323292e360fdba39bf98c7a405fe3cb05b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "suggest": {
+                "ext-redis": "Improved performance for communicating with redis"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Client.php",
+                    "Cluster.php",
+                    "Sentinel.php",
+                    "Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Mollenhour",
+                    "email": "colin@mollenhour.com"
+                }
+            ],
+            "description": "Credis is a lightweight interface to the Redis key-value store which wraps the phpredis library when available for better performance.",
+            "homepage": "https://github.com/colinmollenhour/credis",
+            "support": {
+                "issues": "https://github.com/colinmollenhour/credis/issues",
+                "source": "https://github.com/colinmollenhour/credis/tree/v1.16.2"
+            },
+            "time": "2024-12-17T02:24:03+00:00"
+        },
         {
             "name": "doctrine/inflector",
             "version": "1.4.4",

@@ -26,7 +26,7 @@ const CacheSettings = () => {
 	const [ cacheLevel, setCacheLevel ] = useState( runtimeLevel );
 	const [ updating, setUpdating ] = useState( false );
 
-	const { pushNotification, setCacheLevel: dispatchSetCacheLevel } =
+	const { pushNotification, setCacheLevel: dispatchSetCacheLevel, setObjectCache: dispatchSetObjectCache } =
 		useDispatch( STORE_NAME );
 
 	const apiUrl = NewfoldRuntime.createApiUrl(
@@ -47,10 +47,13 @@ const CacheSettings = () => {
 			method: 'POST',
 			data: { cacheLevel: selectedLevel },
 		} )
-			.then( () => {
+			.then( ( response ) => {
 				setUpdating( false );
 				setCacheLevel( selectedLevel );
 				dispatchSetCacheLevel( selectedLevel );
+				if ( selectedLevel <= 0 && response?.objectCache ) {
+					dispatchSetObjectCache( response.objectCache );
+				}
 			} )
 			.catch( ( err ) => {
 				setUpdating( false );

@@ -12,6 +12,7 @@ import { useEffect } from '@wordpress/element';
 import CacheSettings from '../../sections/CacheSettings';
 import NotificationFeed from '../NotificationFeed';
 import CacheExclusion from '../../sections/CacheExclusion';
+import ObjectCache from '../../sections/ObjectCache';
 import ClearCache from '../../sections/ClearCache';
 import Skip404 from '../../sections/Skip404';
 import JetpackBoost from '../../sections/JetpackBoost';
@@ -66,6 +67,15 @@ const App = () => {
 					>
 						<CacheSettings />
 					</Container.Block>
+					{ /* Only show Object Cache when Redis is configured (objectCache.available from backend). */ }
+					{ NewfoldRuntime?.sdk?.cache?.objectCache?.available && (
+						<Container.Block
+							separator
+							className="newfold-object-cache"
+						>
+							<ObjectCache />
+						</Container.Block>
+					) }
 					<Container.Block
 						separator
 						className="newfold-cache-exclusion"

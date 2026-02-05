@@ -1,5 +1,6 @@
 const DEFAULT_STATE = {
 	cacheLevel: null,
+	objectCache: null,
 	feed: {},
 };
 
@@ -9,6 +10,12 @@ export default function reducer( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				cacheLevel: action.level,
+			};
+
+		case 'SET_OBJECT_CACHE':
+			return {
+				...state,
+				objectCache: action.objectCache,
 			};
 
 		case 'PUSH_NOTIFICATION':

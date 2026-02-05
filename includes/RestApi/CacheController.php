@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Performance\Permissions;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\Cache\CachePurgingService;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache;
 
 use function NewfoldLabs\WP\ModuleLoader\container;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
@@ -65,13 +66,14 @@ class CacheController {
 	 * @return \WP_REST_Response
 	 */
 	public function get_settings() {
-		return new \WP_REST_Response(
-			array(
-				'cacheExclusion' => get_cache_exclusion(),
-				'cacheLevel'     => get_cache_level(),
-			),
-			200
+		// If user preference is "on" but the drop-in is missing, restore it so the UI shows enabled.
+		ObjectCache::maybe_restore_dropin();
+		$response = array(
+			'cacheExclusion' => get_cache_exclusion(),
+			'cacheLevel'     => get_cache_level(),
+			'objectCache'    => ObjectCache::get_state(),
 		);
+		return new \WP_REST_Response( $response, 200 );
 	}
 
 	/**
@@ -95,34 +97,63 @@ class CacheController {
 				);
 			}
 			$result = update_option( CacheExclusion::OPTION_CACHE_EXCLUSION, $normalized );
-		} elseif ( $request->has_param( 'cacheLevel' ) ) {
-			$cache_level = $request->get_param( 'cacheLevel' );
-			$result      = update_option( CacheManager::OPTION_CACHE_LEVEL, $cache_level );
+			if ( $result ) {
+				return new \WP_REST_Response( array( 'result' => true ), 200 );
+			}
+			return new \WP_REST_Response( array( 'result' => false ), 400 );
 		}
 
-		if ( $result ) {
-			return new \WP_REST_Response(
-				array(
-					'result' => true,
-				),
-				200
-			);
-		} else {
-			return new \WP_REST_Response(
-				array(
-					'result' => false,
-				),
-				400
-			);
+		if ( $request->has_param( 'cacheLevel' ) ) {
+			$cache_level = (int) $request->get_param( 'cacheLevel' );
+			$result      = update_option( CacheManager::OPTION_CACHE_LEVEL, $cache_level );
+			if ( $result ) {
+				// When cache is disabled, turn off object caching too so the UI stays in sync.
+				if ( $cache_level <= 0 ) {
+					ObjectCache::disable();
+				}
+				$response = array( 'result' => true );
+				if ( $cache_level <= 0 ) {
+					$response['objectCache'] = ObjectCache::get_state();
+				}
+				return new \WP_REST_Response( $response, 200 );
+			}
+			return new \WP_REST_Response( array( 'result' => false ), 400 );
 		}
+
+		if ( $request->has_param( 'objectCache' ) ) {
+			$object_cache = $request->get_param( 'objectCache' );
+			if ( is_array( $object_cache ) && isset( $object_cache['enabled'] ) ) {
+				$enable = (bool) $object_cache['enabled'];
+				if ( $enable ) {
+					$out = ObjectCache::enable();
+				} else {
+					$out = ObjectCache::disable();
+				}
+				if ( $out['success'] ) {
+					// Purge page cache and object cache (purge_all includes flush_object_cache).
+					container()->get( 'cachePurger' )->purge_all();
+					return new \WP_REST_Response( array( 'result' => true ), 200 );
+				}
+				return new \WP_REST_Response(
+					array(
+						'result'  => false,
+						'message' => isset( $out['message'] ) ? $out['message'] : '',
+					),
+					400
+				);
+			}
+		}
+
+		return new \WP_REST_Response( array( 'result' => false ), 400 );
 	}
 
 	/**
-	 * Clears the entire cache
+	 * Clears the entire cache (page cache and object cache when enabled).
 	 */
 	public function purge_all() {
 
 		container()->get( 'cachePurger' )->purge_all();
+		ObjectCache::flush_object_cache();
 
 		return array(
 			'status'  => 'success',

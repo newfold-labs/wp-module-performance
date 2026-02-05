@@ -18,10 +18,12 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Performance\OptionListener;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Browser;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\File;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache;
 use NewfoldLabs\WP\Module\Performance\Images\ImageRewriteHandler;
 use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Class PerformanceLifecycleHooks
@@ -40,12 +42,25 @@ class PerformanceLifecycleHooks {
 	protected $container;
 
 	/**
+	 * Whether plugin_hooks has already run (avoids double-registering).
+	 *
+	 * @var bool
+	 */
+	protected $plugin_hooks_done = false;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		if ( function_exists( 'add_action' ) ) {
 			add_action( 'newfold_container_set', array( $this, 'plugin_hooks' ) );
 			add_action( 'plugins_loaded', array( $this, 'hooks' ) );
+			// If Redis config was removed from wp-config but our drop-in is still present, remove it so the site does not break.
+			add_action( 'plugins_loaded', array( ObjectCache::class, 'maybe_remove_dropin_if_unavailable' ), 1 );
+
+			// Do not call container() here. The ModuleLoader's container() creates and locks in
+			// an empty container if called before the host plugin calls setContainer(), which
+			// causes "No entry was found for 'plugin'" when Features etc. run.
 
 			// Keep Cache level header in sync with option changes.
 			new OptionListener( CacheManager::OPTION_CACHE_LEVEL, array( $this, 'on_cache_level_change' ) );
@@ -59,6 +74,10 @@ class PerformanceLifecycleHooks {
 	 * @return void
 	 */
 	public function plugin_hooks( Container $container ) {
+		if ( $this->plugin_hooks_done ) {
+			return;
+		}
+		$this->plugin_hooks_done = true;
 		$this->container = $container;
 
 		register_activation_hook(
@@ -96,9 +115,14 @@ class PerformanceLifecycleHooks {
 	 * @return void
 	 */
 	public function on_activation() {
+		// Purge object cache on shutdown so the next request reads active_plugins from DB (not Redis).
+		add_action( 'shutdown', array( $this, 'purge_object_cache_on_shutdown' ), PHP_INT_MAX );
 		// Cache feature bits.
 		File::on_activation();
 		Browser::on_activation();
+
+		// Restore object-cache drop-in if Redis constants exist and user had it enabled before deactivation.
+		ObjectCache::maybe_restore_on_activation();
 
 		// Image rewrite rules.
 		ImageRewriteHandler::on_activation();
@@ -111,15 +135,49 @@ class PerformanceLifecycleHooks {
 	}
 
 	/**
+	 * Delete object-cache keys for active_plugins and alloptions so the next request reads from DB.
+	 * Prevents stale plugin list when object cache (e.g. Redis) is enabled, which can make
+	 * activation/deactivation appear to fail the first time.
+	 *
+	 * @return void
+	 */
+	protected function delete_plugin_list_option_cache() {
+		ObjectCache::clear_options_object_cache();
+	}
+
+	/**
+	 * Purge object cache (options + full flush + runtime) on shutdown after activate/deactivate.
+	 * Ensures the next request reads active_plugins from DB even if something re-cached after our hooks.
+	 *
+	 * @return void
+	 */
+	public function purge_object_cache_on_shutdown() {
+		$this->delete_plugin_list_option_cache();
+		ObjectCache::flush_object_cache();
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
+		if ( function_exists( 'wp_cache_flush_runtime' ) ) {
+			wp_cache_flush_runtime();
+		}
+	}
+
+	/**
 	 * Deactivation/Disable: remove Cache + Skip404.
 	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
 	public function on_deactivation() {
+		// Purge object cache on shutdown so the next request reads active_plugins from DB (not Redis).
+		add_action( 'shutdown', array( $this, 'purge_object_cache_on_shutdown' ), PHP_INT_MAX );
+
 		// Cache feature bits.
 		File::on_deactivation();
 		Browser::on_deactivation();
+
+		// Remove our object-cache drop-in if present (only deletes if it's our file).
+		ObjectCache::on_deactivation();
 
 		// Remove image rewrite rules.
 		ImageRewriteHandler::on_deactivation();
