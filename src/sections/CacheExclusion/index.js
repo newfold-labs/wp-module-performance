@@ -12,11 +12,16 @@ import { STORE_NAME } from '../../data/constants';
 import { NewfoldRuntime } from '@newfold/wp-module-runtime';
 import getCacheExclusionText from './getCacheExclusionText';
 
+// Must match backend: CacheExclusion::CACHE_EXCLUSION_VALIDATE_REGEX (includes/Cache/CacheExclusion.php)
+const CACHE_EXCLUSION_VALIDATE_REGEX = /^[a-z0-9,-]*$/;
+
 const {
 	cacheExclusionTitle,
 	cacheExclusionDescription,
 	cacheExclusionSaved,
 	cacheExclusionSaveButton,
+	cacheExclusionInvalidInput,
+	cacheExclusionPlaceholder
 } = getCacheExclusionText();
 
 // Custom hook to mimic componentDidUpdate behavior
@@ -34,6 +39,7 @@ const useUpdateEffect = ( effect, deps ) => {
 
 const CacheExclusion = () => {
 	const [ isEdited, setIsEdited ] = useState( false );
+	const [ hadInvalidInput, setHadInvalidInput ] = useState( false );
 	const [ isError, setIsError ] = useState( false );
 	const [ isSaved, setIsSaved ] = useState( false );
 
@@ -63,23 +69,41 @@ const CacheExclusion = () => {
 
 	const handleCacheExclusionChange = ( e ) => {
 		const newValue = e.target.value;
+		const normalized = newValue.replace( /\s+/g, '' ).replace( /,$/, '' );
+		const valid = CACHE_EXCLUSION_VALIDATE_REGEX.test( normalized );
 		setIsEdited( newValue !== cacheExclusion );
+		if ( ! valid ) {
+			setHadInvalidInput( true );
+		}
 		setCurrentValue( newValue );
+		setIsError( false );
 	};
 
+	// Normalization must match backend: CacheExclusion::normalize()
+	const normalizedRules = currentValue.replace( /\s+/g, '' ).replace( /,$/, '' );
+	const isInputValid = CACHE_EXCLUSION_VALIDATE_REGEX.test( normalizedRules );
+
 	const handleSave = () => {
+		if ( ! isInputValid ) {
+			return;
+		}
+
 		apiFetch( {
 			url: apiUrl,
 			method: 'POST',
-			data: { cacheExclusion: currentValue },
+			data: { cacheExclusion: normalizedRules },
 		} )
 			.then( () => {
+				setIsError( false );
+				setHadInvalidInput( false );
 				setIsSaved( true );
-				setCacheExclusion( currentValue );
+				setCacheExclusion( normalizedRules );
+				setCurrentValue( normalizedRules );
 				setIsEdited( false );
 			} )
 			.catch( ( error ) => {
 				setIsError( error.message );
+				setCurrentValue( normalizedRules );
 			} );
 	};
 
@@ -104,14 +128,21 @@ const CacheExclusion = () => {
 				name="cache-exclusion"
 				onChange={ handleCacheExclusionChange }
 				value={ currentValue }
+				placeholder={ cacheExclusionPlaceholder }
 				rows="1"
 				label={ cacheExclusionTitle }
 			/>
-			{ isEdited && (
+			{ ( isEdited || ( hadInvalidInput && isInputValid ) ) && ! isInputValid && (
+				<p className="nfd-text-sm nfd-text-red-600 nfd-mt-1">
+					{ cacheExclusionInvalidInput }
+				</p>
+			) }
+			{ ( isEdited || ( hadInvalidInput && isInputValid ) ) && (
 				<Button
 					variant="secondary"
 					className="save-cache-exclusion-button"
 					onClick={ handleSave }
+					disabled={ ! isInputValid }
 				>
 					{ cacheExclusionSaveButton }
 				</Button>

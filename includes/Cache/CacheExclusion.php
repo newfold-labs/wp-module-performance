@@ -24,6 +24,25 @@ class CacheExclusion {
 	const OPTION_CACHE_EXCLUSION = 'nfd_performance_cache_exclusion';
 
 	/**
+	 * Regex for validating cache exclusion value. Must match frontend (CacheExclusion section).
+	 * Allows: empty string, or lowercase letters, numbers, commas, hyphens only.
+	 *
+	 * @var string
+	 */
+	const CACHE_EXCLUSION_VALIDATE_REGEX = '/^[a-z0-9,-]*$/';
+
+	/**
+	 * Normalize cache exclusion input to match frontend: strip all whitespace, remove trailing comma.
+	 *
+	 * @param string $value Raw cache exclusion value.
+	 * @return string Normalized value.
+	 */
+	public static function normalize( $value ) {
+		$normalized = preg_replace( '/\s+/', '', (string) $value );
+		return preg_replace( '/,$/', '', $normalized );
+	}
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Container $container the container

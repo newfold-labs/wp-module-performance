@@ -8,6 +8,14 @@ const getCacheExclusionText = () => ( {
 	),
 	cacheExclusionSaved: __( 'Cache Exclusion saved', 'wp-module-performance' ),
 	cacheExclusionSaveButton: __( 'Save', 'wp-module-performance' ),
+	cacheExclusionInvalidInput: __(
+		'Invalid input. Please use only lowercase letters, numbers, commas, and hyphens.',
+		'wp-module-performance'
+	),
+	cacheExclusionPlaceholder: __(
+		'e.g. cart,checkout,wp-admin',
+		'wp-module-performance'
+	),
 } );
 
 export default getCacheExclusionText;
