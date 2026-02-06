@@ -504,3 +504,39 @@ msgstr "Mejorar la carga de imágenes en conexiones lentas"
 #: build/performance/performance.min.js:2
 msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
 msgstr "Cloudflare Mirage acelera la carga de imágenes en redes móviles y lentas."
+
+#: build/performance/performance.min.js:2
+msgid "Invalid input. Please use only lowercase letters, numbers, commas, and hyphens."
+msgstr ""
+
+#: build/performance/performance.min.js:2
+msgid "e.g. cart,checkout,wp-admin"
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Disable Coming Soon"
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Object Caching"
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Enable Object Caching"
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Object cache setting saved"
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Failed to update object cache"
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
+msgstr ""

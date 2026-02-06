@@ -348,6 +348,33 @@
             ],
             "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
                 "Cloudflare Mirage acc\u00e9l\u00e8re le chargement d\u2019images sur r\u00e9seaux mobiles et lents."
+            ],
+            "Invalid input. Please use only lowercase letters, numbers, commas, and hyphens.": [
+                ""
+            ],
+            "e.g. cart,checkout,wp-admin": [
+                ""
+            ],
+            "Disable Coming Soon": [
+                ""
+            ],
+            "Object Caching": [
+                ""
+            ],
+            "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled.": [
+                ""
+            ],
+            "Enable Object Caching": [
+                ""
+            ],
+            "Object cache setting saved": [
+                ""
+            ],
+            "Failed to update object cache": [
+                ""
+            ],
+            "Another plugin's object cache is active. Disable it in that plugin to use this toggle.": [
+                ""
             ]
         }
     }
