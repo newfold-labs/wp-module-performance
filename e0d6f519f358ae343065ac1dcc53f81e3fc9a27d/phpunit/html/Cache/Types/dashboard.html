@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/runner/work/wp-module-performance/wp-module-performance/includes/Cache/Types</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../_css/bootstrap.min.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="../../_css/nv.d3.min.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="../../_css/style.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="../../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../../index.html">/home/runner/work/wp-module-performance/wp-module-performance/includes</a></li>
+         <li class="breadcrumb-item"><a href="../index.html">Cache</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Types</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Browser.php.html#24">NewfoldLabs\WP\Module\Performance\Cache\Types\Browser</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CacheBase.php.html#10">NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#22">NewfoldLabs\WP\Module\Performance\Cache\Types\File</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#20">NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#20">NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Nginx.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\Nginx</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Sitelock.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#13">NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler</a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="ObjectCache.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache</a></td><td class="text-right">3906</td></tr>
+       <tr><td><a href="File.php.html#22">NewfoldLabs\WP\Module\Performance\Cache\Types\File</a></td><td class="text-right">3906</td></tr>
+       <tr><td><a href="Browser.php.html#24">NewfoldLabs\WP\Module\Performance\Cache\Types\Browser</a></td><td class="text-right">342</td></tr>
+       <tr><td><a href="Cloudflare.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare</a></td><td class="text-right">306</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#13">NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#20">NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Sitelock.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#20">NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="Nginx.php.html#11">NewfoldLabs\WP\Module\Performance\Cache\Types\Nginx</a></td><td class="text-right">42</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Browser.php.html#48"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::should_enable">should_enable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#109"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::exclusive">exclusive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Nginx.php.html#34"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Nginx::purgeRequest">purgeRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Nginx.php.html#25"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Nginx::purge_url">purge_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Nginx.php.html#16"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Nginx::purge_all">purge_all</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#172"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::patches">patches</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#136"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#124"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::is_enabled">is_enabled</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#98"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::priority">priority</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#76"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::get_drop_in_path">get_drop_in_path</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#85"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::id">id</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#70"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#153"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::patches">patches</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#111"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#101"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::is_enabled">is_enabled</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#89"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::exclusive">exclusive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#80"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::priority">priority</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#62"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::is_available">is_available</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#86"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::is_our_drop_in">is_our_drop_in</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#58"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#361"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::clear_options_object_cache">clear_options_object_cache</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#89"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::skip_404">skip_404</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#51"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::level">level</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#22"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::validate_cache_level">validate_cache_level</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Sitelock.php.html#68"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock::purge_url">purge_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Sitelock.php.html#27"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock::purge_all">purge_all</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Sitelock.php.html#20"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock::should_enable">should_enable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#382"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::flush_and_clear_on_shutdown">flush_and_clear_on_shutdown</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#345"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::flush_object_cache">flush_object_cache</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#103"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::get_state">get_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#315"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::maybe_remove_dropin_if_unavailable">maybe_remove_dropin_if_unavailable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#304"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::maybe_restore_on_activation">maybe_restore_on_activation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#286"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::maybe_restore_dropin">maybe_restore_dropin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#275"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::is_preference_enabled">is_preference_enabled</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#265"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::on_deactivation">on_deactivation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#207"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::disable">disable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ObjectCache.php.html#123"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::enable">enable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#70"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::id">id</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#378"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::on_deactivation">on_deactivation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#58"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CacheBase.php.html#26"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase::should_enable">should_enable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#53"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::getCloudflareTier">getCloudflareTier</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#44"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::isCoudflareEnabled">isCoudflareEnabled</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#35"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::should_enable">should_enable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#25"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CacheBase.php.html#46"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase::getContainer">getContainer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CacheBase.php.html#37"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase::setContainer">setContainer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#204"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::on_deactivation">on_deactivation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#86"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::purge_url">purge_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#195"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::on_activation">on_activation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#137"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::getFileTypeExpirations">getFileTypeExpirations</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#108"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::addRules">addRules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#98"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::removeRules">removeRules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#89"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::maybeAddRules">maybeAddRules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#79"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::exclusionChange">exclusionChange</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Browser.php.html#70"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::on_rewrite">on_rewrite</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#75"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::purge_all">purge_all</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Cloudflare.php.html#99"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::purgeRequest">purgeRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#369"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::on_activation">on_activation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#194"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::isCacheable">isCacheable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#360"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::getStorageFileForRequest">getStorageFileForRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#343"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::getStoragePathForRequest">getStoragePathForRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#324"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::purge_url">purge_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#314"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::purge_all">purge_all</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#298"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::getExpirationTimeframe">getExpirationTimeframe</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#287"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::exclusions">exclusions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#257"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::shouldCache">shouldCache</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#161"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::write">write</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#51"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::should_enable">should_enable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#145"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::maybeGeneratePageCache">maybeGeneratePageCache</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#136"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::removeRules">removeRules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#105"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::addRules">addRules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#90"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::maybeAddRules">maybeAddRules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#80"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::on_rewrite">on_rewrite</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#71"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::exclusionChange">exclusionChange</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="File.php.html#58"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#120"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::exclude">exclude</abbr></a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="File.php.html#194"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::isCacheable">isCacheable</abbr></a></td><td class="text-right">420</td></tr>
+       <tr><td><a href="ObjectCache.php.html#123"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::enable">enable</abbr></a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="ObjectCache.php.html#207"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::disable">disable</abbr></a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="ObjectCache.php.html#315"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::maybe_remove_dropin_if_unavailable">maybe_remove_dropin_if_unavailable</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="File.php.html#257"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::shouldCache">shouldCache</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Cloudflare.php.html#53"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::getCloudflareTier">getCloudflareTier</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="File.php.html#161"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::write">write</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="ObjectCache.php.html#103"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::get_state">get_state</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Sitelock.php.html#27"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock::purge_all">purge_all</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="ObjectCache.php.html#345"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::flush_object_cache">flush_object_cache</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Browser.php.html#137"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::getFileTypeExpirations">getFileTypeExpirations</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Fragments/BrowserCacheFragment.php.html#111"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment::render">render</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Cloudflare.php.html#99"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::purgeRequest">purgeRequest</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="ObjectCache.php.html#286"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::maybe_restore_dropin">maybe_restore_dropin</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#89"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::skip_404">skip_404</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="ObjectCache.php.html#86"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::is_our_drop_in">is_our_drop_in</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Nginx.php.html#34"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Nginx::purgeRequest">purgeRequest</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="ObjectCache.php.html#382"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::flush_and_clear_on_shutdown">flush_and_clear_on_shutdown</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Sitelock.php.html#68"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Sitelock::purge_url">purge_url</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="File.php.html#298"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::getExpirationTimeframe">getExpirationTimeframe</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="ObjectCache.php.html#361"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::clear_options_object_cache">clear_options_object_cache</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="File.php.html#90"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::maybeAddRules">maybeAddRules</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="File.php.html#145"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::maybeGeneratePageCache">maybeGeneratePageCache</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="File.php.html#324"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::purge_url">purge_url</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="ObjectCache.php.html#62"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache::is_available">is_available</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#22"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::validate_cache_level">validate_cache_level</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Browser.php.html#108"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::addRules">addRules</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="File.php.html#105"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::addRules">addRules</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#51"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::level">level</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Browser.php.html#48"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::should_enable">should_enable</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Fragments/FileCacheFragment.php.html#136"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment::render">render</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Browser.php.html#89"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Browser::maybeAddRules">maybeAddRules</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="File.php.html#343"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::getStoragePathForRequest">getStoragePathForRequest</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="File.php.html#51"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\File::should_enable">should_enable</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Cloudflare.php.html#86"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::purge_url">purge_url</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Cloudflare.php.html#75"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\Cloudflare::purge_all">purge_all</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="WPCLI/CacheTypesCommandHandler.php.html#120"><abbr title="NewfoldLabs\WP\Module\Performance\Cache\Types\WPCLI\CacheTypesCommandHandler::exclude">exclude</abbr></a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.32</a> using <a href="https://secure.php.net/" target="_top">PHP 7.4.33</a> at Fri Feb 6 16:16:03 UTC 2026.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../../_js/jquery.min.js?v=9.2.32" type="text/javascript"></script>
+  <script src="../../_js/d3.min.js?v=9.2.32" type="text/javascript"></script>
+  <script src="../../_js/nv.d3.min.js?v=9.2.32" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([10,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([77,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,18,"<a href=\"Browser.php.html#24\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser<\/a>"],[0,3,"<a href=\"CacheBase.php.html#10\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\CacheBase<\/a>"],[0,17,"<a href=\"Cloudflare.php.html#11\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare<\/a>"],[0,62,"<a href=\"File.php.html#22\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File<\/a>"],[0,10,"<a href=\"Fragments\/BrowserCacheFragment.php.html#20\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment<\/a>"],[0,8,"<a href=\"Fragments\/FileCacheFragment.php.html#20\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment<\/a>"],[0,6,"<a href=\"Nginx.php.html#11\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Nginx<\/a>"],[0,62,"<a href=\"ObjectCache.php.html#11\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache<\/a>"],[0,10,"<a href=\"Sitelock.php.html#11\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Sitelock<\/a>"],[0,11,"<a href=\"WPCLI\/CacheTypesCommandHandler.php.html#13\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\WPCLI\\CacheTypesCommandHandler<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,2,"<a href=\"Browser.php.html#48\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::should_enable<\/a>"],[0,1,"<a href=\"Browser.php.html#58\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::__construct<\/a>"],[0,1,"<a href=\"Browser.php.html#70\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::on_rewrite<\/a>"],[0,1,"<a href=\"Browser.php.html#79\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::exclusionChange<\/a>"],[0,2,"<a href=\"Browser.php.html#89\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::maybeAddRules<\/a>"],[0,1,"<a href=\"Browser.php.html#98\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::removeRules<\/a>"],[0,3,"<a href=\"Browser.php.html#108\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::addRules<\/a>"],[0,5,"<a href=\"Browser.php.html#137\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::getFileTypeExpirations<\/a>"],[0,1,"<a href=\"Browser.php.html#195\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::on_activation<\/a>"],[0,1,"<a href=\"Browser.php.html#204\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Browser::on_deactivation<\/a>"],[0,1,"<a href=\"CacheBase.php.html#26\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\CacheBase::should_enable<\/a>"],[0,1,"<a href=\"CacheBase.php.html#37\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\CacheBase::setContainer<\/a>"],[0,1,"<a href=\"CacheBase.php.html#46\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\CacheBase::getContainer<\/a>"],[0,1,"<a href=\"Cloudflare.php.html#25\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::__construct<\/a>"],[0,1,"<a href=\"Cloudflare.php.html#35\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::should_enable<\/a>"],[0,1,"<a href=\"Cloudflare.php.html#44\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::isCoudflareEnabled<\/a>"],[0,6,"<a href=\"Cloudflare.php.html#53\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::getCloudflareTier<\/a>"],[0,2,"<a href=\"Cloudflare.php.html#75\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::purge_all<\/a>"],[0,2,"<a href=\"Cloudflare.php.html#86\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::purge_url<\/a>"],[0,4,"<a href=\"Cloudflare.php.html#99\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Cloudflare::purgeRequest<\/a>"],[0,2,"<a href=\"File.php.html#51\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::should_enable<\/a>"],[0,1,"<a href=\"File.php.html#58\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::__construct<\/a>"],[0,1,"<a href=\"File.php.html#71\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::exclusionChange<\/a>"],[0,1,"<a href=\"File.php.html#80\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::on_rewrite<\/a>"],[0,4,"<a href=\"File.php.html#90\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::maybeAddRules<\/a>"],[0,3,"<a href=\"File.php.html#105\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::addRules<\/a>"],[0,1,"<a href=\"File.php.html#136\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::removeRules<\/a>"],[0,3,"<a href=\"File.php.html#145\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::maybeGeneratePageCache<\/a>"],[0,5,"<a href=\"File.php.html#161\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::write<\/a>"],[0,20,"<a href=\"File.php.html#194\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::isCacheable<\/a>"],[0,7,"<a href=\"File.php.html#257\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::shouldCache<\/a>"],[0,1,"<a href=\"File.php.html#287\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::exclusions<\/a>"],[0,4,"<a href=\"File.php.html#298\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::getExpirationTimeframe<\/a>"],[0,1,"<a href=\"File.php.html#314\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::purge_all<\/a>"],[0,3,"<a href=\"File.php.html#324\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::purge_url<\/a>"],[0,2,"<a href=\"File.php.html#343\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::getStoragePathForRequest<\/a>"],[0,1,"<a href=\"File.php.html#360\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::getStorageFileForRequest<\/a>"],[0,1,"<a href=\"File.php.html#369\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::on_activation<\/a>"],[0,1,"<a href=\"File.php.html#378\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\File::on_deactivation<\/a>"],[0,1,"<a href=\"Fragments\/BrowserCacheFragment.php.html#58\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::__construct<\/a>"],[0,1,"<a href=\"Fragments\/BrowserCacheFragment.php.html#70\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::id<\/a>"],[0,1,"<a href=\"Fragments\/BrowserCacheFragment.php.html#80\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::priority<\/a>"],[0,1,"<a href=\"Fragments\/BrowserCacheFragment.php.html#89\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::exclusive<\/a>"],[0,1,"<a href=\"Fragments\/BrowserCacheFragment.php.html#101\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::is_enabled<\/a>"],[0,4,"<a href=\"Fragments\/BrowserCacheFragment.php.html#111\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::render<\/a>"],[0,1,"<a href=\"Fragments\/BrowserCacheFragment.php.html#153\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\BrowserCacheFragment::patches<\/a>"],[0,1,"<a href=\"Fragments\/FileCacheFragment.php.html#70\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::__construct<\/a>"],[0,1,"<a href=\"Fragments\/FileCacheFragment.php.html#85\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::id<\/a>"],[0,1,"<a href=\"Fragments\/FileCacheFragment.php.html#98\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::priority<\/a>"],[0,1,"<a href=\"Fragments\/FileCacheFragment.php.html#109\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::exclusive<\/a>"],[0,1,"<a href=\"Fragments\/FileCacheFragment.php.html#124\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::is_enabled<\/a>"],[0,2,"<a href=\"Fragments\/FileCacheFragment.php.html#136\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::render<\/a>"],[0,1,"<a href=\"Fragments\/FileCacheFragment.php.html#172\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Fragments\\FileCacheFragment::patches<\/a>"],[0,1,"<a href=\"Nginx.php.html#16\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Nginx::purge_all<\/a>"],[0,1,"<a href=\"Nginx.php.html#25\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Nginx::purge_url<\/a>"],[0,4,"<a href=\"Nginx.php.html#34\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Nginx::purgeRequest<\/a>"],[0,3,"<a href=\"ObjectCache.php.html#62\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::is_available<\/a>"],[0,1,"<a href=\"ObjectCache.php.html#76\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::get_drop_in_path<\/a>"],[0,4,"<a href=\"ObjectCache.php.html#86\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::is_our_drop_in<\/a>"],[0,5,"<a href=\"ObjectCache.php.html#103\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::get_state<\/a>"],[0,12,"<a href=\"ObjectCache.php.html#123\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::enable<\/a>"],[0,9,"<a href=\"ObjectCache.php.html#207\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::disable<\/a>"],[0,1,"<a href=\"ObjectCache.php.html#265\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::on_deactivation<\/a>"],[0,1,"<a href=\"ObjectCache.php.html#275\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::is_preference_enabled<\/a>"],[0,4,"<a href=\"ObjectCache.php.html#286\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::maybe_restore_dropin<\/a>"],[0,1,"<a href=\"ObjectCache.php.html#304\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::maybe_restore_on_activation<\/a>"],[0,8,"<a href=\"ObjectCache.php.html#315\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::maybe_remove_dropin_if_unavailable<\/a>"],[0,5,"<a href=\"ObjectCache.php.html#345\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::flush_object_cache<\/a>"],[0,4,"<a href=\"ObjectCache.php.html#361\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::clear_options_object_cache<\/a>"],[0,4,"<a href=\"ObjectCache.php.html#382\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\ObjectCache::flush_and_clear_on_shutdown<\/a>"],[0,1,"<a href=\"Sitelock.php.html#20\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Sitelock::should_enable<\/a>"],[0,5,"<a href=\"Sitelock.php.html#27\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Sitelock::purge_all<\/a>"],[0,4,"<a href=\"Sitelock.php.html#68\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\Sitelock::purge_url<\/a>"],[0,3,"<a href=\"WPCLI\/CacheTypesCommandHandler.php.html#22\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\WPCLI\\CacheTypesCommandHandler::validate_cache_level<\/a>"],[0,2,"<a href=\"WPCLI\/CacheTypesCommandHandler.php.html#51\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\WPCLI\\CacheTypesCommandHandler::level<\/a>"],[0,4,"<a href=\"WPCLI\/CacheTypesCommandHandler.php.html#89\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\WPCLI\\CacheTypesCommandHandler::skip_404<\/a>"],[0,2,"<a href=\"WPCLI\/CacheTypesCommandHandler.php.html#120\">NewfoldLabs\\WP\\Module\\Performance\\Cache\\Types\\WPCLI\\CacheTypesCommandHandler::exclude<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
