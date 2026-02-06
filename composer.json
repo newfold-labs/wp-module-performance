@@ -32,6 +32,7 @@
         }
     },
     "require": {
+        "colinmollenhour/credis": "^1.14",
         "newfold-labs/wp-module-context": "^1.0",
         "wp-forge/collection": "^1.0",
         "wp-forge/wp-htaccess-manager": "^1.0",

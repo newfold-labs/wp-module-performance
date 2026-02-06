@@ -3,6 +3,11 @@ export const setCacheLevel = ( level ) => ( {
 	level,
 } );
 
+export const setObjectCache = ( objectCache ) => ( {
+	type: 'SET_OBJECT_CACHE',
+	objectCache,
+} );
+
 export const pushNotification = ( id, message ) => ( {
 	type: 'PUSH_NOTIFICATION',
 	id,

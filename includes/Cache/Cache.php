@@ -4,6 +4,8 @@ namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 use NewfoldLabs\WP\ModuleLoader\Container;
 
+use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache;
+
 use function NewfoldLabs\WP\Module\Performance\get_cache_exclusion;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
@@ -73,10 +75,12 @@ class Cache {
 	 * @return array SDK data.
 	 */
 	public function add_to_runtime( $sdk ) {
-
+		// If preference is "on" but the drop-in is missing, restore so runtime has correct enabled state.
+		ObjectCache::maybe_restore_dropin();
 		$values = array(
-			'level'     => get_cache_level(),
-			'exclusion' => get_cache_exclusion(),
+			'level'       => get_cache_level(),
+			'exclusion'   => get_cache_exclusion(),
+			'objectCache' => ObjectCache::get_state(),
 		);
 
 		return array_merge( $sdk, array( 'cache' => $values ) );

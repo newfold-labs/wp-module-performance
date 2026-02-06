@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance\Cache;
 
 use NewfoldLabs\WP\Module\Performance\Performance;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\CacheBase;
+use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache;
 use wpscholar\Url;
 
 use function NewfoldLabs\WP\Module\Performance\to_studly_case;
@@ -102,6 +103,7 @@ class CachePurgingService {
 				$instance->purge_all();
 			}
 		}
+		ObjectCache::flush_object_cache();
 	}
 
 	/**
