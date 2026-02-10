@@ -64,7 +64,9 @@ class Performance {
 		$this->hooks();
 
 		new Cache( $container );
-		new Skip404( $container );
+		if ( Skip404::is_active( $container ) ) {
+			new Skip404( $container );
+		}
 		new PerformanceWPCLI();
 		new Constants( $container );
 		new CloudflareFeaturesManager( $container );
@@ -110,6 +112,11 @@ class Performance {
 			}
 		} else {
 			global $is_apache;
+		}
+
+		// Skip .htaccess modifications in local environments (e.g. wp-env, Docker) to avoid 500s from patch/regex issues.
+		if ( function_exists( 'wp_get_environment_type' ) && 'local' === wp_get_environment_type() ) {
+			$is_apache = false;
 		}
 
 		$container->set( 'isApache', $is_apache );
