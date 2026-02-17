@@ -11,6 +11,7 @@ use NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\FileCacheFragment;
 use NewfoldLabs\WP\Module\Htaccess\Api as HtaccessApi;
 use wpscholar\Url;
 
+use function NewfoldLabs\WP\Module\Performance\get_cache_exclusion;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 use function NewfoldLabs\WP\Module\Performance\remove_directory;
 use function NewfoldLabs\WP\Module\Performance\should_cache_pages;
@@ -109,7 +110,7 @@ class File extends CacheBase implements Purgeable {
 
 		// Build optional exclusion pattern (pipe-separated).
 		$exclusion_pattern = '';
-		$cache_exclusion   = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
+		$cache_exclusion   = get_cache_exclusion();
 
 		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
 			$parts             = array_map( 'trim', explode( ',', sanitize_text_field( $cache_exclusion ) ) );
@@ -286,7 +287,7 @@ class File extends CacheBase implements Purgeable {
 	 */
 	protected function exclusions() {
 		$default                = array( 'cart', 'checkout', 'wp-admin', '@', '%', ':', ';', '&', '=', '.', rest_get_url_prefix() );
-		$cache_exclusion_option = array_map( 'trim', explode( ',', (string) get_option( CacheExclusion::OPTION_CACHE_EXCLUSION ) ) );
+		$cache_exclusion_option = array_map( 'trim', explode( ',', (string) get_cache_exclusion() ) );
 		return array_merge( $default, array_filter( $cache_exclusion_option ) );
 	}
 
