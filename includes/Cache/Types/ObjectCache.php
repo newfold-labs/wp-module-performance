@@ -38,11 +38,8 @@ class ObjectCache {
 	 * @var string[]
 	 */
 	const REDIS_CONNECTION_CONSTANTS = array(
-		'WP_REDIS_HOST',
-		'WP_REDIS_SERVERS',
-		'WP_REDIS_CLUSTER',
-		'WP_REDIS_SHARDS',
-		'WP_REDIS_SENTINEL',
+		'WP_REDIS_PREFIX',
+		'WP_REDIS_PASSWORD',
 	);
 
 	/**
