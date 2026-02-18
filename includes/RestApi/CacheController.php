@@ -130,8 +130,14 @@ class CacheController {
 					$out = ObjectCache::disable();
 				}
 				if ( $out['success'] ) {
-					// Purge page cache and object cache (purge_all includes flush_object_cache).
-					container()->get( 'cachePurger' )->purge_all();
+					// When enabling: only purge page caches so we don't flush object cache (avoids logging out the user).
+					// When disabling: purge everything including object cache.
+					$purger = container()->get( 'cachePurger' );
+					if ( $enable ) {
+						$purger->purge_page_caches();
+					} else {
+						$purger->purge_all();
+					}
 					return new \WP_REST_Response( array( 'result' => true ), 200 );
 				}
 				return new \WP_REST_Response(
