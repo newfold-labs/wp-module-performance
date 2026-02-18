@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40e649c1410910cef90493fedb0d6e7c",
+    "content-hash": "176edd9ac8b8968ddaa6e915ec314762",
     "packages": [
         {
             "name": "colinmollenhour/credis",
@@ -899,6 +899,55 @@
                 "source": "https://github.com/php-fig/http-message/tree/2.0"
             },
             "time": "2023-04-04T09:54:51+00:00"
+        },
+        {
+            "name": "wp-cli/wp-config-transformer",
+            "version": "v1.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-cli/wp-config-transformer.git",
+                "reference": "b0fda07aac51317404f5e56dc8953ea899bc7bce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/b0fda07aac51317404f5e56dc8953ea899bc7bce",
+                "reference": "b0fda07aac51317404f5e56dc8953ea899bc7bce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.24"
+            },
+            "require-dev": {
+                "wp-cli/wp-cli-tests": "^4.0 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/WPConfigTransformer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frankie Jarrett",
+                    "email": "fjarrett@gmail.com"
+                }
+            ],
+            "description": "Programmatically edit a wp-config.php file.",
+            "homepage": "https://github.com/wp-cli/wp-config-transformer",
+            "support": {
+                "issues": "https://github.com/wp-cli/wp-config-transformer/issues",
+                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.4"
+            },
+            "time": "2026-01-22T09:07:20+00:00"
         },
         {
             "name": "wp-forge/collection",
@@ -10756,55 +10805,6 @@
                 "source": "https://github.com/wp-cli/wp-cli-bundle"
             },
             "time": "2025-05-07T02:15:53+00:00"
-        },
-        {
-            "name": "wp-cli/wp-config-transformer",
-            "version": "v1.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wp-cli/wp-config-transformer.git",
-                "reference": "b78cab1159b43eb5ee097e2cfafe5eab573d2a8a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/b78cab1159b43eb5ee097e2cfafe5eab573d2a8a",
-                "reference": "b78cab1159b43eb5ee097e2cfafe5eab573d2a8a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "wp-cli/wp-cli-tests": "^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/WPConfigTransformer.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Frankie Jarrett",
-                    "email": "fjarrett@gmail.com"
-                }
-            ],
-            "description": "Programmatically edit a wp-config.php file.",
-            "homepage": "https://github.com/wp-cli/wp-config-transformer",
-            "support": {
-                "issues": "https://github.com/wp-cli/wp-config-transformer/issues",
-                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.2"
-            },
-            "time": "2025-03-31T08:37:05+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

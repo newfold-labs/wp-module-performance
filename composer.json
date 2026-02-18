@@ -40,7 +40,8 @@
         "newfold-labs/wp-module-features": "^1.5",
         "newfold-labs/wp-module-installer": "^1.7",
         "newfold-labs/wp-module-htaccess": "^1.0",
-        "predis/predis": "^3.4"
+        "predis/predis": "^3.4",
+        "wp-cli/wp-config-transformer": "^1.4"
     },
     "require-dev": {
         "newfold-labs/wp-php-standards": "^1.2",

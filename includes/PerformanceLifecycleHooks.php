@@ -115,8 +115,9 @@ class PerformanceLifecycleHooks {
 	 * @return void
 	 */
 	public function on_activation() {
-		// Purge object cache on shutdown so the next request reads active_plugins from DB (not Redis).
-		add_action( 'shutdown', array( $this, 'purge_object_cache_on_shutdown' ), PHP_INT_MAX );
+		// Clear plugin list from object cache on shutdown so the next request reads active_plugins from DB (not Redis).
+		// Only clears options group — avoids full flush which would destroy session/auth data and log the user out.
+		add_action( 'shutdown', array( $this, 'clear_plugin_cache_on_shutdown' ), PHP_INT_MAX );
 		// Cache feature bits.
 		File::on_activation();
 		Browser::on_activation();
@@ -146,7 +147,17 @@ class PerformanceLifecycleHooks {
 	}
 
 	/**
-	 * Purge object cache (options + full flush + runtime) on shutdown after activate/deactivate.
+	 * Clear only the plugin list from object cache on shutdown after activation.
+	 * Ensures the next request reads active_plugins from DB without destroying session/auth data.
+	 *
+	 * @return void
+	 */
+	public function clear_plugin_cache_on_shutdown() {
+		$this->delete_plugin_list_option_cache();
+	}
+
+	/**
+	 * Purge object cache (options + full flush + runtime) on shutdown after deactivation.
 	 * Ensures the next request reads active_plugins from DB even if something re-cached after our hooks.
 	 *
 	 * @return void
