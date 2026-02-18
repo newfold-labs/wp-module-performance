@@ -90,9 +90,10 @@ class CachePurgingService {
 	}
 
 	/**
-	 * Purge everything.
+	 * Purge page caches only (File, Browser). Does not flush object cache.
+	 * Use when enabling object cache so session/auth data is not flushed.
 	 */
-	public function purge_all() {
+	public function purge_page_caches() {
 		foreach ( $this->cache_types as $instance ) {
 			if ( array_key_exists( Purgeable::class, class_implements( $instance ) ) ) {
 				/**
@@ -103,6 +104,13 @@ class CachePurgingService {
 				$instance->purge_all();
 			}
 		}
+	}
+
+	/**
+	 * Purge everything (page caches and object cache).
+	 */
+	public function purge_all() {
+		$this->purge_page_caches();
 		ObjectCache::flush_object_cache();
 	}
 

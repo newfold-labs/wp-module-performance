@@ -38,11 +38,8 @@ class ObjectCache {
 	 * @var string[]
 	 */
 	const REDIS_CONNECTION_CONSTANTS = array(
-		'WP_REDIS_HOST',
-		'WP_REDIS_SERVERS',
-		'WP_REDIS_CLUSTER',
-		'WP_REDIS_SHARDS',
-		'WP_REDIS_SENTINEL',
+		'WP_REDIS_PREFIX',
+		'WP_REDIS_PASSWORD',
 	);
 
 	/**
@@ -61,11 +58,49 @@ class ObjectCache {
 	 */
 	public static function is_available() {
 		foreach ( self::REDIS_CONNECTION_CONSTANTS as $constant ) {
-			if ( defined( $constant ) ) {
-				return true;
+			if ( ! defined( $constant ) ) {
+				return false;
 			}
 		}
-		return false;
+		return true;
+	}
+
+	/**
+	 * Whether Redis is configured in wp-config.php (at least one connection constant is defined there).
+	 * Used for removal: we remove the drop-in when wp-config no longer has Redis config, even if the
+	 * drop-in has already defined a constant (e.g. WP_REDIS_PREFIX from WP_CACHE_KEY_SALT or env).
+	 * Uses WP-CLI's wp-config-transformer so commented-out defines are not counted as present.
+	 * Result is cached per request to avoid repeated file reads and parsing.
+	 *
+	 * @return bool
+	 */
+	public static function is_configured_in_wp_config() {
+		static $result = null;
+		if ( null !== $result ) {
+			return $result;
+		}
+		$path = defined( 'WP_CONFIG_FILE' ) ? constant( 'WP_CONFIG_FILE' ) : ( ABSPATH . 'wp-config.php' );
+		if ( ! file_exists( $path ) ) {
+			$path = dirname( ABSPATH ) . '/wp-config.php';
+		}
+		if ( ! file_exists( $path ) || ! is_readable( $path ) ) {
+			$result = false;
+			return $result;
+		}
+		try {
+			$transformer = new \WPConfigTransformer( $path, true );
+			foreach ( self::REDIS_CONNECTION_CONSTANTS as $constant ) {
+				if ( ! $transformer->exists( 'constant', $constant ) ) {
+					$result = false;
+					return $result;
+				}
+			}
+		} catch ( \Exception $e ) {
+			$result = false;
+			return $result;
+		}
+		$result = true;
+		return $result;
 	}
 
 	/**
@@ -308,16 +343,18 @@ class ObjectCache {
 	/**
 	 * If Redis config is no longer present (e.g. constants commented out in wp-config) but our drop-in
 	 * is still in place, remove the drop-in so WordPress does not load a broken object cache.
-	 * Also clears the enabled preference so state stays consistent.
+	 * Uses wp-config content (not defined()) so we still remove when the drop-in has already defined
+	 * a constant (e.g. WP_REDIS_PREFIX from WP_CACHE_KEY_SALT or env). Also clears the enabled preference.
+	 * Checks for the drop-in file first so we skip wp-config read/parse on most requests (no drop-in).
 	 *
 	 * @return void
 	 */
 	public static function maybe_remove_dropin_if_unavailable() {
-		if ( self::is_available() ) {
-			return;
-		}
 		$path = self::get_drop_in_path();
 		if ( ! file_exists( $path ) || ! self::is_our_drop_in( $path ) ) {
+			return;
+		}
+		if ( self::is_configured_in_wp_config() ) {
 			return;
 		}
 		if ( ! function_exists( 'WP_Filesystem' ) ) {
