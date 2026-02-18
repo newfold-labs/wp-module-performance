@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Htaccess\Api as HtaccessApi;
 use NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments\BrowserCacheFragment;
 
+use function NewfoldLabs\WP\Module\Performance\get_cache_exclusion;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
 /**
@@ -109,7 +110,7 @@ class Browser extends CacheBase {
 
 		// Build exclusion pattern (same logic as before).
 		$exclusion_pattern = '';
-		$cache_exclusion   = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, '' );
+		$cache_exclusion   = get_cache_exclusion();
 
 		if ( is_string( $cache_exclusion ) && '' !== $cache_exclusion ) {
 			$parts             = array_map( 'trim', explode( ',', sanitize_text_field( $cache_exclusion ) ) );

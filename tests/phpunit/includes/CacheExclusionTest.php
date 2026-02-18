@@ -118,6 +118,31 @@ namespace NewfoldLabs\WP\Module\Performance\Cache {
 			$this->assertSame( 400, $response->get_status() );
 			$this->assertFalse( $response->get_data()['result'] );
 		}
+
+		/**
+		 * Test that get_cache_exclusion() deletes invalid option and returns default.
+		 */
+		public function test_get_cache_exclusion_deletes_invalid_option_and_returns_default() {
+			$invalid_value = 'cart,checkout,wp-admin,wp-json https://example.com/admin/';
+			$option_name   = \NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion::OPTION_CACHE_EXCLUSION;
+			$default       = 'cart,checkout,wp-admin,wp-json';
+
+			WP_Mock::userFunction( 'get_option' )
+				->with( $option_name, $default )
+				->andReturn( $invalid_value );
+
+			WP_Mock::userFunction( 'delete_option' )
+				->with( $option_name )
+				->once()
+				->andReturn( true );
+
+			WP_Mock::userFunction( 'rest_get_url_prefix' )
+				->andReturn( 'wp-json' );
+
+			$result = \NewfoldLabs\WP\Module\Performance\get_cache_exclusion();
+
+			$this->assertSame( $default, $result );
+		}
 	}
 }
 // phpcs:enable

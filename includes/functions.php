@@ -7,9 +7,12 @@ use NewfoldLabs\WP\Module\Performance\Cache\CacheManager;
 use NewfoldLabs\WP\Module\Performance\Cache\CacheExclusion;
 
 /**
- * Return defaul exclusions.
+ * Return default cache exclusions (comma-separated string).
  *
- * @return array
+ * Must stay compatible with CacheExclusion::CACHE_EXCLUSION_VALIDATE_REGEX (a-z0-9,- only)
+ * so that get_cache_exclusion() validation and .htaccess fragment content remain valid.
+ *
+ * @return string
  */
 function get_default_cache_exclusions() {
 	return join( ',', array( 'cart', 'checkout', 'wp-admin', rest_get_url_prefix() ) );
@@ -27,10 +30,22 @@ function get_cache_level() {
 /**
  * Get the cache exclusion.
  *
- * @return int Cache exclusion.
+ * If the stored value is invalid (non-empty but contains disallowed characters), the option is deleted
+ * and the default exclusions are returned. Empty string is valid (exclude no paths).
+ *
+ * @return string Comma-separated exclusion slugs (e.g. cart,checkout,wp-admin,wp-json).
  */
 function get_cache_exclusion() {
-	return get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() );
+	$value      = get_option( CacheExclusion::OPTION_CACHE_EXCLUSION, get_default_cache_exclusions() );
+	$normalized = CacheExclusion::normalize( $value );
+
+	// Invalid: non-empty and does not match allowed characters (a-z0-9,-). Empty is valid (exclude nothing).
+	if ( '' !== $normalized && ! preg_match( CacheExclusion::CACHE_EXCLUSION_VALIDATE_REGEX, $normalized ) ) {
+		delete_option( CacheExclusion::OPTION_CACHE_EXCLUSION );
+		return get_default_cache_exclusions();
+	}
+
+	return $value;
 }
 
 /**
