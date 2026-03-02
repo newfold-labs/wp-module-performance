@@ -28,7 +28,7 @@
     "@wordpress/env": "^11.0.0",
     "@wordpress/i18n": "^6.13.0",
     "@wordpress/scripts": "^31.5.0",
-    "autoprefixer": "^10.4.24",
+    "autoprefixer": "^10.4.27",
     "chalk": "^5.6.2",
     "css-minimizer-webpack-plugin": "^7.0.4",
     "glob": "^13.0.6",
