@@ -36,8 +36,9 @@ class ObjectCacheTest extends TestCase {
 	 * When the file does not exist, reconcile returns immediately (no-op).
 	 */
 	public function test_reconcile_non_ours_dropin_file_missing() {
-		WP_Mock::userFunction( 'file_exists' )
-			->andReturn( false );
+		Patchwork\redefine( 'file_exists', function ( $path ) {
+			return false;
+		} );
 
 		// get_option should not be called when file is missing.
 		WP_Mock::userFunction( 'get_option' )
@@ -51,11 +52,15 @@ class ObjectCacheTest extends TestCase {
 	 * When the file exists and is our drop-in, reconcile returns immediately (no-op).
 	 */
 	public function test_reconcile_non_ours_dropin_file_is_ours() {
-		WP_Mock::userFunction( 'file_exists' )
-			->andReturn( true );
-		// is_our_drop_in reads the file; return content with our header.
-		WP_Mock::userFunction( 'file_get_contents' )
-			->andReturn( '<?php /* ' . ObjectCache::DROPIN_HEADER_IDENTIFIER . ' */' );
+		Patchwork\redefine( 'file_exists', function ( $path ) {
+			return true;
+		} );
+		Patchwork\redefine( 'is_readable', function ( $path ) {
+			return true;
+		} );
+		Patchwork\redefine( 'file_get_contents', function ( $path ) {
+			return '<?php /* ' . ObjectCache::DROPIN_HEADER_IDENTIFIER . ' */';
+		} );
 
 		WP_Mock::userFunction( 'get_option' )
 			->never();
@@ -68,10 +73,12 @@ class ObjectCacheTest extends TestCase {
 	 * When file is not ours and preference is disabled, reconcile leaves the file alone (no replace, no delete).
 	 */
 	public function test_reconcile_non_ours_dropin_preference_disabled_leaves_file() {
-		WP_Mock::userFunction( 'file_exists' )
-			->andReturn( true );
-		WP_Mock::userFunction( 'file_get_contents' )
-			->andReturn( '<?php /* Third-party object cache */' );
+		Patchwork\redefine( 'file_exists', function ( $path ) {
+			return true;
+		} );
+		Patchwork\redefine( 'file_get_contents', function ( $path ) {
+			return '<?php /* Third-party object cache */';
+		} );
 
 		WP_Mock::userFunction( 'get_option' )
 			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, ObjectCache::PREFERENCE_NOT_SET_SENTINEL )
@@ -89,10 +96,12 @@ class ObjectCacheTest extends TestCase {
 	 * When file is not ours, preference not set, and Redis not available, reconcile leaves the file alone.
 	 */
 	public function test_reconcile_non_ours_dropin_preference_not_set_redis_not_available_leaves_file() {
-		WP_Mock::userFunction( 'file_exists' )
-			->andReturn( true );
-		WP_Mock::userFunction( 'file_get_contents' )
-			->andReturn( '<?php /* Third-party object cache */' );
+		Patchwork\redefine( 'file_exists', function ( $path ) {
+			return true;
+		} );
+		Patchwork\redefine( 'file_get_contents', function ( $path ) {
+			return '<?php /* Third-party object cache */';
+		} );
 
 		WP_Mock::userFunction( 'get_option' )
 			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, ObjectCache::PREFERENCE_NOT_SET_SENTINEL )
@@ -120,10 +129,12 @@ class ObjectCacheTest extends TestCase {
 	 * When file is not ours and preference is disabled, get_option receives the sentinel as default.
 	 */
 	public function test_reconcile_preference_not_set_uses_sentinel() {
-		WP_Mock::userFunction( 'file_exists' )
-			->andReturn( true );
-		WP_Mock::userFunction( 'file_get_contents' )
-			->andReturn( '<?php /* Other cache */' );
+		Patchwork\redefine( 'file_exists', function ( $path ) {
+			return true;
+		} );
+		Patchwork\redefine( 'file_get_contents', function ( $path ) {
+			return '<?php /* Other cache */';
+		} );
 
 		WP_Mock::userFunction( 'get_option' )
 			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, ObjectCache::PREFERENCE_NOT_SET_SENTINEL )
