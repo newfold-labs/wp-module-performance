@@ -1,5 +1,6 @@
 {
     "name": "newfold-labs/wp-module-performance",
+    "version": "3.7.2",
     "description": "A module for managing caching functionality.",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -40,7 +41,7 @@
         "newfold-labs/wp-module-features": "^1.5",
         "newfold-labs/wp-module-installer": "^1.7",
         "newfold-labs/wp-module-htaccess": "^1.0",
-        "predis/predis": "^3.4",
+        "predis/predis": "2.4.1",
         "wp-cli/wp-config-transformer": "^1.4"
     },
     "require-dev": {
