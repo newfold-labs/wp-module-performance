@@ -8,6 +8,8 @@ use Patchwork;
 
 /**
  * Test ObjectCache reconciliation and preference handling.
+ *
+ * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Closures for Patchwork redefine; param required by PHP.
  */
 class ObjectCacheTest extends TestCase {
 
@@ -36,9 +38,12 @@ class ObjectCacheTest extends TestCase {
 	 * When the file does not exist, reconcile returns immediately (no-op).
 	 */
 	public function test_reconcile_non_ours_dropin_file_missing() {
-		Patchwork\redefine( 'file_exists', function ( $path ) {
-			return false;
-		} );
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
 
 		// get_option should not be called when file is missing.
 		WP_Mock::userFunction( 'get_option' )
@@ -52,15 +57,24 @@ class ObjectCacheTest extends TestCase {
 	 * When the file exists and is our drop-in, reconcile returns immediately (no-op).
 	 */
 	public function test_reconcile_non_ours_dropin_file_is_ours() {
-		Patchwork\redefine( 'file_exists', function ( $path ) {
-			return true;
-		} );
-		Patchwork\redefine( 'is_readable', function ( $path ) {
-			return true;
-		} );
-		Patchwork\redefine( 'file_get_contents', function ( $path ) {
-			return '<?php /* ' . ObjectCache::DROPIN_HEADER_IDENTIFIER . ' */';
-		} );
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return true;
+			}
+		);
+		Patchwork\redefine(
+			'is_readable',
+			function ( $_path ) {
+				return true;
+			}
+		);
+		Patchwork\redefine(
+			'file_get_contents',
+			function ( $_path ) {
+				return '<?php /* ' . ObjectCache::DROPIN_HEADER_IDENTIFIER . ' */';
+			}
+		);
 
 		WP_Mock::userFunction( 'get_option' )
 			->never();
@@ -73,12 +87,18 @@ class ObjectCacheTest extends TestCase {
 	 * When file is not ours and preference is disabled, reconcile leaves the file alone (no replace, no delete).
 	 */
 	public function test_reconcile_non_ours_dropin_preference_disabled_leaves_file() {
-		Patchwork\redefine( 'file_exists', function ( $path ) {
-			return true;
-		} );
-		Patchwork\redefine( 'file_get_contents', function ( $path ) {
-			return '<?php /* Third-party object cache */';
-		} );
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return true;
+			}
+		);
+		Patchwork\redefine(
+			'file_get_contents',
+			function ( $_path ) {
+				return '<?php /* Third-party object cache */';
+			}
+		);
 
 		WP_Mock::userFunction( 'get_option' )
 			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, ObjectCache::PREFERENCE_NOT_SET_SENTINEL )
@@ -96,12 +116,18 @@ class ObjectCacheTest extends TestCase {
 	 * When file is not ours, preference not set, and Redis not available, reconcile leaves the file alone.
 	 */
 	public function test_reconcile_non_ours_dropin_preference_not_set_redis_not_available_leaves_file() {
-		Patchwork\redefine( 'file_exists', function ( $path ) {
-			return true;
-		} );
-		Patchwork\redefine( 'file_get_contents', function ( $path ) {
-			return '<?php /* Third-party object cache */';
-		} );
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return true;
+			}
+		);
+		Patchwork\redefine(
+			'file_get_contents',
+			function ( $_path ) {
+				return '<?php /* Third-party object cache */';
+			}
+		);
 
 		WP_Mock::userFunction( 'get_option' )
 			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, ObjectCache::PREFERENCE_NOT_SET_SENTINEL )
@@ -129,12 +155,18 @@ class ObjectCacheTest extends TestCase {
 	 * When file is not ours and preference is disabled, get_option receives the sentinel as default.
 	 */
 	public function test_reconcile_preference_not_set_uses_sentinel() {
-		Patchwork\redefine( 'file_exists', function ( $path ) {
-			return true;
-		} );
-		Patchwork\redefine( 'file_get_contents', function ( $path ) {
-			return '<?php /* Other cache */';
-		} );
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return true;
+			}
+		);
+		Patchwork\redefine(
+			'file_get_contents',
+			function ( $_path ) {
+				return '<?php /* Other cache */';
+			}
+		);
 
 		WP_Mock::userFunction( 'get_option' )
 			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, ObjectCache::PREFERENCE_NOT_SET_SENTINEL )
