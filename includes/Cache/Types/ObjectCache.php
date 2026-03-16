@@ -164,12 +164,15 @@ class ObjectCache {
 		}
 		$state = self::get_state();
 		if ( $state['overwritten'] ) {
-			return array(
-				'success' => false,
-				'message' => __( 'Another object cache drop-in is active. Disable it in the other plugin first.', 'wp-module-performance' ),
-			);
-		}
-		if ( $state['ours'] ) {
+			$path = self::get_drop_in_path();
+			if ( ! self::delete_dropin_file( $path ) ) {
+				return array(
+					'success' => false,
+					'message' => __( 'Could not remove the existing object cache drop-in. Check file permissions.', 'wp-module-performance' ),
+				);
+			}
+			// Fall through to download and install our drop-in.
+		} elseif ( $state['ours'] ) {
 			update_option( self::OPTION_ENABLED_PREFERENCE, true );
 			return array( 'success' => true );
 		}
@@ -304,13 +307,13 @@ class ObjectCache {
 
 	/**
 	 * Whether the stored preference means "user wants object cache on".
-	 * WordPress may store true as 1 or '1' in the database.
+	 * Only explicit true/1/'1' counts as enabled; null or false means do not restore/replace.
 	 *
 	 * @return bool
 	 */
 	public static function is_preference_enabled() {
 		$preference = get_option( self::OPTION_ENABLED_PREFERENCE, null );
-		return in_array( $preference, array( null, true, 1, '1' ), true );
+		return in_array( $preference, array( true, 1, '1' ), true );
 	}
 
 	/**
@@ -395,6 +398,10 @@ class ObjectCache {
 			return;
 		}
 
+		// Bypass object cache so we read the real preference (e.g. avoid W3TC/other plugin cache returning stale or empty).
+		if ( function_exists( 'wp_cache_delete' ) ) {
+			wp_cache_delete( 'alloptions', 'options' );
+		}
 		$preference = get_option( self::OPTION_ENABLED_PREFERENCE, self::PREFERENCE_NOT_SET_SENTINEL );
 
 		// Preference not set: option does not exist in DB.

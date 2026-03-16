@@ -13,12 +13,10 @@ const {
 	objectCacheToggleLabel,
 	objectCacheSaved,
 	objectCacheErrorTitle,
-	objectCacheOverwrittenNotice,
 } = getObjectCacheText();
 
 const ObjectCache = () => {
 	const runtimeEnabled = NewfoldRuntime?.sdk?.cache?.objectCache?.enabled ?? false;
-	const overwritten = NewfoldRuntime?.sdk?.cache?.objectCache?.overwritten === true;
 	const runtimeCacheLevel = NewfoldRuntime?.sdk?.cache?.level ?? 0;
 
 	const { storeObjectCache, cacheLevel } = useSelect(
@@ -51,7 +49,7 @@ const ObjectCache = () => {
 	}, [ storeObjectCache ] );
 
 	const handleChange = () => {
-		if ( overwritten || isCacheDisabled ) {
+		if ( isCacheDisabled ) {
 			return;
 		}
 		setUpdating( true );
@@ -92,17 +90,12 @@ const ObjectCache = () => {
 			title={ objectCacheTitle }
 			description={ objectCacheDescription }
 		>
-			{ overwritten && (
-				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-600">
-					{ objectCacheOverwrittenNotice }
-				</p>
-			) }
 			<ToggleField
 				id="object-cache"
 				label={ objectCacheToggleLabel }
 				checked={ isCacheDisabled ? false : enabled }
 				onChange={ handleChange }
-				disabled={ updating || overwritten || isCacheDisabled }
+				disabled={ updating || isCacheDisabled }
 			/>
 		</Container.SettingsField>
 	);
