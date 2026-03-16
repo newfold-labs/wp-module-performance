@@ -9,10 +9,6 @@ const getObjectCacheText = () => ( {
 	objectCacheToggleLabel: __( 'Enable Object Caching', 'wp-module-performance' ),
 	objectCacheSaved: __( 'Object cache setting saved', 'wp-module-performance' ),
 	objectCacheErrorTitle: __( 'Failed to update object cache', 'wp-module-performance' ),
-	objectCacheOverwrittenNotice: __(
-		"Another plugin's object cache is active. Disable it in that plugin to use this toggle.",
-		'wp-module-performance'
-	),
 } );
 
 export default getObjectCacheText;
