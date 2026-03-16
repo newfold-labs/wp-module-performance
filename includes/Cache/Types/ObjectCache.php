@@ -405,7 +405,7 @@ class ObjectCache {
 		$preference = get_option( self::OPTION_ENABLED_PREFERENCE, self::PREFERENCE_NOT_SET_SENTINEL );
 
 		// Preference not set: option does not exist in DB.
-		if ( $preference === self::PREFERENCE_NOT_SET_SENTINEL ) {
+		if ( self::PREFERENCE_NOT_SET_SENTINEL === $preference ) {
 			if ( self::is_available() ) {
 				self::delete_dropin_file( $path );
 				self::enable();
