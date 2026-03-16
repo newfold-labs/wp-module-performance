@@ -126,18 +126,24 @@ class CacheController {
 				$enable = (bool) $object_cache['enabled'];
 				if ( $enable ) {
 					$out = ObjectCache::enable();
-				} else {
-					$out = ObjectCache::disable();
-				}
-				if ( $out['success'] ) {
-					// When enabling: only purge page caches so we don't flush object cache (avoids logging out the user).
-					// When disabling: purge everything including object cache.
-					$purger = container()->get( 'cachePurger' );
-					if ( $enable ) {
+					if ( $out['success'] ) {
+						$purger = container()->get( 'cachePurger' );
 						$purger->purge_page_caches();
-					} else {
-						$purger->purge_all();
+						return new \WP_REST_Response( array( 'result' => true ), 200 );
 					}
+					return new \WP_REST_Response(
+						array(
+							'result'  => false,
+							'message' => isset( $out['message'] ) ? $out['message'] : '',
+						),
+						400
+					);
+				}
+
+				$out = ObjectCache::disable();
+				if ( $out['success'] ) {
+					$purger = container()->get( 'cachePurger' );
+					$purger->purge_all();
 					return new \WP_REST_Response( array( 'result' => true ), 200 );
 				}
 				return new \WP_REST_Response(
