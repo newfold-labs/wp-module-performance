@@ -11,6 +11,7 @@ Documentation for wp-module-performance, for **humans** and **AI agents**. Start
 | [integration.md](integration.md) | How the module registers and integrates with htaccess/installer. |
 | [development.md](development.md) | Lint, test, and workflow. |
 | [dependencies.md](dependencies.md) | Composer dependencies. |
+| [release.md](release.md) | Release process: use the Newfold Prepare Release workflow. |
 
 ## Quick links
 
