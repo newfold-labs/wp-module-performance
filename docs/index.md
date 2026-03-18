@@ -1,3 +1,10 @@
+---
+name: wp-module-performance
+title: Documentation index
+description: Table of contents and quick links.
+updated: 2025-03-18
+---
+
 # wp-module-performance – Documentation index
 
 Documentation for wp-module-performance, for **humans** and **AI agents**. Start here.
