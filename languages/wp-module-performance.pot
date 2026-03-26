@@ -524,6 +524,74 @@ msgid "Another plugin's object cache is active. Disable it in that plugin to use
 msgstr ""
 
 #: build/performance/performance.min.js:5
+msgid "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Redis credentials are not present in wp-config.php yet."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Redis credentials are being applied. We will retry automatically in a few seconds."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Hosting token is not available yet. Please try again shortly or contact support."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Hosting site id is not available yet. Please try again shortly or contact support."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Could not connect to Redis with the current credentials."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Redis service is not active on the server yet."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Your PHP version does not meet requirements for Redis on this hosting environment."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Hosting reports the Redis drop-in is not available yet."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Hosting could not locate WordPress for this site."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Could not reach Hiive to provision Redis credentials."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Hosting API could not enable Redis for this site."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Hosting API returned an unexpected error while enabling Redis."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Failed to download the Redis object cache drop-in."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Downloaded drop-in content was invalid."
+msgstr ""
+
+#: build/performance/performance.min.js:5
+msgid "Could not write object-cache.php. Check file permissions."
+msgstr ""
+
+#: build/performance/performance.min.js:5
 msgid "Skip 404"
 msgstr ""
 
