@@ -1,6 +1,7 @@
 {
   "redefinable-internals": [
     "defined",
-    "constant"
+    "constant",
+    "extension_loaded"
   ]
 }

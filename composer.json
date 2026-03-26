@@ -35,6 +35,7 @@
     "require": {
         "colinmollenhour/credis": "^1.14",
         "newfold-labs/wp-module-context": "^1.0",
+        "newfold-labs/wp-module-data": "^2.9",
         "wp-forge/collection": "^1.0",
         "wp-forge/wp-htaccess-manager": "^1.0",
         "wpscholar/url": "^1.2",

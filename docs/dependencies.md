@@ -13,6 +13,7 @@ updated: 2025-03-18
 |---------|---------|
 | **colinmollenhour/credis** | Redis client for object cache. |
 | **newfold-labs/wp-module-context** | Brand/context; used for feature checks. |
+| **newfold-labs/wp-module-data** | Hiive connection/auth token for Hiive API requests. |
 | **wp-forge/collection** | Collection utilities. |
 | **wp-forge/wp-htaccess-manager** | .htaccess rules for page cache. |
 | **wpscholar/url** | URL utilities. |

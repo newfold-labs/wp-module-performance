@@ -138,12 +138,20 @@ class CacheController {
 					} else {
 						$purger->purge_all();
 					}
-					return new \WP_REST_Response( array( 'result' => true ), 200 );
+					return new \WP_REST_Response(
+						array(
+							'result'      => true,
+							'objectCache' => ObjectCache::get_state(),
+						),
+						200
+					);
 				}
 				return new \WP_REST_Response(
 					array(
-						'result'  => false,
-						'message' => isset( $out['message'] ) ? $out['message'] : '',
+						'result'      => false,
+						'message'     => isset( $out['message'] ) ? $out['message'] : '',
+						'code'        => isset( $out['code'] ) ? (string) $out['code'] : '',
+						'objectCache' => ObjectCache::get_state(),
 					),
 					400
 				);
