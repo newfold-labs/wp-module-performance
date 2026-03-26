@@ -1,4 +1,4 @@
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { Container, ToggleField } from '@newfold/ui-component-library';
@@ -14,6 +14,7 @@ const {
 	objectCacheSaved,
 	objectCacheErrorTitle,
 	objectCacheOverwrittenNotice,
+	getObjectCacheErrorDescription,
 } = getObjectCacheText();
 
 const ObjectCache = () => {
@@ -34,6 +35,9 @@ const ObjectCache = () => {
 	const [ enabled, setEnabled ] = useState( runtimeEnabled );
 	const [ updating, setUpdating ] = useState( false );
 
+	const retryTimerRef = useRef( null );
+	const retryAttemptsRef = useRef( 0 );
+
 	const { pushNotification } = useDispatch( STORE_NAME );
 	const apiUrl = NewfoldRuntime.createApiUrl(
 		'/newfold-performance/v1/cache/settings'
@@ -50,42 +54,134 @@ const ObjectCache = () => {
 		}
 	}, [ storeObjectCache ] );
 
-	const handleChange = () => {
-		if ( overwritten || isCacheDisabled ) {
+	useEffect( () => {
+		return () => {
+			if ( retryTimerRef.current ) {
+				clearTimeout( retryTimerRef.current );
+			}
+		};
+	}, [] );
+
+	const refetchSettings = async () => {
+		const settings = await apiFetch( { url: apiUrl } );
+		if ( settings?.objectCache && 'enabled' in settings.objectCache ) {
+			setEnabled( settings.objectCache.enabled === true );
+		}
+		return settings;
+	};
+
+	const scheduleCredentialsRetry = ( desiredEnabled ) => {
+		if ( retryAttemptsRef.current >= 4 ) {
+			setUpdating( false );
+			pushNotification( 'object-cache-error', {
+				title: objectCacheErrorTitle,
+				description: getObjectCacheErrorDescription(
+					'credentials_pending_reload',
+					''
+				),
+				variant: 'error',
+				autoDismiss: 7000,
+			} );
 			return;
 		}
+
+		retryAttemptsRef.current += 1;
+		retryTimerRef.current = setTimeout( () => {
+			requestToggle( desiredEnabled, true );
+		}, 2500 );
+	};
+
+	const requestToggle = ( desiredEnabled, isRetry = false ) => {
+		if ( ! isRetry ) {
+			retryAttemptsRef.current = 0;
+		}
+
 		setUpdating( true );
-		const newValue = ! enabled;
 		apiFetch( {
 			url: apiUrl,
 			method: 'POST',
-			data: { objectCache: { enabled: newValue } },
+			data: { objectCache: { enabled: desiredEnabled } },
 		} )
-			.then( () => {
+			.then( async ( response ) => {
+				if ( response?.result !== true ) {
+					const code = response?.code || '';
+					if ( desiredEnabled === true && code === 'credentials_pending_reload' ) {
+						pushNotification( 'object-cache-pending', {
+							title: objectCacheErrorTitle,
+							description: getObjectCacheErrorDescription( code, response?.message || '' ),
+							variant: 'warning',
+							autoDismiss: 6000,
+						} );
+						scheduleCredentialsRetry( desiredEnabled );
+						return;
+					}
+
+					setUpdating( false );
+					pushNotification( 'object-cache-error', {
+						title: objectCacheErrorTitle,
+						description: getObjectCacheErrorDescription( code, response?.message || '' ),
+						variant: 'error',
+						autoDismiss: 7000,
+					} );
+					await refetchSettings();
+					return;
+				}
+
 				setUpdating( false );
-				setEnabled( newValue );
+				setEnabled( desiredEnabled );
 				pushNotification( 'object-cache-saved', {
 					title: objectCacheSaved,
 					variant: 'success',
 					autoDismiss: 5000,
 				} );
-				// Refetch so toggle stays in sync with server (e.g. after remount).
-				apiFetch( { url: apiUrl } ).then( ( settings ) => {
-					if ( settings?.objectCache && 'enabled' in settings.objectCache ) {
-						setEnabled( settings.objectCache.enabled === true );
-					}
-				} );
+				await refetchSettings();
 			} )
-			.catch( ( err ) => {
+			.catch( async ( err ) => {
+				const code = err?.code || '';
+
+				if ( desiredEnabled === true && code === 'credentials_pending_reload' ) {
+					pushNotification( 'object-cache-pending', {
+						title: objectCacheErrorTitle,
+						description: getObjectCacheErrorDescription( code, err?.message || '' ),
+						variant: 'warning',
+						autoDismiss: 6000,
+					} );
+					scheduleCredentialsRetry( desiredEnabled );
+					return;
+				}
+
 				setUpdating( false );
 				pushNotification( 'object-cache-error', {
 					title: objectCacheErrorTitle,
-					description: err?.message || '',
+					description: getObjectCacheErrorDescription( code, err?.message || '' ),
 					variant: 'error',
-					autoDismiss: 5000,
+					autoDismiss: 7000,
 				} );
+				await refetchSettings();
 			} );
 	};
+
+	const handleChange = () => {
+		if ( overwritten || isCacheDisabled ) {
+			return;
+		}
+		const newValue = ! enabled;
+		requestToggle( newValue, false );
+	};
+
+	const preflight = storeObjectCache?.preflight;
+	// Match enable() before provisioning: phpredis + (if wp-config lacks creds, Hiive must be connected).
+	const needsProvisioning =
+		preflight && preflight.configuredInWpConfig === false;
+	const provisioningPreconditionsMet =
+		! needsProvisioning ||
+		preflight.hiiveConnected === true ||
+		preflight.hiiveConnected === undefined;
+	const preflightBlocksToggle =
+		! overwritten &&
+		! isCacheDisabled &&
+		preflight &&
+		( preflight.extensionLoaded === false || ! provisioningPreconditionsMet );
 
 	return (
 		<Container.SettingsField
@@ -97,12 +193,15 @@ const ObjectCache = () => {
 					{ objectCacheOverwrittenNotice }
 				</p>
 			) }
+			{ ! overwritten && preflight?.preflightMessage && (
+				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-600">{ preflight.preflightMessage }</p>
+			) }
 			<ToggleField
 				id="object-cache"
 				label={ objectCacheToggleLabel }
 				checked={ isCacheDisabled ? false : enabled }
 				onChange={ handleChange }
-				disabled={ updating || overwritten || isCacheDisabled }
+				disabled={ updating || overwritten || isCacheDisabled || preflightBlocksToggle }
 			/>
 		</Container.SettingsField>
 	);
