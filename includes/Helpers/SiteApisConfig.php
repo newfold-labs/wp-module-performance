@@ -24,11 +24,21 @@ final class SiteApisConfig {
 		return trailingslashit( $base );
 	}
 
+	/**
+	 * Request timeout in seconds for Hiive HTTP calls.
+	 *
+	 * @return int
+	 */
 	public static function hiive_request_timeout_seconds(): int {
 		$timeout = 30;
 		return (int) apply_filters( 'newfold_performance_hiive_request_timeout_seconds', $timeout );
 	}
 
+	/**
+	 * Request timeout in seconds for Hosting UAPI HTTP calls.
+	 *
+	 * @return int
+	 */
 	public static function hosting_uapi_request_timeout_seconds(): int {
 		$timeout = 30;
 		return (int) apply_filters( 'newfold_performance_hosting_uapi_request_timeout_seconds', $timeout );

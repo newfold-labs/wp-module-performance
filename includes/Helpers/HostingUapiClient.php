@@ -56,7 +56,7 @@ final class HostingUapiClient {
 		$raw  = (string) wp_remote_retrieve_body( $response );
 
 		if ( $code < 200 || $code >= 300 ) {
-			$data = json_decode( $raw, true );
+			$data           = json_decode( $raw, true );
 			$customer_error = is_array( $data ) ? self::extract_customer_error( $data ) : null;
 
 			$err = new \WP_Error(
@@ -68,10 +68,10 @@ final class HostingUapiClient {
 					self::snippet( $raw )
 				),
 				array(
-					'status'          => $code,
-					'body'            => $raw,
-					'customer_error'  => $customer_error,
-					'decoded'         => is_array( $data ) ? $data : null,
+					'status'         => $code,
+					'body'           => $raw,
+					'customer_error' => $customer_error,
+					'decoded'        => is_array( $data ) ? $data : null,
 				)
 			);
 
@@ -89,6 +89,8 @@ final class HostingUapiClient {
 	}
 
 	/**
+	 * Extract a stable customer-facing error string from a decoded JSON body when present.
+	 *
 	 * @param array $data Decoded JSON.
 	 */
 	private static function extract_customer_error( array $data ): ?string {
@@ -107,6 +109,12 @@ final class HostingUapiClient {
 		return null;
 	}
 
+	/**
+	 * Truncate raw response text for error messages.
+	 *
+	 * @param string $raw Response body.
+	 * @return string Trimmed substring, max 240 characters.
+	 */
 	private static function snippet( string $raw ): string {
 		$raw = trim( $raw );
 		if ( '' === $raw ) {

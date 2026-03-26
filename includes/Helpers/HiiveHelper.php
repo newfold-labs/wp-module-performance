@@ -10,21 +10,29 @@ use NewfoldLabs\WP\Module\Data\HiiveConnection;
 class HiiveHelper {
 
 	/**
+	 * Base URL for Hiive API requests.
+	 *
 	 * @var string
 	 */
 	private $api_base_url;
 
 	/**
+	 * API path appended to the base URL.
+	 *
 	 * @var string
 	 */
 	private $endpoint;
 
 	/**
+	 * Request body for POST-like methods or query args for GET/DELETE.
+	 *
 	 * @var array
 	 */
 	private $body;
 
 	/**
+	 * HTTP method (GET, POST, PUT, PATCH, DELETE).
+	 *
 	 * @var string
 	 */
 	private $method;
