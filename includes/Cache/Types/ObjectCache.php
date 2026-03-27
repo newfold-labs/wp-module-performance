@@ -333,16 +333,17 @@ class ObjectCache {
 	public static function disable( $clear_preference = true ) {
 		$path = self::get_drop_in_path();
 		if ( ! file_exists( $path ) ) {
-			return array(
-				'success' => false,
-				'message' => __( 'Object cache is not enabled.', 'wp-module-performance' ),
-			);
+			if ( $clear_preference ) {
+				update_option( self::OPTION_ENABLED_PREFERENCE, false );
+			}
+			return array( 'success' => true );
 		}
 		if ( ! self::is_our_drop_in( $path ) ) {
-			return array(
-				'success' => false,
-				'message' => __( 'Another object cache drop-in is active. Disable it in the other plugin first.', 'wp-module-performance' ),
-			);
+			// Drop-in is not ours; do not delete it. Just record the user's preference so reconcile leaves it alone.
+			if ( $clear_preference ) {
+				update_option( self::OPTION_ENABLED_PREFERENCE, false );
+			}
+			return array( 'success' => true );
 		}
 
 		// Flush Redis and clear options cache while our drop-in is still active, then remove the file.
@@ -394,13 +395,13 @@ class ObjectCache {
 
 	/**
 	 * Whether the stored preference means "user wants object cache on".
-	 * WordPress may store true as 1 or '1' in the database.
+	 * Only explicit true/1/'1' counts as enabled; null or false means do not restore/replace.
 	 *
 	 * @return bool
 	 */
 	public static function is_preference_enabled() {
 		$preference = get_option( self::OPTION_ENABLED_PREFERENCE, null );
-		return in_array( $preference, array( null, true, 1, '1' ), true );
+		return in_array( $preference, array( true, 1, '1' ), true );
 	}
 
 	/**
@@ -754,6 +755,79 @@ class ObjectCache {
 		}
 		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.unlink_unlink -- Intentional fallback after WP_Filesystem.
 		return (bool) @unlink( $path );
+	}
+
+	/**
+	 * Sentinel value for "preference not set" (option never written). We never write this to the option.
+	 *
+	 * @var string
+	 */
+	const PREFERENCE_NOT_SET_SENTINEL = 'newfold_object_cache_preference_not_set';
+
+	/**
+	 * Reconcile a non-ours object-cache.php with the user's preference.
+	 *
+	 * Runs when the drop-in exists and is not ours. Replace with our drop-in when preference is
+	 * enabled or not set and Redis is available; leave the file alone when preference is disabled
+	 * or when Redis is not available (so we never remove a drop-in we can't replace).
+	 *
+	 * @return void
+	 */
+	public static function reconcile_non_ours_dropin() {
+		$path = self::get_drop_in_path();
+		if ( ! file_exists( $path ) || self::is_our_drop_in( $path ) ) {
+			return;
+		}
+
+		// Bypass object cache so we read the real preference (e.g. avoid W3TC/other plugin cache returning stale or empty).
+		if ( function_exists( 'wp_cache_delete' ) ) {
+			wp_cache_delete( 'alloptions', 'options' );
+		}
+		$preference = get_option( self::OPTION_ENABLED_PREFERENCE, self::PREFERENCE_NOT_SET_SENTINEL );
+
+		// Preference not set: option does not exist in DB.
+		if ( self::PREFERENCE_NOT_SET_SENTINEL === $preference ) {
+			if ( self::is_available() ) {
+				self::delete_dropin_file( $path );
+				self::enable();
+			}
+			return;
+		}
+
+		// Preference enabled: option exists and value is on (true, 1, '1').
+		if ( in_array( $preference, array( true, 1, '1' ), true ) ) {
+			if ( self::is_available() ) {
+				self::delete_dropin_file( $path );
+				self::enable();
+			}
+			return;
+		}
+
+		// Preference disabled: option exists and not enabled. Leave the non-ours drop-in alone.
+	}
+
+	/**
+	 * Delete the object-cache drop-in file at the given path.
+	 *
+	 * Uses WP_Filesystem then unlink fallback. Used by reconcile when replacing a non-ours drop-in.
+	 *
+	 * @param string $path Full path to object-cache.php.
+	 * @return bool True if file was deleted or did not exist, false if delete failed.
+	 */
+	private static function delete_dropin_file( $path ) {
+		if ( ! file_exists( $path ) ) {
+			return true;
+		}
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+		WP_Filesystem();
+		global $wp_filesystem;
+		if ( $wp_filesystem && $wp_filesystem->delete( $path ) ) {
+			return true;
+		}
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.unlink_unlink -- Intentional fallback after WP_Filesystem.
+		return @unlink( $path );
 	}
 
 	/**

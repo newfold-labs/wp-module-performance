@@ -57,6 +57,8 @@ class PerformanceLifecycleHooks {
 			add_action( 'plugins_loaded', array( $this, 'hooks' ) );
 			// If Redis config was removed from wp-config but our drop-in is still present, remove it so the site does not break.
 			add_action( 'plugins_loaded', array( ObjectCache::class, 'maybe_remove_dropin_if_unavailable' ), 1 );
+			// Reconcile any non-ours object-cache.php with the user's preference (replace or leave).
+			add_action( 'plugins_loaded', array( ObjectCache::class, 'reconcile_non_ours_dropin' ), 2 );
 
 			// Do not call container() here. The ModuleLoader's container() creates and locks in
 			// an empty container if called before the host plugin calls setContainer(), which
