@@ -1,5 +1,6 @@
 {
     "name": "newfold-labs/wp-module-performance",
+    "version": "3.7.2",
     "description": "A module for managing caching functionality.",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -34,21 +35,22 @@
     "require": {
         "colinmollenhour/credis": "^1.14",
         "newfold-labs/wp-module-context": "^1.0",
+        "newfold-labs/wp-module-data": "^2.9",
         "wp-forge/collection": "^1.0",
         "wp-forge/wp-htaccess-manager": "^1.0",
         "wpscholar/url": "^1.2",
         "newfold-labs/wp-module-features": "^1.5",
         "newfold-labs/wp-module-installer": "^1.7",
         "newfold-labs/wp-module-htaccess": "^1.0",
-        "predis/predis": "^3.4",
+        "predis/predis": "2.4.1",
         "wp-cli/wp-config-transformer": "^1.4"
     },
     "require-dev": {
         "newfold-labs/wp-php-standards": "^1.2",
         "wp-cli/wp-cli-bundle": "^2.8.1|^2.12",
-        "wp-cli/i18n-command": "^2.6",
+        "wp-cli/i18n-command": "^2.7",
         "10up/wp_mock": "^0.5.0|^1.0.0",
-        "johnpbloch/wordpress": "6.9.1",
+        "johnpbloch/wordpress": "6.9.4",
         "lucatume/wp-browser": "*",
         "phpunit/phpcov": "*"
     },
@@ -69,9 +71,8 @@
             "@i18n-json",
             "@i18n-php"
         ],
-        "i18n-json": "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print",
-        "i18n-mo": "vendor/bin/wp i18n make-mo ./languages",
-        "i18n-php": "vendor/bin/wp --allow-root i18n make-php ./languages",
+        "i18n-json": "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --pretty-print",
+        "i18n-php": "vendor/bin/wp --allow-root i18n make-php ./languages --pretty-print",
         "i18n-po": "vendor/bin/wp i18n update-po ./languages/wp-module-performance.pot ./languages",
         "i18n-pot": "vendor/bin/wp i18n make-pot . ./languages/wp-module-performance.pot --domain=wp-module-performance --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-performance/issues\",\"POT-Creation-Date\":null}' --exclude=src,tests,assets,wordpress --include=build/*.min.js",
         "test": [

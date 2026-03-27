@@ -67,8 +67,8 @@ const App = () => {
 					>
 						<CacheSettings />
 					</Container.Block>
-					{ /* Only show Object Cache when Redis is configured (objectCache.available from backend). */ }
-					{ NewfoldRuntime?.sdk?.cache?.objectCache?.available && (
+					{ /* objectCache.available = show UI (not "creds already in wp-config"); omit/false hides block. */ }
+					{ ( NewfoldRuntime?.sdk?.cache?.objectCache?.available ?? true ) && (
 						<Container.Block
 							separator
 							className="newfold-object-cache"

@@ -4,6 +4,7 @@
     "constant",
     "file_exists",
     "file_get_contents",
-    "is_readable"
+    "is_readable",
+    "extension_loaded"
   ]
 }

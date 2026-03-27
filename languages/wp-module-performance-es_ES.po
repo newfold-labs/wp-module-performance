@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-04-25 17:18+0100\n"
+"PO-Revision-Date: 2026-03-26T19:51:59+00:00\n"
 "Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -18,22 +18,6 @@ msgstr ""
 "X-Crowdin-Project-ID: 767577\n"
 "X-Domain: wp-module-performance\n"
 "X-Generator: Poedit 3.6\n"
-
-#: build/performance/performance.min.js:5
-msgid "Concatenate CSS"
-msgstr "Concatenar CSS"
-
-#: build/performance/performance.min.js:5
-msgid "Defer Non-Essential JavaScript"
-msgstr "Aplazar JavaScript no esencial"
-
-#: build/performance/performance.min.js:2
-msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
-msgstr "Este sitio ya no cumple los requisitos para la optimización de la imagen ya que ha alcanzado sus límites de uso."
-
-#: build/performance/performance.min.js:2
-msgid "Performance"
-msgstr "Rendimiento"
 
 #: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimizing Images…"
@@ -72,6 +56,14 @@ msgid "Optimized"
 msgstr "Optimizado"
 
 #: build/performance/performance.min.js:2
+msgid "Performance"
+msgstr "Rendimiento"
+
+#: build/performance/performance.min.js:2
+msgid "Optimize your website by managing cache and performance settings"
+msgstr "Optimiza tu sitio web gestionando la caché y la configuración de rendimiento"
+
+#: build/performance/performance.min.js:2
 msgid "Exclude from cache"
 msgstr "Excluir de la caché"
 
@@ -86,6 +78,14 @@ msgstr "Exclusión de caché guardada"
 #: build/performance/performance.min.js:2
 msgid "Save"
 msgstr "Guardar"
+
+#: build/performance/performance.min.js:2
+msgid "Invalid input. Please use only lowercase letters, numbers, commas, and hyphens."
+msgstr "Entrada inválida. Por favor, utiliza solo letras minúsculas, números, comas y guiones."
+
+#: build/performance/performance.min.js:2
+msgid "e.g. cart,checkout,wp-admin"
+msgstr "Por ejemplo, carrito, préstamo, wp-admin"
 
 #: build/performance/performance.min.js:2
 msgid "Cache Level"
@@ -148,6 +148,62 @@ msgid "Cache enabled for assets and pages (extended)."
 msgstr "Caché activada para recursos y páginas (extendido)."
 
 #: build/performance/performance.min.js:2
+msgid "Clear Cache"
+msgstr "Borrar caché"
+
+#: build/performance/performance.min.js:2
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr "Borramos automáticamente tu caché mientras trabajas (creando contenido, cambiando configuraciones, instalando plugins, etc.). Pero puedes borrarla manualmente aquí para asegurarte de que esté actualizada."
+
+#: build/performance/performance.min.js:2
+msgid "Clear All Cache Now"
+msgstr "Borrar toda la caché ahora"
+
+#: build/performance/performance.min.js:2
+msgid "Cache cleared"
+msgstr "Caché borrada"
+
+#: build/performance/performance.min.js:2
+msgid "Font Optimization"
+msgstr "Optimización de fuentes"
+
+#: build/performance/performance.min.js:2
+msgid "Improve load times by replacing Google Fonts with optimized local versions."
+msgstr "Mejora tiempos de carga reemplazando Google Fonts por versiones optimizadas locales."
+
+#: build/performance/performance.min.js:2
+msgid "Optimize Fonts via Cloudflare"
+msgstr "Optimizar fuentes con Cloudflare"
+
+#: build/performance/performance.min.js:2
+msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
+msgstr "Reemplaza Google Fonts por versiones locales más rápidas y respetuosas con la privacidad."
+
+#: build/performance/performance.min.js:2
+msgid "Loading font optimization settings…"
+msgstr "Cargando ajustes de optimización de fuentes…"
+
+#: build/performance/performance.min.js:2
+msgid "Error loading settings."
+msgstr "Error al cargar ajustes."
+
+#: build/performance/performance.min.js:2
+msgid "Fonts optimization updated"
+msgstr "Optimización de fuentes actualizada"
+
+#: build/performance/performance.min.js:2
+msgid "Font optimization setting saved successfully."
+msgstr "Ajuste de optimización de fuentes guardado correctamente."
+
+#: build/performance/performance.min.js:2
+msgid "Update failed"
+msgstr "Actualización fallida"
+
+#: build/performance/performance.min.js:2
+msgid "Could not save font optimization setting."
+msgstr "No se pudo guardar el ajuste de optimización de fuentes."
+
+#: build/performance/performance.min.js:2
 msgid "Image Optimization"
 msgstr "Optimización de imágenes"
 
@@ -166,6 +222,10 @@ msgstr "imágenes procesadas de"
 #: build/performance/performance.min.js:2
 msgid "/month"
 msgstr "/mes"
+
+#: build/performance/performance.min.js:2
+msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
+msgstr "Este sitio ya no cumple los requisitos para la optimización de la imagen ya que ha alcanzado sus límites de uso."
 
 #: build/performance/performance.min.js:2
 msgid "Loading settings…"
@@ -248,6 +308,22 @@ msgid "Something went wrong while updating the settings. Please try again."
 msgstr "Algo salió mal al actualizar las configuraciones. Por favor, inténtalo de nuevo."
 
 #: build/performance/performance.min.js:2
+msgid "Optimize Images via Cloudflare"
+msgstr "Optimizar imágenes con Cloudflare"
+
+#: build/performance/performance.min.js:2
+msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
+msgstr "Activa la compresión de imágenes de Cloudflare para reducir tiempos de carga y uso de ancho de banda."
+
+#: build/performance/performance.min.js:2
+msgid "Improve Image Loading on Slow Connections"
+msgstr "Mejorar carga de imágenes en conexiones lentas"
+
+#: build/performance/performance.min.js:2
+msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
+msgstr "Cloudflare Mirage acelera la carga de imágenes en redes móviles y lentas."
+
+#: build/performance/performance.min.js:2
 msgid "Advanced settings"
 msgstr "Configuraciones avanzadas"
 
@@ -323,6 +399,10 @@ msgid "Move important styling information to the start of the page, which helps 
 msgstr "Mueve la información de estilo importante al inicio de la página, lo que ayuda a mostrar tu contenido antes para que tus usuarios no tengan que esperar a que se cargue toda la página.%1$s %2$sBoost generará automáticamente tu CSS crítico%3$s cada vez que realices cambios en la estructura HTML o CSS de tu sitio."
 
 #: build/performance/performance.min.js:5
+msgid "Defer Non-Essential JavaScript"
+msgstr "Aplazar JavaScript no esencial"
+
+#: build/performance/performance.min.js:5
 msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
 msgstr "Ejecuta JavaScript no esencial después de que la página se haya cargado para que los estilos e imágenes se carguen más rápido."
 
@@ -339,12 +419,20 @@ msgid "Exclude JS Strings"
 msgstr "Excluir cadenas JS"
 
 #: build/performance/performance.min.js:5
+msgid "Concatenate CSS"
+msgstr "Concatenar CSS"
+
+#: build/performance/performance.min.js:5
 msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
 msgstr "Los estilos se agrupan por su ubicación original, se concatenan y se minifican para reducir el tiempo de carga del sitio y el número de solicitudes."
 
 #: build/performance/performance.min.js:5
 msgid "Exclude CSS Strings"
 msgstr "Excluir cadenas CSS"
+
+#: build/performance/performance.min.js:5
+msgid "Disable Coming Soon"
+msgstr "Desactivar Próximamente"
 
 #: build/performance/performance.min.js:5
 msgid "Link Prefetch"
@@ -418,110 +506,6 @@ msgstr "Excluir palabras clave"
 msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
 msgstr "Excluir palabras clave: una lista de palabras o cadenas separadas por comas que excluirán un enlace de la precarga. Por ejemplo, excluir \"app\" evitará que se precargue https://example.com/apple."
 
-#: build/performance/performance.min.js:2
-msgid "Clear Cache"
-msgstr "Borrar caché"
-
-#: build/performance/performance.min.js:2
-msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
-msgstr "Borramos automáticamente tu caché mientras trabajas (creando contenido, cambiando configuraciones, instalando plugins, etc.). Pero puedes borrarla manualmente aquí para asegurarte de que esté actualizada."
-
-#: build/performance/performance.min.js:2
-msgid "Clear All Cache Now"
-msgstr "Borrar toda la caché ahora"
-
-#: build/performance/performance.min.js:2
-msgid "Cache cleared"
-msgstr "Caché borrada"
-
-#: build/performance/performance.min.js:5
-msgid "Skip 404"
-msgstr "Omitir 404"
-
-#: build/performance/performance.min.js:5
-msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
-msgstr "Cuando está activado, los recursos estáticos como imágenes y fuentes usarán una página 404 por defecto del servidor y no las páginas 404 de WordPress. Las páginas y publicaciones seguirán usando WordPress para las páginas 404."
-
-#: build/performance/performance.min.js:5
-msgid "Enable Skip 404 Handling For Static Files"
-msgstr "Habilitar omisión de 404 para archivos estáticos"
-
-#: build/performance/performance.min.js:5
-msgid "Skip 404 saved"
-msgstr "Omisión de 404 guardada"
-
-#: build/performance/performance.min.js:2
-msgid "Optimize your website by managing cache and performance settings"
-msgstr "Optimiza tu sitio web gestionando la caché y la configuración de rendimiento"
-
-#: build/performance/performance.min.js:2
-msgid "Font Optimization"
-msgstr "Optimización de fuentes"
-
-#: build/performance/performance.min.js:2
-msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr "Mejora tiempos de carga reemplazando Google Fonts por versiones optimizadas locales."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Fonts via Cloudflare"
-msgstr "Optimizar fuentes con Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr "Reemplaza Google Fonts por versiones locales más rápidas y respetuosas con la privacidad."
-
-#: build/performance/performance.min.js:2
-msgid "Loading font optimization settings…"
-msgstr "Cargando ajustes de optimización de fuentes…"
-
-#: build/performance/performance.min.js:2
-msgid "Error loading settings."
-msgstr "Error al cargar ajustes."
-
-#: build/performance/performance.min.js:2
-msgid "Fonts optimization updated"
-msgstr "Optimización de fuentes actualizada"
-
-#: build/performance/performance.min.js:2
-msgid "Font optimization setting saved successfully."
-msgstr "Ajuste de optimización de fuentes guardado correctamente."
-
-#: build/performance/performance.min.js:2
-msgid "Update failed"
-msgstr "Actualización fallida"
-
-#: build/performance/performance.min.js:2
-msgid "Could not save font optimization setting."
-msgstr "No se pudo guardar el ajuste de optimización de fuentes."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Images via Cloudflare"
-msgstr "Optimizar imágenes con Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr "Activa la compresión de imágenes de Cloudflare para reducir tiempos de carga y uso de ancho de banda."
-
-#: build/performance/performance.min.js:2
-msgid "Improve Image Loading on Slow Connections"
-msgstr "Mejorar carga de imágenes en conexiones lentas"
-
-#: build/performance/performance.min.js:2
-msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr "Cloudflare Mirage acelera la carga de imágenes en redes móviles y lentas."
-
-#: build/performance/performance.min.js:2
-msgid "Invalid input. Please use only lowercase letters, numbers, commas, and hyphens."
-msgstr "Entrada inválida. Por favor, utiliza solo letras minúsculas, números, comas y guiones."
-
-#: build/performance/performance.min.js:2
-msgid "e.g. cart,checkout,wp-admin"
-msgstr "Por ejemplo, carrito, préstamo, wp-admin"
-
-#: build/performance/performance.min.js:5
-msgid "Disable Coming Soon"
-msgstr "Desactivar Próximamente"
-
 #: build/performance/performance.min.js:5
 msgid "Object Caching"
 msgstr "Caché de objetos"
@@ -545,3 +529,87 @@ msgstr "No se ha podido actualizar la caché de objetos"
 #: build/performance/performance.min.js:5
 msgid "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
 msgstr "La caché de objetos de otro plugin está activa. Desactívalo en ese plugin para usar este interruptor."
+
+#: build/performance/performance.min.js:5
+msgid "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version."
+msgstr "PHP Redis (phpredis) no está disponible en este servidor. Pide a tu host que active la extensión Redis para tu versión de PHP."
+
+#: build/performance/performance.min.js:5
+msgid "Redis credentials are not present in wp-config.php yet."
+msgstr "Las credenciales Redis aún no están presentes en wp-config.php."
+
+#: build/performance/performance.min.js:5
+msgid "Redis credentials are being applied. We will retry automatically in a few seconds."
+msgstr "Se están aplicando las credenciales Redis. Lo intentaremos automáticamente en unos segundos."
+
+#: build/performance/performance.min.js:5
+msgid "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
+msgstr "Este sitio no está conectado a Hiive, por lo que las credenciales de Redis no pueden ser provisionadas automáticamente."
+
+#: build/performance/performance.min.js:5
+msgid "Hosting token is not available yet. Please try again shortly or contact support."
+msgstr "El token de alojamiento aún no está disponible. Por favor, inténtalo de nuevo pronto o contacta con el soporte."
+
+#: build/performance/performance.min.js:5
+msgid "Hosting site id is not available yet. Please try again shortly or contact support."
+msgstr "El ID del sitio de alojamiento aún no está disponible. Por favor, inténtalo de nuevo pronto o contacta con el soporte."
+
+#: build/performance/performance.min.js:5
+msgid "Could not connect to Redis with the current credentials."
+msgstr "No se pude conectar con Redis con las credenciales actuales."
+
+#: build/performance/performance.min.js:5
+msgid "Redis service is not active on the server yet."
+msgstr "El servicio Redis aún no está activo en el servidor."
+
+#: build/performance/performance.min.js:5
+msgid "Your PHP version does not meet requirements for Redis on this hosting environment."
+msgstr "Tu versión de PHP no cumple los requisitos de Redis en este entorno de alojamiento."
+
+#: build/performance/performance.min.js:5
+msgid "Hosting reports the Redis drop-in is not available yet."
+msgstr "El anfitrión informa que el acceso directo de Redis aún no está disponible."
+
+#: build/performance/performance.min.js:5
+msgid "Hosting could not locate WordPress for this site."
+msgstr "El hosting no pudo localizar WordPress para este sitio."
+
+#: build/performance/performance.min.js:5
+msgid "Could not reach Hiive to provision Redis credentials."
+msgstr "No se pude contactar con Hiive para proporcionar credenciales Redis."
+
+#: build/performance/performance.min.js:5
+msgid "Hosting API could not enable Redis for this site."
+msgstr "La API de alojamiento no pudo habilitar Redis para este sitio."
+
+#: build/performance/performance.min.js:5
+msgid "Hosting API returned an unexpected error while enabling Redis."
+msgstr "La API de alojamiento devolvió un error inesperado al habilitar Redis."
+
+#: build/performance/performance.min.js:5
+msgid "Failed to download the Redis object cache drop-in."
+msgstr "No se pudo descargar el drop-in de caché de objetos de Rederis."
+
+#: build/performance/performance.min.js:5
+msgid "Downloaded drop-in content was invalid."
+msgstr "El contenido descargado de acceso directo no era válido."
+
+#: build/performance/performance.min.js:5
+msgid "Could not write object-cache.php. Check file permissions."
+msgstr "No pude escribir object-cache.php. Comprueba los permisos de los archivos."
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404"
+msgstr "Omitir 404"
+
+#: build/performance/performance.min.js:5
+msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
+msgstr "Cuando está activado, los recursos estáticos como imágenes y fuentes usarán una página 404 por defecto del servidor y no las páginas 404 de WordPress. Las páginas y publicaciones seguirán usando WordPress para las páginas 404."
+
+#: build/performance/performance.min.js:5
+msgid "Enable Skip 404 Handling For Static Files"
+msgstr "Habilitar omisión de 404 para archivos estáticos"
+
+#: build/performance/performance.min.js:5
+msgid "Skip 404 saved"
+msgstr "Omisión de 404 guardada"

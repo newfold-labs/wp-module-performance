@@ -126,30 +126,32 @@ class CacheController {
 				$enable = (bool) $object_cache['enabled'];
 				if ( $enable ) {
 					$out = ObjectCache::enable();
-					if ( $out['success'] ) {
-						$purger = container()->get( 'cachePurger' );
+				} else {
+					$out = ObjectCache::disable();
+				}
+				if ( $out['success'] ) {
+					// When enabling: only purge page caches so we don't flush object cache (avoids logging out the user).
+					// When disabling: purge everything including object cache.
+					$purger = container()->get( 'cachePurger' );
+					if ( $enable ) {
 						$purger->purge_page_caches();
-						return new \WP_REST_Response( array( 'result' => true ), 200 );
+					} else {
+						$purger->purge_all();
 					}
 					return new \WP_REST_Response(
 						array(
-							'result'  => false,
-							'message' => isset( $out['message'] ) ? $out['message'] : '',
+							'result'      => true,
+							'objectCache' => ObjectCache::get_state(),
 						),
-						400
+						200
 					);
-				}
-
-				$out = ObjectCache::disable();
-				if ( $out['success'] ) {
-					$purger = container()->get( 'cachePurger' );
-					$purger->purge_all();
-					return new \WP_REST_Response( array( 'result' => true ), 200 );
 				}
 				return new \WP_REST_Response(
 					array(
-						'result'  => false,
-						'message' => isset( $out['message'] ) ? $out['message'] : '',
+						'result'      => false,
+						'message'     => isset( $out['message'] ) ? $out['message'] : '',
+						'code'        => isset( $out['code'] ) ? (string) $out['code'] : '',
+						'objectCache' => ObjectCache::get_state(),
 					),
 					400
 				);
