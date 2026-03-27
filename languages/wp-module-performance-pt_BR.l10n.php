@@ -5,7 +5,7 @@ return [
 	'language' => 'pt_BR',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-03-26T19:51:59+00:00',
+	'po-revision-date' => '2026-03-27T09:35:59+00:00',
 	'x-generator' => 'Poedit 3.2.2',
 	'messages' => [
 ,
