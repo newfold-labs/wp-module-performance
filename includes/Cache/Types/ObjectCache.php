@@ -405,21 +405,31 @@ class ObjectCache {
 	}
 
 	/**
-	 * Restore the drop-in when Redis is available, user preference is "on", and the file is missing.
+	 * Restore/replace the drop-in when user preference is "on".
 	 * Used on activation and when serving cache settings so the UI state matches the preference.
+	 *
+	 * Calls enable() unconditionally (after preference + file checks) so missing credentials can be
+	 * reprovisioned during activation and a missing drop-in can be restored in the same flow.
+	 * When a non-ours drop-in is present, delete it first so enable() can install ours.
 	 *
 	 * @return void
 	 */
 	public static function maybe_restore_dropin() {
-		if ( ! self::is_configured_in_wp_config() && ! self::is_available() ) {
-			return;
-		}
 		if ( ! self::is_preference_enabled() ) {
 			return;
 		}
-		if ( self::get_state()['ours'] ) {
+
+		$path   = self::get_drop_in_path();
+		$exists = file_exists( $path );
+		$ours   = $exists && self::is_our_drop_in( $path );
+		if ( $ours ) {
 			return;
 		}
+
+		if ( $exists && ! self::delete_dropin_file( $path ) ) {
+			return;
+		}
+
 		self::enable();
 	}
 
