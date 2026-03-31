@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1774648939">
-  <project timestamp="1774648939">
+<coverage generated="1774959589">
+  <project timestamp="1774959589">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="3" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
@@ -829,7 +829,7 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cache/Types/ObjectCache.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache" namespace="global">
-        <metrics complexity="160" methods="30" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="354" coveredstatements="18" elements="384" coveredelements="19"/>
+        <metrics complexity="161" methods="30" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="357" coveredstatements="18" elements="387" coveredelements="19"/>
       </class>
       <line num="69" type="method" name="is_available" visibility="public" complexity="3" crap="3.14" count="2"/>
       <line num="70" type="stmt" count="2"/>
@@ -1006,216 +1006,219 @@
       <line num="402" type="method" name="is_preference_enabled" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="403" type="stmt" count="0"/>
       <line num="404" type="stmt" count="0"/>
-      <line num="413" type="method" name="maybe_restore_dropin" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="414" type="stmt" count="0"/>
-      <line num="415" type="stmt" count="0"/>
-      <line num="417" type="stmt" count="0"/>
+      <line num="417" type="method" name="maybe_restore_dropin" visibility="public" complexity="6" crap="42" count="0"/>
       <line num="418" type="stmt" count="0"/>
-      <line num="420" type="stmt" count="0"/>
-      <line num="421" type="stmt" count="0"/>
+      <line num="419" type="stmt" count="0"/>
+      <line num="422" type="stmt" count="0"/>
       <line num="423" type="stmt" count="0"/>
-      <line num="433" type="method" name="get_dropin_source_url" visibility="private" complexity="5" crap="30" count="0"/>
-      <line num="434" type="stmt" count="0"/>
-      <line num="435" type="stmt" count="0"/>
-      <line num="436" type="stmt" count="0"/>
-      <line num="439" type="stmt" count="0"/>
-      <line num="447" type="method" name="default_local_dropin_path" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="448" type="stmt" count="0"/>
+      <line num="424" type="stmt" count="0"/>
+      <line num="425" type="stmt" count="0"/>
+      <line num="426" type="stmt" count="0"/>
+      <line num="429" type="stmt" count="0"/>
+      <line num="430" type="stmt" count="0"/>
+      <line num="433" type="stmt" count="0"/>
+      <line num="443" type="method" name="get_dropin_source_url" visibility="private" complexity="5" crap="30" count="0"/>
+      <line num="444" type="stmt" count="0"/>
+      <line num="445" type="stmt" count="0"/>
+      <line num="446" type="stmt" count="0"/>
       <line num="449" type="stmt" count="0"/>
-      <line num="457" type="method" name="run_connectivity_preflight" visibility="private" complexity="4" crap="20" count="0"/>
+      <line num="457" type="method" name="default_local_dropin_path" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="458" type="stmt" count="0"/>
       <line num="459" type="stmt" count="0"/>
-      <line num="460" type="stmt" count="0"/>
-      <line num="461" type="stmt" count="0"/>
-      <line num="462" type="stmt" count="0"/>
-      <line num="463" type="stmt" count="0"/>
-      <line num="466" type="stmt" count="0"/>
+      <line num="467" type="method" name="run_connectivity_preflight" visibility="private" complexity="4" crap="20" count="0"/>
       <line num="468" type="stmt" count="0"/>
       <line num="469" type="stmt" count="0"/>
       <line num="470" type="stmt" count="0"/>
       <line num="471" type="stmt" count="0"/>
       <line num="472" type="stmt" count="0"/>
       <line num="473" type="stmt" count="0"/>
-      <line num="474" type="stmt" count="0"/>
-      <line num="477" type="stmt" count="0"/>
-      <line num="485" type="method" name="bootstrap_redis_connection_constants_for_preflight" visibility="public" complexity="14" crap="210" count="0"/>
-      <line num="486" type="stmt" count="0"/>
+      <line num="476" type="stmt" count="0"/>
+      <line num="478" type="stmt" count="0"/>
+      <line num="479" type="stmt" count="0"/>
+      <line num="480" type="stmt" count="0"/>
+      <line num="481" type="stmt" count="0"/>
+      <line num="482" type="stmt" count="0"/>
+      <line num="483" type="stmt" count="0"/>
+      <line num="484" type="stmt" count="0"/>
       <line num="487" type="stmt" count="0"/>
-      <line num="488" type="stmt" count="0"/>
-      <line num="489" type="stmt" count="0"/>
-      <line num="490" type="stmt" count="0"/>
-      <line num="491" type="stmt" count="0"/>
-      <line num="492" type="stmt" count="0"/>
-      <line num="493" type="stmt" count="0"/>
-      <line num="494" type="stmt" count="0"/>
-      <line num="495" type="stmt" count="0"/>
+      <line num="495" type="method" name="bootstrap_redis_connection_constants_for_preflight" visibility="public" complexity="14" crap="210" count="0"/>
       <line num="496" type="stmt" count="0"/>
+      <line num="497" type="stmt" count="0"/>
+      <line num="498" type="stmt" count="0"/>
       <line num="499" type="stmt" count="0"/>
       <line num="500" type="stmt" count="0"/>
       <line num="501" type="stmt" count="0"/>
       <line num="502" type="stmt" count="0"/>
       <line num="503" type="stmt" count="0"/>
       <line num="504" type="stmt" count="0"/>
+      <line num="505" type="stmt" count="0"/>
       <line num="506" type="stmt" count="0"/>
-      <line num="507" type="stmt" count="0"/>
       <line num="509" type="stmt" count="0"/>
       <line num="510" type="stmt" count="0"/>
       <line num="511" type="stmt" count="0"/>
+      <line num="512" type="stmt" count="0"/>
       <line num="513" type="stmt" count="0"/>
       <line num="514" type="stmt" count="0"/>
       <line num="516" type="stmt" count="0"/>
-      <line num="518" type="stmt" count="0"/>
+      <line num="517" type="stmt" count="0"/>
       <line num="519" type="stmt" count="0"/>
-      <line num="522" type="stmt" count="0"/>
+      <line num="520" type="stmt" count="0"/>
+      <line num="521" type="stmt" count="0"/>
       <line num="523" type="stmt" count="0"/>
       <line num="524" type="stmt" count="0"/>
-      <line num="525" type="stmt" count="0"/>
-      <line num="527" type="stmt" count="0"/>
+      <line num="526" type="stmt" count="0"/>
       <line num="528" type="stmt" count="0"/>
+      <line num="529" type="stmt" count="0"/>
+      <line num="532" type="stmt" count="0"/>
       <line num="533" type="stmt" count="0"/>
-      <line num="536" type="stmt" count="0"/>
-      <line num="540" type="stmt" count="0"/>
-      <line num="548" type="method" name="maybe_define_redis_constants_from_environment" visibility="private" complexity="4" crap="20" count="0"/>
-      <line num="549" type="stmt" count="0"/>
+      <line num="534" type="stmt" count="0"/>
+      <line num="535" type="stmt" count="0"/>
+      <line num="537" type="stmt" count="0"/>
+      <line num="538" type="stmt" count="0"/>
+      <line num="543" type="stmt" count="0"/>
+      <line num="546" type="stmt" count="0"/>
       <line num="550" type="stmt" count="0"/>
-      <line num="551" type="stmt" count="0"/>
-      <line num="553" type="stmt" count="0"/>
-      <line num="554" type="stmt" count="0"/>
-      <line num="555" type="stmt" count="0"/>
-      <line num="558" type="stmt" count="0"/>
-      <line num="567" type="method" name="get_wp_config_transformer_readonly" visibility="private" complexity="6" crap="42" count="0"/>
+      <line num="558" type="method" name="maybe_define_redis_constants_from_environment" visibility="private" complexity="4" crap="20" count="0"/>
+      <line num="559" type="stmt" count="0"/>
+      <line num="560" type="stmt" count="0"/>
+      <line num="561" type="stmt" count="0"/>
+      <line num="563" type="stmt" count="0"/>
+      <line num="564" type="stmt" count="0"/>
+      <line num="565" type="stmt" count="0"/>
       <line num="568" type="stmt" count="0"/>
-      <line num="569" type="stmt" count="0"/>
-      <line num="570" type="stmt" count="0"/>
-      <line num="572" type="stmt" count="0"/>
-      <line num="573" type="stmt" count="0"/>
-      <line num="577" type="stmt" count="0"/>
+      <line num="577" type="method" name="get_wp_config_transformer_readonly" visibility="private" complexity="6" crap="42" count="0"/>
       <line num="578" type="stmt" count="0"/>
       <line num="579" type="stmt" count="0"/>
-      <line num="589" type="method" name="parse_wp_config_scalar" visibility="private" complexity="8" crap="72" count="0"/>
-      <line num="590" type="stmt" count="0"/>
-      <line num="591" type="stmt" count="0"/>
-      <line num="592" type="stmt" count="0"/>
-      <line num="595" type="stmt" count="0"/>
-      <line num="596" type="stmt" count="0"/>
-      <line num="599" type="stmt" count="0"/>
+      <line num="580" type="stmt" count="0"/>
+      <line num="582" type="stmt" count="0"/>
+      <line num="583" type="stmt" count="0"/>
+      <line num="587" type="stmt" count="0"/>
+      <line num="588" type="stmt" count="0"/>
+      <line num="589" type="stmt" count="0"/>
+      <line num="599" type="method" name="parse_wp_config_scalar" visibility="private" complexity="8" crap="72" count="0"/>
       <line num="600" type="stmt" count="0"/>
-      <line num="603" type="stmt" count="0"/>
-      <line num="604" type="stmt" count="0"/>
+      <line num="601" type="stmt" count="0"/>
+      <line num="602" type="stmt" count="0"/>
+      <line num="605" type="stmt" count="0"/>
       <line num="606" type="stmt" count="0"/>
-      <line num="607" type="stmt" count="0"/>
+      <line num="609" type="stmt" count="0"/>
       <line num="610" type="stmt" count="0"/>
-      <line num="611" type="stmt" count="0"/>
+      <line num="613" type="stmt" count="0"/>
       <line num="614" type="stmt" count="0"/>
-      <line num="615" type="stmt" count="0"/>
-      <line num="618" type="stmt" count="0"/>
-      <line num="629" type="method" name="parse_wp_config_redis_acl_password" visibility="private" complexity="8" crap="72" count="0"/>
-      <line num="630" type="stmt" count="0"/>
-      <line num="631" type="stmt" count="0"/>
-      <line num="632" type="stmt" count="0"/>
-      <line num="636" type="stmt" count="0"/>
-      <line num="637" type="stmt" count="0"/>
-      <line num="638" type="stmt" count="0"/>
+      <line num="616" type="stmt" count="0"/>
+      <line num="617" type="stmt" count="0"/>
+      <line num="620" type="stmt" count="0"/>
+      <line num="621" type="stmt" count="0"/>
+      <line num="624" type="stmt" count="0"/>
+      <line num="625" type="stmt" count="0"/>
+      <line num="628" type="stmt" count="0"/>
+      <line num="639" type="method" name="parse_wp_config_redis_acl_password" visibility="private" complexity="8" crap="72" count="0"/>
       <line num="640" type="stmt" count="0"/>
       <line num="641" type="stmt" count="0"/>
+      <line num="642" type="stmt" count="0"/>
       <line num="646" type="stmt" count="0"/>
       <line num="647" type="stmt" count="0"/>
-      <line num="649" type="stmt" count="0"/>
+      <line num="648" type="stmt" count="0"/>
       <line num="650" type="stmt" count="0"/>
-      <line num="653" type="stmt" count="0"/>
-      <line num="662" type="method" name="map_wp_error_to_enable_result" visibility="private" complexity="6" crap="42" count="0"/>
+      <line num="651" type="stmt" count="0"/>
+      <line num="656" type="stmt" count="0"/>
+      <line num="657" type="stmt" count="0"/>
+      <line num="659" type="stmt" count="0"/>
+      <line num="660" type="stmt" count="0"/>
       <line num="663" type="stmt" count="0"/>
-      <line num="664" type="stmt" count="0"/>
-      <line num="666" type="stmt" count="0"/>
-      <line num="669" type="stmt" count="0"/>
-      <line num="670" type="stmt" count="0"/>
+      <line num="672" type="method" name="map_wp_error_to_enable_result" visibility="private" complexity="6" crap="42" count="0"/>
       <line num="673" type="stmt" count="0"/>
       <line num="674" type="stmt" count="0"/>
-      <line num="675" type="stmt" count="0"/>
       <line num="676" type="stmt" count="0"/>
-      <line num="677" type="stmt" count="0"/>
-      <line num="678" type="stmt" count="0"/>
       <line num="679" type="stmt" count="0"/>
       <line num="680" type="stmt" count="0"/>
-      <line num="682" type="stmt" count="0"/>
       <line num="683" type="stmt" count="0"/>
+      <line num="684" type="stmt" count="0"/>
+      <line num="685" type="stmt" count="0"/>
       <line num="686" type="stmt" count="0"/>
       <line num="687" type="stmt" count="0"/>
       <line num="688" type="stmt" count="0"/>
       <line num="689" type="stmt" count="0"/>
       <line num="690" type="stmt" count="0"/>
-      <line num="698" type="method" name="maybe_restore_on_activation" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="692" type="stmt" count="0"/>
+      <line num="693" type="stmt" count="0"/>
+      <line num="696" type="stmt" count="0"/>
+      <line num="697" type="stmt" count="0"/>
+      <line num="698" type="stmt" count="0"/>
       <line num="699" type="stmt" count="0"/>
-      <line num="711" type="method" name="maybe_remove_dropin_if_unavailable" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="712" type="stmt" count="0"/>
-      <line num="713" type="stmt" count="0"/>
-      <line num="714" type="stmt" count="0"/>
-      <line num="716" type="stmt" count="0"/>
-      <line num="717" type="stmt" count="0"/>
-      <line num="719" type="stmt" count="0"/>
-      <line num="730" type="method" name="remove_our_dropin_file_and_disable_preference" visibility="private" complexity="2" crap="6" count="0"/>
-      <line num="731" type="stmt" count="0"/>
-      <line num="732" type="stmt" count="0"/>
-      <line num="734" type="stmt" count="0"/>
-      <line num="735" type="stmt" count="0"/>
-      <line num="743" type="method" name="delete_our_drop_in_file_if_ours" visibility="private" complexity="6" crap="42" count="0"/>
+      <line num="700" type="stmt" count="0"/>
+      <line num="708" type="method" name="maybe_restore_on_activation" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="709" type="stmt" count="0"/>
+      <line num="721" type="method" name="maybe_remove_dropin_if_unavailable" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="722" type="stmt" count="0"/>
+      <line num="723" type="stmt" count="0"/>
+      <line num="724" type="stmt" count="0"/>
+      <line num="726" type="stmt" count="0"/>
+      <line num="727" type="stmt" count="0"/>
+      <line num="729" type="stmt" count="0"/>
+      <line num="740" type="method" name="remove_our_dropin_file_and_disable_preference" visibility="private" complexity="2" crap="6" count="0"/>
+      <line num="741" type="stmt" count="0"/>
+      <line num="742" type="stmt" count="0"/>
       <line num="744" type="stmt" count="0"/>
       <line num="745" type="stmt" count="0"/>
-      <line num="746" type="stmt" count="0"/>
-      <line num="748" type="stmt" count="0"/>
-      <line num="749" type="stmt" count="0"/>
-      <line num="751" type="stmt" count="0"/>
-      <line num="752" type="stmt" count="0"/>
-      <line num="753" type="stmt" count="0"/>
+      <line num="753" type="method" name="delete_our_drop_in_file_if_ours" visibility="private" complexity="6" crap="42" count="0"/>
       <line num="754" type="stmt" count="0"/>
-      <line num="757" type="stmt" count="0"/>
-      <line num="776" type="method" name="reconcile_non_ours_dropin" visibility="public" complexity="8" crap="13.36" count="5"/>
-      <line num="777" type="stmt" count="5"/>
-      <line num="778" type="stmt" count="5"/>
-      <line num="779" type="stmt" count="2"/>
-      <line num="783" type="stmt" count="3"/>
-      <line num="784" type="stmt" count="0"/>
-      <line num="786" type="stmt" count="3"/>
-      <line num="789" type="stmt" count="3"/>
-      <line num="790" type="stmt" count="2"/>
-      <line num="791" type="stmt" count="0"/>
-      <line num="792" type="stmt" count="0"/>
-      <line num="794" type="stmt" count="2"/>
-      <line num="798" type="stmt" count="1"/>
-      <line num="799" type="stmt" count="0"/>
-      <line num="800" type="stmt" count="0"/>
+      <line num="755" type="stmt" count="0"/>
+      <line num="756" type="stmt" count="0"/>
+      <line num="758" type="stmt" count="0"/>
+      <line num="759" type="stmt" count="0"/>
+      <line num="761" type="stmt" count="0"/>
+      <line num="762" type="stmt" count="0"/>
+      <line num="763" type="stmt" count="0"/>
+      <line num="764" type="stmt" count="0"/>
+      <line num="767" type="stmt" count="0"/>
+      <line num="786" type="method" name="reconcile_non_ours_dropin" visibility="public" complexity="8" crap="13.36" count="5"/>
+      <line num="787" type="stmt" count="5"/>
+      <line num="788" type="stmt" count="5"/>
+      <line num="789" type="stmt" count="2"/>
+      <line num="793" type="stmt" count="3"/>
+      <line num="794" type="stmt" count="0"/>
+      <line num="796" type="stmt" count="3"/>
+      <line num="799" type="stmt" count="3"/>
+      <line num="800" type="stmt" count="2"/>
       <line num="801" type="stmt" count="0"/>
-      <line num="803" type="stmt" count="0"/>
-      <line num="817" type="method" name="delete_dropin_file" visibility="private" complexity="5" crap="30" count="0"/>
-      <line num="818" type="stmt" count="0"/>
-      <line num="819" type="stmt" count="0"/>
-      <line num="821" type="stmt" count="0"/>
-      <line num="822" type="stmt" count="0"/>
-      <line num="824" type="stmt" count="0"/>
-      <line num="825" type="stmt" count="0"/>
-      <line num="826" type="stmt" count="0"/>
-      <line num="827" type="stmt" count="0"/>
-      <line num="830" type="stmt" count="0"/>
-      <line num="840" type="method" name="flush_object_cache" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="841" type="stmt" count="0"/>
-      <line num="842" type="stmt" count="0"/>
-      <line num="843" type="stmt" count="0"/>
-      <line num="845" type="stmt" count="0"/>
-      <line num="846" type="stmt" count="0"/>
-      <line num="856" type="method" name="clear_options_object_cache" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="857" type="stmt" count="0"/>
-      <line num="858" type="stmt" count="0"/>
-      <line num="860" type="stmt" count="0"/>
-      <line num="861" type="stmt" count="0"/>
-      <line num="862" type="stmt" count="0"/>
-      <line num="863" type="stmt" count="0"/>
-      <line num="865" type="stmt" count="0"/>
-      <line num="866" type="stmt" count="0"/>
-      <line num="877" type="method" name="flush_and_clear_on_shutdown" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="878" type="stmt" count="0"/>
-      <line num="879" type="stmt" count="0"/>
-      <line num="881" type="stmt" count="0"/>
-      <metrics loc="884" ncloc="616" classes="1" methods="30" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="354" coveredstatements="18" elements="384" coveredelements="19"/>
+      <line num="802" type="stmt" count="0"/>
+      <line num="804" type="stmt" count="2"/>
+      <line num="808" type="stmt" count="1"/>
+      <line num="809" type="stmt" count="0"/>
+      <line num="810" type="stmt" count="0"/>
+      <line num="811" type="stmt" count="0"/>
+      <line num="813" type="stmt" count="0"/>
+      <line num="827" type="method" name="delete_dropin_file" visibility="private" complexity="5" crap="30" count="0"/>
+      <line num="828" type="stmt" count="0"/>
+      <line num="829" type="stmt" count="0"/>
+      <line num="831" type="stmt" count="0"/>
+      <line num="832" type="stmt" count="0"/>
+      <line num="834" type="stmt" count="0"/>
+      <line num="835" type="stmt" count="0"/>
+      <line num="836" type="stmt" count="0"/>
+      <line num="837" type="stmt" count="0"/>
+      <line num="840" type="stmt" count="0"/>
+      <line num="850" type="method" name="flush_object_cache" visibility="public" complexity="5" crap="30" count="0"/>
+      <line num="851" type="stmt" count="0"/>
+      <line num="852" type="stmt" count="0"/>
+      <line num="853" type="stmt" count="0"/>
+      <line num="855" type="stmt" count="0"/>
+      <line num="856" type="stmt" count="0"/>
+      <line num="866" type="method" name="clear_options_object_cache" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="867" type="stmt" count="0"/>
+      <line num="868" type="stmt" count="0"/>
+      <line num="870" type="stmt" count="0"/>
+      <line num="871" type="stmt" count="0"/>
+      <line num="872" type="stmt" count="0"/>
+      <line num="873" type="stmt" count="0"/>
+      <line num="875" type="stmt" count="0"/>
+      <line num="876" type="stmt" count="0"/>
+      <line num="887" type="method" name="flush_and_clear_on_shutdown" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="888" type="stmt" count="0"/>
+      <line num="889" type="stmt" count="0"/>
+      <line num="891" type="stmt" count="0"/>
+      <metrics loc="894" ncloc="622" classes="1" methods="30" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="357" coveredstatements="18" elements="387" coveredelements="19"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Cache/Types/ObjectCacheErrorCodes.php">
       <class name="NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCacheErrorCodes" namespace="global">
@@ -4599,6 +4602,6 @@
       <line num="186" type="stmt" count="0"/>
       <metrics loc="188" ncloc="114" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="6" elements="47" coveredelements="6"/>
     </file>
-    <metrics files="85" loc="11225" ncloc="7135" classes="81" methods="420" coveredmethods="36" conditionals="0" coveredconditionals="0" statements="3679" coveredstatements="269" elements="4099" coveredelements="305"/>
+    <metrics files="85" loc="11235" ncloc="7141" classes="81" methods="420" coveredmethods="36" conditionals="0" coveredconditionals="0" statements="3682" coveredstatements="269" elements="4102" coveredelements="305"/>
   </project>
 </coverage>
