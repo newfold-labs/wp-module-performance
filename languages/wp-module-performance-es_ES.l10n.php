@@ -8,6 +8,5 @@ return [
 	'po-revision-date' => '2026-03-31T12:21:12+00:00',
 	'x-generator' => 'Poedit 3.6',
 	'messages' => [
-,
 	],
 ];
