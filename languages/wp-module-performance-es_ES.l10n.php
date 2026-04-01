@@ -7,7 +7,5 @@ return [
 	'pot-creation-date' => '',
 	'po-revision-date' => '2026-04-01T22:20:41+00:00',
 	'x-generator' => 'Poedit 3.6',
-	'messages' => [
-,
-	],
+	'messages' => [],
 ];
