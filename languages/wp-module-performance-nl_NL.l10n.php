@@ -5,8 +5,7 @@ return [
 	'language' => 'nl_NL',
 	'project-id-version' => 'wp-module-performance',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-03-31T12:21:12+00:00',
+	'po-revision-date' => '2026-04-01T22:20:41+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
-	'messages' => [
-	],
+	'messages' => [],
 ];
