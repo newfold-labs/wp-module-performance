@@ -76,7 +76,7 @@ class ImageService {
 			return new \WP_Error(
 				'nfd_performance_error',
 				sprintf(
-				/* translators: %s: Retry time in seconds */
+				/* translators: %s: Time remaining */
 					__( 'This site has made too many requests in a short period. Please wait %s before trying again.', 'wp-module-performance' ),
 					human_time_diff( time(), $rate_limit_transient )
 				)
