@@ -1,16 +1,15 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-module-performance\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-02T19:04:42+00:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
-"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-04-02T19:35:06+00:00\n"
+"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
 "X-Crowdin-File-ID: 15\n"
@@ -36,7 +35,8 @@ msgstr "Ein Wert für mobiles Verhalten ist erforderlich."
 msgid "A numeric value for hoverDelay is required."
 msgstr "Ein numerischer Wert für hoverDelay ist erforderlich."
 
-#: includes/Images/WPCLI/ImageCommandHandler.php:263 includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
+#: includes/Images/WPCLI/ImageCommandHandler.php:263
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
 msgid "A status ('on' or 'off') is required."
 msgstr "Ein Status (\"an\" oder \"aus\") ist erforderlich."
 
@@ -84,7 +84,10 @@ msgstr "Alle Bildoptimierungseinstellungen wurden auf %s gestellt."
 msgid "An error occurred while regenerating critical CSS."
 msgstr "Ein Fehler trat während der Regenerierung kritischer CSS auf."
 
-#: includes/RestApi/JetpackController.php:117 includes/RestApi/JetpackController.php:137 includes/RestApi/Skip404Controller.php:94 includes/RestApi/Skip404Controller.php:123
+#: includes/RestApi/JetpackController.php:117
+#: includes/RestApi/JetpackController.php:137
+#: includes/RestApi/Skip404Controller.php:94
+#: includes/RestApi/Skip404Controller.php:123
 msgid "An error occurred while updating the option."
 msgstr "Ein Fehler trat beim Aktualisieren der Option auf."
 
@@ -268,7 +271,8 @@ msgstr "Cloudflare-bezogene Schriftoptimierungseinstellungen."
 msgid "Cloudflare-related image optimization options."
 msgstr "Cloudflare-bezogene Bildoptimierungsoptionen."
 
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:14 build/performance/performance.min.js:5
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
+#: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
 msgstr "CSS zusammenführen"
 
@@ -292,11 +296,14 @@ msgstr "Das Aneinandersetzen von JavaScript kann die Leistung verbessern, indem 
 msgid "Could not connect to Redis with the current credentials."
 msgstr "Mit den aktuellen Zugangsdaten konnte ich mich nicht mit Redis verbinden."
 
-#: includes/Cache/Types/ObjectCache.php:483 includes/Cache/Types/ObjectCache.php:687 includes/Cache/Types/ObjectCachePreflight.php:62
+#: includes/Cache/Types/ObjectCache.php:483
+#: includes/Cache/Types/ObjectCache.php:687
+#: includes/Cache/Types/ObjectCachePreflight.php:62
 msgid "Could not connect to Redis."
 msgstr "Konnte keine Verbindung zu Redis herstellen."
 
-#: includes/Cache/Types/ObjectCache.php:688 build/performance/performance.min.js:5
+#: includes/Cache/Types/ObjectCache.php:688
+#: build/performance/performance.min.js:5
 msgid "Could not reach Hiive to provision Redis credentials."
 msgstr "Ich konnte Hiive nicht erreichen, um Redis-Zugangsdaten bereitzustellen."
 
@@ -308,7 +315,8 @@ msgstr "Konnte object-cache.php nicht entfernen. Überprüfe die Dateiberechtigu
 msgid "Could not save font optimization setting."
 msgstr "Die Einstellung zur Schriftarten-Optimierung konnte nicht gespeichert werden."
 
-#: includes/Cache/Types/ObjectCache.php:323 build/performance/performance.min.js:5
+#: includes/Cache/Types/ObjectCache.php:323
+#: build/performance/performance.min.js:5
 msgid "Could not write object-cache.php. Check file permissions."
 msgstr "Konnte object-cache.php nicht schreiben. Überprüfe die Dateiberechtigungen."
 
@@ -336,7 +344,8 @@ msgstr "Cron Lock Timeout ist auf 60 Sekunden oder weniger eingestellt."
 msgid "Cron lock timeout is set to a high number."
 msgstr "Cron Lock Timeout ist auf eine hohe Zahl gesetzt."
 
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14 build/performance/performance.min.js:5
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14
+#: build/performance/performance.min.js:5
 msgid "Defer Non-Essential JavaScript"
 msgstr "Verweilen Sie JavaScript"
 
@@ -458,7 +467,8 @@ msgstr "Fehler beim Laden der Einstellungen."
 msgid "Error retrieving site URL."
 msgstr "Fehler bei der Wiederherstellung der Website-URL."
 
-#: build/performance/performance.min.js:2 build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
+#: build/performance/performance.min.js:5
 msgid "Error saving option"
 msgstr "Fehler beim Speichern der Option"
 
@@ -546,7 +556,8 @@ msgstr "Zur Medienbibliothek gehen"
 msgid "HTTP %1$d: %2$s"
 msgstr "HTTP %1$d: %2$s"
 
-#: includes/Cache/Types/ObjectCache.php:685 includes/Helpers/RedisCredentialsProvisioner.php:47
+#: includes/Cache/Types/ObjectCache.php:685
+#: includes/Helpers/RedisCredentialsProvisioner.php:47
 msgid "HUAPI token is not available yet. Try again in a few minutes or contact support."
 msgstr "Der HUAPI-Token ist noch nicht verfügbar. Versuchen Sie es in ein paar Minuten noch einmal oder kontaktieren Sie den Support."
 
@@ -556,7 +567,8 @@ msgstr "Der HUAPI-Token ist noch nicht verfügbar. Versuchen Sie es in ein paar 
 msgid "Hiive API returned HTTP %d."
 msgstr "Die Hiive API hat HTTP %d zurückgegeben."
 
-#: includes/Cache/Types/ObjectCache.php:689 build/performance/performance.min.js:5
+#: includes/Cache/Types/ObjectCache.php:689
+#: build/performance/performance.min.js:5
 msgid "Hosting API could not enable Redis for this site."
 msgstr "Die Hosting-API konnte Redis für diese Seite nicht aktivieren."
 
@@ -582,7 +594,8 @@ msgstr "Das Hosting berichtet, dass der Redis Drop-in noch nicht verfügbar ist.
 msgid "Hosting site id is not available yet. Please try again shortly or contact support."
 msgstr "Die Hosting-Site-ID ist noch nicht verfügbar. Bitte versuchen Sie es bald erneut oder kontaktieren Sie den Support."
 
-#: includes/Cache/Types/ObjectCache.php:686 includes/Helpers/RedisCredentialsProvisioner.php:54
+#: includes/Cache/Types/ObjectCache.php:686
+#: includes/Helpers/RedisCredentialsProvisioner.php:54
 msgid "Hosting site id is not available yet. Try again in a few minutes or contact support."
 msgstr "Die Hosting-Site-ID ist noch nicht verfügbar. Versuchen Sie es in ein paar Minuten noch einmal oder kontaktieren Sie den Support."
 
@@ -631,7 +644,8 @@ msgid "Invalid Media ID provided."
 msgstr "Ungültige Medien-ID angegeben."
 
 #. translators: %s is the list of valid mobile behaviors.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167 includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
 #, php-format
 msgid "Invalid behavior: Use one of the following - %s."
 msgstr "Ungültiges Verhalten: Verwenden Sie eines der folgenden - %s."
@@ -670,7 +684,8 @@ msgstr "Ungültige Antwort von Cloudflare Worker."
 msgid "Invalid settings format"
 msgstr "Ungültiges Einstellungsformat"
 
-#: includes/Images/WPCLI/ImageCommandHandler.php:267 includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
+#: includes/Images/WPCLI/ImageCommandHandler.php:267
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
 msgid "Invalid status: Use 'on' or 'off'."
 msgstr "Ungültiger Status: Verwenden Sie 'an' oder 'aus'."
 
@@ -811,7 +826,8 @@ msgstr "Die Anzahl der Beitragsrevisionen ist auf eine hohe Zahl gesetzt"
 msgid "Number of requests made this month."
 msgstr "Anzahl der Anfragen in diesem Monat."
 
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14 build/performance/performance.min.js:5
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
+#: build/performance/performance.min.js:5
 msgid "Object Caching"
 msgstr "Objekt-Caching"
 
@@ -903,7 +919,8 @@ msgstr "Seiten-Caching ist deaktiviert"
 msgid "Page caching is enabled"
 msgstr "Seiten-Caching ist aktiviert"
 
-#: includes/Performance.php:278 includes/Performance.php:279 includes/Performance.php:305 build/performance/performance.min.js:2
+#: includes/Performance.php:278 includes/Performance.php:279
+#: includes/Performance.php:305 build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Leistung"
 
@@ -999,7 +1016,8 @@ msgstr "Redis-Qualifikationen werden angewendet. Wir versuchen es in wenigen Sek
 msgid "Redis credentials are not present in wp-config.php yet."
 msgstr "Redis-Qualifikationen sind in wp-config.php noch nicht vorhanden."
 
-#: includes/Cache/Types/ObjectCache.php:472 includes/Cache/Types/ObjectCachePreflight.php:52
+#: includes/Cache/Types/ObjectCache.php:472
+#: includes/Cache/Types/ObjectCachePreflight.php:52
 msgid "Redis credentials are not present in wp-config.php."
 msgstr "Redis-Qualifikationen sind in wp-config.php nicht vorhanden."
 
@@ -1161,11 +1179,13 @@ msgstr "Die PHP Redis-Erweiterung (phpredis) ist nicht geladen."
 msgid "The PHP Redis extension (phpredis) is required before object cache can be enabled."
 msgstr "Die PHP Redis-Erweiterung (phpredis) ist erforderlich, bevor der Objekt-Cache aktiviert werden kann."
 
-#: includes/RestApi/JetpackController.php:93 includes/RestApi/Skip404Controller.php:74
+#: includes/RestApi/JetpackController.php:93
+#: includes/RestApi/Skip404Controller.php:74
 msgid "The fields 'id' and 'value' are required."
 msgstr "Die Felder 'id' und 'value' sind erforderlich."
 
-#: includes/RestApi/JetpackController.php:81 includes/RestApi/Skip404Controller.php:62
+#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/Skip404Controller.php:62
 msgid "The parameter 'field' is missing or invalid."
 msgstr "Das Parameter 'Feld' fehlt oder ist ungültig."
 
@@ -1183,7 +1203,10 @@ msgstr "Diese Einstellung legt fest, auf welchen Seiten ein „no-cache“-Heade
 msgid "This site has made too many requests in a short period. Please wait %s before trying again."
 msgstr "Diese Seite hat in kurzer Zeit zu viele Anfragen gestellt. Bitte warte %s, bevor du es erneut versuchst."
 
-#: includes/Cache/Types/ObjectCache.php:684 includes/Cache/Types/ObjectCachePreflight.php:46 includes/Helpers/RedisCredentialsProvisioner.php:22 build/performance/performance.min.js:5
+#: includes/Cache/Types/ObjectCache.php:684
+#: includes/Cache/Types/ObjectCachePreflight.php:46
+#: includes/Helpers/RedisCredentialsProvisioner.php:22
+#: build/performance/performance.min.js:5
 msgid "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
 msgstr "Diese Seite ist nicht mit Hiive verbunden, daher können Redis-Zugangsdaten nicht automatisch bereitgestellt werden."
 
