@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-01T22:20:41+00:00",
+    "translation-revision-date": "2026-04-03T11:54:39+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,6 +10,30 @@
                 "lang": "en_GB",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
+            "Could not write object-cache.php. Check file permissions.": [
+                "Could not write object-cache.php. Check file permissions."
+            ],
+            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
+                "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
+            ],
+            "Could not reach Hiive to provision Redis credentials.": [
+                "Could not reach Hiive to provision Redis credentials."
+            ],
+            "Hosting API could not enable Redis for this site.": [
+                "Hosting API could not enable Redis for this site."
+            ],
+            "Concatenate CSS": [
+                "Concatenate CSS"
+            ],
+            "Defer Non-Essential JavaScript": [
+                "Defer Non-Essential JavaScript"
+            ],
+            "Object Caching": [
+                "Object Caching"
+            ],
+            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
+                "This site no longer qualifies for image optimization as it has reached its usage limits."
+            ],
             "Performance": [
                 "Performance"
             ],
@@ -135,9 +159,6 @@
             ],
             "\/month": [
                 "\/month"
-            ],
-            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                "This site no longer qualifies for image optimization as it has reached its usage limits."
             ],
             "Loading settings\u2026": [
                 "Loading settings\u2026"
@@ -265,9 +286,6 @@
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
                 "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
             ],
-            "Defer Non-Essential JavaScript": [
-                "Defer Non-Essential JavaScript"
-            ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
             ],
@@ -279,9 +297,6 @@
             ],
             "Exclude JS Strings": [
                 "Exclude JS Strings"
-            ],
-            "Concatenate CSS": [
-                "Concatenate CSS"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
                 "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
@@ -346,9 +361,6 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched."
             ],
-            "Object Caching": [
-                "Object Caching"
-            ],
             "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled.": [
                 "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled."
             ],
@@ -373,9 +385,6 @@
             "Redis credentials are being applied. We will retry automatically in a few seconds.": [
                 "Redis credentials are being applied. We will retry automatically in a few seconds."
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
-            ],
             "Hosting token is not available yet. Please try again shortly or contact support.": [
                 "Hosting token is not available yet. Please try again shortly or contact support."
             ],
@@ -397,12 +406,6 @@
             "Hosting could not locate WordPress for this site.": [
                 "Hosting could not locate WordPress for this site."
             ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "Could not reach Hiive to provision Redis credentials."
-            ],
-            "Hosting API could not enable Redis for this site.": [
-                "Hosting API could not enable Redis for this site."
-            ],
             "Hosting API returned an unexpected error while enabling Redis.": [
                 "Hosting API returned an unexpected error while enabling Redis."
             ],
@@ -411,9 +414,6 @@
             ],
             "Downloaded drop-in content was invalid.": [
                 "Downloaded drop-in content was invalid."
-            ],
-            "Could not write object-cache.php. Check file permissions.": [
-                "Could not write object-cache.php. Check file permissions."
             ],
             "Skip 404": [
                 "Skip 404"
