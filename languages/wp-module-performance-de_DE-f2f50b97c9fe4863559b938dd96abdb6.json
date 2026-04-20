@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-01T22:20:41+00:00",
+    "translation-revision-date": "2026-04-20T08:30:25+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,6 +10,30 @@
                 "lang": "de_DE",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
+            "Could not write object-cache.php. Check file permissions.": [
+                "Konnte object-cache.php nicht schreiben. \u00dcberpr\u00fcfe die Dateiberechtigungen."
+            ],
+            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
+                "Diese Seite ist nicht mit Hiive verbunden, daher k\u00f6nnen Redis-Zugangsdaten nicht automatisch bereitgestellt werden."
+            ],
+            "Could not reach Hiive to provision Redis credentials.": [
+                "Ich konnte Hiive nicht erreichen, um Redis-Zugangsdaten bereitzustellen."
+            ],
+            "Hosting API could not enable Redis for this site.": [
+                "Die Hosting-API konnte Redis f\u00fcr diese Seite nicht aktivieren."
+            ],
+            "Concatenate CSS": [
+                "CSS zusammenf\u00fchren"
+            ],
+            "Defer Non-Essential JavaScript": [
+                "Verweilen Sie JavaScript"
+            ],
+            "Object Caching": [
+                "Objekt-Caching"
+            ],
+            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
+                "Diese Seite qualifiziert sich nicht mehr f\u00fcr die Bildoptimierung, da sie ihr Nutzungslimit erreicht hat."
+            ],
             "Performance": [
                 "Leistung"
             ],
@@ -135,9 +159,6 @@
             ],
             "\/month": [
                 "\/Monat"
-            ],
-            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                "Diese Seite qualifiziert sich nicht mehr f\u00fcr die Bildoptimierung, da sie ihr Nutzungslimit erreicht hat."
             ],
             "Loading settings\u2026": [
                 "Einstellungen werden geladen\u2026"
@@ -265,9 +286,6 @@
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
                 "Verschiebt wichtige Styling-Informationen an den Anfang der Seite, damit der Inhalt schneller angezeigt wird und Nutzer nicht auf das vollst\u00e4ndige Laden der Seite warten m\u00fcssen.%1$s %2$sBoost generiert automatisch das Critical CSS%3$s, sobald \u00c4nderungen an der HTML- oder CSS-Struktur deiner Website vorgenommen werden."
             ],
-            "Defer Non-Essential JavaScript": [
-                "Verweilen Sie JavaScript"
-            ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "F\u00fchren Sie nicht essentielles JavaScript aus, nachdem die Seite geladen wurde, damit Stile und Bilder schneller geladen werden k\u00f6nnen."
             ],
@@ -279,9 +297,6 @@
             ],
             "Exclude JS Strings": [
                 "JS-Strings ausschlie\u00dfen"
-            ],
-            "Concatenate CSS": [
-                "CSS zusammenf\u00fchren"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
                 "Stile werden nach ihrer urspr\u00fcnglichen Platzierung gruppiert, zusammengef\u00fchrt und minimiert, um die Ladezeit der Website zu reduzieren und die Anzahl der Anfragen zu verringern."
@@ -346,9 +361,6 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Schl\u00fcsselw\u00f6rter ausschlie\u00dfen: Eine durch Kommas getrennte Liste von W\u00f6rtern oder Zeichenketten, die einen Link vom Vorabruf ausschlie\u00dfen. Zum Beispiel wird durch den Ausschluss von \"app\" verhindert, dass https:\/\/example.com\/apple vorabgerufen wird."
             ],
-            "Object Caching": [
-                "Objekt-Caching"
-            ],
             "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled.": [
                 "Speichere Datenbankabfragen in Redis, sodass wiederholte Anfragen aus dem Speicher statt aus der Datenbank gesendet werden. Das oben gel\u00f6schte Cache l\u00f6scht auch den Objektcache, wenn es aktiviert ist."
             ],
@@ -373,9 +385,6 @@
             "Redis credentials are being applied. We will retry automatically in a few seconds.": [
                 "Redis-Qualifikationen werden angewendet. Wir versuchen es in wenigen Sekunden automatisch erneut."
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "Diese Seite ist nicht mit Hiive verbunden, daher k\u00f6nnen Redis-Zugangsdaten nicht automatisch bereitgestellt werden."
-            ],
             "Hosting token is not available yet. Please try again shortly or contact support.": [
                 "Ein Hosting-Token ist noch nicht verf\u00fcgbar. Bitte versuchen Sie es bald erneut oder kontaktieren Sie den Support."
             ],
@@ -397,12 +406,6 @@
             "Hosting could not locate WordPress for this site.": [
                 "Das Hosting konnte WordPress f\u00fcr diese Seite nicht finden."
             ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "Ich konnte Hiive nicht erreichen, um Redis-Zugangsdaten bereitzustellen."
-            ],
-            "Hosting API could not enable Redis for this site.": [
-                "Die Hosting-API konnte Redis f\u00fcr diese Seite nicht aktivieren."
-            ],
             "Hosting API returned an unexpected error while enabling Redis.": [
                 "Die Hosting-API lieferte einen unerwarteten Fehler beim Aktivieren von Redis."
             ],
@@ -411,9 +414,6 @@
             ],
             "Downloaded drop-in content was invalid.": [
                 "Heruntergeladene Drop-in-Inhalte waren ung\u00fcltig."
-            ],
-            "Could not write object-cache.php. Check file permissions.": [
-                "Konnte object-cache.php nicht schreiben. \u00dcberpr\u00fcfe die Dateiberechtigungen."
             ],
             "Skip 404": [
                 "404 \u00fcberspringen"
