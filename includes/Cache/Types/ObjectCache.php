@@ -55,6 +55,15 @@ class ObjectCache {
 	const OPTION_ENABLED_PREFERENCE = 'newfold_object_cache_enabled_preference';
 
 	/**
+	 * When true, disables all automatic object-cache.php deletion/replacement from this module
+	 * (plugins_loaded cleanup, reconcile, enable failure cleanup, disable file removal).
+	 *
+	 * Define in wp-config.php before wp-settings.php loads, for example:
+	 * `define( 'NFD_DISABLE_OBJECT_CACHE_AUTO_MANAGEMENT', true );`
+	 */
+	const DISABLE_AUTO_MANAGEMENT_CONSTANT = 'NFD_DISABLE_OBJECT_CACHE_AUTO_MANAGEMENT';
+
+	/**
 	 * Cached wp-config existence check (per request).
 	 *
 	 * @var bool|null
@@ -226,7 +235,8 @@ class ObjectCache {
 			$ping = self::run_connectivity_preflight();
 			if ( true !== $ping ) {
 				if (
-					is_array( $ping )
+					! self::is_object_cache_dropin_auto_management_disabled()
+					&& is_array( $ping )
 					&& isset( $ping['code'] )
 					&& ObjectCacheErrorCodes::REDIS_UNREACHABLE === $ping['code']
 				) {
@@ -346,6 +356,13 @@ class ObjectCache {
 			return array( 'success' => true );
 		}
 
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			if ( $clear_preference ) {
+				update_option( self::OPTION_ENABLED_PREFERENCE, false );
+			}
+			return array( 'success' => true );
+		}
+
 		// Flush Redis and clear options cache while our drop-in is still active, then remove the file.
 		self::flush_object_cache();
 		self::clear_options_object_cache();
@@ -415,6 +432,10 @@ class ObjectCache {
 	 * @return void
 	 */
 	public static function maybe_restore_dropin() {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return;
+		}
+
 		if ( ! self::is_preference_enabled() ) {
 			return;
 		}
@@ -716,9 +737,22 @@ class ObjectCache {
 	 * a constant (e.g. WP_REDIS_PREFIX from WP_CACHE_KEY_SALT or env). Also clears the enabled preference.
 	 * Checks for the drop-in file first so we skip wp-config read/parse on most requests (no drop-in).
 	 *
+	 * When the user has not turned host-managed object cache on (stored preference is not true), does
+	 * nothing: the UI can show "off" while the option is still unset, and the Redis Object Cache plugin
+	 * uses the same drop-in header fingerprint as ours.
+	 *
+	 * Opt out entirely with {@see self::DISABLE_AUTO_MANAGEMENT_CONSTANT}.
+	 *
 	 * @return void
 	 */
 	public static function maybe_remove_dropin_if_unavailable() {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return;
+		}
+		if ( ! self::is_preference_enabled() ) {
+			return;
+		}
+
 		$path = self::get_drop_in_path();
 		if ( ! file_exists( $path ) || ! self::is_our_drop_in( $path ) ) {
 			return;
@@ -730,6 +764,33 @@ class ObjectCache {
 	}
 
 	/**
+	 * Whether automatic drop-in install/remove/reconcile is disabled via wp-config constant.
+	 *
+	 * @see self::DISABLE_AUTO_MANAGEMENT_CONSTANT
+	 *
+	 * @return bool
+	 */
+	public static function is_object_cache_dropin_auto_management_disabled() {
+		$constant_name = self::DISABLE_AUTO_MANAGEMENT_CONSTANT;
+
+		return defined( $constant_name ) && self::normalize_to_bool( constant( $constant_name ) );
+	}
+
+	/**
+	 * Coerce a value to boolean (wp-config defines may use strings).
+	 *
+	 * @param mixed $value Raw value.
+	 * @return bool
+	 */
+	private static function normalize_to_bool( $value ) {
+		if ( function_exists( 'wp_validate_boolean' ) ) {
+			return wp_validate_boolean( $value );
+		}
+
+		return (bool) filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+	}
+
+	/**
 	 * Delete our object-cache.php and set the enabled preference to false.
 	 *
 	 * Does not call wp_cache_flush(); used when Redis is unreachable or wp-config no longer has creds
@@ -738,6 +799,9 @@ class ObjectCache {
 	 * @return bool True if the file was ours and was removed.
 	 */
 	private static function remove_our_dropin_file_and_disable_preference(): bool {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return false;
+		}
 		if ( ! self::delete_our_drop_in_file_if_ours() ) {
 			return false;
 		}
@@ -784,6 +848,10 @@ class ObjectCache {
 	 * @return void
 	 */
 	public static function reconcile_non_ours_dropin() {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return;
+		}
+
 		$path = self::get_drop_in_path();
 		if ( ! file_exists( $path ) || self::is_our_drop_in( $path ) ) {
 			return;

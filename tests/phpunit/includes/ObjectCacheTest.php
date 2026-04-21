@@ -24,6 +24,13 @@ class ObjectCacheTest extends TestCase {
 		if ( ! defined( 'WP_CONTENT_DIR' ) ) {
 			define( 'WP_CONTENT_DIR', sys_get_temp_dir() . '/wp-content-performance-test' );
 		}
+		if ( ! is_dir( WP_CONTENT_DIR ) ) {
+			mkdir( WP_CONTENT_DIR, 0777, true );
+		}
+		$dropin = WP_CONTENT_DIR . '/object-cache.php';
+		if ( is_file( $dropin ) ) {
+			unlink( $dropin );
+		}
 	}
 
 	/**
@@ -187,5 +194,57 @@ class ObjectCacheTest extends TestCase {
 
 		ObjectCache::reconcile_non_ours_dropin();
 		$this->assertTrue( true, 'Reconcile with sentinel (preference not set) and Redis not available should leave file alone.' );
+	}
+
+	/**
+	 * When preference is not on (false), maybe_remove_dropin_if_unavailable must not delete the drop-in.
+	 */
+	public function test_maybe_remove_dropin_if_unavailable_respects_preference_disabled() {
+		$path = WP_CONTENT_DIR . '/object-cache.php';
+		file_put_contents(
+			$path,
+			"<?php\n/**\n * Plugin Name: " . ObjectCache::DROPIN_HEADER_IDENTIFIER . "\n */\n"
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( false );
+
+		Patchwork\redefine(
+			array( ObjectCache::class, 'is_configured_in_wp_config' ),
+			function () {
+				return false;
+			}
+		);
+
+		ObjectCache::maybe_remove_dropin_if_unavailable();
+
+		$this->assertFileExists( $path );
+	}
+
+	/**
+	 * When the preference option was never saved (null), UI can show "off" but maybe_remove must not delete.
+	 */
+	public function test_maybe_remove_dropin_if_unavailable_respects_preference_unset() {
+		$path = WP_CONTENT_DIR . '/object-cache.php';
+		file_put_contents(
+			$path,
+			"<?php\n/**\n * Plugin Name: " . ObjectCache::DROPIN_HEADER_IDENTIFIER . "\n */\n"
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( null );
+
+		Patchwork\redefine(
+			array( ObjectCache::class, 'is_configured_in_wp_config' ),
+			function () {
+				return false;
+			}
+		);
+
+		ObjectCache::maybe_remove_dropin_if_unavailable();
+
+		$this->assertFileExists( $path );
 	}
 }
