@@ -87,7 +87,7 @@ class LinkPrefetchController {
 		return new \WP_REST_Response(
 			array(
 				'result'  => false,
-				'message' => 'Invalid settings format',
+				'message' => __( 'Invalid settings format', 'wp-module-performance' ),
 			),
 			400
 		);

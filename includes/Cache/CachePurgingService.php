@@ -210,7 +210,7 @@ class CachePurgingService {
 	}
 
 	/**
-	 * Purge all caches when an option is updated.
+	 * Purge page caches when an option is updated. Does not flush object cache (Redis).
 	 *
 	 * @param  string $option    Option name.
 	 * @param  mixed  $oldValue  Old option value.
@@ -322,7 +322,7 @@ class CachePurgingService {
 			}
 		}
 
-		$this->purge_all();
+		$this->purge_page_caches();
 
 		return true;
 	}

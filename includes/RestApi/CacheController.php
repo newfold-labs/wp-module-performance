@@ -91,7 +91,7 @@ class CacheController {
 				return new \WP_REST_Response(
 					array(
 						'result'  => false,
-						'message' => 'Invalid cache exclusion format.',
+						'message' => __( 'Invalid cache exclusion format.', 'wp-module-performance' ),
 					),
 					400
 				);
@@ -171,7 +171,7 @@ class CacheController {
 
 		return array(
 			'status'  => 'success',
-			'message' => 'Cache purged',
+			'message' => __( 'Cache purged', 'wp-module-performance' ),
 		);
 	}
 }
