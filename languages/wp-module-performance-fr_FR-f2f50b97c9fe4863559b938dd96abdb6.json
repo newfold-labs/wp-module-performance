@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-01T22:20:41+00:00",
+    "translation-revision-date": "2026-04-24T20:05:10+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,6 +10,30 @@
                 "lang": "fr_FR",
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
+            "Could not write object-cache.php. Check file permissions.": [
+                "Je n\u2019ai pas pu \u00e9crire object-cache.php. V\u00e9rifiez les permissions des fichiers."
+            ],
+            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
+                "Ce site n\u2019est pas connect\u00e9 \u00e0 Hiive, donc les identifiants Redis ne peuvent pas \u00eatre provisionn\u00e9s automatiquement."
+            ],
+            "Could not reach Hiive to provision Redis credentials.": [
+                "Impossible de joindre Hiive pour fournir les identifiants Redis."
+            ],
+            "Hosting API could not enable Redis for this site.": [
+                "L\u2019API d\u2019h\u00e9bergement n\u2019a pas pu activer Redis pour ce site."
+            ],
+            "Concatenate CSS": [
+                "Concat\u00e9ner le CSS"
+            ],
+            "Defer Non-Essential JavaScript": [
+                "Reporter JavaScript non essentiel"
+            ],
+            "Object Caching": [
+                "Mise en cache des objets"
+            ],
+            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
+                "Ce site ne se qualifie plus pour l'optimisation des images car il a atteint ses limites d'utilisation."
+            ],
             "Performance": [
                 "Performances"
             ],
@@ -135,9 +159,6 @@
             ],
             "\/month": [
                 "\/mois"
-            ],
-            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                "Ce site ne se qualifie plus pour l'optimisation des images car il a atteint ses limites d'utilisation."
             ],
             "Loading settings\u2026": [
                 "Chargement des param\u00e8tres\u2026"
@@ -265,9 +286,6 @@
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
                 "D\u00e9place les informations de style importantes au d\u00e9but de la page, ce qui permet d\u2019afficher votre contenu plus rapidement et \u00e9vite aux utilisateurs d\u2019attendre le chargement complet de la page.%1$s %2$sBoost g\u00e9n\u00e9rera automatiquement votre CSS critique%3$s \u00e0 chaque fois que vous modifiez la structure HTML ou CSS de votre site."
             ],
-            "Defer Non-Essential JavaScript": [
-                "Reporter JavaScript non essentiel"
-            ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "Ex\u00e9cutez le JavaScript non essentiel apr\u00e8s le chargement de la page afin que les styles et les images puissent se charger plus rapidement."
             ],
@@ -279,9 +297,6 @@
             ],
             "Exclude JS Strings": [
                 "Exclure les cha\u00eenes JS"
-            ],
-            "Concatenate CSS": [
-                "Concat\u00e9ner le CSS"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
                 "Les styles sont regroup\u00e9s par leur emplacement d'origine, concat\u00e9n\u00e9s et minifi\u00e9s pour r\u00e9duire le temps de chargement du site et r\u00e9duire le nombre de requ\u00eates."
@@ -346,9 +361,6 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Exclure les mots-cl\u00e9s : Une liste de mots ou de cha\u00eenes s\u00e9par\u00e9s par des virgules qui exclura un lien d'\u00eatre pr\u00e9charg\u00e9. Par exemple, exclure \"app\" emp\u00eachera https:\/\/example.com\/apple d'\u00eatre pr\u00e9charg\u00e9."
             ],
-            "Object Caching": [
-                "Mise en cache des objets"
-            ],
             "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled.": [
                 "Stocker les r\u00e9sultats des requ\u00eates de base de donn\u00e9es dans Redis afin que les requ\u00eates r\u00e9p\u00e9t\u00e9es soient servies depuis la m\u00e9moire plut\u00f4t que depuis la base de donn\u00e9es. Vider le cache ci-dessus vide aussi le cache des objets lorsqu\u2019il est activ\u00e9."
             ],
@@ -373,9 +385,6 @@
             "Redis credentials are being applied. We will retry automatically in a few seconds.": [
                 "Les certifications Redis sont en cours d\u2019application. Nous r\u00e9essayerons automatiquement dans quelques secondes."
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "Ce site n\u2019est pas connect\u00e9 \u00e0 Hiive, donc les identifiants Redis ne peuvent pas \u00eatre provisionn\u00e9s automatiquement."
-            ],
             "Hosting token is not available yet. Please try again shortly or contact support.": [
                 "Le jeton d\u2019h\u00e9bergement n\u2019est pas encore disponible. Veuillez r\u00e9essayer sous peine ou contacter le support."
             ],
@@ -397,12 +406,6 @@
             "Hosting could not locate WordPress for this site.": [
                 "L\u2019h\u00e9bergeur n\u2019a pas pu localiser WordPress pour ce site."
             ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "Impossible de joindre Hiive pour fournir les identifiants Redis."
-            ],
-            "Hosting API could not enable Redis for this site.": [
-                "L\u2019API d\u2019h\u00e9bergement n\u2019a pas pu activer Redis pour ce site."
-            ],
             "Hosting API returned an unexpected error while enabling Redis.": [
                 "L\u2019API d\u2019h\u00e9bergement a renvoy\u00e9 une erreur inattendue lors de l\u2019activation de Redis."
             ],
@@ -411,9 +414,6 @@
             ],
             "Downloaded drop-in content was invalid.": [
                 "Le contenu t\u00e9l\u00e9charg\u00e9 en direct \u00e9tait invalide."
-            ],
-            "Could not write object-cache.php. Check file permissions.": [
-                "Je n\u2019ai pas pu \u00e9crire object-cache.php. V\u00e9rifiez les permissions des fichiers."
             ],
             "Skip 404": [
                 "Ignorer 404"

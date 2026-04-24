@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-01T22:20:41+00:00",
+    "translation-revision-date": "2026-04-24T20:05:10+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,6 +10,30 @@
                 "lang": "nl_NL",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
+            "Could not write object-cache.php. Check file permissions.": [
+                "Kon niet object-cache.php schrijven. Controleer de bestandsrechten."
+            ],
+            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
+                "Deze site is niet verbonden met Hiive, dus Redis-inloggegevens kunnen niet automatisch worden ingesteld."
+            ],
+            "Could not reach Hiive to provision Redis credentials.": [
+                "Ik kon Hiive niet bereiken om Redis-inloggegevens in te dienen."
+            ],
+            "Hosting API could not enable Redis for this site.": [
+                "De Hosting API kon Redis niet inschakelen voor deze site."
+            ],
+            "Concatenate CSS": [
+                "CSS samenvoegen"
+            ],
+            "Defer Non-Essential JavaScript": [
+                "Uitstellen van niet-Essenti\u00eble JavaScript"
+            ],
+            "Object Caching": [
+                "Object Caching"
+            ],
+            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
+                "Deze site komt niet langer in aanmerking voor beeldoptimalisatie, aangezien de gebruiksbeperkingen zijn bereikt."
+            ],
             "Performance": [
                 "Prestaties"
             ],
@@ -135,9 +159,6 @@
             ],
             "\/month": [
                 "\/maand"
-            ],
-            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                "Deze site komt niet langer in aanmerking voor beeldoptimalisatie, aangezien de gebruiksbeperkingen zijn bereikt."
             ],
             "Loading settings\u2026": [
                 "Instellingen laden\u2026"
@@ -265,9 +286,6 @@
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
                 "Verplaatst belangrijke stijlinformatie naar het begin van de pagina, zodat de inhoud sneller wordt weergegeven en gebruikers niet hoeven te wachten tot de hele pagina is geladen.%1$s %2$sBoost genereert automatisch je kritieke CSS%3$s telkens wanneer je wijzigingen aanbrengt in de HTML- of CSS-structuur van je site."
             ],
-            "Defer Non-Essential JavaScript": [
-                "Uitstellen van niet-Essenti\u00eble JavaScript"
-            ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "Voer niet-essenti\u00eble JavaScript uit nadat de pagina is geladen, zodat stijlen en afbeeldingen sneller kunnen laden."
             ],
@@ -279,9 +297,6 @@
             ],
             "Exclude JS Strings": [
                 "JS-strings uitsluiten"
-            ],
-            "Concatenate CSS": [
-                "CSS samenvoegen"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
                 "Stijlen worden gegroepeerd op basis van hun oorspronkelijke plaatsing, samengevoegd en verkleind om de laadtijd van de site te verkorten en het aantal verzoeken te verminderen."
@@ -346,9 +361,6 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Trefwoorden uitsluiten: Een door komma's gescheiden lijst met woorden of strings die een link uitsluiten van prefetching. Bijvoorbeeld, het uitsluiten van \"app\" zal voorkomen dat https:\/\/example.com\/apple wordt voorgeladen."
             ],
-            "Object Caching": [
-                "Object Caching"
-            ],
             "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled.": [
                 "Sla databasequeryresultaten op in Redis zodat herhaalde verzoeken uit het geheugen worden geleverd in plaats van uit de database. Het wissen van de cache hierboven leegt ook de objectcache wanneer ingeschakeld."
             ],
@@ -373,9 +385,6 @@
             "Redis credentials are being applied. We will retry automatically in a few seconds.": [
                 "Redis-credentials worden toegepast. We proberen het automatisch over een paar seconden opnieuw."
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "Deze site is niet verbonden met Hiive, dus Redis-inloggegevens kunnen niet automatisch worden ingesteld."
-            ],
             "Hosting token is not available yet. Please try again shortly or contact support.": [
                 "Een hostingtoken is nog niet beschikbaar. Probeer het binnenkort opnieuw of neem contact op met de support."
             ],
@@ -397,12 +406,6 @@
             "Hosting could not locate WordPress for this site.": [
                 "Hosting kon WordPress voor deze site niet vinden."
             ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "Ik kon Hiive niet bereiken om Redis-inloggegevens in te dienen."
-            ],
-            "Hosting API could not enable Redis for this site.": [
-                "De Hosting API kon Redis niet inschakelen voor deze site."
-            ],
             "Hosting API returned an unexpected error while enabling Redis.": [
                 "De Hosting API gaf een onverwachte foutmelding bij het inschakelen van Redis."
             ],
@@ -411,9 +414,6 @@
             ],
             "Downloaded drop-in content was invalid.": [
                 "Gedownloade drop-in content was ongeldig."
-            ],
-            "Could not write object-cache.php. Check file permissions.": [
-                "Kon niet object-cache.php schrijven. Controleer de bestandsrechten."
             ],
             "Skip 404": [
                 "404 overslaan"
