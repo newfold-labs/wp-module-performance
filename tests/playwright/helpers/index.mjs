@@ -88,8 +88,8 @@ export async function navigateToPerformancePage(page) {
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForPerformancePage(page) {
-  await page.waitForLoadState('networkidle');
-  await page.waitForSelector(SELECTORS.performancePage, { timeout: 10000 });
+  await page.waitForLoadState( 'domcontentloaded' );
+  await page.waitForSelector( SELECTORS.performancePage, { timeout: 15000 } );
 }
 
 /**
