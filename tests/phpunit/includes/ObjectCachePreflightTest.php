@@ -92,7 +92,7 @@ namespace NewfoldLabs\WP\Module\Performance\Cache {
 			);
 		}
 
-		public function test_preflight_credentials_missing_when_hiive_connected_and_wp_config_has_no_creds() {
+		public function test_preflight_emits_no_error_when_hiive_connected_and_wp_config_has_no_creds() {
 			Patchwork\redefine(
 				'extension_loaded',
 				function ( $ext ) {
@@ -123,11 +123,12 @@ namespace NewfoldLabs\WP\Module\Performance\Cache {
 
 			$snapshot = \NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCachePreflight::snapshot( false );
 
+			// Hiive is connected and provisioning will run on enable click — this is a
+			// "ready to enable" state, not an error worth surfacing in the UI.
 			$this->assertTrue( $snapshot['hiiveConnected'] );
-			$this->assertSame(
-				\NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCacheErrorCodes::CREDENTIALS_MISSING,
-				$snapshot['preflightCode']
-			);
+			$this->assertFalse( $snapshot['configuredInWpConfig'] );
+			$this->assertNull( $snapshot['preflightCode'] );
+			$this->assertNull( $snapshot['preflightMessage'] );
 		}
 	}
 }
