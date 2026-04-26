@@ -111,11 +111,13 @@ class CacheController {
 				if ( $cache_level <= 0 ) {
 					ObjectCache::disable();
 				}
-				$response = array( 'result' => true );
-				if ( $cache_level <= 0 ) {
-					$response['objectCache'] = ObjectCache::get_state();
-				}
-				return new \WP_REST_Response( $response, 200 );
+				return new \WP_REST_Response(
+					array(
+						'result'      => true,
+						'objectCache' => ObjectCache::get_state(),
+					),
+					200
+				);
 			}
 			return new \WP_REST_Response( array( 'result' => false ), 400 );
 		}

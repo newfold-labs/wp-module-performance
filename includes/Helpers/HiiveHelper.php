@@ -65,7 +65,7 @@ class HiiveHelper {
 		if ( ! HiiveConnection::is_connected() ) {
 			return new \WP_Error(
 				'nfd_hiive_error',
-				__( 'Failed to connect to Hiive API.', 'wp-module-performance' )
+				__( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' )
 			);
 		}
 
@@ -98,11 +98,7 @@ class HiiveHelper {
 		if ( $code < 200 || $code >= 300 ) {
 			return new \WP_Error(
 				'nfd_hiive_error',
-				sprintf(
-					/* translators: %d: HTTP status code */
-					__( 'Hiive API returned HTTP %d.', 'wp-module-performance' ),
-					$code
-				),
+				__( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
 				array(
 					'status' => $code,
 					'body'   => wp_remote_retrieve_body( $response ),

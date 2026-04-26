@@ -38,16 +38,24 @@ const ObjectCache = () => {
 	const retryTimerRef = useRef( null );
 	const retryAttemptsRef = useRef( 0 );
 
-	const { pushNotification } = useDispatch( STORE_NAME );
+	const { pushNotification, setObjectCache: dispatchSetObjectCache } = useDispatch( STORE_NAME );
 	const apiUrl = NewfoldRuntime.createApiUrl(
 		'/newfold-performance/v1/cache/settings'
 	);
+
+	// Seed the store from runtime on mount so preflight gating is consistent from the first render.
+	useEffect( () => {
+		const runtimeObjectCache = NewfoldRuntime?.sdk?.cache?.objectCache;
+		if ( runtimeObjectCache && ! storeObjectCache ) {
+			dispatchSetObjectCache( runtimeObjectCache );
+		}
+	}, [] );
 
 	useEffect( () => {
 		setEnabled( runtimeEnabled );
 	}, [ runtimeEnabled ] );
 
-	// When cache level is set to disabled, store receives objectCache state; sync toggle.
+	// When the store updates (cache level change, refetch), sync local toggle to server truth.
 	useEffect( () => {
 		if ( storeObjectCache && typeof storeObjectCache.enabled === 'boolean' ) {
 			setEnabled( storeObjectCache.enabled );
@@ -64,8 +72,11 @@ const ObjectCache = () => {
 
 	const refetchSettings = async () => {
 		const settings = await apiFetch( { url: apiUrl } );
-		if ( settings?.objectCache && 'enabled' in settings.objectCache ) {
-			setEnabled( settings.objectCache.enabled === true );
+		if ( settings?.objectCache ) {
+			dispatchSetObjectCache( settings.objectCache );
+			if ( 'enabled' in settings.objectCache ) {
+				setEnabled( settings.objectCache.enabled === true );
+			}
 		}
 		return settings;
 	};
@@ -193,7 +204,7 @@ const ObjectCache = () => {
 					{ objectCacheOverwrittenNotice }
 				</p>
 			) }
-			{ ! overwritten && preflight?.preflightMessage && (
+			{ ! overwritten && ! isCacheDisabled && preflight?.preflightMessage && (
 				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-600">{ preflight.preflightMessage }</p>
 			) }
 			<ToggleField
