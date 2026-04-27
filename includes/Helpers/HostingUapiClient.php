@@ -20,7 +20,7 @@ final class HostingUapiClient {
 		$site_id   = (string) $site_id;
 
 		if ( '' === $huapi_jwt || '' === $site_id ) {
-			return new \WP_Error( 'nfd_hosting_uapi_error', __( 'Missing HUAPI credentials.', 'wp-module-performance' ) );
+			return new \WP_Error( 'nfd_hosting_uapi_error', __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ) );
 		}
 
 		$base = SiteApisConfig::hosting_uapi_base_url();
@@ -61,12 +61,7 @@ final class HostingUapiClient {
 
 			$err = new \WP_Error(
 				'nfd_hosting_uapi_error',
-				sprintf(
-					/* translators: 1: HTTP status code, 2: response snippet */
-					__( 'Hosting API returned HTTP %1$s: %2$s', 'wp-module-performance' ),
-					(string) $code,
-					self::snippet( $raw )
-				),
+				__( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
 				array(
 					'status'         => $code,
 					'body'           => $raw,

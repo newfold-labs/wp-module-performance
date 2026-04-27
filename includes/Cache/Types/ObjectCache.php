@@ -219,7 +219,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::DROPIN_OVERWRITTEN,
-				'message' => __( 'Another object cache drop-in is active. Disable it in the other plugin first.', 'wp-module-performance' ),
+				'message' => __( "Another plugin's object cache is active. Disable it in that plugin first.", 'wp-module-performance' ),
 			);
 		}
 
@@ -227,7 +227,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::PHPREDIS_MISSING,
-				'message' => __( 'The PHP Redis extension (phpredis) is required before object cache can be enabled.', 'wp-module-performance' ),
+				'message' => __( 'Object caching is not supported on this server.', 'wp-module-performance' ),
 			);
 		}
 
@@ -260,7 +260,7 @@ class ObjectCache {
 				return array(
 					'success' => false,
 					'code'    => ObjectCacheErrorCodes::CREDENTIALS_PENDING_RELOAD,
-					'message' => __( 'Redis credentials are being applied. Please wait a few seconds and try again.', 'wp-module-performance' ),
+					'message' => __( 'Setting up object cache. Please wait a few seconds and try again.', 'wp-module-performance' ),
 				);
 			}
 		}
@@ -284,7 +284,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::DOWNLOAD_FAILED,
-				'message' => $response->get_error_message(),
+				'message' => __( 'Could not download object cache files. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -293,11 +293,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::DOWNLOAD_FAILED,
-				'message' => sprintf(
-					/* translators: %d: HTTP status code */
-					__( 'Failed to download object cache (HTTP %d).', 'wp-module-performance' ),
-					$code
-				),
+				'message' => __( 'Could not download object cache files. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -306,7 +302,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::INVALID_DROPIN,
-				'message' => __( 'Downloaded content is not valid. Please try again.', 'wp-module-performance' ),
+				'message' => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -330,7 +326,7 @@ class ObjectCache {
 		return array(
 			'success' => false,
 			'code'    => ObjectCacheErrorCodes::WRITE_FAILED,
-			'message' => __( 'Could not write object-cache.php. Check file permissions.', 'wp-module-performance' ),
+			'message' => __( 'Could not save object cache file. Check file permissions or contact support.', 'wp-module-performance' ),
 		);
 	}
 
@@ -395,7 +391,7 @@ class ObjectCache {
 
 		return array(
 			'success' => false,
-			'message' => __( 'Could not remove object-cache.php. Check file permissions.', 'wp-module-performance' ),
+			'message' => __( 'Could not disable object cache. Check file permissions or contact support.', 'wp-module-performance' ),
 		);
 	}
 
@@ -490,7 +486,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::CREDENTIALS_MISSING,
-				'message' => __( 'Redis credentials are not present in wp-config.php.', 'wp-module-performance' ),
+				'message' => __( 'Object cache is not configured yet.', 'wp-module-performance' ),
 			);
 		}
 
@@ -501,7 +497,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::REDIS_UNREACHABLE,
-				'message' => isset( $ping['message'] ) ? (string) $ping['message'] : __( 'Could not connect to Redis.', 'wp-module-performance' ),
+				'message' => __( 'Could not connect to the object cache. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -702,12 +698,12 @@ class ObjectCache {
 		}
 
 		$known = array(
-			ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED     => __( 'This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.', 'wp-module-performance' ),
-			ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE => __( 'HUAPI token is not available yet. Try again in a few minutes or contact support.', 'wp-module-performance' ),
-			ObjectCacheErrorCodes::HAL_SITE_ID_MISSING     => __( 'Hosting site id is not available yet. Try again in a few minutes or contact support.', 'wp-module-performance' ),
-			ObjectCacheErrorCodes::REDIS_UNREACHABLE       => __( 'Could not connect to Redis.', 'wp-module-performance' ),
-			'nfd_hiive_error'                              => __( 'Could not reach Hiive to provision Redis credentials.', 'wp-module-performance' ),
-			'nfd_hosting_uapi_error'                       => __( 'Hosting API could not enable Redis for this site.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED     => __( 'Object cache cannot be enabled automatically right now. Please contact support.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::HAL_SITE_ID_MISSING     => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::REDIS_UNREACHABLE       => __( 'Could not connect to the object cache. Please try again later.', 'wp-module-performance' ),
+			'nfd_hiive_error'                              => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			'nfd_hosting_uapi_error'                       => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
 		);
 
 		if ( isset( $known[ $code ] ) ) {

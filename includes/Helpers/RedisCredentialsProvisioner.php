@@ -19,7 +19,7 @@ final class RedisCredentialsProvisioner {
 		if ( ! HiiveConnection::is_connected() ) {
 			return new \WP_Error(
 				ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED,
-				__( 'This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.', 'wp-module-performance' )
+				__( 'Object cache cannot be enabled automatically right now. Please contact support.', 'wp-module-performance' )
 			);
 		}
 
@@ -34,7 +34,7 @@ final class RedisCredentialsProvisioner {
 		if ( ! is_array( $data ) ) {
 			return new \WP_Error(
 				ObjectCacheErrorCodes::HUAPI_ERROR,
-				__( 'Unexpected response while reading customer data from Hiive.', 'wp-module-performance' )
+				__( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' )
 			);
 		}
 
@@ -44,14 +44,14 @@ final class RedisCredentialsProvisioner {
 		if ( '' === $token ) {
 			return new \WP_Error(
 				ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE,
-				__( 'HUAPI token is not available yet. Try again in a few minutes or contact support.', 'wp-module-performance' )
+				__( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' )
 			);
 		}
 
 		if ( '' === $site_id || ! ctype_digit( $site_id ) ) {
 			return new \WP_Error(
 				ObjectCacheErrorCodes::HAL_SITE_ID_MISSING,
-				__( 'Hosting site id is not available yet. Try again in a few minutes or contact support.', 'wp-module-performance' )
+				__( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' )
 			);
 		}
 
