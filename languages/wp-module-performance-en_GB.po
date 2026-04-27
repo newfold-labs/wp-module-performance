@@ -8,84 +8,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-24T20:05:10+00:00\n"
+"PO-Revision-Date: 2026-04-27T13:35:02+00:00\n"
 "Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-performance\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
 #: includes/Cache/Types/ObjectCache.php:222
-msgid "Another object cache drop-in is active. Disable it in the other plugin first."
-msgstr "Another object cache drop-in is active. Disable it in the other plugin first."
+msgid "Another plugin's object cache is active. Disable it in that plugin first."
+msgstr ""
 
 #: includes/Cache/Types/ObjectCache.php:230
-msgid "The PHP Redis extension (phpredis) is required before object cache can be enabled."
-msgstr "The PHP Redis extension (phpredis) is required before object cache can be enabled."
+#: includes/Cache/Types/ObjectCachePreflight.php:40
+msgid "Object caching is not supported on this server."
+msgstr ""
 
 #: includes/Cache/Types/ObjectCache.php:263
-msgid "Redis credentials are being applied. Please wait a few seconds and try again."
-msgstr "Redis credentials are being applied. Please wait a few seconds and try again."
+msgid "Setting up object cache. Please wait a few seconds and try again."
+msgstr ""
 
-#. translators: %d: HTTP status code
-#: includes/Cache/Types/ObjectCache.php:298
-#, php-format
-msgid "Failed to download object cache (HTTP %d)."
-msgstr "Failed to download object cache (HTTP %d)."
-
-#: includes/Cache/Types/ObjectCache.php:309
-msgid "Downloaded content is not valid. Please try again."
-msgstr "Downloaded content is not valid. Please try again."
-
-#: includes/Cache/Types/ObjectCache.php:333
+#: includes/Cache/Types/ObjectCache.php:287
+#: includes/Cache/Types/ObjectCache.php:296
 #: build/performance/performance.min.js:5
-msgid "Could not write object-cache.php. Check file permissions."
-msgstr "Could not write object-cache.php. Check file permissions."
+msgid "Could not download object cache files. Please try again later."
+msgstr ""
 
-#: includes/Cache/Types/ObjectCache.php:398
-msgid "Could not remove object-cache.php. Check file permissions."
-msgstr "Could not remove object-cache.php. Check file permissions."
-
-#: includes/Cache/Types/ObjectCache.php:493
-#: includes/Cache/Types/ObjectCachePreflight.php:52
-msgid "Redis credentials are not present in wp-config.php."
-msgstr "Redis credentials are not present in wp-config.php."
-
-#: includes/Cache/Types/ObjectCache.php:504
-#: includes/Cache/Types/ObjectCache.php:708
-#: includes/Cache/Types/ObjectCachePreflight.php:62
-msgid "Could not connect to Redis."
-msgstr "Could not connect to Redis."
-
+#: includes/Cache/Types/ObjectCache.php:305
+#: includes/Cache/Types/ObjectCache.php:702
+#: includes/Cache/Types/ObjectCache.php:703
 #: includes/Cache/Types/ObjectCache.php:705
-#: includes/Cache/Types/ObjectCachePreflight.php:46
+#: includes/Cache/Types/ObjectCache.php:706
+#: includes/Helpers/HiiveHelper.php:68
+#: includes/Helpers/HiiveHelper.php:101
+#: includes/Helpers/HostingUapiClient.php:23
+#: includes/Helpers/HostingUapiClient.php:64
+#: includes/Helpers/RedisCredentialsProvisioner.php:37
+#: includes/Helpers/RedisCredentialsProvisioner.php:47
+#: includes/Helpers/RedisCredentialsProvisioner.php:54
+#: build/performance/performance.min.js:5
+msgid "Could not enable object cache right now. Please try again later."
+msgstr ""
+
+#: includes/Cache/Types/ObjectCache.php:329
+#: build/performance/performance.min.js:5
+msgid "Could not save object cache file. Check file permissions or contact support."
+msgstr ""
+
+#: includes/Cache/Types/ObjectCache.php:394
+msgid "Could not disable object cache. Check file permissions or contact support."
+msgstr ""
+
+#: includes/Cache/Types/ObjectCache.php:489
+msgid "Object cache is not configured yet."
+msgstr ""
+
+#: includes/Cache/Types/ObjectCache.php:500
+#: includes/Cache/Types/ObjectCache.php:704
+#: build/performance/performance.min.js:5
+msgid "Could not connect to the object cache. Please try again later."
+msgstr ""
+
+#: includes/Cache/Types/ObjectCache.php:701
 #: includes/Helpers/RedisCredentialsProvisioner.php:22
 #: build/performance/performance.min.js:5
-msgid "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
-msgstr "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
+msgid "Object cache cannot be enabled automatically right now. Please contact support."
+msgstr ""
 
-#: includes/Cache/Types/ObjectCache.php:706
-#: includes/Helpers/RedisCredentialsProvisioner.php:47
-msgid "HUAPI token is not available yet. Try again in a few minutes or contact support."
-msgstr "HUAPI token is not available yet. Try again in a few minutes or contact support."
+#: includes/Cache/Types/ObjectCachePreflight.php:46
+msgid "Object cache cannot be enabled automatically right now."
+msgstr ""
 
-#: includes/Cache/Types/ObjectCache.php:707
-#: includes/Helpers/RedisCredentialsProvisioner.php:54
-msgid "Hosting site id is not available yet. Try again in a few minutes or contact support."
-msgstr "Hosting site id is not available yet. Try again in a few minutes or contact support."
-
-#: includes/Cache/Types/ObjectCache.php:709
-#: build/performance/performance.min.js:5
-msgid "Could not reach Hiive to provision Redis credentials."
-msgstr "Could not reach Hiive to provision Redis credentials."
-
-#: includes/Cache/Types/ObjectCache.php:710
-#: build/performance/performance.min.js:5
-msgid "Hosting API could not enable Redis for this site."
-msgstr "Hosting API could not enable Redis for this site."
-
-#: includes/Cache/Types/ObjectCachePreflight.php:40
-msgid "The PHP Redis extension (phpredis) is not loaded."
-msgstr "The PHP Redis extension (phpredis) is not loaded."
+#: includes/Cache/Types/ObjectCachePreflight.php:61
+msgid "Could not connect to the object cache."
+msgstr ""
 
 #: includes/Cache/Types/PhpRedisPinger.php:24
 msgid "phpredis is not available."
@@ -404,30 +399,6 @@ msgstr "Critical CSS is not prioritised"
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 msgstr "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 
-#: includes/Helpers/HiiveHelper.php:68
-msgid "Failed to connect to Hiive API."
-msgstr "Failed to connect to Hiive API."
-
-#. translators: %d: HTTP status code
-#: includes/Helpers/HiiveHelper.php:103
-#, php-format
-msgid "Hiive API returned HTTP %d."
-msgstr "Hiive API returned HTTP %d."
-
-#: includes/Helpers/HostingUapiClient.php:23
-msgid "Missing HUAPI credentials."
-msgstr "Missing HUAPI credentials."
-
-#. translators: 1: HTTP status code, 2: response snippet
-#: includes/Helpers/HostingUapiClient.php:66
-#, php-format
-msgid "Hosting API returned HTTP %1$s: %2$s"
-msgstr "Hosting API returned HTTP %1$s: %2$s"
-
-#: includes/Helpers/RedisCredentialsProvisioner.php:37
-msgid "Unexpected response while reading customer data from Hiive."
-msgstr "Unexpected response while reading customer data from Hiive."
-
 #. translators: %s: Time remaining
 #: includes/Images/ImageLimitBanner.php:56
 #: includes/Images/ImageService.php:80
@@ -719,7 +690,7 @@ msgstr "Performance"
 msgid "Invalid cache exclusion format."
 msgstr "Invalid cache exclusion format."
 
-#: includes/RestApi/CacheController.php:174
+#: includes/RestApi/CacheController.php:176
 msgid "Cache purged"
 msgstr "Cache purged"
 
@@ -1252,56 +1223,24 @@ msgid "Another plugin's object cache is active. Disable it in that plugin to use
 msgstr "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
 
 #: build/performance/performance.min.js:5
-msgid "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version."
-msgstr "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version."
+msgid "Object caching is not supported on this server. Please contact your hosting provider for help."
+msgstr ""
 
 #: build/performance/performance.min.js:5
-msgid "Redis credentials are not present in wp-config.php yet."
-msgstr "Redis credentials are not present in wp-config.php yet."
+msgid "Object cache is not configured yet. Please try again in a moment."
+msgstr ""
 
 #: build/performance/performance.min.js:5
-msgid "Redis credentials are being applied. We will retry automatically in a few seconds."
-msgstr "Redis credentials are being applied. We will retry automatically in a few seconds."
+msgid "Setting up object cache. We will retry automatically in a few seconds."
+msgstr ""
 
 #: build/performance/performance.min.js:5
-msgid "Hosting token is not available yet. Please try again shortly or contact support."
-msgstr "Hosting token is not available yet. Please try again shortly or contact support."
+msgid "Object cache is not ready on this server yet. Please try again later."
+msgstr ""
 
 #: build/performance/performance.min.js:5
-msgid "Hosting site id is not available yet. Please try again shortly or contact support."
-msgstr "Hosting site id is not available yet. Please try again shortly or contact support."
-
-#: build/performance/performance.min.js:5
-msgid "Could not connect to Redis with the current credentials."
-msgstr "Could not connect to Redis with the current credentials."
-
-#: build/performance/performance.min.js:5
-msgid "Redis service is not active on the server yet."
-msgstr "Redis service is not active on the server yet."
-
-#: build/performance/performance.min.js:5
-msgid "Your PHP version does not meet requirements for Redis on this hosting environment."
-msgstr "Your PHP version does not meet requirements for Redis on this hosting environment."
-
-#: build/performance/performance.min.js:5
-msgid "Hosting reports the Redis drop-in is not available yet."
-msgstr "Hosting reports the Redis drop-in is not available yet."
-
-#: build/performance/performance.min.js:5
-msgid "Hosting could not locate WordPress for this site."
-msgstr "Hosting could not locate WordPress for this site."
-
-#: build/performance/performance.min.js:5
-msgid "Hosting API returned an unexpected error while enabling Redis."
-msgstr "Hosting API returned an unexpected error while enabling Redis."
-
-#: build/performance/performance.min.js:5
-msgid "Failed to download the Redis object cache drop-in."
-msgstr "Failed to download the Redis object cache drop-in."
-
-#: build/performance/performance.min.js:5
-msgid "Downloaded drop-in content was invalid."
-msgstr "Downloaded drop-in content was invalid."
+msgid "Could not enable object cache right now. Please contact support."
+msgstr ""
 
 #: build/performance/performance.min.js:5
 msgid "Skip 404"
