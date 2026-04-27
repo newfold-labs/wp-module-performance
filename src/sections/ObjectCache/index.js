@@ -200,12 +200,12 @@ const ObjectCache = () => {
 			description={ objectCacheDescription }
 		>
 			{ overwritten && (
-				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-600">
+				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-700">
 					{ objectCacheOverwrittenNotice }
 				</p>
 			) }
 			{ ! overwritten && ! isCacheDisabled && preflight?.preflightMessage && (
-				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-600">{ preflight.preflightMessage }</p>
+				<p className="nfd-mb-4 nfd-text-sm nfd-text-orange-700">{ preflight.preflightMessage }</p>
 			) }
 			<ToggleField
 				id="object-cache"
