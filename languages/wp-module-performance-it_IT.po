@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-module-performance\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-performance/issues\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-04-27T13:33:52+00:00\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-24T20:05:10+00:00\n"
-"Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
 "X-Crowdin-File-ID: 15\n"
@@ -19,104 +20,29 @@ msgstr ""
 "X-Domain: wp-module-performance\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: includes/Cache/Types/ObjectCache.php:222
-msgid "Another object cache drop-in is active. Disable it in the other plugin first."
-msgstr "Un altro drop-in della cache degli oggetti è attivo. Disabilitalo prima nell'altro plugin."
+#: build/performance/performance.min.js:2
+msgid "/month"
+msgstr "/mese"
 
-#: includes/Cache/Types/ObjectCache.php:230
-msgid "The PHP Redis extension (phpredis) is required before object cache can be enabled."
-msgstr "L'estensione PHP Redis (phpredis) è necessaria prima che la cache degli oggetti possa essere abilitata."
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:160
+msgid "A behavior value is required."
+msgstr "È richiesto un valore comportamentale."
 
-#: includes/Cache/Types/ObjectCache.php:263
-msgid "Redis credentials are being applied. Please wait a few seconds and try again."
-msgstr "Le credenziali Redis vengono applicate. Attendi qualche secondo e riprova."
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:231
+msgid "A mobile behavior value is required."
+msgstr "È richiesto un valore di comportamento mobile."
 
-#. translators: %d: HTTP status code
-#: includes/Cache/Types/ObjectCache.php:298
-#, php-format
-msgid "Failed to download object cache (HTTP %d)."
-msgstr "Non è riuscito a scaricare la cache degli oggetti (HTTP %d)."
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:200
+msgid "A numeric value for hoverDelay is required."
+msgstr "È richiesto un valore numerico per hoverDelay."
 
-#: includes/Cache/Types/ObjectCache.php:309
-msgid "Downloaded content is not valid. Please try again."
-msgstr "I contenuti scaricati non sono validi. Per favore, riprova."
+#: includes/Images/WPCLI/ImageCommandHandler.php:263 includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
+msgid "A status ('on' or 'off') is required."
+msgstr "È richiesto uno stato ('acceso' o 'spento')."
 
-#: includes/Cache/Types/ObjectCache.php:333
-#: build/performance/performance.min.js:5
-msgid "Could not write object-cache.php. Check file permissions."
-msgstr "Non riuscivo a scrivere object-cache.php. Controlla i permessi dei file."
-
-#: includes/Cache/Types/ObjectCache.php:398
-msgid "Could not remove object-cache.php. Check file permissions."
-msgstr "Non sono riuscito a rimuovere object-cache.php. Controlla i permessi dei file."
-
-#: includes/Cache/Types/ObjectCache.php:493
-#: includes/Cache/Types/ObjectCachePreflight.php:52
-msgid "Redis credentials are not present in wp-config.php."
-msgstr "Le credenziali Redis non sono presenti in wp-config.php."
-
-#: includes/Cache/Types/ObjectCache.php:504
-#: includes/Cache/Types/ObjectCache.php:708
-#: includes/Cache/Types/ObjectCachePreflight.php:62
-msgid "Could not connect to Redis."
-msgstr "Non riuscivo a collegarsi a Redis."
-
-#: includes/Cache/Types/ObjectCache.php:705
-#: includes/Cache/Types/ObjectCachePreflight.php:46
-#: includes/Helpers/RedisCredentialsProvisioner.php:22
-#: build/performance/performance.min.js:5
-msgid "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
-msgstr "Questo sito non è collegato a Hiive, quindi le credenziali Redis non possono essere provisionate automaticamente."
-
-#: includes/Cache/Types/ObjectCache.php:706
-#: includes/Helpers/RedisCredentialsProvisioner.php:47
-msgid "HUAPI token is not available yet. Try again in a few minutes or contact support."
-msgstr "Il token HUAPI non è ancora disponibile. Riprova tra qualche minuto o contatta l'assistenza."
-
-#: includes/Cache/Types/ObjectCache.php:707
-#: includes/Helpers/RedisCredentialsProvisioner.php:54
-msgid "Hosting site id is not available yet. Try again in a few minutes or contact support."
-msgstr "L'ID del sito di hosting non è ancora disponibile. Riprova tra qualche minuto o contatta l'assistenza."
-
-#: includes/Cache/Types/ObjectCache.php:709
-#: build/performance/performance.min.js:5
-msgid "Could not reach Hiive to provision Redis credentials."
-msgstr "Non sono riuscito a contattare Hiive per fornire le credenziali Redis."
-
-#: includes/Cache/Types/ObjectCache.php:710
-#: build/performance/performance.min.js:5
-msgid "Hosting API could not enable Redis for this site."
-msgstr "L'API di hosting non poteva abilitare Redis per questo sito."
-
-#: includes/Cache/Types/ObjectCachePreflight.php:40
-msgid "The PHP Redis extension (phpredis) is not loaded."
-msgstr "L'estensione PHP Redis (phpredis) non viene caricata."
-
-#: includes/Cache/Types/PhpRedisPinger.php:24
-msgid "phpredis is not available."
-msgstr "PHREDIS non è disponibile."
-
-#: includes/Cache/Types/PhpRedisPinger.php:33
-msgid "RedisArray is not available in this PHP Redis build."
-msgstr "RedisArray non è disponibile in questa versione PHP Redis."
-
-#: includes/Cache/Types/PhpRedisPinger.php:43
-msgid "RedisCluster is not available in this PHP Redis build."
-msgstr "RedisCluster non è disponibile in questa build PHP-Redis di Reddit."
-
-#: includes/Cache/Types/PhpRedisPinger.php:92
-msgid "Unsupported WP_REDIS_CLUSTER configuration."
-msgstr "Configurazione WP_REDIS_CLUSTER non supportata."
-
-#: includes/Cache/Types/PhpRedisPinger.php:232
-msgid "Redis did not respond to PING as expected."
-msgstr "Redis non ha risposto al PING come previsto."
-
-#. translators: %s is the list of valid cache levels.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:27
-#, php-format
-msgid "Invalid cache level. Use one of the following: %s."
-msgstr "Livello di cache non valido. Usa uno dei seguenti punti: percentuali."
+#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:122
+msgid "A value for cache exclusion is required."
+msgstr "È richiesto un valore per l'esclusione della cache."
 
 #. translators: %s is the list of valid cache levels.
 #: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:56
@@ -124,100 +50,123 @@ msgstr "Livello di cache non valido. Usa uno dei seguenti punti: percentuali."
 msgid "A value for cache level is required. Use one of the following: %s."
 msgstr "È richiesto un valore per il livello della cache. Usa uno dei seguenti punti: percentuali."
 
-#. translators: %s is the new cache level.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:66
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:271
+msgid "A value for ignoreKeywords is required."
+msgstr "È richiesto un valore per ignoreKeys."
+
+#: build/performance/performance.min.js:5
+msgid "Activate on desktop"
+msgstr "Attiva su desktop"
+
+#: build/performance/performance.min.js:5
+msgid "Activate on mobile"
+msgstr "Attiva su mobile"
+
+#: build/performance/performance.min.js:2
+msgid "Activation failed"
+msgstr "Attivazione fallita"
+
+#: build/performance/performance.min.js:2
+msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
+msgstr "Funzionalità aggiuntive di velocità e scalabilità alimentate da Jetpack Boost per rendere il tuo sito il più veloce possibile."
+
+#: build/performance/performance.min.js:2
+msgid "Advanced settings"
+msgstr "Impostazioni avanzate"
+
+#. translators: %s is the on/off status.
+#: includes/Images/WPCLI/ImageCommandHandler.php:172
 #, php-format
-msgid "Setting 'newfold_cache_level' has been set to '%s'."
-msgstr "Impostare 'newfold_cache_level' è stato impostato su '%s'."
+msgid "All image optimization settings have been turned %s."
+msgstr "Tutte le impostazioni di ottimizzazione delle immagini sono state rimosse di percentuali."
 
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:91
-msgid "Invalid value. Use 'true' or 'false' for skip_404 handling."
-msgstr "Valore non valido. Usa 'vero' o 'falso' per la gestione skip_404."
+#: includes/RestApi/JetpackController.php:177
+msgid "An error occurred while regenerating critical CSS."
+msgstr "Si è verificato un errore durante la rigenerazione del CSS critico."
 
-#. translators: %s is the new boolean status.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:98
-#, php-format
-msgid "Setting 'newfold_skip_404_handling' has been set to '%s'."
-msgstr "Impostare 'newfold_skip_404_handling' è stato impostato su '%s'."
+#: includes/RestApi/JetpackController.php:117 includes/RestApi/JetpackController.php:137 includes/RestApi/Skip404Controller.php:94 includes/RestApi/Skip404Controller.php:123
+msgid "An error occurred while updating the option."
+msgstr "Si è verificato un errore durante l'aggiornamento dell'opzione."
 
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:122
-msgid "A value for cache exclusion is required."
-msgstr "È richiesto un valore per l'esclusione della cache."
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
+msgid "An error occurred."
+msgstr "Si è verificato un errore."
 
-#. translators: %s is the new cache exclusion list.
-#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:136
-#, php-format
-msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
-msgstr "L'impostazione 'newfold_cache_exclusion' è stata aggiornata a: '%s'."
+#: includes/Cache/Types/ObjectCache.php:222
+msgid "Another plugin's object cache is active. Disable it in that plugin first."
+msgstr "La cache degli oggetti di un altro plugin è attiva. Disabilitala prima in quel plugin."
 
-#: includes/Fonts/FontSettings.php:56
-msgid "Settings for NFD Font Optimization."
-msgstr "Impostazioni per l'ottimizzazione dei font NFD."
+#: build/performance/performance.min.js:5
+msgid "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
+msgstr "La cache degli oggetti di un altro plugin è attiva. Disabilitalo in quel plugin per usare questo interruttore."
 
-#: includes/Fonts/FontSettings.php:65
-msgid "Cloudflare-related font optimization settings."
-msgstr "Impostazioni di ottimizzazione dei font legate a Cloudflare."
+#: build/performance/performance.min.js:5
+msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
+msgstr "Chiede al browser di scaricare e memorizzare nella cache i link sulla pagina prima che vengano cliccati, in modo che quando vengono cliccati si carichino quasi istantaneamente."
 
-#: includes/Fonts/FontSettings.php:69
-msgid "Enable Cloudflare Font Optimization."
-msgstr "Abilita l'ottimizzazione dei font Cloudflare."
+#: build/performance/performance.min.js:2
+msgid "Assets & Web Pages"
+msgstr "Risorse e pagine web"
 
-#: includes/Fonts/FontSettings.php:83
-msgid "Timestamp of last update."
-msgstr "Timestamp dell'ultimo aggiornamento."
+#: build/performance/performance.min.js:2
+msgid "Assets & Web Pages - Extended"
+msgstr "Risorse e pagine web - Esteso"
+
+#: build/performance/performance.min.js:2
+msgid "Assets Only"
+msgstr "Solo risorse"
+
+#: build/performance/performance.min.js:2
+msgid "Auto Delete Original Image"
+msgstr "Elimina automaticamente l'immagine originale"
+
+#: includes/Images/ImageSettings.php:108
+msgid "Auto-optimized uploaded images settings."
+msgstr "Impostazioni delle immagini caricate automaticamente."
+
+#: build/performance/performance.min.js:2
+msgid "Automatically Optimize Uploaded Images"
+msgstr "Ottimizza automaticamente le immagini caricate"
+
+#: includes/Images/ImageSettings.php:112
+msgid "Automatically optimize uploaded images."
+msgstr "Ottimizza automaticamente le immagini caricate."
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
 msgstr "Intervallo di salvataggio automatico"
 
-#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:15
-msgid "Autosaving is set to happen every 30 seconds or more"
-msgstr "Il salvataggio automatico è impostato per avvenire ogni 30 secondi o più"
-
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:16
 msgid "Autosaving is set to be frequent, less than every 30 seconds"
 msgstr "Il salvataggio automatico è impostato per essere frequente, meno di ogni 30 secondi"
 
-#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:17
-msgid "Setting the autosave interval to a longer period can reduce server load. It is recommended to set it to 30 seconds or more."
-msgstr "Impostare l'intervallo di autosalvataggio a un periodo più lungo può ridurre il carico del server. Si consiglia di impostarla a 30 secondi o più."
+#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:15
+msgid "Autosaving is set to happen every 30 seconds or more"
+msgstr "Il salvataggio automatico è impostato per avvenire ogni 30 secondi o più"
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Struttura/valore degli eventi sbagliati."
+
+#: build/performance/performance.min.js:5
+msgid "Behavior"
+msgstr "Comportamento"
+
+#: build/performance/performance.min.js:2
+msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
+msgstr "Aumenta la velocità e le prestazioni memorizzando una copia dei contenuti, dei file e delle immagini del tuo sito web online, in modo che le pagine del tuo sito web si carichino più velocemente per i tuoi visitatori."
 
 #: includes/HealthChecks/BrowserCachingHealthCheck.php:14
 msgid "Browser Caching"
 msgstr "Cache del browser"
 
-#: includes/HealthChecks/BrowserCachingHealthCheck.php:15
-msgid "Browser caching is enabled"
-msgstr "La cache del browser è abilitata"
-
 #: includes/HealthChecks/BrowserCachingHealthCheck.php:16
 msgid "Browser caching is disabled"
 msgstr "La cache del browser è disabilitata"
 
-#: includes/HealthChecks/BrowserCachingHealthCheck.php:17
-msgid "Enabling browser caching can improve performance by storing static assets in the browser for faster page loads."
-msgstr "Abilitare la cache del browser può migliorare le prestazioni memorizzando asset statici nel browser per carichi di pagina più rapidi."
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:14
-msgid "Cloudflare enabled"
-msgstr "Cloudflare abilitato"
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:15
-msgid "Cloudflare integration is enabled"
-msgstr "L'integrazione con Cloudflare è abilitata"
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:16
-msgid "Cloudflare integration is disabled"
-msgstr "L'integrazione con Cloudflare è disabilitata"
-
-#: includes/HealthChecks/CloudflareHealthCheck.php:17
-msgid "Cloudflare integration can improve performance and security."
-msgstr "L'integrazione con Cloudflare può migliorare prestazioni e sicurezza."
-
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
-#: build/performance/performance.min.js:5
-msgid "Concatenate CSS"
-msgstr "Concatena CSS"
+#: includes/HealthChecks/BrowserCachingHealthCheck.php:15
+msgid "Browser caching is enabled"
+msgstr "La cache del browser è abilitata"
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:15
 msgid "CSS files are concatenated"
@@ -227,29 +176,173 @@ msgstr "I file CSS sono concatenati"
 msgid "CSS files are not concatenated"
 msgstr "I file CSS non sono concatenati"
 
-#: includes/HealthChecks/ConcatenateCssHealthCheck.php:17
-msgid "Concatenating CSS can improve performance by reducing the number of requests."
-msgstr "Concatenare CSS può migliorare le prestazioni riducendo il numero di richieste."
+#: build/performance/performance.min.js:2
+msgid "Cache Exclusion saved"
+msgstr "Esclusione dalla cache salvata"
+
+#: build/performance/performance.min.js:2
+msgid "Cache Level"
+msgstr "Livello di cache"
+
+#: includes/Performance.php:262
+msgid "Cache Settings"
+msgstr "Impostazioni della cache"
+
+#: build/performance/performance.min.js:2
+msgid "Cache cleared"
+msgstr "Cache svuotata"
+
+#: build/performance/performance.min.js:2
+msgid "Cache enabled for assets and pages (extended)."
+msgstr "Cache abilitata per risorse e pagine (estesa)."
+
+#: build/performance/performance.min.js:2
+msgid "Cache enabled for assets and pages."
+msgstr "Cache abilitata per risorse e pagine."
+
+#: build/performance/performance.min.js:2
+msgid "Cache enabled for assets only."
+msgstr "Cache abilitata solo per le risorse."
+
+#: includes/RestApi/CacheController.php:176
+msgid "Cache purged"
+msgstr "Purga della cache"
+
+#: build/performance/performance.min.js:2
+msgid "Cache setting saved"
+msgstr "Impostazione della cache salvata"
+
+#: build/performance/performance.min.js:2
+msgid "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
+msgstr "Memorizza nella cache le risorse statiche per 1 settimana e le pagine web per 8 ore. Ottimizzato per siti che si aggiornano poche volte al mese o meno."
+
+#: build/performance/performance.min.js:2
+msgid "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
+msgstr "Memorizza nella cache le risorse statiche per 24 ore e le pagine web per 2 ore. Ottimizzato per siti che cambiano almeno settimanalmente."
+
+#: build/performance/performance.min.js:2
+msgid "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
+msgstr "Memorizza nella cache risorse statiche come immagini e l'aspetto del tuo sito per 1 ora. Ottimizzato per negozi online e siti di membri che devono essere aggiornati."
+
+#: includes/Performance.php:232
+msgid "Caching"
+msgstr "Cache"
+
+#: build/performance/performance.min.js:2
+msgid "Caching disabled."
+msgstr "Memorizzazione nella cache disabilitata."
+
+#: build/performance/performance.min.js:2
+msgid "Clear All Cache Now"
+msgstr "Svuota tutta la cache ora"
+
+#: build/performance/performance.min.js:2
+msgid "Clear Cache"
+msgstr "Svuota la cache"
+
+#: build/performance/performance.min.js:2
+msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
+msgstr "Cloudflare Mirage accelera il caricamento delle immagini su reti mobili e lente."
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:14
+msgid "Cloudflare enabled"
+msgstr "Cloudflare abilitato"
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:17
+msgid "Cloudflare integration can improve performance and security."
+msgstr "L'integrazione con Cloudflare può migliorare prestazioni e sicurezza."
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:16
+msgid "Cloudflare integration is disabled"
+msgstr "L'integrazione con Cloudflare è disabilitata"
+
+#: includes/HealthChecks/CloudflareHealthCheck.php:15
+msgid "Cloudflare integration is enabled"
+msgstr "L'integrazione con Cloudflare è abilitata"
+
+#: includes/Fonts/FontSettings.php:65
+msgid "Cloudflare-related font optimization settings."
+msgstr "Impostazioni di ottimizzazione dei font legate a Cloudflare."
+
+#: includes/Images/ImageSettings.php:161
+msgid "Cloudflare-related image optimization options."
+msgstr "Opzioni di ottimizzazione delle immagini legate a Cloudflare."
+
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:14 build/performance/performance.min.js:5
+msgid "Concatenate CSS"
+msgstr "Concatena CSS"
+
+#: build/performance/performance.min.js:5
+msgid "Concatenate JS"
+msgstr "Concatena JS"
 
 #: includes/HealthChecks/ConcatenateJsHealthCheck.php:14
 msgid "Concatenate JavaScript"
 msgstr "Concatenate JavaScript"
 
-#: includes/HealthChecks/ConcatenateJsHealthCheck.php:15
-msgid "JavaScript files are concatenated"
-msgstr "I file JavaScript sono concatenati"
-
-#: includes/HealthChecks/ConcatenateJsHealthCheck.php:16
-msgid "JavaScript files are not concatenated"
-msgstr "I file JavaScript non sono concatenati"
+#: includes/HealthChecks/ConcatenateCssHealthCheck.php:17
+msgid "Concatenating CSS can improve performance by reducing the number of requests."
+msgstr "Concatenare CSS può migliorare le prestazioni riducendo il numero di richieste."
 
 #: includes/HealthChecks/ConcatenateJsHealthCheck.php:17
 msgid "Concatenating JavaScript can improve performance by reducing the number of requests."
 msgstr "Concatenare JavaScript può migliorare le prestazioni riducendo il numero di richieste."
 
-#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:14
-msgid "WP Cron Lock Timeout"
-msgstr "Timeout per blocco cron WP"
+#: build/performance/performance.min.js:5
+msgid "Could not connect to Redis with the current credentials."
+msgstr "Non sono riuscito a connettersi a Redis con le credenziali attuali."
+
+#: includes/Cache/Types/ObjectCachePreflight.php:61
+msgid "Could not connect to the object cache."
+msgstr "Non riuscivo a connettersi alla cache degli oggetti."
+
+#: includes/Cache/Types/ObjectCache.php:500 includes/Cache/Types/ObjectCache.php:704
+msgid "Could not connect to the object cache. Please try again later."
+msgstr "Non è riuscito a connettersi alla cache degli oggetti. Per favore, riprova più tardi."
+
+#: includes/Cache/Types/ObjectCache.php:394
+msgid "Could not disable object cache. Check file permissions or contact support."
+msgstr "Non è stato possibile disabilitare la cache degli oggetti. Controlla i permessi dei file o contatta il supporto."
+
+#: includes/Cache/Types/ObjectCache.php:287 includes/Cache/Types/ObjectCache.php:296
+msgid "Could not download object cache files. Please try again later."
+msgstr "Non è riuscito a scaricare file di cache oggetto. Per favore, riprova più tardi."
+
+#: includes/Cache/Types/ObjectCache.php:305 includes/Cache/Types/ObjectCache.php:702 includes/Cache/Types/ObjectCache.php:703 includes/Cache/Types/ObjectCache.php:705 includes/Cache/Types/ObjectCache.php:706 includes/Helpers/HiiveHelper.php:68 includes/Helpers/HiiveHelper.php:101 includes/Helpers/HostingUapiClient.php:23 includes/Helpers/HostingUapiClient.php:64 includes/Helpers/RedisCredentialsProvisioner.php:37 includes/Helpers/RedisCredentialsProvisioner.php:47 includes/Helpers/RedisCredentialsProvisioner.php:54
+msgid "Could not enable object cache right now. Please try again later."
+msgstr "Non è possibile abilitare la cache degli oggetti al momento. Per favore, riprova più tardi."
+
+#: build/performance/performance.min.js:5
+msgid "Could not reach Hiive to provision Redis credentials."
+msgstr "Non sono riuscito a contattare Hiive per fornire le credenziali Redis."
+
+#: build/performance/performance.min.js:2
+msgid "Could not save font optimization setting."
+msgstr "Impossibile salvare l’impostazione di ottimizzazione dei font."
+
+#: includes/Cache/Types/ObjectCache.php:329
+msgid "Could not save object cache file. Check file permissions or contact support."
+msgstr "Non è possibile salvare il file cache degli oggetti. Controlla i permessi del file o contatta il supporto."
+
+#: build/performance/performance.min.js:5
+msgid "Could not write object-cache.php. Check file permissions."
+msgstr "Non riuscivo a scrivere object-cache.php. Controlla i permessi dei file."
+
+#: build/performance/performance.min.js:2
+msgid "Critical CSS generated successfully."
+msgstr "CSS critico generato con successo."
+
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:16
+msgid "Critical CSS is not prioritized"
+msgstr "Il CSS critico non è prioritario"
+
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:15
+msgid "Critical CSS is prioritized"
+msgstr "Il CSS critico è prioritario"
+
+#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:17
+msgid "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
+msgstr "Il timeout del blocco cron influisce su quanto tempo può durare un lavoro cron. Impostarlo a un numero più basso può migliorare le prestazioni."
 
 #: includes/HealthChecks/CronLockTimeoutHealthCheck.php:15
 msgid "Cron lock timeout is set to 60 seconds or less."
@@ -259,236 +352,195 @@ msgstr "Il timeout del blocco cron è impostato a 60 secondi o meno."
 msgid "Cron lock timeout is set to a high number."
 msgstr "Il timeout del blocco di cron è impostato su un numero alto."
 
-#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:17
-msgid "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
-msgstr "Il timeout del blocco cron influisce su quanto tempo può durare un lavoro cron. Impostarlo a un numero più basso può migliorare le prestazioni."
-
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14
-#: build/performance/performance.min.js:5
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14 build/performance/performance.min.js:5
 msgid "Defer Non-Essential JavaScript"
 msgstr "Rinvia Javascript Non Essenziale"
 
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:15
-msgid "Non-essential JavaScript is deferred"
-msgstr "JavaScript non essenziale è differito"
+#: includes/Images/ImageSettings.php:117
+msgid "Delete the original uploaded image after optimization."
+msgstr "Elimina l'immagine caricata originale dopo l'ottimizzazione."
 
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:16
-msgid "Non-essential JavaScript is not deferred"
-msgstr "JavaScript non essenziale non è differito"
+#: build/performance/performance.min.js:5
+msgid "Disable Coming Soon"
+msgstr "Disabilita Prossimamente"
 
-#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:17
-msgid "JavaScript can be deferred to improve performance by loading it after the page has loaded."
-msgstr "JavaScript può essere differito per migliorare le prestazioni caricandolo dopo il caricamento della pagina."
+#: build/performance/performance.min.js:2
+msgid "Disabled"
+msgstr "Disabilitato"
+
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
+msgid "Done"
+msgstr "Fatto"
+
+#: build/performance/performance.min.js:5
+msgid "Downloaded drop-in content was invalid."
+msgstr "Il contenuto drop-in scaricato era invalido."
 
 #: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:14
 msgid "Empty Trash Days"
 msgstr "Giorni della spazzatura vuota"
 
-#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:15
-msgid "Trash is emptied every 30 days or less"
-msgstr "La spazzatura viene svuotata ogni 30 giorni o meno"
-
-#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:16
-msgid "Trash is emptied less frequently than every 30 days."
-msgstr "La spazzatura viene svuotata meno frequentemente di ogni 30 giorni."
-
 #: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:17
 msgid "Emptying the trash more frequently can reduce database bloat."
 msgstr "Svuotare il cestino più frequentemente può ridurre il gonfiore del database."
 
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:14
-msgid "Lazy Loading"
-msgstr "Caricamento pigro"
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:15
-msgid "Lazy loading is enabled"
-msgstr "Il caricamento pigro è abilitato"
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:16
-msgid "Lazy loading is disabled"
-msgstr "Il caricamento pigro è disabilitato"
-
-#: includes/HealthChecks/LazyLoadingHealthCheck.php:17
-msgid "Lazy loading can improve performance by only loading images when they are in view."
-msgstr "Il caricamento pigro può migliorare le prestazioni caricando le immagini solo quando sono visive."
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
-msgid "Link Prefetching"
-msgstr "Pre-recupero di link"
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
-msgid "Link prefetching is enabled"
-msgstr "Il pre-recupero del collegamento è abilitato"
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:18
-msgid "Link prefetching is disabled"
-msgstr "Il pre-recupero dei collegamenti è disabilitato"
-
-#: includes/HealthChecks/LinkPrefetchHealthCheck.php:19
-msgid "Link prefetching can improve performance by loading pages immediately before they are requested."
-msgstr "Il pre-richit dei link può migliorare le prestazioni caricando le pagine immediatamente prima che vengano richieste."
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:14
-msgid "Page Caching"
-msgstr "Cache delle pagine"
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:15
-msgid "Page caching is enabled"
-msgstr "La cache delle pagine è abilitata"
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:16
-msgid "Page caching is disabled"
-msgstr "La cache delle pagine è disabilitata"
-
-#: includes/HealthChecks/PageCachingHealthCheck.php:17
-msgid "Page caching can improve performance by bypassing PHP and database queries for faster page loads."
-msgstr "La cache delle pagine può migliorare le prestazioni bypassando le query PHP e database per carichi di pagina più rapidi."
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:14
-msgid "Permalinks"
-msgstr "Permalink"
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:15
-msgid "Permalinks are pretty"
-msgstr "I permalink sono davvero belli"
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:16
-msgid "Permalinks are not set up"
-msgstr "I permalink non sono configurati"
-
-#: includes/HealthChecks/PermalinksHealthCheck.php:17
-msgid "Setting permalinks to anything other than plain can improve performance and SEO."
-msgstr "Impostare i permalink su qualsiasi cosa diversa dal semplice può migliorare prestazioni e SEO."
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
-#: build/performance/performance.min.js:5
-msgid "Object Caching"
-msgstr "Cache degli oggetti"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:15
-msgid "Object caching is enabled"
-msgstr "La cache degli oggetti è abilitata"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:16
-msgid "Object caching is disabled"
-msgstr "La cache degli oggetti è disabilitata"
-
-#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:17
-msgid "Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud."
-msgstr "La cache degli oggetti salva i risultati da frequenti query del database, riducendo i tempi di caricamento evitando l'elaborazione ripetitiva delle query. La cache degli oggetti è disponibile in tutti i livelli di Bluehost Cloud."
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:14
-msgid "Post Revisions"
-msgstr "Revisioni post-Revisioni"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:15
-msgid "Number of post revisions is limited to 5 or less"
-msgstr "Il numero di revisioni dei post è limitato a 5 o meno"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:16
-msgid "Number of post revisions is set to a high number"
-msgstr "Il numero di revisioni dei post è impostato su un numero alto"
-
-#: includes/HealthChecks/PostRevisionsHealthCheck.php:17
-msgid "Setting the number of post revisions to a lower number can reduce database bloat."
-msgstr "Impostare il numero di revisioni dei post a un numero inferiore può ridurre il gonfiore del database."
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:14
-msgid "Prioritize Critical CSS"
-msgstr "Prioritizza il CSS critico"
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:15
-msgid "Critical CSS is prioritized"
-msgstr "Il CSS critico è prioritario"
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:16
-msgid "Critical CSS is not prioritized"
-msgstr "Il CSS critico non è prioritario"
-
-#: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
-msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
-msgstr "Dare priorità al CSS critico può migliorare le prestazioni caricando prima il CSS più importante."
-
-#: includes/Helpers/HiiveHelper.php:68
-msgid "Failed to connect to Hiive API."
-msgstr "Non sono riuscito a connettersi all'API di Hiive."
-
-#. translators: %d: HTTP status code
-#: includes/Helpers/HiiveHelper.php:103
-#, php-format
-msgid "Hiive API returned HTTP %d."
-msgstr "L'API di Hiive restituiva HTTP %d."
-
-#: includes/Helpers/HostingUapiClient.php:23
-msgid "Missing HUAPI credentials."
-msgstr "Mancano le credenziali HUAPI."
-
-#. translators: 1: HTTP status code, 2: response snippet
-#: includes/Helpers/HostingUapiClient.php:66
-#, php-format
-msgid "Hosting API returned HTTP %1$s: %2$s"
-msgstr "API di hosting restituita HTTP %1$s: %2$s"
-
-#: includes/Helpers/RedisCredentialsProvisioner.php:37
-msgid "Unexpected response while reading customer data from Hiive."
-msgstr "Risposta inaspettata mentre leggo i dati dei clienti di Hiive."
-
-#. translators: %s: Time remaining
-#: includes/Images/ImageLimitBanner.php:56
-#: includes/Images/ImageService.php:80
-#, php-format
-msgid "This site has made too many requests in a short period. Please wait %s before trying again."
-msgstr "Questo sito ha fatto troppe richieste in poco tempo. Attendi qualche percentuale prima di riprovare."
-
-#. translators: %s: Support link
-#: includes/Images/ImageLimitBanner.php:74
-#, php-format
-msgid "This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href=\"%s\">contact support</a> for assistance."
-msgstr "Questo sito non è più idoneo all'ottimizzazione delle immagini poiché ha raggiunto i limiti di utilizzo. Per assistenza <a href=\"%s\">contatta l'assistenza</a> tecnica."
-
-#: includes/Images/ImageService.php:53
-msgid "The provided image URL is invalid."
-msgstr "L'URL dell'immagine fornito è invalido."
-
-#: includes/Images/ImageService.php:61
-#: includes/Images/ImageService.php:457
-msgid "Error retrieving site URL."
-msgstr "Errore nel recuperare l'URL del sito."
-
-#: includes/Images/ImageService.php:69
 #: build/performance/performance.min.js:2
-msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
-msgstr "Questo sito non si qualifica più per l'ottimizzazione dell'immagine in quanto ha raggiunto i suoi limiti di utilizzo."
+msgid "Enable Bulk Optimization of Images"
+msgstr "Abilita ottimizzazione in blocco delle immagini"
+
+#: includes/Fonts/FontSettings.php:69
+msgid "Enable Cloudflare Font Optimization."
+msgstr "Abilita l'ottimizzazione dei font Cloudflare."
+
+#: includes/Images/ImageSettings.php:180
+msgid "Enable Cloudflare Mirage optimization."
+msgstr "Abilita l'ottimizzazione di Cloudflare Mirage."
+
+#: includes/Images/ImageSettings.php:165
+msgid "Enable Cloudflare Polish optimization."
+msgstr "Abilita l'ottimizzazione Cloudflare Polish."
+
+#: build/performance/performance.min.js:2
+msgid "Enable Image Optimization"
+msgstr "Abilita ottimizzazione delle immagini"
+
+#: build/performance/performance.min.js:2
+msgid "Enable Lazy Loading"
+msgstr "Abilita caricamento differito"
+
+#: build/performance/performance.min.js:5
+msgid "Enable Object Caching"
+msgstr "Abilita la cache degli oggetti"
+
+#: build/performance/performance.min.js:5
+msgid "Enable Skip 404 Handling For Static Files"
+msgstr "Abilita l’ignoramento dei 404 per i file statici"
+
+#: includes/Images/ImageSettings.php:135
+msgid "Enable bulk optimization of images."
+msgstr "Abilita l'ottimizzazione in massa delle immagini."
+
+#: includes/Images/ImageSettings.php:98
+msgid "Enable image optimization."
+msgstr "Abilita l'ottimizzazione dell'immagine."
+
+#: includes/Images/ImageSettings.php:128
+msgid "Enable lazy loading."
+msgstr "Abilita il caricamento pigro."
+
+#: build/performance/performance.min.js:5
+msgid "Enable link prefetching on desktop"
+msgstr "Abilita prefetch dei link su desktop"
+
+#: build/performance/performance.min.js:5
+msgid "Enable link prefetching on mobile"
+msgstr "Abilita prefetch dei link su mobile"
+
+#: build/performance/performance.min.js:2
+msgid "Enable or disable image optimization globally."
+msgstr "Abilita o disabilita l'ottimizzazione delle immagini a livello globale."
+
+#: build/performance/performance.min.js:2
+msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
+msgstr "Attiva la compressione delle immagini di Cloudflare per ridurre tempi di caricamento e banda."
+
+#: includes/HealthChecks/BrowserCachingHealthCheck.php:17
+msgid "Enabling browser caching can improve performance by storing static assets in the browser for faster page loads."
+msgstr "Abilitare la cache del browser può migliorare le prestazioni memorizzando asset statici nel browser per carichi di pagina più rapidi."
+
+#: build/performance/performance.min.js:2
+msgid "Error Updating Settings"
+msgstr "Errore durante l'aggiornamento delle impostazioni"
 
 #. translators: %s: Error message
-#: includes/Images/ImageService.php:138
-#: includes/Images/ImageService.php:478
+#: includes/Images/ImageService.php:138 includes/Images/ImageService.php:478
 #, php-format
 msgid "Error connecting to Cloudflare Worker: %s"
 msgstr "Errore di connessione a Cloudflare Worker: %s"
 
-#: includes/Images/ImageService.php:155
-#: includes/Images/ImageService.php:161
-msgid "Image optimization access has been permanently revoked for this site."
-msgstr "L'accesso all'ottimizzazione delle immagini è stato revocato definitivamente per questo sito."
+#: build/performance/performance.min.js:2
+msgid "Error generating Critical CSS, try again"
+msgstr "Errore durante la generazione del CSS critico, riprova"
 
-#: includes/Images/ImageService.php:174
-#: includes/Images/ImageService.php:180
-msgid "Rate limit exceeded. Please try again later."
-msgstr "Limite di tariffa superato. Per favore, riprova più tardi."
+#: build/performance/performance.min.js:2
+msgid "Error loading settings."
+msgstr "Errore nel caricamento delle impostazioni."
 
-#: includes/Images/ImageService.php:187
-#: includes/Images/ImageService.php:501
-msgid "Invalid response from Cloudflare Worker."
-msgstr "Risposta non valida da Cloudflare Worker."
+#: includes/Images/ImageService.php:61 includes/Images/ImageService.php:457
+msgid "Error retrieving site URL."
+msgstr "Errore nel recuperare l'URL del sito."
+
+#: build/performance/performance.min.js:2 build/performance/performance.min.js:5
+msgid "Error saving option"
+msgstr "Errore durante il salvataggio dell'opzione"
+
+#: build/performance/performance.min.js:5
+msgid "Exclude CSS Strings"
+msgstr "Escludi stringhe CSS"
+
+#: build/performance/performance.min.js:5
+msgid "Exclude JS Strings"
+msgstr "Escludi stringhe JS"
+
+#: build/performance/performance.min.js:5
+msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
+msgstr "Escludi parole chiave: Un elenco separato da virgole di parole o stringhe che escluderanno un link dall'essere prefetchato. Ad esempio, escludendo \"app\" si impedirà che https://example.com/apple venga prefetchato."
+
+#: build/performance/performance.min.js:2
+msgid "Exclude from cache"
+msgstr "Escludi dalla cache"
+
+#: build/performance/performance.min.js:5
+msgid "Exclude keywords"
+msgstr "Escludi parole chiave"
+
+#: includes/Images/ImageService.php:359
+msgid "Failed to delete the original file."
+msgstr "Non è riuscito a cancellare il file originale."
+
+#: build/performance/performance.min.js:5
+msgid "Failed to download the Redis object cache drop-in."
+msgstr "Non è riuscito a scaricare il drop-in della cache degli oggetti Reddis."
+
+#: includes/Images/ImageService.php:375
+msgid "Failed to generate attachment metadata."
+msgstr "Non è riuscito a generare i metadati degli allegati."
+
+#: includes/RestApi/JetpackController.php:167
+msgid "Failed to regenerate critical CSS."
+msgstr "Non sono riuscito a rigenerare il CSS critico."
 
 #: includes/Images/ImageService.php:222
 msgid "Failed to save the optimized WebP image."
 msgstr "Non è riuscito a salvare l'immagine WebP ottimizzata."
 
-#: includes/Images/ImageService.php:253
-msgid "Invalid file path for generating WebP."
-msgstr "Percorso file invalido per generare WebP."
+#: build/performance/performance.min.js:5
+msgid "Failed to update object cache"
+msgstr "Fallita nell'aggiornamento della cache degli oggetti"
+
+#: build/performance/performance.min.js:2
+msgid "Font Optimization"
+msgstr "Ottimizzazione dei font"
+
+#: build/performance/performance.min.js:2
+msgid "Font optimization setting saved successfully."
+msgstr "Impostazione di ottimizzazione dei font salvata con successo."
+
+#: build/performance/performance.min.js:2
+msgid "Fonts optimization updated"
+msgstr "Ottimizzazione dei font aggiornata"
+
+#: build/performance/performance.min.js:2
+msgid "Generate CSS"
+msgstr "Genera CSS"
+
+#: build/performance/performance.min.js:2
+msgid "Generate Critical CSS Automatically"
+msgstr "Genera automaticamente CSS critico"
+
+#: build/performance/performance.min.js:2
+msgid "Go to Media Library"
+msgstr "Vai alla libreria multimediale"
 
 #. translators: 1: HTTP response code, 2: Response message
 #: includes/Images/ImageService.php:295
@@ -496,194 +548,206 @@ msgstr "Percorso file invalido per generare WebP."
 msgid "HTTP %1$d: %2$s"
 msgstr "HTTP %1$d: %2$s"
 
-#: includes/Images/ImageService.php:320
-msgid "WebP file is missing or empty."
-msgstr "Il file WebP manca o è vuoto."
+#: build/performance/performance.min.js:5
+msgid "Hosting API could not enable Redis for this site."
+msgstr "L'API di hosting non poteva abilitare Redis per questo sito."
 
-#: includes/Images/ImageService.php:331
-msgid "Invalid Media ID provided."
-msgstr "È stato fornito un ID media non valido."
+#: build/performance/performance.min.js:5
+msgid "Hosting API returned an unexpected error while enabling Redis."
+msgstr "L'API di hosting ha restituito un errore inaspettato durante l'abilitazione di Redis."
 
-#: includes/Images/ImageService.php:351
-msgid "Invalid Media ID or file path provided."
-msgstr "ID media o percorso file non validi forniti."
+#: build/performance/performance.min.js:5
+msgid "Hosting could not locate WordPress for this site."
+msgstr "L'hosting non è riuscito a trovare WordPress per questo sito."
 
-#: includes/Images/ImageService.php:359
-msgid "Failed to delete the original file."
-msgstr "Non è riuscito a cancellare il file originale."
+#: build/performance/performance.min.js:5
+msgid "Hosting reports the Redis drop-in is not available yet."
+msgstr "Secondo l'hosting il drop-in di Redis non è ancora disponibile."
 
-#: includes/Images/ImageService.php:375
-msgid "Failed to generate attachment metadata."
-msgstr "Non è riuscito a generare i metadati degli allegati."
+#: build/performance/performance.min.js:5
+msgid "Hosting site id is not available yet. Please try again shortly or contact support."
+msgstr "L'ID del sito di hosting non è ancora disponibile. Per favore, riprova a breve o contatta l'assistenza."
 
-#. translators: %s: HTTP response code
-#: includes/Images/ImageService.php:491
-#, php-format
-msgid "Unexpected response from Cloudflare Worker: HTTP %s"
-msgstr "Risposta inaspettata da Cloudflare Worker: HTTP %s"
+#: build/performance/performance.min.js:5
+msgid "Hosting token is not available yet. Please try again shortly or contact support."
+msgstr "Il token di hosting non è ancora disponibile. Per favore, riprova a breve o contatta l'assistenza."
 
-#: includes/Images/ImageSettings.php:89
-msgid "Settings for NFD Image Optimization."
-msgstr "Impostazioni per l'ottimizzazione dell'immagine NFD."
+#: build/performance/performance.min.js:2
+msgid "Image Optimization"
+msgstr "Ottimizzazione delle immagini"
 
-#: includes/Images/ImageSettings.php:98
-msgid "Enable image optimization."
-msgstr "Abilita l'ottimizzazione dell'immagine."
-
-#: includes/Images/ImageSettings.php:103
-msgid "Prefer WebP format when it exists."
-msgstr "Preferisci il formato WebP quando esiste."
-
-#: includes/Images/ImageSettings.php:108
-msgid "Auto-optimized uploaded images settings."
-msgstr "Impostazioni delle immagini caricate automaticamente."
-
-#: includes/Images/ImageSettings.php:112
-msgid "Automatically optimize uploaded images."
-msgstr "Ottimizza automaticamente le immagini caricate."
-
-#: includes/Images/ImageSettings.php:117
-msgid "Delete the original uploaded image after optimization."
-msgstr "Elimina l'immagine caricata originale dopo l'ottimizzazione."
-
-#: includes/Images/ImageSettings.php:124
-msgid "Settings for lazy loading."
-msgstr "Impostazioni per caricamento lento."
-
-#: includes/Images/ImageSettings.php:128
-msgid "Enable lazy loading."
-msgstr "Abilita il caricamento pigro."
-
-#: includes/Images/ImageSettings.php:135
-msgid "Enable bulk optimization of images."
-msgstr "Abilita l'ottimizzazione in massa delle immagini."
-
-#: includes/Images/ImageSettings.php:140
-msgid "Indicates if the site is banned from image optimization."
-msgstr "Indica se il sito è bandito dall'ottimizzazione delle immagini."
-
-#: includes/Images/ImageSettings.php:145
-msgid "Monthly usage statistics for image optimization."
-msgstr "Statistiche mensili di utilizzo per l'ottimizzazione delle immagini."
-
-#: includes/Images/ImageSettings.php:149
-msgid "Number of requests made this month."
-msgstr "Numero di richieste fatte questo mese."
-
-#: includes/Images/ImageSettings.php:154
-msgid "Maximum allowed requests per month."
-msgstr "Richieste massime consentite al mese."
-
-#: includes/Images/ImageSettings.php:161
-msgid "Cloudflare-related image optimization options."
-msgstr "Opzioni di ottimizzazione delle immagini legate a Cloudflare."
-
-#: includes/Images/ImageSettings.php:165
-msgid "Enable Cloudflare Polish optimization."
-msgstr "Abilita l'ottimizzazione Cloudflare Polish."
-
-#: includes/Images/ImageSettings.php:180
-msgid "Enable Cloudflare Mirage optimization."
-msgstr "Abilita l'ottimizzazione di Cloudflare Mirage."
-
-#: includes/Images/RestApi/ImagesController.php:60
-msgid "The ID of the media item to optimize."
-msgstr "L'ID dell'elemento multimediale da ottimizzare."
-
-#: includes/Images/RestApi/ImagesController.php:86
-msgid "Invalid media ID or media item not found."
-msgstr "ID media invalido o elemento multimediale non trovato."
+#: includes/Images/ImageService.php:155 includes/Images/ImageService.php:161
+msgid "Image optimization access has been permanently revoked for this site."
+msgstr "L'accesso all'ottimizzazione delle immagini è stato revocato definitivamente per questo sito."
 
 #: includes/Images/RestApi/ImagesController.php:125
 msgid "Image successfully optimized."
 msgstr "Immagine ottimizzata con successo."
 
-#. translators: %s is the on/off status.
-#: includes/Images/WPCLI/ImageCommandHandler.php:172
-#, php-format
-msgid "All image optimization settings have been turned %s."
-msgstr "Tutte le impostazioni di ottimizzazione delle immagini sono state rimosse di percentuali."
+#: build/performance/performance.min.js:2
+msgid "Improve Image Loading on Slow Connections"
+msgstr "Migliora il caricamento delle immagini su connessioni lente"
 
-#. translators: 1: the setting key, 2: the on/off status
-#: includes/Images/WPCLI/ImageCommandHandler.php:208
-#, php-format
-msgid "Setting '%1$s' has been turned %2$s."
-msgstr "L'impostazione '%1$s' è stata trasformata in %2$s."
+#: build/performance/performance.min.js:2
+msgid "Improve load times by replacing Google Fonts with optimized local versions."
+msgstr "Migliora i tempi di caricamento sostituendo Google Fonts con versioni locali ottimizzate."
 
-#: includes/Images/WPCLI/ImageCommandHandler.php:263
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:43
-msgid "A status ('on' or 'off') is required."
-msgstr "È richiesto uno stato ('acceso' o 'spento')."
+#: includes/Images/ImageSettings.php:140
+msgid "Indicates if the site is banned from image optimization."
+msgstr "Indica se il sito è bandito dall'ottimizzazione delle immagini."
 
-#: includes/Images/WPCLI/ImageCommandHandler.php:267
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
-msgid "Invalid status: Use 'on' or 'off'."
-msgstr "Stato invalido: Usa 'acceso' o 'spento'."
+#: build/performance/performance.min.js:2
+msgid "Install Jetpack Boost to unlock"
+msgstr "Installa Jetpack Boost per sbloccare"
 
-#. translators: %s is the on/off status.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:75
-#, php-format
-msgid "Setting 'activeOnDesktop' has been turned %s."
-msgstr "L'impostazione 'activeOnDesktop' è stata ridotta in percentuali."
+#: build/performance/performance.min.js:2
+msgid "Installing Jetpack Boost…"
+msgstr "Installazione di Jetpack Boost…"
 
-#. translators: %s is the on/off status.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:104
-#, php-format
-msgid "Setting 'activeOnMobile' has been turned %s."
-msgstr "Impostare 'activeOnMobile' è stato ridotto di percentuali."
+#: includes/Images/ImageService.php:351
+msgid "Invalid Media ID or file path provided."
+msgstr "ID media o percorso file non validi forniti."
 
-#. translators: %s is the on/off status.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:133
-#, php-format
-msgid "Setting 'instantClick' has been turned %s."
-msgstr "Impostare 'instantClick' è stato ridotto di percentuali."
-
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:160
-msgid "A behavior value is required."
-msgstr "È richiesto un valore comportamentale."
+#: includes/Images/ImageService.php:331
+msgid "Invalid Media ID provided."
+msgstr "È stato fornito un ID media non valido."
 
 #. translators: %s is the list of valid mobile behaviors.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:167 includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:238
 #, php-format
 msgid "Invalid behavior: Use one of the following - %s."
 msgstr "Comportamento invalido: Usa uno dei seguenti - percentuali."
 
-#. translators: %s is the new behavior value.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:176
+#: includes/RestApi/CacheController.php:94
+msgid "Invalid cache exclusion format."
+msgstr "Formato di esclusione della cache non valido."
+
+#. translators: %s is the list of valid cache levels.
+#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:27
 #, php-format
-msgid "Setting 'behavior' has been set to '%s'."
-msgstr "Impostare 'comportamento' è stato impostato su '%s'."
+msgid "Invalid cache level. Use one of the following: %s."
+msgstr "Livello di cache non valido. Usa uno dei seguenti punti: percentuali."
 
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:200
-msgid "A numeric value for hoverDelay is required."
-msgstr "È richiesto un valore numerico per hoverDelay."
+#: includes/RestApi/Skip404Controller.php:105
+msgid "Invalid field ID provided."
+msgstr "ID di campo non valido fornito."
 
-#. translators: %s is the numeric value for hoverDelay.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:207
-#, php-format
-msgid "Setting 'hoverDelay' has been set to '%s'."
-msgstr "Impostare 'hoverDelay' è stato impostato su '%s'."
+#: includes/Images/ImageService.php:253
+msgid "Invalid file path for generating WebP."
+msgstr "Percorso file invalido per generare WebP."
 
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:231
-msgid "A mobile behavior value is required."
-msgstr "È richiesto un valore di comportamento mobile."
+#: build/performance/performance.min.js:2
+msgid "Invalid input. Please use only lowercase letters, numbers, commas, and hyphens."
+msgstr "Input non valido. Si prega di usare solo lettere minuscole, numeri, virgole e trattini."
 
-#. translators: %s is the new mobile behavior value.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:247
-#, php-format
-msgid "Setting 'mobileBehavior' has been set to '%s'."
-msgstr "Impostare 'mobileBehavior' è stato impostato su '%s'."
+#: includes/Images/RestApi/ImagesController.php:86
+msgid "Invalid media ID or media item not found."
+msgstr "ID media invalido o elemento multimediale non trovato."
 
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:271
-msgid "A value for ignoreKeywords is required."
-msgstr "È richiesto un valore per ignoreKeys."
+#: includes/Images/ImageService.php:187 includes/Images/ImageService.php:501
+msgid "Invalid response from Cloudflare Worker."
+msgstr "Risposta non valida da Cloudflare Worker."
 
-#. translators: %s is the new ignoreKeywords value.
-#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:286
-#, php-format
-msgid "Setting 'ignoreKeywords' has been set to '%s'."
-msgstr "Impostare 'ignoreKeywords' è stato impostato su '%s'."
+#: includes/RestApi/LinkPrefetchController.php:90
+msgid "Invalid settings format"
+msgstr "Formato delle impostazioni non valido"
+
+#: includes/Images/WPCLI/ImageCommandHandler.php:267 includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:47
+msgid "Invalid status: Use 'on' or 'off'."
+msgstr "Stato invalido: Usa 'acceso' o 'spento'."
+
+#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:91
+msgid "Invalid value. Use 'true' or 'false' for skip_404 handling."
+msgstr "Valore non valido. Usa 'vero' o 'falso' per la gestione skip_404."
+
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:17
+msgid "JavaScript can be deferred to improve performance by loading it after the page has loaded."
+msgstr "JavaScript può essere differito per migliorare le prestazioni caricandolo dopo il caricamento della pagina."
+
+#: includes/HealthChecks/ConcatenateJsHealthCheck.php:15
+msgid "JavaScript files are concatenated"
+msgstr "I file JavaScript sono concatenati"
+
+#: includes/HealthChecks/ConcatenateJsHealthCheck.php:16
+msgid "JavaScript files are not concatenated"
+msgstr "I file JavaScript non sono concatenati"
+
+#: build/performance/performance.min.js:2
+msgid "Jetpack Boost is now active"
+msgstr "Jetpack Boost è ora attivo"
+
+#: build/performance/performance.min.js:2
+msgid "Keep this page opened until the process finish"
+msgstr "Mantieni questa pagina aperta fino al termine del processo"
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:14
+msgid "Lazy Loading"
+msgstr "Caricamento pigro"
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:17
+msgid "Lazy loading can improve performance by only loading images when they are in view."
+msgstr "Il caricamento pigro può migliorare le prestazioni caricando le immagini solo quando sono visive."
+
+#: build/performance/performance.min.js:2
+msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
+msgstr "Il caricamento differito ritarda il caricamento delle immagini finché non sono visibili sullo schermo, migliorando la velocità di caricamento delle pagine e le prestazioni."
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:16
+msgid "Lazy loading is disabled"
+msgstr "Il caricamento pigro è disabilitato"
+
+#: includes/HealthChecks/LazyLoadingHealthCheck.php:15
+msgid "Lazy loading is enabled"
+msgstr "Il caricamento pigro è abilitato"
+
+#: build/performance/performance.min.js:5
+msgid "Link Prefetch"
+msgstr "Prefetch dei link"
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:16
+msgid "Link Prefetching"
+msgstr "Pre-recupero di link"
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:19
+msgid "Link prefetching can improve performance by loading pages immediately before they are requested."
+msgstr "Il pre-richit dei link può migliorare le prestazioni caricando le pagine immediatamente prima che vengano richieste."
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:18
+msgid "Link prefetching is disabled"
+msgstr "Il pre-recupero dei collegamenti è disabilitato"
+
+#: includes/HealthChecks/LinkPrefetchHealthCheck.php:17
+msgid "Link prefetching is enabled"
+msgstr "Il pre-recupero del collegamento è abilitato"
+
+#: build/performance/performance.min.js:5
+msgid "Link prefetching setting saved"
+msgstr "Impostazione di prefetch dei link salvata"
+
+#: build/performance/performance.min.js:2
+msgid "Loading font optimization settings…"
+msgstr "Caricamento impostazioni ottimizzazione font…"
+
+#: build/performance/performance.min.js:2
+msgid "Loading settings…"
+msgstr "Caricamento impostazioni…"
+
+#: includes/Images/ImageSettings.php:154
+msgid "Maximum allowed requests per month."
+msgstr "Richieste massime consentite al mese."
+
+#: includes/Images/ImageSettings.php:145
+msgid "Monthly usage statistics for image optimization."
+msgstr "Statistiche mensili di utilizzo per l'ottimizzazione delle immagini."
+
+#: build/performance/performance.min.js:2
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
+msgstr "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo."
+
+#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
+#: build/performance/performance.min.js:5
+msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
+msgstr "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo.%1$s %2$sBoost genererà automaticamente il tuo CSS critico%3$s ogni volta che apporti modifiche alla struttura HTML o CSS del tuo sito."
 
 #. translators: %s is the name of the field that is invalid (e.g., 'namespace', 'command', or 'handler').
 #: includes/NFD_WPCLI.php:49
@@ -697,496 +761,177 @@ msgstr "CLI Newfold: percentuali invalidi forniti a NFD_WPCLI::add_command()."
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "CLI-Fi Newfold: La classe handler %s non esiste."
 
-#: includes/Performance.php:232
-msgid "Caching"
-msgstr "Cache"
-
-#: includes/Performance.php:241
-msgid "Purge All"
-msgstr "Purifica Tutto"
-
-#: includes/Performance.php:251
-msgid "Purge This Page"
-msgstr "Elimina questa pagina"
-
-#: includes/Performance.php:262
-msgid "Cache Settings"
-msgstr "Impostazioni della cache"
-
-#: includes/Performance.php:278
-#: includes/Performance.php:279
-#: includes/Performance.php:305
 #: build/performance/performance.min.js:2
-msgid "Performance"
-msgstr "Prestazioni"
+msgid "No cache enabled. Every page load is fresh. Not recommended."
+msgstr "Nessuna cache abilitata. Ogni caricamento di pagina è nuovo. Non consigliato."
 
-#: includes/RestApi/CacheController.php:94
-msgid "Invalid cache exclusion format."
-msgstr "Formato di esclusione della cache non valido."
+#: build/performance/performance.min.js:2
+msgid "No settings available."
+msgstr "Nessuna impostazione disponibile."
 
-#: includes/RestApi/CacheController.php:174
-msgid "Cache purged"
-msgstr "Purga della cache"
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:15
+msgid "Non-essential JavaScript is deferred"
+msgstr "JavaScript non essenziale è differito"
 
-#: includes/RestApi/JetpackController.php:81
-#: includes/RestApi/Skip404Controller.php:62
-msgid "The parameter 'field' is missing or invalid."
-msgstr "Il parametro 'campo' manca o non è valido."
+#: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:16
+msgid "Non-essential JavaScript is not deferred"
+msgstr "JavaScript non essenziale non è differito"
 
-#: includes/RestApi/JetpackController.php:93
-#: includes/RestApi/Skip404Controller.php:74
-msgid "The fields 'id' and 'value' are required."
-msgstr "Sono richiesti i campi 'id' e 'value'."
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:15
+msgid "Number of post revisions is limited to 5 or less"
+msgstr "Il numero di revisioni dei post è limitato a 5 o meno"
 
-#: includes/RestApi/JetpackController.php:117
-#: includes/RestApi/JetpackController.php:137
-#: includes/RestApi/Skip404Controller.php:94
-#: includes/RestApi/Skip404Controller.php:123
-msgid "An error occurred while updating the option."
-msgstr "Si è verificato un errore durante l'aggiornamento dell'opzione."
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:16
+msgid "Number of post revisions is set to a high number"
+msgstr "Il numero di revisioni dei post è impostato su un numero alto"
 
-#: includes/RestApi/JetpackController.php:167
-msgid "Failed to regenerate critical CSS."
-msgstr "Non sono riuscito a rigenerare il CSS critico."
+#: includes/Images/ImageSettings.php:149
+msgid "Number of requests made this month."
+msgstr "Numero di richieste fatte questo mese."
 
-#: includes/RestApi/JetpackController.php:177
-msgid "An error occurred while regenerating critical CSS."
-msgstr "Si è verificato un errore durante la rigenerazione del CSS critico."
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14 build/performance/performance.min.js:5
+msgid "Object Caching"
+msgstr "Cache degli oggetti"
 
-#: includes/RestApi/LinkPrefetchController.php:90
-msgid "Invalid settings format"
-msgstr "Formato delle impostazioni non valido"
+#: includes/Cache/Types/ObjectCachePreflight.php:46
+msgid "Object cache cannot be enabled automatically right now."
+msgstr "La cache degli oggetti non può essere attivata automaticamente al momento."
 
-#: includes/RestApi/Skip404Controller.php:105
-msgid "Invalid field ID provided."
-msgstr "ID di campo non valido fornito."
+#: includes/Cache/Types/ObjectCache.php:701 includes/Helpers/RedisCredentialsProvisioner.php:22
+msgid "Object cache cannot be enabled automatically right now. Please contact support."
+msgstr "La cache degli oggetti non può essere attivata automaticamente al momento. Per favore, contatta il supporto."
 
-#: includes/Services/EventService.php:23
-msgid "Bad event structure/value."
-msgstr "Struttura/valore degli eventi sbagliati."
+#: includes/Cache/Types/ObjectCache.php:489
+msgid "Object cache is not configured yet."
+msgstr "La cache degli oggetti non è ancora configurata."
 
-#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
-msgid "Optimizing Images…"
-msgstr "Ottimizzazione Delle Immagini…"
+#: build/performance/performance.min.js:5
+msgid "Object cache setting saved"
+msgstr "Impostazione della cache oggetto salvata"
 
-#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
-msgid "Preparing files…"
-msgstr "Preparazione dei file…"
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:16
+msgid "Object caching is disabled"
+msgstr "La cache degli oggetti è disabilitata"
 
-#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
-msgid "Done"
-msgstr "Fatto"
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:15
+msgid "Object caching is enabled"
+msgstr "La cache degli oggetti è abilitata"
+
+#: includes/Cache/Types/ObjectCache.php:230 includes/Cache/Types/ObjectCachePreflight.php:40
+msgid "Object caching is not supported on this server."
+msgstr "La cache degli oggetti non è supportata su questo server."
+
+#: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:17
+msgid "Object caching saves results from frequent database queries, reducing load times by avoiding repetitive query processing. Object caching is available in all tiers of Bluehost Cloud."
+msgstr "La cache degli oggetti salva i risultati da frequenti query del database, riducendo i tempi di caricamento evitando l'elaborazione ripetitiva delle query. La cache degli oggetti è disponibile in tutti i livelli di Bluehost Cloud."
+
+#: build/performance/performance.min.js:2
+msgid "Oops! Something went wrong. Please try again."
+msgstr "Ops! Qualcosa è andato storto. Per favore riprova."
 
 #: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimization Canceled"
 msgstr "Ottimizzazione Annullata"
 
 #: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
-msgid "Optimizing:"
-msgstr "Ottimizzazione:"
-
-#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimization Complete!"
 msgstr "Ottimizzazione Completata!"
 
 #: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
-msgid "An error occurred."
-msgstr "Si è verificato un errore."
-
-#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
 msgid "Optimize"
 msgstr "Ottimizza"
-
-#: build/assets/image-optimized-marker/image-optimized-marker.min.js:1
-msgid "Optimized"
-msgstr "Ottimizzato"
-
-#: build/performance/performance.min.js:2
-msgid "Optimize your website by managing cache and performance settings"
-msgstr "Ottimizza il tuo sito gestendo cache e impostazioni di prestazioni"
-
-#: build/performance/performance.min.js:2
-msgid "Exclude from cache"
-msgstr "Escludi dalla cache"
-
-#: build/performance/performance.min.js:2
-msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
-msgstr "Questa impostazione controlla quali pagine inviano un’intestazione “no-cache”, in modo che non venga utilizzata la cache delle pagine o del browser."
-
-#: build/performance/performance.min.js:2
-msgid "Cache Exclusion saved"
-msgstr "Esclusione dalla cache salvata"
-
-#: build/performance/performance.min.js:2
-msgid "Save"
-msgstr "Salva"
-
-#: build/performance/performance.min.js:2
-msgid "Invalid input. Please use only lowercase letters, numbers, commas, and hyphens."
-msgstr "Input non valido. Si prega di usare solo lettere minuscole, numeri, virgole e trattini."
-
-#: build/performance/performance.min.js:2
-msgid "e.g. cart,checkout,wp-admin"
-msgstr "ad esempio carrello, checkout, wp-admin"
-
-#: build/performance/performance.min.js:2
-msgid "Cache Level"
-msgstr "Livello di cache"
-
-#: build/performance/performance.min.js:2
-msgid "Boost speed and performance by storing a copy of your website content, files, and images online so the pages of your website load faster for your visitors."
-msgstr "Aumenta la velocità e le prestazioni memorizzando una copia dei contenuti, dei file e delle immagini del tuo sito web online, in modo che le pagine del tuo sito web si carichino più velocemente per i tuoi visitatori."
-
-#: build/performance/performance.min.js:2
-msgid "Cache setting saved"
-msgstr "Impostazione della cache salvata"
-
-#: build/performance/performance.min.js:2
-msgid "Disabled"
-msgstr "Disabilitato"
-
-#: build/performance/performance.min.js:2
-msgid "No cache enabled. Every page load is fresh. Not recommended."
-msgstr "Nessuna cache abilitata. Ogni caricamento di pagina è nuovo. Non consigliato."
-
-#: build/performance/performance.min.js:2
-msgid "Caching disabled."
-msgstr "Memorizzazione nella cache disabilitata."
-
-#: build/performance/performance.min.js:2
-msgid "Assets Only"
-msgstr "Solo risorse"
-
-#: build/performance/performance.min.js:2
-msgid "Cache static assets like images and the appearance of your site for 1 hour. Tuned for online stores and member sites that need to be fresh."
-msgstr "Memorizza nella cache risorse statiche come immagini e l'aspetto del tuo sito per 1 ora. Ottimizzato per negozi online e siti di membri che devono essere aggiornati."
-
-#: build/performance/performance.min.js:2
-msgid "Cache enabled for assets only."
-msgstr "Cache abilitata solo per le risorse."
-
-#: build/performance/performance.min.js:2
-msgid "Assets & Web Pages"
-msgstr "Risorse e pagine web"
-
-#: build/performance/performance.min.js:2
-msgid "Cache static assets for 24 hours and web pages for 2 hours. Tuned for sites that change at least weekly."
-msgstr "Memorizza nella cache le risorse statiche per 24 ore e le pagine web per 2 ore. Ottimizzato per siti che cambiano almeno settimanalmente."
-
-#: build/performance/performance.min.js:2
-msgid "Cache enabled for assets and pages."
-msgstr "Cache abilitata per risorse e pagine."
-
-#: build/performance/performance.min.js:2
-msgid "Assets & Web Pages - Extended"
-msgstr "Risorse e pagine web - Esteso"
-
-#: build/performance/performance.min.js:2
-msgid "Cache static assets for 1 week and web pages for 8 hours. Tuned for sites that update a few times a month or less."
-msgstr "Memorizza nella cache le risorse statiche per 1 settimana e le pagine web per 8 ore. Ottimizzato per siti che si aggiornano poche volte al mese o meno."
-
-#: build/performance/performance.min.js:2
-msgid "Cache enabled for assets and pages (extended)."
-msgstr "Cache abilitata per risorse e pagine (estesa)."
-
-#: build/performance/performance.min.js:2
-msgid "Clear Cache"
-msgstr "Svuota la cache"
-
-#: build/performance/performance.min.js:2
-msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
-msgstr "Svuotiamo automaticamente la cache mentre lavori (creando contenuti, modificando impostazioni, installando plugin e altro). Ma puoi anche svuotarla manualmente qui per essere sicuro che sia aggiornata."
-
-#: build/performance/performance.min.js:2
-msgid "Clear All Cache Now"
-msgstr "Svuota tutta la cache ora"
-
-#: build/performance/performance.min.js:2
-msgid "Cache cleared"
-msgstr "Cache svuotata"
-
-#: build/performance/performance.min.js:2
-msgid "Font Optimization"
-msgstr "Ottimizzazione dei font"
-
-#: build/performance/performance.min.js:2
-msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr "Migliora i tempi di caricamento sostituendo Google Fonts con versioni locali ottimizzate."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Fonts via Cloudflare"
-msgstr "Ottimizza i font via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr "Sostituisce Google Fonts con versioni locali più veloci e rispettose della privacy."
-
-#: build/performance/performance.min.js:2
-msgid "Loading font optimization settings…"
-msgstr "Caricamento impostazioni ottimizzazione font…"
-
-#: build/performance/performance.min.js:2
-msgid "Error loading settings."
-msgstr "Errore nel caricamento delle impostazioni."
-
-#: build/performance/performance.min.js:2
-msgid "Fonts optimization updated"
-msgstr "Ottimizzazione dei font aggiornata"
-
-#: build/performance/performance.min.js:2
-msgid "Font optimization setting saved successfully."
-msgstr "Impostazione di ottimizzazione dei font salvata con successo."
-
-#: build/performance/performance.min.js:2
-msgid "Update failed"
-msgstr "Aggiornamento fallito"
-
-#: build/performance/performance.min.js:2
-msgid "Could not save font optimization setting."
-msgstr "Impossibile salvare l’impostazione di ottimizzazione dei font."
-
-#: build/performance/performance.min.js:2
-msgid "Image Optimization"
-msgstr "Ottimizzazione delle immagini"
-
-#: build/performance/performance.min.js:2
-msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
-msgstr "Ottimizziamo automaticamente le tue immagini caricate nel formato WebP per prestazioni più veloci e dimensioni di file ridotte. Puoi anche scegliere di eliminare le immagini originali per risparmiare spazio di archiviazione."
-
-#: build/performance/performance.min.js:2
-msgid "Usage:"
-msgstr "Utilizzo:"
-
-#: build/performance/performance.min.js:2
-msgid "images processed of"
-msgstr "immagini elaborate su"
-
-#: build/performance/performance.min.js:2
-msgid "/month"
-msgstr "/mese"
-
-#: build/performance/performance.min.js:2
-msgid "Loading settings…"
-msgstr "Caricamento impostazioni…"
-
-#: build/performance/performance.min.js:2
-msgid "Oops! Something went wrong. Please try again."
-msgstr "Ops! Qualcosa è andato storto. Per favore riprova."
-
-#: build/performance/performance.min.js:2
-msgid "No settings available."
-msgstr "Nessuna impostazione disponibile."
-
-#: build/performance/performance.min.js:2
-msgid "Enable Image Optimization"
-msgstr "Abilita ottimizzazione delle immagini"
-
-#: build/performance/performance.min.js:2
-msgid "Enable or disable image optimization globally."
-msgstr "Abilita o disabilita l'ottimizzazione delle immagini a livello globale."
-
-#: build/performance/performance.min.js:2
-msgid "Automatically Optimize Uploaded Images"
-msgstr "Ottimizza automaticamente le immagini caricate"
-
-#: build/performance/performance.min.js:2
-msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
-msgstr "Quando abilitato, tutti i tuoi nuovi caricamenti di immagini saranno automaticamente ottimizzati nel formato WebP, garantendo un caricamento più veloce delle pagine e dimensioni di file ridotte."
-
-#: build/performance/performance.min.js:2
-msgid "Enable Bulk Optimization of Images"
-msgstr "Abilita ottimizzazione in blocco delle immagini"
-
-#: build/performance/performance.min.js:2
-msgid "When enabled, allows bulk optimization of images in the media library."
-msgstr "Quando abilitato, consente l'ottimizzazione in blocco delle immagini nella libreria multimediale."
-
-#: build/performance/performance.min.js:2
-msgid "Go to Media Library"
-msgstr "Vai alla libreria multimediale"
-
-#: build/performance/performance.min.js:2
-msgid "Auto Delete Original Image"
-msgstr "Elimina automaticamente l'immagine originale"
-
-#: build/performance/performance.min.js:2
-msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
-msgstr "Quando abilitato, l'immagine originale caricata viene eliminata e sostituita con la versione ottimizzata, contribuendo a risparmiare spazio di archiviazione. Se disabilitato, l'immagine ottimizzata viene salvata come file separato, conservando l'originale."
-
-#: build/performance/performance.min.js:2
-msgid "Enable Lazy Loading"
-msgstr "Abilita caricamento differito"
-
-#: build/performance/performance.min.js:2
-msgid "Lazy loading defers the loading of images until they are visible on the screen, improving page load speed and performance."
-msgstr "Il caricamento differito ritarda il caricamento delle immagini finché non sono visibili sullo schermo, migliorando la velocità di caricamento delle pagine e le prestazioni."
-
-#: build/performance/performance.min.js:2
-msgid "Prefer Optimized Image When Exists"
-msgstr "Preferisci immagine ottimizzata quando esiste"
-
-#: build/performance/performance.min.js:2
-msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
-msgstr "Quando abilitato, le immagini ottimizzate verranno servite al posto delle immagini originali quando esistono, migliorando le prestazioni."
-
-#: build/performance/performance.min.js:2
-msgid "Settings updated successfully"
-msgstr "Impostazioni aggiornate con successo"
-
-#: build/performance/performance.min.js:2
-msgid "Your image optimization settings have been saved."
-msgstr "Le tue impostazioni di ottimizzazione delle immagini sono state salvate."
-
-#: build/performance/performance.min.js:2
-msgid "Error Updating Settings"
-msgstr "Errore durante l'aggiornamento delle impostazioni"
-
-#: build/performance/performance.min.js:2
-msgid "Something went wrong while updating the settings. Please try again."
-msgstr "Qualcosa è andato storto durante l'aggiornamento delle impostazioni. Per favore riprova."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Images via Cloudflare"
-msgstr "Ottimizza le immagini via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr "Attiva la compressione delle immagini di Cloudflare per ridurre tempi di caricamento e banda."
-
-#: build/performance/performance.min.js:2
-msgid "Improve Image Loading on Slow Connections"
-msgstr "Migliora il caricamento delle immagini su connessioni lente"
-
-#: build/performance/performance.min.js:2
-msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr "Cloudflare Mirage accelera il caricamento delle immagini su reti mobili e lente."
-
-#: build/performance/performance.min.js:2
-msgid "Advanced settings"
-msgstr "Impostazioni avanzate"
-
-#: build/performance/performance.min.js:2
-msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
-msgstr "Funzionalità aggiuntive di velocità e scalabilità alimentate da Jetpack Boost per rendere il tuo sito il più veloce possibile."
-
-#: build/performance/performance.min.js:2
-msgid "Option saved correctly"
-msgstr "Opzione salvata correttamente"
-
-#: build/performance/performance.min.js:2
-#: build/performance/performance.min.js:5
-msgid "Error saving option"
-msgstr "Errore durante il salvataggio dell'opzione"
-
-#: build/performance/performance.min.js:2
-msgid "Upgrade to unlock"
-msgstr "Aggiorna per sbloccare"
-
-#: build/performance/performance.min.js:2
-msgid "Install Jetpack Boost to unlock"
-msgstr "Installa Jetpack Boost per sbloccare"
-
-#: build/performance/performance.min.js:2
-msgid "Installing Jetpack Boost…"
-msgstr "Installazione di Jetpack Boost…"
-
-#: build/performance/performance.min.js:2
-msgid "Jetpack Boost is now active"
-msgstr "Jetpack Boost è ora attivo"
-
-#: build/performance/performance.min.js:2
-msgid "Activation failed"
-msgstr "Attivazione fallita"
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Critical CSS Loading (manual)"
-msgstr "Ottimizza il caricamento del CSS critico (manuale)"
-
-#: build/performance/performance.min.js:2
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo."
-
-#: build/performance/performance.min.js:2
-msgid "Generate CSS"
-msgstr "Genera CSS"
-
-#: build/performance/performance.min.js:2
-msgid "Critical CSS generated successfully."
-msgstr "CSS critico generato con successo."
-
-#: build/performance/performance.min.js:2
-msgid "Keep this page opened until the process finish"
-msgstr "Mantieni questa pagina aperta fino al termine del processo"
-
-#: build/performance/performance.min.js:2
-msgid "Error generating Critical CSS, try again"
-msgstr "Errore durante la generazione del CSS critico, riprova"
 
 #: build/performance/performance.min.js:2
 msgid "Optimize Critical CSS Loading (UPGRADED)"
 msgstr "Ottimizza il caricamento del CSS critico (MIGLIORATO)"
 
 #: build/performance/performance.min.js:2
-msgid "Generate Critical CSS Automatically"
-msgstr "Genera automaticamente CSS critico"
+msgid "Optimize Critical CSS Loading (manual)"
+msgstr "Ottimizza il caricamento del CSS critico (manuale)"
 
-#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
-#: build/performance/performance.min.js:5
-#, js-format
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr "Sposta le informazioni di stile importanti all'inizio della pagina, per mostrare prima i contenuti e non far aspettare agli utenti il caricamento completo.%1$s %2$sBoost genererà automaticamente il tuo CSS critico%3$s ogni volta che apporti modifiche alla struttura HTML o CSS del tuo sito."
+#: build/performance/performance.min.js:2
+msgid "Optimize Fonts via Cloudflare"
+msgstr "Ottimizza i font via Cloudflare"
 
-#: build/performance/performance.min.js:5
-msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
-msgstr "Esegui JavaScript non essenziale dopo che la pagina è stata caricata in modo che stili e immagini possano caricarsi più velocemente."
+#: build/performance/performance.min.js:2
+msgid "Optimize Images via Cloudflare"
+msgstr "Ottimizza le immagini via Cloudflare"
 
-#: build/performance/performance.min.js:5
-msgid "Concatenate JS"
-msgstr "Concatena JS"
+#: build/performance/performance.min.js:2
+msgid "Optimize your website by managing cache and performance settings"
+msgstr "Ottimizza il tuo sito gestendo cache e impostazioni di prestazioni"
 
-#: build/performance/performance.min.js:5
-msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr "Gli script sono raggruppati in base alla loro posizione originale, concatenati e minificati per ridurre il tempo di caricamento del sito e ridurre il numero di richieste."
+#: build/assets/image-optimized-marker/image-optimized-marker.min.js:1
+msgid "Optimized"
+msgstr "Ottimizzato"
 
-#: build/performance/performance.min.js:5
-msgid "Exclude JS Strings"
-msgstr "Escludi stringhe JS"
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
+msgid "Optimizing Images…"
+msgstr "Ottimizzazione Delle Immagini…"
 
-#: build/performance/performance.min.js:5
-msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr "Gli stili sono raggruppati in base alla loro posizione originale, concatenati e minificati per ridurre il tempo di caricamento del sito e ridurre il numero di richieste."
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
+msgid "Optimizing:"
+msgstr "Ottimizzazione:"
 
-#: build/performance/performance.min.js:5
-msgid "Exclude CSS Strings"
-msgstr "Escludi stringhe CSS"
+#: build/performance/performance.min.js:2
+msgid "Option saved correctly"
+msgstr "Opzione salvata correttamente"
 
 #: build/performance/performance.min.js:5
-msgid "Disable Coming Soon"
-msgstr "Disabilita Prossimamente"
+msgid "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version."
+msgstr "PHP Redis (phpredis) non è disponibile su questo server. Chiedi al tuo host di abilitare l'estensione Redis per la tua versione PHP."
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:14
+msgid "Page Caching"
+msgstr "Cache delle pagine"
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:17
+msgid "Page caching can improve performance by bypassing PHP and database queries for faster page loads."
+msgstr "La cache delle pagine può migliorare le prestazioni bypassando le query PHP e database per carichi di pagina più rapidi."
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:16
+msgid "Page caching is disabled"
+msgstr "La cache delle pagine è disabilitata"
+
+#: includes/HealthChecks/PageCachingHealthCheck.php:15
+msgid "Page caching is enabled"
+msgstr "La cache delle pagine è abilitata"
+
+#: includes/Performance.php:278 includes/Performance.php:279 includes/Performance.php:305 build/performance/performance.min.js:2
+msgid "Performance"
+msgstr "Prestazioni"
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:14
+msgid "Permalinks"
+msgstr "Permalink"
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:16
+msgid "Permalinks are not set up"
+msgstr "I permalink non sono configurati"
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:15
+msgid "Permalinks are pretty"
+msgstr "I permalink sono davvero belli"
+
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:14
+msgid "Post Revisions"
+msgstr "Revisioni post-Revisioni"
+
+#: build/performance/performance.min.js:2
+msgid "Prefer Optimized Image When Exists"
+msgstr "Preferisci immagine ottimizzata quando esiste"
+
+#: includes/Images/ImageSettings.php:103
+msgid "Prefer WebP format when it exists."
+msgstr "Preferisci il formato WebP quando esiste."
 
 #: build/performance/performance.min.js:5
-msgid "Link Prefetch"
-msgstr "Prefetch dei link"
+msgid "Prefetch Above the Fold"
+msgstr "Prefetch sopra la piega"
 
 #: build/performance/performance.min.js:5
-msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
-msgstr "Chiede al browser di scaricare e memorizzare nella cache i link sulla pagina prima che vengano cliccati, in modo che quando vengono cliccati si carichino quasi istantaneamente."
-
-#: build/performance/performance.min.js:5
-msgid "Link prefetching setting saved"
-msgstr "Impostazione di prefetch dei link salvata"
-
-#: build/performance/performance.min.js:5
-msgid "Enable link prefetching on desktop"
-msgstr "Abilita prefetch dei link su desktop"
-
-#: build/performance/performance.min.js:5
-msgid "Activate on desktop"
-msgstr "Attiva su desktop"
-
-#: build/performance/performance.min.js:5
-msgid "Behavior"
-msgstr "Comportamento"
+msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
+msgstr "Prefetch sopra la piega: Carica istantaneamente i link nella tua vista corrente, assicurando che siano pronti quando ne hai bisogno."
 
 #: build/performance/performance.min.js:5
 msgid "Prefetch on Mouse Down"
@@ -1205,14 +950,6 @@ msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor h
 msgstr "Prefetch al passaggio del mouse: Inizia a caricare la pagina nel momento in cui il cursore passa sopra un link"
 
 #: build/performance/performance.min.js:5
-msgid "Enable link prefetching on mobile"
-msgstr "Abilita prefetch dei link su mobile"
-
-#: build/performance/performance.min.js:5
-msgid "Activate on mobile"
-msgstr "Attiva su mobile"
-
-#: build/performance/performance.min.js:5
 msgid "Prefetch on Touchstart (Recommended)"
 msgstr "Prefetch al tocco (Consigliato)"
 
@@ -1220,106 +957,314 @@ msgstr "Prefetch al tocco (Consigliato)"
 msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
 msgstr "Prefetch al tocco: Inizia istantaneamente a caricare la pagina non appena tocchi lo schermo, garantendo una risposta più rapida quando sollevi il dito."
 
-#: build/performance/performance.min.js:5
-msgid "Prefetch Above the Fold"
-msgstr "Prefetch sopra la piega"
+#: build/assets/image-bulk-optimizer/image-bulk-optimizer.min.js:1
+msgid "Preparing files…"
+msgstr "Preparazione dei file…"
 
-#: build/performance/performance.min.js:5
-msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
-msgstr "Prefetch sopra la piega: Carica istantaneamente i link nella tua vista corrente, assicurando che siano pronti quando ne hai bisogno."
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:14
+msgid "Prioritize Critical CSS"
+msgstr "Prioritizza il CSS critico"
 
-#: build/performance/performance.min.js:5
-msgid "Exclude keywords"
-msgstr "Escludi parole chiave"
+#: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
+msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
+msgstr "Dare priorità al CSS critico può migliorare le prestazioni caricando prima il CSS più importante."
 
-#: build/performance/performance.min.js:5
-msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
-msgstr "Escludi parole chiave: Un elenco separato da virgole di parole o stringhe che escluderanno un link dall'essere prefetchato. Ad esempio, escludendo \"app\" si impedirà che https://example.com/apple venga prefetchato."
+#: includes/Performance.php:241
+msgid "Purge All"
+msgstr "Purifica Tutto"
 
-#: build/performance/performance.min.js:5
-msgid "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled."
-msgstr "Memorizzare i risultati delle query del database in Redis in modo che le richieste ripetute vengano servite dalla memoria invece che dal database. Cancella la cache sopra svuota anche la cache degli oggetti quando è abilitata."
+#: includes/Performance.php:251
+msgid "Purge This Page"
+msgstr "Elimina questa pagina"
 
-#: build/performance/performance.min.js:5
-msgid "Enable Object Caching"
-msgstr "Abilita la cache degli oggetti"
-
-#: build/performance/performance.min.js:5
-msgid "Object cache setting saved"
-msgstr "Impostazione della cache oggetto salvata"
-
-#: build/performance/performance.min.js:5
-msgid "Failed to update object cache"
-msgstr "Fallita nell'aggiornamento della cache degli oggetti"
-
-#: build/performance/performance.min.js:5
-msgid "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
-msgstr "La cache degli oggetti di un altro plugin è attiva. Disabilitalo in quel plugin per usare questo interruttore."
-
-#: build/performance/performance.min.js:5
-msgid "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version."
-msgstr "PHP Redis (phpredis) non è disponibile su questo server. Chiedi al tuo host di abilitare l'estensione Redis per la tua versione PHP."
-
-#: build/performance/performance.min.js:5
-msgid "Redis credentials are not present in wp-config.php yet."
-msgstr "Le credenziali Redis non sono ancora presenti in wp-config.php."
+#: includes/Images/ImageService.php:174 includes/Images/ImageService.php:180
+msgid "Rate limit exceeded. Please try again later."
+msgstr "Limite di tariffa superato. Per favore, riprova più tardi."
 
 #: build/performance/performance.min.js:5
 msgid "Redis credentials are being applied. We will retry automatically in a few seconds."
 msgstr "Le credenziali Redis vengono applicate. Riproveremo automaticamente tra qualche secondo."
 
 #: build/performance/performance.min.js:5
-msgid "Hosting token is not available yet. Please try again shortly or contact support."
-msgstr "Il token di hosting non è ancora disponibile. Per favore, riprova a breve o contatta l'assistenza."
+msgid "Redis credentials are not present in wp-config.php yet."
+msgstr "Le credenziali Redis non sono ancora presenti in wp-config.php."
 
-#: build/performance/performance.min.js:5
-msgid "Hosting site id is not available yet. Please try again shortly or contact support."
-msgstr "L'ID del sito di hosting non è ancora disponibile. Per favore, riprova a breve o contatta l'assistenza."
-
-#: build/performance/performance.min.js:5
-msgid "Could not connect to Redis with the current credentials."
-msgstr "Non sono riuscito a connettersi a Redis con le credenziali attuali."
+#: includes/Cache/Types/PhpRedisPinger.php:232
+msgid "Redis did not respond to PING as expected."
+msgstr "Redis non ha risposto al PING come previsto."
 
 #: build/performance/performance.min.js:5
 msgid "Redis service is not active on the server yet."
 msgstr "Il servizio Redis non è ancora attivo sul server."
 
-#: build/performance/performance.min.js:5
-msgid "Your PHP version does not meet requirements for Redis on this hosting environment."
-msgstr "La tua versione PHP non soddisfa i requisiti di Redis in questo ambiente di hosting."
+#: includes/Cache/Types/PhpRedisPinger.php:33
+msgid "RedisArray is not available in this PHP Redis build."
+msgstr "RedisArray non è disponibile in questa versione PHP Redis."
+
+#: includes/Cache/Types/PhpRedisPinger.php:43
+msgid "RedisCluster is not available in this PHP Redis build."
+msgstr "RedisCluster non è disponibile in questa build PHP-Redis di Reddit."
+
+#: build/performance/performance.min.js:2
+msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
+msgstr "Sostituisce Google Fonts con versioni locali più veloci e rispettose della privacy."
 
 #: build/performance/performance.min.js:5
-msgid "Hosting reports the Redis drop-in is not available yet."
-msgstr "Secondo l'hosting il drop-in di Redis non è ancora disponibile."
+msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
+msgstr "Esegui JavaScript non essenziale dopo che la pagina è stata caricata in modo che stili e immagini possano caricarsi più velocemente."
+
+#: build/performance/performance.min.js:2
+msgid "Save"
+msgstr "Salva"
 
 #: build/performance/performance.min.js:5
-msgid "Hosting could not locate WordPress for this site."
-msgstr "L'hosting non è riuscito a trovare WordPress per questo sito."
+msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr "Gli script sono raggruppati in base alla loro posizione originale, concatenati e minificati per ridurre il tempo di caricamento del sito e ridurre il numero di richieste."
 
-#: build/performance/performance.min.js:5
-msgid "Hosting API returned an unexpected error while enabling Redis."
-msgstr "L'API di hosting ha restituito un errore inaspettato durante l'abilitazione di Redis."
+#. translators: 1: the setting key, 2: the on/off status
+#: includes/Images/WPCLI/ImageCommandHandler.php:208
+#, php-format
+msgid "Setting '%1$s' has been turned %2$s."
+msgstr "L'impostazione '%1$s' è stata trasformata in %2$s."
 
-#: build/performance/performance.min.js:5
-msgid "Failed to download the Redis object cache drop-in."
-msgstr "Non è riuscito a scaricare il drop-in della cache degli oggetti Reddis."
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:75
+#, php-format
+msgid "Setting 'activeOnDesktop' has been turned %s."
+msgstr "L'impostazione 'activeOnDesktop' è stata ridotta in percentuali."
 
-#: build/performance/performance.min.js:5
-msgid "Downloaded drop-in content was invalid."
-msgstr "Il contenuto drop-in scaricato era invalido."
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:104
+#, php-format
+msgid "Setting 'activeOnMobile' has been turned %s."
+msgstr "Impostare 'activeOnMobile' è stato ridotto di percentuali."
+
+#. translators: %s is the new behavior value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:176
+#, php-format
+msgid "Setting 'behavior' has been set to '%s'."
+msgstr "Impostare 'comportamento' è stato impostato su '%s'."
+
+#. translators: %s is the numeric value for hoverDelay.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:207
+#, php-format
+msgid "Setting 'hoverDelay' has been set to '%s'."
+msgstr "Impostare 'hoverDelay' è stato impostato su '%s'."
+
+#. translators: %s is the new ignoreKeywords value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:286
+#, php-format
+msgid "Setting 'ignoreKeywords' has been set to '%s'."
+msgstr "Impostare 'ignoreKeywords' è stato impostato su '%s'."
+
+#. translators: %s is the on/off status.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:133
+#, php-format
+msgid "Setting 'instantClick' has been turned %s."
+msgstr "Impostare 'instantClick' è stato ridotto di percentuali."
+
+#. translators: %s is the new mobile behavior value.
+#: includes/LinkPrefetch/WPCLI/LinkPrefetchCommandHandler.php:247
+#, php-format
+msgid "Setting 'mobileBehavior' has been set to '%s'."
+msgstr "Impostare 'mobileBehavior' è stato impostato su '%s'."
+
+#. translators: %s is the new cache exclusion list.
+#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:136
+#, php-format
+msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
+msgstr "L'impostazione 'newfold_cache_exclusion' è stata aggiornata a: '%s'."
+
+#. translators: %s is the new cache level.
+#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:66
+#, php-format
+msgid "Setting 'newfold_cache_level' has been set to '%s'."
+msgstr "Impostare 'newfold_cache_level' è stato impostato su '%s'."
+
+#. translators: %s is the new boolean status.
+#: includes/Cache/Types/WPCLI/CacheTypesCommandHandler.php:98
+#, php-format
+msgid "Setting 'newfold_skip_404_handling' has been set to '%s'."
+msgstr "Impostare 'newfold_skip_404_handling' è stato impostato su '%s'."
+
+#: includes/HealthChecks/PermalinksHealthCheck.php:17
+msgid "Setting permalinks to anything other than plain can improve performance and SEO."
+msgstr "Impostare i permalink su qualsiasi cosa diversa dal semplice può migliorare prestazioni e SEO."
+
+#: includes/HealthChecks/AutosaveIntervalHealthCheck.php:17
+msgid "Setting the autosave interval to a longer period can reduce server load. It is recommended to set it to 30 seconds or more."
+msgstr "Impostare l'intervallo di autosalvataggio a un periodo più lungo può ridurre il carico del server. Si consiglia di impostarla a 30 secondi o più."
+
+#: includes/HealthChecks/PostRevisionsHealthCheck.php:17
+msgid "Setting the number of post revisions to a lower number can reduce database bloat."
+msgstr "Impostare il numero di revisioni dei post a un numero inferiore può ridurre il gonfiore del database."
+
+#: includes/Cache/Types/ObjectCache.php:263
+msgid "Setting up object cache. Please wait a few seconds and try again."
+msgstr "Configurazione della cache degli oggetti. Per favore, aspetta qualche secondo e riprova."
+
+#: includes/Fonts/FontSettings.php:56
+msgid "Settings for NFD Font Optimization."
+msgstr "Impostazioni per l'ottimizzazione dei font NFD."
+
+#: includes/Images/ImageSettings.php:89
+msgid "Settings for NFD Image Optimization."
+msgstr "Impostazioni per l'ottimizzazione dell'immagine NFD."
+
+#: includes/Images/ImageSettings.php:124
+msgid "Settings for lazy loading."
+msgstr "Impostazioni per caricamento lento."
+
+#: build/performance/performance.min.js:2
+msgid "Settings updated successfully"
+msgstr "Impostazioni aggiornate con successo"
 
 #: build/performance/performance.min.js:5
 msgid "Skip 404"
 msgstr "Salta 404"
 
 #: build/performance/performance.min.js:5
+msgid "Skip 404 saved"
+msgstr "Impostazione “Salta 404” salvata"
+
+#: build/performance/performance.min.js:2
+msgid "Something went wrong while updating the settings. Please try again."
+msgstr "Qualcosa è andato storto durante l'aggiornamento delle impostazioni. Per favore riprova."
+
+#: build/performance/performance.min.js:5
+msgid "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled."
+msgstr "Memorizzare i risultati delle query del database in Redis in modo che le richieste ripetute vengano servite dalla memoria invece che dal database. Cancella la cache sopra svuota anche la cache degli oggetti quando è abilitata."
+
+#: build/performance/performance.min.js:5
+msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
+msgstr "Gli stili sono raggruppati in base alla loro posizione originale, concatenati e minificati per ridurre il tempo di caricamento del sito e ridurre il numero di richieste."
+
+#: includes/Images/RestApi/ImagesController.php:60
+msgid "The ID of the media item to optimize."
+msgstr "L'ID dell'elemento multimediale da ottimizzare."
+
+#: includes/RestApi/JetpackController.php:93 includes/RestApi/Skip404Controller.php:74
+msgid "The fields 'id' and 'value' are required."
+msgstr "Sono richiesti i campi 'id' e 'value'."
+
+#: includes/RestApi/JetpackController.php:81 includes/RestApi/Skip404Controller.php:62
+msgid "The parameter 'field' is missing or invalid."
+msgstr "Il parametro 'campo' manca o non è valido."
+
+#: includes/Images/ImageService.php:53
+msgid "The provided image URL is invalid."
+msgstr "L'URL dell'immagine fornito è invalido."
+
+#: build/performance/performance.min.js:2
+msgid "This setting controls what pages pass a “no-cache” header so that page caching and browser caching is not used."
+msgstr "Questa impostazione controlla quali pagine inviano un’intestazione “no-cache”, in modo che non venga utilizzata la cache delle pagine o del browser."
+
+#. translators: %s: Time remaining
+#: includes/Images/ImageLimitBanner.php:56 includes/Images/ImageService.php:80
+#, php-format
+msgid "This site has made too many requests in a short period. Please wait %s before trying again."
+msgstr "Questo sito ha fatto troppe richieste in poco tempo. Attendi qualche percentuale prima di riprovare."
+
+#: build/performance/performance.min.js:5
+msgid "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically."
+msgstr "Questo sito non è collegato a Hiive, quindi le credenziali Redis non possono essere provisionate automaticamente."
+
+#: includes/Images/ImageService.php:69 build/performance/performance.min.js:2
+msgid "This site no longer qualifies for image optimization as it has reached its usage limits."
+msgstr "Questo sito non si qualifica più per l'ottimizzazione dell'immagine in quanto ha raggiunto i suoi limiti di utilizzo."
+
+#. translators: %s: Support link
+#: includes/Images/ImageLimitBanner.php:74
+#, php-format
+msgid "This site no longer qualifies for image optimization as it has reached its usage limits. Please <a href=\"%s\">contact support</a> for assistance."
+msgstr "Questo sito non è più idoneo all'ottimizzazione delle immagini poiché ha raggiunto i limiti di utilizzo. Per assistenza <a href=\"%s\">contatta l'assistenza</a> tecnica."
+
+#: includes/Fonts/FontSettings.php:83
+msgid "Timestamp of last update."
+msgstr "Timestamp dell'ultimo aggiornamento."
+
+#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:15
+msgid "Trash is emptied every 30 days or less"
+msgstr "La spazzatura viene svuotata ogni 30 giorni o meno"
+
+#: includes/HealthChecks/EmptyTrashDaysHealthCheck.php:16
+msgid "Trash is emptied less frequently than every 30 days."
+msgstr "La spazzatura viene svuotata meno frequentemente di ogni 30 giorni."
+
+#. translators: %s: HTTP response code
+#: includes/Images/ImageService.php:491
+#, php-format
+msgid "Unexpected response from Cloudflare Worker: HTTP %s"
+msgstr "Risposta inaspettata da Cloudflare Worker: HTTP %s"
+
+#: includes/Cache/Types/PhpRedisPinger.php:92
+msgid "Unsupported WP_REDIS_CLUSTER configuration."
+msgstr "Configurazione WP_REDIS_CLUSTER non supportata."
+
+#: build/performance/performance.min.js:2
+msgid "Update failed"
+msgstr "Aggiornamento fallito"
+
+#: build/performance/performance.min.js:2
+msgid "Upgrade to unlock"
+msgstr "Aggiorna per sbloccare"
+
+#: build/performance/performance.min.js:2
+msgid "Usage:"
+msgstr "Utilizzo:"
+
+#: includes/HealthChecks/CronLockTimeoutHealthCheck.php:14
+msgid "WP Cron Lock Timeout"
+msgstr "Timeout per blocco cron WP"
+
+#: build/performance/performance.min.js:2
+msgid "We automatically clear your cache as you work (creating content, changing settings, installing plugins and more). But you can manually clear it here to be confident it is fresh."
+msgstr "Svuotiamo automaticamente la cache mentre lavori (creando contenuti, modificando impostazioni, installando plugin e altro). Ma puoi anche svuotarla manualmente qui per essere sicuro che sia aggiornata."
+
+#: build/performance/performance.min.js:2
+msgid "We automatically optimize your uploaded images to WebP format for faster performance and reduced file sizes. You can also choose to delete the original images to save storage space."
+msgstr "Ottimizziamo automaticamente le tue immagini caricate nel formato WebP per prestazioni più veloci e dimensioni di file ridotte. Puoi anche scegliere di eliminare le immagini originali per risparmiare spazio di archiviazione."
+
+#: includes/Images/ImageService.php:320
+msgid "WebP file is missing or empty."
+msgstr "Il file WebP manca o è vuoto."
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, all your new image uploads will be automatically optimized to WebP format, ensuring faster page loading and reduced file sizes."
+msgstr "Quando abilitato, tutti i tuoi nuovi caricamenti di immagini saranno automaticamente ottimizzati nel formato WebP, garantendo un caricamento più veloce delle pagine e dimensioni di file ridotte."
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, allows bulk optimization of images in the media library."
+msgstr "Quando abilitato, consente l'ottimizzazione in blocco delle immagini nella libreria multimediale."
+
+#: build/performance/performance.min.js:2
+msgid "When enabled, optimized images will be served in place of original images when they exist, improving performance."
+msgstr "Quando abilitato, le immagini ottimizzate verranno servite al posto delle immagini originali quando esistono, migliorando le prestazioni."
+
+#: build/performance/performance.min.js:5
 msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
 msgstr "Quando abilitata, le risorse statiche come immagini e font useranno una pagina 404 predefinita del server e non quella di WordPress. Le pagine e gli articoli continueranno a utilizzare le pagine 404 di WordPress."
 
-#: build/performance/performance.min.js:5
-msgid "Enable Skip 404 Handling For Static Files"
-msgstr "Abilita l’ignoramento dei 404 per i file statici"
+#: build/performance/performance.min.js:2
+msgid "When enabled, the original uploaded image is deleted and replaced with the optimized version, helping to save storage space. If disabled, the optimized image is saved as a separate file, retaining the original."
+msgstr "Quando abilitato, l'immagine originale caricata viene eliminata e sostituita con la versione ottimizzata, contribuendo a risparmiare spazio di archiviazione. Se disabilitato, l'immagine ottimizzata viene salvata come file separato, conservando l'originale."
 
 #: build/performance/performance.min.js:5
-msgid "Skip 404 saved"
-msgstr "Impostazione “Salta 404” salvata"
+msgid "Your PHP version does not meet requirements for Redis on this hosting environment."
+msgstr "La tua versione PHP non soddisfa i requisiti di Redis in questo ambiente di hosting."
+
+#: build/performance/performance.min.js:2
+msgid "Your image optimization settings have been saved."
+msgstr "Le tue impostazioni di ottimizzazione delle immagini sono state salvate."
+
+#: build/performance/performance.min.js:2
+msgid "e.g. cart,checkout,wp-admin"
+msgstr "ad esempio carrello, checkout, wp-admin"
+
+#: build/performance/performance.min.js:2
+msgid "images processed of"
+msgstr "immagini elaborate su"
+
+#: includes/Cache/Types/PhpRedisPinger.php:24
+msgid "phpredis is not available."
+msgstr "PHREDIS non è disponibile."
