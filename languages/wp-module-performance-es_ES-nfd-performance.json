@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-27T13:35:02+00:00",
+    "translation-revision-date": "2026-04-27T13:43:22+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -11,19 +11,19 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Could not download object cache files. Please try again later.": [
-                ""
+                "No se pudieron descargar los archivos de cach\u00e9 de objetos. Int\u00e9ntelo de nuevo m\u00e1s tarde."
             ],
             "Could not enable object cache right now. Please try again later.": [
-                ""
+                "No se pudo habilitar la cach\u00e9 de objetos en este momento. Int\u00e9ntelo de nuevo m\u00e1s tarde."
             ],
             "Could not save object cache file. Check file permissions or contact support.": [
-                ""
+                "No se pudo guardar el archivo de cach\u00e9 de objetos. Compruebe los permisos de archivos o contacte con el soporte."
             ],
             "Could not connect to the object cache. Please try again later.": [
-                ""
+                "No se pudo conectar con la cach\u00e9 de objetos. Int\u00e9ntelo de nuevo m\u00e1s tarde."
             ],
             "Object cache cannot be enabled automatically right now. Please contact support.": [
-                ""
+                "La cach\u00e9 de objetos no puede habilitarse autom\u00e1ticamente en este momento. Contacte con el soporte."
             ],
             "Concatenate CSS": [
                 "Concatenar CSS"
@@ -380,19 +380,19 @@
                 "La cach\u00e9 de objetos de otro plugin est\u00e1 activa. Desact\u00edvalo en ese plugin para usar este interruptor."
             ],
             "Object caching is not supported on this server. Please contact your hosting provider for help.": [
-                ""
+                "La cach\u00e9 de objetos no es compatible con este servidor. Contacte con su proveedor de alojamiento para obtener ayuda."
             ],
             "Object cache is not configured yet. Please try again in a moment.": [
-                ""
+                "La cach\u00e9 de objetos a\u00fan no est\u00e1 configurada. Int\u00e9ntelo de nuevo en un momento."
             ],
             "Setting up object cache. We will retry automatically in a few seconds.": [
-                ""
+                "Configurando la cach\u00e9 de objetos. Reintentaremos autom\u00e1ticamente en unos segundos."
             ],
             "Object cache is not ready on this server yet. Please try again later.": [
-                ""
+                "La cach\u00e9 de objetos a\u00fan no est\u00e1 lista en este servidor. Int\u00e9ntelo de nuevo m\u00e1s tarde."
             ],
             "Could not enable object cache right now. Please contact support.": [
-                ""
+                "No se pudo habilitar la cach\u00e9 de objetos en este momento. Contacte con el soporte."
             ],
             "Skip 404": [
                 "Omitir 404"
