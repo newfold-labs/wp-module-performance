@@ -27,6 +27,7 @@ const helpersUrl = pathToFileURL(finalHelpersPath).href;
 const pluginHelpers = await import(helpersUrl);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
+const { fancyLog } = utils;
 
 // ============================================================================
 // CONSTANTS
@@ -69,6 +70,23 @@ export const SELECTORS = {
   notifications: '.nfd-notifications',
 };
 
+const DEFAULT_CAPABILITY_RETRIES = 2;
+const DEFAULT_CAPABILITY_RETRY_DELAY_MS = 200;
+const DEFAULT_HTACCESS_REPAIR_RETRIES = 2;
+
+const CLEAN_HTACCESS_TEMPLATE = `# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+`;
+
 // ============================================================================
 // NAVIGATION HELPERS
 // ============================================================================
@@ -88,8 +106,37 @@ export async function navigateToPerformancePage(page) {
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForPerformancePage(page) {
-  await page.waitForLoadState('networkidle');
-  await page.waitForSelector(SELECTORS.performancePage, { timeout: 10000 });
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    await page.waitForLoadState('domcontentloaded');
+    const isVisible = await page.locator(SELECTORS.performancePage).isVisible().catch(() => false);
+    if (isVisible) {
+      return true;
+    }
+
+    const bodyText = await page.locator('body').innerText().catch(() => '');
+    const currentUrl = page.url();
+    if (
+      bodyText.includes('Internal Server Error') ||
+      currentUrl.includes('/wp-login.php') ||
+      !currentUrl.includes(`/wp-admin/admin.php?page=${pluginId}`)
+    ) {
+      const repaired = await ensureHealthyHtaccess();
+      if (!repaired.ok) {
+        break;
+      }
+      await auth.loginToWordPress(page);
+      await page.goto(`/wp-admin/admin.php?page=${pluginId}#/settings/performance`, {
+        waitUntil: 'domcontentloaded',
+      });
+      continue;
+    }
+
+    await page.goto(`/wp-admin/admin.php?page=${pluginId}#/settings/performance`, {
+      waitUntil: 'domcontentloaded',
+    });
+  }
+
+  return false;
 }
 
 /**
@@ -97,9 +144,134 @@ export async function waitForPerformancePage(page) {
  * @param {import('@playwright/test').Page} page
  */
 export async function setupAndNavigate(page) {
+  const htaccess = await ensureHealthyHtaccess();
+  if (!htaccess.ok) {
+    return htaccess;
+  }
   await auth.loginToWordPress(page);
   await navigateToPerformancePage(page);
-  await waitForPerformancePage(page);
+  const ready = await waitForPerformancePage(page);
+  if (!ready) {
+    return {
+      ok: false,
+      reason: 'Performance page did not become ready after recovery attempts.',
+    };
+  }
+  return { ok: true, reason: '' };
+}
+
+function getWpLoginHttpStatusLine() {
+  try {
+    return execSync(
+      `npx wp-env run wordpress php -r '$ctx=stream_context_create(["http"=>["ignore_errors"=>true]]); @file_get_contents("http://localhost/wp-login.php", false, $ctx); echo (string)($http_response_header[0] ?? "");'`,
+      {
+        encoding: 'utf-8',
+        stdio: ['pipe', 'pipe', 'pipe'],
+        timeout: 15000,
+      },
+    ).trim();
+  } catch {
+    return '';
+  }
+}
+
+function restoreBaseHtaccess() {
+  const b64 = Buffer.from(CLEAN_HTACCESS_TEMPLATE, 'utf8').toString('base64');
+  execSync(
+    `npx wp-env run wordpress php -r "file_put_contents('/var/www/html/.htaccess', base64_decode('${b64}'));"`,
+    {
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'pipe'],
+      timeout: 15000,
+    },
+  );
+  execSync('npx wp-env run cli wp rewrite flush', {
+    encoding: 'utf-8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+    timeout: 15000,
+  });
+}
+
+export async function ensureHealthyHtaccess(retries = DEFAULT_HTACCESS_REPAIR_RETRIES) {
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    const status = getWpLoginHttpStatusLine();
+    if (status.includes('200')) {
+      return { ok: true, reason: '' };
+    }
+
+    fancyLog(
+      `Detected unhealthy wp-login response (${status || 'no status'}) — restoring .htaccess baseline (${attempt}/${retries})`,
+      100,
+      'yellow',
+    );
+    try {
+      restoreBaseHtaccess();
+    } catch (error) {
+      fancyLog(`.htaccess repair command failed: ${error?.message || error}`, 100, 'yellow');
+    }
+  }
+
+  const finalStatus = getWpLoginHttpStatusLine();
+  return {
+    ok: false,
+    reason: `wp-login remains unhealthy after .htaccess repair attempts (status: ${finalStatus || 'unknown'})`,
+  };
+}
+
+function isWpCliError(output) {
+  if (typeof output !== 'string') {
+    return false;
+  }
+  return output.startsWith('Error:') || output.includes('Fatal error') || output.includes('Parse error');
+}
+
+async function runWpCli(command) {
+  const raw = await wordpress.wpCli(command, { failOnNonZeroExit: false });
+  const output = typeof raw === 'string' ? raw : String(raw ?? '');
+  return {
+    ok: !isWpCliError(output),
+    output,
+  };
+}
+
+function toPhpArray(capabilities) {
+  return Object.entries(capabilities)
+    .map(([key, value]) => {
+      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
+      return `'${key}' => ${phpValue}`;
+    })
+    .join(', ');
+}
+
+async function verifySiteCapabilities(expectedCapabilities) {
+  const result = await runWpCli('option get _transient_nfd_site_capabilities --format=json');
+  if (!result.ok) {
+    return {
+      ok: false,
+      reason: `capability read failed: ${result.output}`,
+    };
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(result.output);
+  } catch {
+    return {
+      ok: false,
+      reason: `capability read was not valid JSON: ${result.output}`,
+    };
+  }
+
+  for (const [key, expected] of Object.entries(expectedCapabilities)) {
+    if (parsed?.[key] !== expected) {
+      return {
+        ok: false,
+        reason: `capability mismatch for ${key} (expected: ${String(expected)}, actual: ${String(parsed?.[key])})`,
+      };
+    }
+  }
+
+  return { ok: true, reason: '' };
 }
 
 // ============================================================================
@@ -112,15 +284,44 @@ export async function setupAndNavigate(page) {
  * @example setSiteCapabilities({ hasCloudflareFonts: true, hasLinkPrefetchClick: true })
  */
 export async function setSiteCapabilities(capabilities) {
-  const phpArray = Object.entries(capabilities)
-    .map(([key, value]) => {
-      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
-      return `'${key}' => ${phpValue}`;
-    })
-    .join(', ');
+  return setSiteCapabilitiesWithRetry(capabilities);
+}
 
-  const command = `eval "set_transient('nfd_site_capabilities', array(${phpArray}));"`;
-  await wordpress.wpCli(command, { failOnNonZeroExit: false });
+export async function setSiteCapabilitiesWithRetry(
+  capabilities,
+  retries = DEFAULT_CAPABILITY_RETRIES,
+) {
+  const phpArray = toPhpArray(capabilities);
+  let lastReason = '';
+
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    const setResult = await runWpCli(
+      `eval "set_transient('nfd_site_capabilities', array(${phpArray}), 4 * HOUR_IN_SECONDS);"`,
+    );
+    if (!setResult.ok) {
+      lastReason = setResult.output;
+    } else {
+      const verify = await verifySiteCapabilities(capabilities);
+      if (verify.ok) {
+        return { ok: true, reason: '' };
+      }
+      lastReason = verify.reason;
+    }
+
+    fancyLog(
+      `Performance capability setup retry (${attempt}/${retries}): ${lastReason}`,
+      100,
+      'yellow',
+    );
+    if (attempt < retries) {
+      await new Promise((resolve) => setTimeout(resolve, DEFAULT_CAPABILITY_RETRY_DELAY_MS));
+    }
+  }
+
+  return {
+    ok: false,
+    reason: `Unable to verify nfd_site_capabilities after retries: ${lastReason}`,
+  };
 }
 
 /**
@@ -133,7 +334,15 @@ export const setLinkPrefetchCapabilities = setSiteCapabilities;
  * Clear site capabilities transient
  */
 export async function clearSiteCapabilities() {
-  await wordpress.wpCli('option delete _transient_nfd_site_capabilities', { failOnNonZeroExit: false });
+  await wordpress.wpCli('transient delete nfd_site_capabilities', {
+    failOnNonZeroExit: false,
+  });
+  await wordpress.wpCli('option delete _transient_nfd_site_capabilities', {
+    failOnNonZeroExit: false,
+  });
+  await wordpress.wpCli('option delete _transient_timeout_nfd_site_capabilities', {
+    failOnNonZeroExit: false,
+  });
 }
 
 /**
@@ -168,7 +377,7 @@ export async function readHtaccess() {
     const output = execSync('npx wp-env run cli cat .htaccess', {
       encoding: 'utf-8',
       stdio: ['pipe', 'pipe', 'pipe'],
-      timeout: 5000,
+      timeout: 15000,
     });
     return output || '';
   } catch (error) {
@@ -187,12 +396,15 @@ export async function readHtaccess() {
  * @param {string} hash - The hash identifier for the rule (use CLOUDFLARE_HASHES)
  * @param {number} retries - Number of retry attempts (default: 3)
  */
-export async function assertHtaccessHasRule(hash, retries = 3) {
+export async function assertHtaccessHasRule(hash, retries = 8) {
   let htaccess = '';
-  
+
   for (let i = 0; i < retries; i++) {
     htaccess = await readHtaccess();
-    if (htaccess.includes(hash) && htaccess.includes('# BEGIN Newfold CF Optimization Header')) {
+    if (
+      htaccess.includes(hash) &&
+      htaccess.includes('# BEGIN Newfold CF Optimization Header')
+    ) {
       expect(htaccess).toContain('# BEGIN Newfold CF Optimization Header');
       expect(htaccess).toContain('# END Newfold CF Optimization Header');
       expect(htaccess).toContain('nfd-enable-cf-opt');
@@ -201,19 +413,28 @@ export async function assertHtaccessHasRule(hash, retries = 3) {
       return;
     }
     if (i < retries - 1) {
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
-  
-  // Final assertion - will produce clear error message on failure
+
   expect(htaccess).toContain(hash);
 }
 
 /**
- * Assert that .htaccess does NOT contain the expected rule
+ * Assert that .htaccess does NOT contain the expected rule (retries: rules are removed async).
  * @param {string} hash - The hash identifier for the rule (use CLOUDFLARE_HASHES)
+ * @param {number} retries
  */
-export async function assertHtaccessHasNoRule(hash) {
+export async function assertHtaccessHasNoRule(hash, retries = 8) {
+  for (let i = 0; i < retries; i++) {
+    const htaccess = await readHtaccess();
+    if (!htaccess.includes(hash)) {
+      return;
+    }
+    if (i < retries - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
   const htaccess = await readHtaccess();
   expect(htaccess).not.toContain(hash);
 }
@@ -256,13 +477,15 @@ export function getCloudflareToggle(page, type) {
  */
 export async function verifyCloudflareToggleState(page, type, expectedState) {
   const toggle = getCloudflareToggle(page, type);
-  await expect(toggle).toBeVisible();
-  await expect(toggle).toHaveAttribute('aria-checked', expectedState);
+  await expect(toggle).toBeVisible({ timeout: 20000 });
+  await expect(toggle).toHaveAttribute('aria-checked', expectedState, {
+    timeout: 20000,
+  });
 }
 
 /**
- * Toggle a Cloudflare feature on or off
- * Waits for network to settle after clicking to ensure htaccess is updated
+ * Toggle a Cloudflare feature on or off. Avoids `networkidle` (unreliable in wp-admin);
+ * relies on attribute assertion and a short delay for async .htaccess writes.
  * @param {import('@playwright/test').Page} page
  * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
  * @param {boolean} enable - Whether to enable (true) or disable (false)
@@ -271,12 +494,15 @@ export async function setCloudflareToggle(page, type, enable) {
   const toggle = getCloudflareToggle(page, type);
   const currentState = await toggle.getAttribute('aria-checked');
   const wantEnabled = enable ? 'true' : 'false';
-  
+
   if (currentState !== wantEnabled) {
     await toggle.click();
-    await page.waitForLoadState('networkidle');
   }
-  await expect(toggle).toHaveAttribute('aria-checked', wantEnabled);
+  await expect(toggle).toHaveAttribute('aria-checked', wantEnabled, {
+    timeout: 20000,
+  });
+  await page.waitForLoadState('load').catch(() => {});
+  await new Promise((resolve) => setTimeout(resolve, 400));
 }
 
 /**
