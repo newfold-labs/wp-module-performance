@@ -37,20 +37,19 @@ final class ObjectCachePreflight {
 		if ( ! $extension_loaded ) {
 			$ping_ok = false;
 			$code    = ObjectCacheErrorCodes::PHPREDIS_MISSING;
-			$message = __( 'The PHP Redis extension (phpredis) is not loaded.', 'wp-module-performance' );
+			$message = __( 'Object caching is not supported on this server.', 'wp-module-performance' );
 		} elseif ( ! $configured ) {
 			$ping_ok = false;
 			// Same order as RedisCredentialsProvisioner::provision_enable_redis_via_hosting_api() before HTTP.
 			if ( ! $hiive_connected ) {
 				$code    = ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED;
 				$message = __(
-					'This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.',
+					'Object cache cannot be enabled automatically right now.',
 					'wp-module-performance'
 				);
-			} else {
-				$code    = ObjectCacheErrorCodes::CREDENTIALS_MISSING;
-				$message = __( 'Redis credentials are not present in wp-config.php.', 'wp-module-performance' );
 			}
+			// When wp-config lacks creds but Hiive is connected, enabling will provision creds via the
+			// hosting API — that's a normal "ready to enable" state, not an error worth surfacing in the UI.
 		} elseif ( $include_live_ping ) {
 			// Important: bootstrap WP_REDIS_* from wp-config when constants exist in file but aren't defined() yet.
 			ObjectCache::bootstrap_redis_connection_constants_for_preflight();
@@ -59,7 +58,7 @@ final class ObjectCachePreflight {
 			$ping_ok = (bool) ( $ping['ok'] ?? false );
 			if ( ! $ping_ok ) {
 				$code    = ObjectCacheErrorCodes::REDIS_UNREACHABLE;
-				$message = isset( $ping['message'] ) ? (string) $ping['message'] : __( 'Could not connect to Redis.', 'wp-module-performance' );
+				$message = __( 'Could not connect to the object cache.', 'wp-module-performance' );
 			}
 		}
 

@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-01T22:20:41+00:00",
+    "translation-revision-date": "2026-04-27T13:43:22+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
     "domain": "messages",
@@ -7,32 +7,32 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "en_GB",
+                "lang": "nl_NL",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Optimizing Images\u2026": [
-                "Optimising Images\u2026"
+                "Afbeeldingen optimaliseren\u2026"
             ],
             "Preparing files\u2026": [
-                "Preparing files\u2026"
+                "Bestanden voorbereiden\u2026"
             ],
             "Done": [
-                "Done"
+                "Voltooid"
             ],
             "Optimization Canceled": [
-                "Optimisation Cancelled"
+                "Optimalisatie geannuleerd"
             ],
             "Optimizing:": [
-                "Optimising:"
+                "Optimaliseren:"
             ],
             "Optimization Complete!": [
-                "Optimisation Complete!"
+                "Optimalisatie voltooid!"
             ],
             "An error occurred.": [
-                "An error occurred."
+                "Er is een fout opgetreden."
             ],
             "Optimize": [
-                "Optimise"
+                "Optimaliseren"
             ]
         }
     }

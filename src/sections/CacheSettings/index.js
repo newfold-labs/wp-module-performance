@@ -51,7 +51,7 @@ const CacheSettings = () => {
 				setUpdating( false );
 				setCacheLevel( selectedLevel );
 				dispatchSetCacheLevel( selectedLevel );
-				if ( selectedLevel <= 0 && response?.objectCache ) {
+				if ( response?.objectCache ) {
 					dispatchSetObjectCache( response.objectCache );
 				}
 			} )

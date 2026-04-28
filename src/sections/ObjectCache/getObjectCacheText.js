@@ -20,43 +20,43 @@ const getObjectCacheText = () => ( {
 				'wp-module-performance'
 			),
 			phpredis_missing: __(
-				'PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version.',
+				'Object caching is not supported on this server. Please contact your hosting provider for help.',
 				'wp-module-performance'
 			),
 			credentials_missing: __(
-				'Redis credentials are not present in wp-config.php yet.',
+				'Object cache is not configured yet. Please try again in a moment.',
 				'wp-module-performance'
 			),
 			credentials_pending_reload: __(
-				'Redis credentials are being applied. We will retry automatically in a few seconds.',
+				'Setting up object cache. We will retry automatically in a few seconds.',
 				'wp-module-performance'
 			),
 			hiive_not_connected: __(
-				'This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.',
+				'Object cache cannot be enabled automatically right now. Please contact support.',
 				'wp-module-performance'
 			),
 			huapi_token_unavailable: __(
-				'Hosting token is not available yet. Please try again shortly or contact support.',
+				'Could not enable object cache right now. Please try again later.',
 				'wp-module-performance'
 			),
 			hal_site_id_missing: __(
-				'Hosting site id is not available yet. Please try again shortly or contact support.',
+				'Could not enable object cache right now. Please try again later.',
 				'wp-module-performance'
 			),
-			redis_unreachable: __( 'Could not connect to Redis with the current credentials.', 'wp-module-performance' ),
-			redisServiceInactive: __( 'Redis service is not active on the server yet.', 'wp-module-performance' ),
+			redis_unreachable: __( 'Could not connect to the object cache. Please try again later.', 'wp-module-performance' ),
+			redisServiceInactive: __( 'Object cache is not ready on this server yet. Please try again later.', 'wp-module-performance' ),
 			phpVersionUnsupported: __(
-				'Your PHP version does not meet requirements for Redis on this hosting environment.',
+				'Object caching is not supported on this server. Please contact your hosting provider for help.',
 				'wp-module-performance'
 			),
-			dropInUnavailable: __( 'Hosting reports the Redis drop-in is not available yet.', 'wp-module-performance' ),
-			wordpressNotFound: __( 'Hosting could not locate WordPress for this site.', 'wp-module-performance' ),
-			nfd_hiive_error: __( 'Could not reach Hiive to provision Redis credentials.', 'wp-module-performance' ),
-			nfd_hosting_uapi_error: __( 'Hosting API could not enable Redis for this site.', 'wp-module-performance' ),
-			huapi_error: __( 'Hosting API returned an unexpected error while enabling Redis.', 'wp-module-performance' ),
-			download_failed: __( 'Failed to download the Redis object cache drop-in.', 'wp-module-performance' ),
-			invalid_dropin: __( 'Downloaded drop-in content was invalid.', 'wp-module-performance' ),
-			write_failed: __( 'Could not write object-cache.php. Check file permissions.', 'wp-module-performance' ),
+			dropInUnavailable: __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			wordpressNotFound: __( 'Could not enable object cache right now. Please contact support.', 'wp-module-performance' ),
+			nfd_hiive_error: __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			nfd_hosting_uapi_error: __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			huapi_error: __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			download_failed: __( 'Could not download object cache files. Please try again later.', 'wp-module-performance' ),
+			invalid_dropin: __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			write_failed: __( 'Could not save object cache file. Check file permissions or contact support.', 'wp-module-performance' ),
 		};
 
 		if ( code && map[ code ] ) {

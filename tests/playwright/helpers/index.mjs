@@ -47,25 +47,25 @@ export const CLOUDFLARE_HASHES = {
 export const SELECTORS = {
   // Page container
   performancePage: '#nfd-performance',
-  
+
   // Cache settings
   cacheSettings: '.newfold-cache-settings',
   clearCache: '.newfold-clear-cache',
   clearCacheButton: '.clear-cache-button',
   cacheLevelOff: 'input[type="radio"]#cache-level-0',
   cacheLevelOn: 'input[type="radio"]#cache-level-1',
-  
+
   // Link Prefetch
   linkPrefetchSettings: '[data-cy="link-prefetch-settings"]',
   linkPrefetchBehaviorDropdown: '[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label',
   linkPrefetchDropdownOptions: '[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > .nfd-select__option',
   linkPrefetchDesktopToggle: '[data-cy="link-prefetch-active-desktop-toggle"]',
-  
+
   // Cloudflare toggles
   cloudflareFontsToggle: '[data-id="cloudflare-fonts"]',
   cloudflareMirageToggle: '[data-id="cloudflare-mirage"]',
   cloudflarePolishToggle: '[data-id="cloudflare-polish"]',
-  
+
   // Notifications
   notifications: '.nfd-notifications',
 };
@@ -501,7 +501,7 @@ export async function setCloudflareToggle(page, type, enable) {
   await expect(toggle).toHaveAttribute('aria-checked', wantEnabled, {
     timeout: 20000,
   });
-  await page.waitForLoadState('load').catch(() => {});
+  await page.waitForLoadState('load').catch(() => { });
   await new Promise((resolve) => setTimeout(resolve, 400));
 }
 
@@ -536,16 +536,16 @@ export async function ensureLinkPrefetchToggleEnabled(page) {
 export async function checkLinkPrefetchCapabilities(page, type) {
   const dropdown = page.locator(SELECTORS.linkPrefetchBehaviorDropdown);
   await dropdown.click();
-  
+
   const options = page.locator(SELECTORS.linkPrefetchDropdownOptions);
-  
+
   if (type === 'onlyMouseDown') {
     await expect(options).toHaveCount(1);
     await expect(options.first()).toContainText('Prefetch on Mouse Down');
   } else {
     await expect(options).toHaveCount(2);
   }
-  
+
   // Close dropdown by clicking elsewhere
   await page.locator(SELECTORS.performancePage).click();
 }

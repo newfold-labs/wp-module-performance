@@ -55,6 +55,15 @@ class ObjectCache {
 	const OPTION_ENABLED_PREFERENCE = 'newfold_object_cache_enabled_preference';
 
 	/**
+	 * When true, disables all automatic object-cache.php deletion/replacement from this module
+	 * (plugins_loaded cleanup, reconcile, enable failure cleanup, disable file removal).
+	 *
+	 * Define in wp-config.php before wp-settings.php loads, for example:
+	 * `define( 'NFD_DISABLE_OBJECT_CACHE_AUTO_MANAGEMENT', true );`
+	 */
+	const DISABLE_AUTO_MANAGEMENT_CONSTANT = 'NFD_DISABLE_OBJECT_CACHE_AUTO_MANAGEMENT';
+
+	/**
 	 * Cached wp-config existence check (per request).
 	 *
 	 * @var bool|null
@@ -210,7 +219,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::DROPIN_OVERWRITTEN,
-				'message' => __( 'Another object cache drop-in is active. Disable it in the other plugin first.', 'wp-module-performance' ),
+				'message' => __( "Another plugin's object cache is active. Disable it in that plugin first.", 'wp-module-performance' ),
 			);
 		}
 
@@ -218,7 +227,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::PHPREDIS_MISSING,
-				'message' => __( 'The PHP Redis extension (phpredis) is required before object cache can be enabled.', 'wp-module-performance' ),
+				'message' => __( 'Object caching is not supported on this server.', 'wp-module-performance' ),
 			);
 		}
 
@@ -226,7 +235,8 @@ class ObjectCache {
 			$ping = self::run_connectivity_preflight();
 			if ( true !== $ping ) {
 				if (
-					is_array( $ping )
+					! self::is_object_cache_dropin_auto_management_disabled()
+					&& is_array( $ping )
 					&& isset( $ping['code'] )
 					&& ObjectCacheErrorCodes::REDIS_UNREACHABLE === $ping['code']
 				) {
@@ -250,7 +260,7 @@ class ObjectCache {
 				return array(
 					'success' => false,
 					'code'    => ObjectCacheErrorCodes::CREDENTIALS_PENDING_RELOAD,
-					'message' => __( 'Redis credentials are being applied. Please wait a few seconds and try again.', 'wp-module-performance' ),
+					'message' => __( 'Setting up object cache. Please wait a few seconds and try again.', 'wp-module-performance' ),
 				);
 			}
 		}
@@ -274,7 +284,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::DOWNLOAD_FAILED,
-				'message' => $response->get_error_message(),
+				'message' => __( 'Could not download object cache files. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -283,11 +293,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::DOWNLOAD_FAILED,
-				'message' => sprintf(
-					/* translators: %d: HTTP status code */
-					__( 'Failed to download object cache (HTTP %d).', 'wp-module-performance' ),
-					$code
-				),
+				'message' => __( 'Could not download object cache files. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -296,7 +302,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::INVALID_DROPIN,
-				'message' => __( 'Downloaded content is not valid. Please try again.', 'wp-module-performance' ),
+				'message' => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -320,7 +326,7 @@ class ObjectCache {
 		return array(
 			'success' => false,
 			'code'    => ObjectCacheErrorCodes::WRITE_FAILED,
-			'message' => __( 'Could not write object-cache.php. Check file permissions.', 'wp-module-performance' ),
+			'message' => __( 'Could not save object cache file. Check file permissions or contact support.', 'wp-module-performance' ),
 		);
 	}
 
@@ -340,6 +346,13 @@ class ObjectCache {
 		}
 		if ( ! self::is_our_drop_in( $path ) ) {
 			// Drop-in is not ours; do not delete it. Just record the user's preference so reconcile leaves it alone.
+			if ( $clear_preference ) {
+				update_option( self::OPTION_ENABLED_PREFERENCE, false );
+			}
+			return array( 'success' => true );
+		}
+
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
 			if ( $clear_preference ) {
 				update_option( self::OPTION_ENABLED_PREFERENCE, false );
 			}
@@ -378,7 +391,7 @@ class ObjectCache {
 
 		return array(
 			'success' => false,
-			'message' => __( 'Could not remove object-cache.php. Check file permissions.', 'wp-module-performance' ),
+			'message' => __( 'Could not disable object cache. Check file permissions or contact support.', 'wp-module-performance' ),
 		);
 	}
 
@@ -415,6 +428,10 @@ class ObjectCache {
 	 * @return void
 	 */
 	public static function maybe_restore_dropin() {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return;
+		}
+
 		if ( ! self::is_preference_enabled() ) {
 			return;
 		}
@@ -469,7 +486,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::CREDENTIALS_MISSING,
-				'message' => __( 'Redis credentials are not present in wp-config.php.', 'wp-module-performance' ),
+				'message' => __( 'Object cache is not configured yet.', 'wp-module-performance' ),
 			);
 		}
 
@@ -480,7 +497,7 @@ class ObjectCache {
 			return array(
 				'success' => false,
 				'code'    => ObjectCacheErrorCodes::REDIS_UNREACHABLE,
-				'message' => isset( $ping['message'] ) ? (string) $ping['message'] : __( 'Could not connect to Redis.', 'wp-module-performance' ),
+				'message' => __( 'Could not connect to the object cache. Please try again later.', 'wp-module-performance' ),
 			);
 		}
 
@@ -681,12 +698,12 @@ class ObjectCache {
 		}
 
 		$known = array(
-			ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED     => __( 'This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.', 'wp-module-performance' ),
-			ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE => __( 'HUAPI token is not available yet. Try again in a few minutes or contact support.', 'wp-module-performance' ),
-			ObjectCacheErrorCodes::HAL_SITE_ID_MISSING     => __( 'Hosting site id is not available yet. Try again in a few minutes or contact support.', 'wp-module-performance' ),
-			ObjectCacheErrorCodes::REDIS_UNREACHABLE       => __( 'Could not connect to Redis.', 'wp-module-performance' ),
-			'nfd_hiive_error'                              => __( 'Could not reach Hiive to provision Redis credentials.', 'wp-module-performance' ),
-			'nfd_hosting_uapi_error'                       => __( 'Hosting API could not enable Redis for this site.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED     => __( 'Object cache cannot be enabled automatically right now. Please contact support.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::HAL_SITE_ID_MISSING     => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			ObjectCacheErrorCodes::REDIS_UNREACHABLE       => __( 'Could not connect to the object cache. Please try again later.', 'wp-module-performance' ),
+			'nfd_hiive_error'                              => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
+			'nfd_hosting_uapi_error'                       => __( 'Could not enable object cache right now. Please try again later.', 'wp-module-performance' ),
 		);
 
 		if ( isset( $known[ $code ] ) ) {
@@ -716,9 +733,22 @@ class ObjectCache {
 	 * a constant (e.g. WP_REDIS_PREFIX from WP_CACHE_KEY_SALT or env). Also clears the enabled preference.
 	 * Checks for the drop-in file first so we skip wp-config read/parse on most requests (no drop-in).
 	 *
+	 * When the user has not turned host-managed object cache on (stored preference is not true), does
+	 * nothing: the UI can show "off" while the option is still unset, and the Redis Object Cache plugin
+	 * uses the same drop-in header fingerprint as ours.
+	 *
+	 * Opt out entirely with {@see self::DISABLE_AUTO_MANAGEMENT_CONSTANT}.
+	 *
 	 * @return void
 	 */
 	public static function maybe_remove_dropin_if_unavailable() {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return;
+		}
+		if ( ! self::is_preference_enabled() ) {
+			return;
+		}
+
 		$path = self::get_drop_in_path();
 		if ( ! file_exists( $path ) || ! self::is_our_drop_in( $path ) ) {
 			return;
@@ -730,6 +760,33 @@ class ObjectCache {
 	}
 
 	/**
+	 * Whether automatic drop-in install/remove/reconcile is disabled via wp-config constant.
+	 *
+	 * @see self::DISABLE_AUTO_MANAGEMENT_CONSTANT
+	 *
+	 * @return bool
+	 */
+	public static function is_object_cache_dropin_auto_management_disabled() {
+		$constant_name = self::DISABLE_AUTO_MANAGEMENT_CONSTANT;
+
+		return defined( $constant_name ) && self::normalize_to_bool( constant( $constant_name ) );
+	}
+
+	/**
+	 * Coerce a value to boolean (wp-config defines may use strings).
+	 *
+	 * @param mixed $value Raw value.
+	 * @return bool
+	 */
+	private static function normalize_to_bool( $value ) {
+		if ( function_exists( 'wp_validate_boolean' ) ) {
+			return wp_validate_boolean( $value );
+		}
+
+		return (bool) filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+	}
+
+	/**
 	 * Delete our object-cache.php and set the enabled preference to false.
 	 *
 	 * Does not call wp_cache_flush(); used when Redis is unreachable or wp-config no longer has creds
@@ -738,6 +795,9 @@ class ObjectCache {
 	 * @return bool True if the file was ours and was removed.
 	 */
 	private static function remove_our_dropin_file_and_disable_preference(): bool {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return false;
+		}
 		if ( ! self::delete_our_drop_in_file_if_ours() ) {
 			return false;
 		}
@@ -784,6 +844,10 @@ class ObjectCache {
 	 * @return void
 	 */
 	public static function reconcile_non_ours_dropin() {
+		if ( self::is_object_cache_dropin_auto_management_disabled() ) {
+			return;
+		}
+
 		$path = self::get_drop_in_path();
 		if ( ! file_exists( $path ) || self::is_our_drop_in( $path ) ) {
 			return;

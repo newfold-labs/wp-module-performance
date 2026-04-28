@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-01T22:20:41+00:00",
+    "translation-revision-date": "2026-04-27T13:43:22+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,6 +10,33 @@
                 "lang": "fr_FR",
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
+            "Could not download object cache files. Please try again later.": [
+                "Impossible de t\u00e9l\u00e9charger les fichiers du cache d'objets. Veuillez r\u00e9essayer plus tard."
+            ],
+            "Could not enable object cache right now. Please try again later.": [
+                "Impossible d'activer le cache d'objets pour le moment. Veuillez r\u00e9essayer plus tard."
+            ],
+            "Could not save object cache file. Check file permissions or contact support.": [
+                "Impossible d'enregistrer le fichier du cache d'objets. V\u00e9rifiez les permissions des fichiers ou contactez l'assistance."
+            ],
+            "Could not connect to the object cache. Please try again later.": [
+                "Impossible de se connecter au cache d'objets. Veuillez r\u00e9essayer plus tard."
+            ],
+            "Object cache cannot be enabled automatically right now. Please contact support.": [
+                "Le cache d'objets ne peut pas \u00eatre activ\u00e9 automatiquement pour le moment. Veuillez contacter l'assistance."
+            ],
+            "Concatenate CSS": [
+                "Concat\u00e9ner le CSS"
+            ],
+            "Defer Non-Essential JavaScript": [
+                "Reporter JavaScript non essentiel"
+            ],
+            "Object Caching": [
+                "Mise en cache des objets"
+            ],
+            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
+                "Ce site ne se qualifie plus pour l'optimisation des images car il a atteint ses limites d'utilisation."
+            ],
             "Performance": [
                 "Performances"
             ],
@@ -135,9 +162,6 @@
             ],
             "\/month": [
                 "\/mois"
-            ],
-            "This site no longer qualifies for image optimization as it has reached its usage limits.": [
-                "Ce site ne se qualifie plus pour l'optimisation des images car il a atteint ses limites d'utilisation."
             ],
             "Loading settings\u2026": [
                 "Chargement des param\u00e8tres\u2026"
@@ -265,9 +289,6 @@
             "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
                 "D\u00e9place les informations de style importantes au d\u00e9but de la page, ce qui permet d\u2019afficher votre contenu plus rapidement et \u00e9vite aux utilisateurs d\u2019attendre le chargement complet de la page.%1$s %2$sBoost g\u00e9n\u00e9rera automatiquement votre CSS critique%3$s \u00e0 chaque fois que vous modifiez la structure HTML ou CSS de votre site."
             ],
-            "Defer Non-Essential JavaScript": [
-                "Reporter JavaScript non essentiel"
-            ],
             "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
                 "Ex\u00e9cutez le JavaScript non essentiel apr\u00e8s le chargement de la page afin que les styles et les images puissent se charger plus rapidement."
             ],
@@ -279,9 +300,6 @@
             ],
             "Exclude JS Strings": [
                 "Exclure les cha\u00eenes JS"
-            ],
-            "Concatenate CSS": [
-                "Concat\u00e9ner le CSS"
             ],
             "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
                 "Les styles sont regroup\u00e9s par leur emplacement d'origine, concat\u00e9n\u00e9s et minifi\u00e9s pour r\u00e9duire le temps de chargement du site et r\u00e9duire le nombre de requ\u00eates."
@@ -346,9 +364,6 @@
             "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https:\/\/example.com\/apple from being prefetched.": [
                 "Exclure les mots-cl\u00e9s : Une liste de mots ou de cha\u00eenes s\u00e9par\u00e9s par des virgules qui exclura un lien d'\u00eatre pr\u00e9charg\u00e9. Par exemple, exclure \"app\" emp\u00eachera https:\/\/example.com\/apple d'\u00eatre pr\u00e9charg\u00e9."
             ],
-            "Object Caching": [
-                "Mise en cache des objets"
-            ],
             "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled.": [
                 "Stocker les r\u00e9sultats des requ\u00eates de base de donn\u00e9es dans Redis afin que les requ\u00eates r\u00e9p\u00e9t\u00e9es soient servies depuis la m\u00e9moire plut\u00f4t que depuis la base de donn\u00e9es. Vider le cache ci-dessus vide aussi le cache des objets lorsqu\u2019il est activ\u00e9."
             ],
@@ -364,56 +379,20 @@
             "Another plugin's object cache is active. Disable it in that plugin to use this toggle.": [
                 "Le cache d\u2019objets d\u2019un autre plugin est actif. D\u00e9sactive-le dans ce plugin pour utiliser ce bascule."
             ],
-            "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version.": [
-                "PHP Redis (phpredis) n\u2019est pas disponible sur ce serveur. Demandez \u00e0 votre h\u00e9bergeur d\u2019activer l\u2019extension Redis pour votre version PHP."
+            "Object caching is not supported on this server. Please contact your hosting provider for help.": [
+                "La mise en cache d'objets n'est pas prise en charge sur ce serveur. Contactez votre h\u00e9bergeur pour obtenir de l'aide."
             ],
-            "Redis credentials are not present in wp-config.php yet.": [
-                "Les r\u00e9f\u00e9rences Redis ne sont pas encore pr\u00e9sentes dans wp-config.php."
+            "Object cache is not configured yet. Please try again in a moment.": [
+                "Le cache d'objets n'est pas encore configur\u00e9. Veuillez r\u00e9essayer dans un instant."
             ],
-            "Redis credentials are being applied. We will retry automatically in a few seconds.": [
-                "Les certifications Redis sont en cours d\u2019application. Nous r\u00e9essayerons automatiquement dans quelques secondes."
+            "Setting up object cache. We will retry automatically in a few seconds.": [
+                "Configuration du cache d'objets. Nouvelle tentative automatique dans quelques secondes."
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "Ce site n\u2019est pas connect\u00e9 \u00e0 Hiive, donc les identifiants Redis ne peuvent pas \u00eatre provisionn\u00e9s automatiquement."
+            "Object cache is not ready on this server yet. Please try again later.": [
+                "Le cache d'objets n'est pas encore pr\u00eat sur ce serveur. Veuillez r\u00e9essayer plus tard."
             ],
-            "Hosting token is not available yet. Please try again shortly or contact support.": [
-                "Le jeton d\u2019h\u00e9bergement n\u2019est pas encore disponible. Veuillez r\u00e9essayer sous peine ou contacter le support."
-            ],
-            "Hosting site id is not available yet. Please try again shortly or contact support.": [
-                "L\u2019identifiant du site d\u2019h\u00e9bergement n\u2019est pas encore disponible. Veuillez r\u00e9essayer sous peine ou contacter le support."
-            ],
-            "Could not connect to Redis with the current credentials.": [
-                "Impossible de se connecter \u00e0 Redis avec les identifiants actuels."
-            ],
-            "Redis service is not active on the server yet.": [
-                "Le service Redis n\u2019est pas encore actif sur le serveur."
-            ],
-            "Your PHP version does not meet requirements for Redis on this hosting environment.": [
-                "Votre version PHP ne r\u00e9pond pas aux exigences de Redis sur cet environnement d\u2019h\u00e9bergement."
-            ],
-            "Hosting reports the Redis drop-in is not available yet.": [
-                "L\u2019h\u00e9bergement rapporte que le drop-in Redis n\u2019est pas encore disponible."
-            ],
-            "Hosting could not locate WordPress for this site.": [
-                "L\u2019h\u00e9bergeur n\u2019a pas pu localiser WordPress pour ce site."
-            ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "Impossible de joindre Hiive pour fournir les identifiants Redis."
-            ],
-            "Hosting API could not enable Redis for this site.": [
-                "L\u2019API d\u2019h\u00e9bergement n\u2019a pas pu activer Redis pour ce site."
-            ],
-            "Hosting API returned an unexpected error while enabling Redis.": [
-                "L\u2019API d\u2019h\u00e9bergement a renvoy\u00e9 une erreur inattendue lors de l\u2019activation de Redis."
-            ],
-            "Failed to download the Redis object cache drop-in.": [
-                "\u00c9chec de t\u00e9l\u00e9charger le drop-in du cache d\u2019objets Reddis."
-            ],
-            "Downloaded drop-in content was invalid.": [
-                "Le contenu t\u00e9l\u00e9charg\u00e9 en direct \u00e9tait invalide."
-            ],
-            "Could not write object-cache.php. Check file permissions.": [
-                "Je n\u2019ai pas pu \u00e9crire object-cache.php. V\u00e9rifiez les permissions des fichiers."
+            "Could not enable object cache right now. Please contact support.": [
+                "Impossible d'activer le cache d'objets pour le moment. Veuillez contacter l'assistance."
             ],
             "Skip 404": [
                 "Ignorer 404"
