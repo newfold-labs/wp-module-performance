@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-24T20:05:10+00:00",
+    "translation-revision-date": "2026-04-27T13:35:02+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,17 +10,20 @@
                 "lang": "pt_BR",
                 "plural-forms": "nplurals=2; plural=(n > 1);"
             },
-            "Could not write object-cache.php. Check file permissions.": [
-                "N\u00e3o consegui escrever object-cache.php. Verifique as permiss\u00f5es dos arquivos."
+            "Could not download object cache files. Please try again later.": [
+                ""
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "Este site n\u00e3o est\u00e1 conectado ao Hiive, ent\u00e3o credenciais Redis n\u00e3o podem ser provisionadas automaticamente."
+            "Could not enable object cache right now. Please try again later.": [
+                ""
             ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "N\u00e3o foi poss\u00edvel entrar em contato com o Hiive para fornecer credenciais Redis."
+            "Could not save object cache file. Check file permissions or contact support.": [
+                ""
             ],
-            "Hosting API could not enable Redis for this site.": [
-                "A API de hospedagem n\u00e3o conseguiu habilitar o Redis para este site."
+            "Could not connect to the object cache. Please try again later.": [
+                ""
+            ],
+            "Object cache cannot be enabled automatically right now. Please contact support.": [
+                ""
             ],
             "Concatenate CSS": [
                 "Concatenar CSS"
@@ -376,44 +379,20 @@
             "Another plugin's object cache is active. Disable it in that plugin to use this toggle.": [
                 "O cache de objetos de outro plugin est\u00e1 ativo. Desative esse plugin para usar esse bot\u00e3o de alternar."
             ],
-            "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version.": [
-                "PHP Redis (phpredis) n\u00e3o est\u00e1 dispon\u00edvel neste servidor. Pe\u00e7a ao seu host para ativar a extens\u00e3o Redis para sua vers\u00e3o PHP."
+            "Object caching is not supported on this server. Please contact your hosting provider for help.": [
+                ""
             ],
-            "Redis credentials are not present in wp-config.php yet.": [
-                "As credenciais Redis ainda n\u00e3o est\u00e3o presentes em wp-config.php."
+            "Object cache is not configured yet. Please try again in a moment.": [
+                ""
             ],
-            "Redis credentials are being applied. We will retry automatically in a few seconds.": [
-                "As credenciais Redis est\u00e3o sendo aplicadas. Vamos tentar automaticamente em alguns segundos."
+            "Setting up object cache. We will retry automatically in a few seconds.": [
+                ""
             ],
-            "Hosting token is not available yet. Please try again shortly or contact support.": [
-                "O token de hospedagem ainda n\u00e3o est\u00e1 dispon\u00edvel. Por favor, tente novamente em breve ou entre em contato com o suporte."
+            "Object cache is not ready on this server yet. Please try again later.": [
+                ""
             ],
-            "Hosting site id is not available yet. Please try again shortly or contact support.": [
-                "O ID do site de hospedagem ainda n\u00e3o est\u00e1 dispon\u00edvel. Por favor, tente novamente em breve ou entre em contato com o suporte."
-            ],
-            "Could not connect to Redis with the current credentials.": [
-                "N\u00e3o consegui conectar ao Redis com as credenciais atuais."
-            ],
-            "Redis service is not active on the server yet.": [
-                "O servi\u00e7o Redis ainda n\u00e3o est\u00e1 ativo no servidor."
-            ],
-            "Your PHP version does not meet requirements for Redis on this hosting environment.": [
-                "Sua vers\u00e3o do PHP n\u00e3o atende aos requisitos do Redis nesse ambiente de hospedagem."
-            ],
-            "Hosting reports the Redis drop-in is not available yet.": [
-                "A organiza\u00e7\u00e3o relata que o drop-in da Redis ainda n\u00e3o est\u00e1 dispon\u00edvel."
-            ],
-            "Hosting could not locate WordPress for this site.": [
-                "A hospedagem n\u00e3o conseguiu localizar o WordPress para este site."
-            ],
-            "Hosting API returned an unexpected error while enabling Redis.": [
-                "A API de hospedagem retornou um erro inesperado ao ativar o Redis."
-            ],
-            "Failed to download the Redis object cache drop-in.": [
-                "N\u00e3o foi poss\u00edvel baixar o drop-in do cache de objetos Rederis."
-            ],
-            "Downloaded drop-in content was invalid.": [
-                "O conte\u00fado drop-in baixado estava inv\u00e1lido."
+            "Could not enable object cache right now. Please contact support.": [
+                ""
             ],
             "Skip 404": [
                 "Ignorar 404"

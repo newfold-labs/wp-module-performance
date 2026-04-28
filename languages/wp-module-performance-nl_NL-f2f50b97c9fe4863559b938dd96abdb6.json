@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-24T20:05:10+00:00",
+    "translation-revision-date": "2026-04-27T13:35:02+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -10,17 +10,20 @@
                 "lang": "nl_NL",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
-            "Could not write object-cache.php. Check file permissions.": [
-                "Kon niet object-cache.php schrijven. Controleer de bestandsrechten."
+            "Could not download object cache files. Please try again later.": [
+                ""
             ],
-            "This site is not connected to Hiive, so Redis credentials cannot be provisioned automatically.": [
-                "Deze site is niet verbonden met Hiive, dus Redis-inloggegevens kunnen niet automatisch worden ingesteld."
+            "Could not enable object cache right now. Please try again later.": [
+                ""
             ],
-            "Could not reach Hiive to provision Redis credentials.": [
-                "Ik kon Hiive niet bereiken om Redis-inloggegevens in te dienen."
+            "Could not save object cache file. Check file permissions or contact support.": [
+                ""
             ],
-            "Hosting API could not enable Redis for this site.": [
-                "De Hosting API kon Redis niet inschakelen voor deze site."
+            "Could not connect to the object cache. Please try again later.": [
+                ""
+            ],
+            "Object cache cannot be enabled automatically right now. Please contact support.": [
+                ""
             ],
             "Concatenate CSS": [
                 "CSS samenvoegen"
@@ -376,44 +379,20 @@
             "Another plugin's object cache is active. Disable it in that plugin to use this toggle.": [
                 "De objectcache van een andere plugin is actief. Schakel het uit in die plugin om deze schakelaar te gebruiken."
             ],
-            "PHP Redis (phpredis) is not available on this server. Ask your host to enable the Redis extension for your PHP version.": [
-                "PHP Redis (phpredis) is niet beschikbaar op deze server. Vraag je host om de Redis-extensie in te schakelen voor jouw PHP-versie."
+            "Object caching is not supported on this server. Please contact your hosting provider for help.": [
+                ""
             ],
-            "Redis credentials are not present in wp-config.php yet.": [
-                "Redis-referenties zijn nog niet aanwezig in wp-config.php."
+            "Object cache is not configured yet. Please try again in a moment.": [
+                ""
             ],
-            "Redis credentials are being applied. We will retry automatically in a few seconds.": [
-                "Redis-credentials worden toegepast. We proberen het automatisch over een paar seconden opnieuw."
+            "Setting up object cache. We will retry automatically in a few seconds.": [
+                ""
             ],
-            "Hosting token is not available yet. Please try again shortly or contact support.": [
-                "Een hostingtoken is nog niet beschikbaar. Probeer het binnenkort opnieuw of neem contact op met de support."
+            "Object cache is not ready on this server yet. Please try again later.": [
+                ""
             ],
-            "Hosting site id is not available yet. Please try again shortly or contact support.": [
-                "De host site-ID is nog niet beschikbaar. Probeer het binnenkort opnieuw of neem contact op met de support."
-            ],
-            "Could not connect to Redis with the current credentials.": [
-                "Met de huidige inloggegevens kon ik geen verbinding maken met Redis."
-            ],
-            "Redis service is not active on the server yet.": [
-                "De Redis-dienst is nog niet actief op de server."
-            ],
-            "Your PHP version does not meet requirements for Redis on this hosting environment.": [
-                "Je PHP-versie voldoet niet aan de eisen voor Redis in deze hostingomgeving."
-            ],
-            "Hosting reports the Redis drop-in is not available yet.": [
-                "De host meldt dat de Redis drop-in nog niet beschikbaar is."
-            ],
-            "Hosting could not locate WordPress for this site.": [
-                "Hosting kon WordPress voor deze site niet vinden."
-            ],
-            "Hosting API returned an unexpected error while enabling Redis.": [
-                "De Hosting API gaf een onverwachte foutmelding bij het inschakelen van Redis."
-            ],
-            "Failed to download the Redis object cache drop-in.": [
-                "Het is niet gelukt om de Redis object cache drop-in te downloaden."
-            ],
-            "Downloaded drop-in content was invalid.": [
-                "Gedownloade drop-in content was ongeldig."
+            "Could not enable object cache right now. Please contact support.": [
+                ""
             ],
             "Skip 404": [
                 "404 overslaan"
