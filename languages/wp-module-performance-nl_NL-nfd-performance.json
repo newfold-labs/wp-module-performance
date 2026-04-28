@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-04-27T13:35:02+00:00",
+    "translation-revision-date": "2026-04-27T13:43:22+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -11,19 +11,19 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Could not download object cache files. Please try again later.": [
-                ""
+                "Objectcachebestanden konden niet worden gedownload. Probeer het later opnieuw."
             ],
             "Could not enable object cache right now. Please try again later.": [
-                ""
+                "Objectcache kan nu niet worden ingeschakeld. Probeer het later opnieuw."
             ],
             "Could not save object cache file. Check file permissions or contact support.": [
-                ""
+                "Objectcachebestand kon niet worden opgeslagen. Controleer bestandsrechten of neem contact op met support."
             ],
             "Could not connect to the object cache. Please try again later.": [
-                ""
+                "Kan geen verbinding maken met de objectcache. Probeer het later opnieuw."
             ],
             "Object cache cannot be enabled automatically right now. Please contact support.": [
-                ""
+                "Objectcache kan nu niet automatisch worden ingeschakeld. Neem contact op met support."
             ],
             "Concatenate CSS": [
                 "CSS samenvoegen"
@@ -380,19 +380,19 @@
                 "De objectcache van een andere plugin is actief. Schakel het uit in die plugin om deze schakelaar te gebruiken."
             ],
             "Object caching is not supported on this server. Please contact your hosting provider for help.": [
-                ""
+                "Objectcaching wordt op deze server niet ondersteund. Neem contact op met je hostingprovider voor hulp."
             ],
             "Object cache is not configured yet. Please try again in a moment.": [
-                ""
+                "Objectcache is nog niet geconfigureerd. Probeer het over een moment opnieuw."
             ],
             "Setting up object cache. We will retry automatically in a few seconds.": [
-                ""
+                "Objectcache wordt ingesteld. We proberen het over een paar seconden automatisch opnieuw."
             ],
             "Object cache is not ready on this server yet. Please try again later.": [
-                ""
+                "Objectcache op deze server is nog niet gereed. Probeer het later opnieuw."
             ],
             "Could not enable object cache right now. Please contact support.": [
-                ""
+                "Objectcache kan nu niet worden ingeschakeld. Neem contact op met support."
             ],
             "Skip 404": [
                 "404 overslaan"

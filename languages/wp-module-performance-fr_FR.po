@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-27T13:35:02+00:00\n"
+"PO-Revision-Date: 2026-04-27T13:43:22+00:00\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -21,22 +21,22 @@ msgstr ""
 
 #: includes/Cache/Types/ObjectCache.php:222
 msgid "Another plugin's object cache is active. Disable it in that plugin first."
-msgstr ""
+msgstr "Le cache d'objets d'un autre plugin est actif. Désactivez-le d'abord dans ce plugin."
 
 #: includes/Cache/Types/ObjectCache.php:230
 #: includes/Cache/Types/ObjectCachePreflight.php:40
 msgid "Object caching is not supported on this server."
-msgstr ""
+msgstr "La mise en cache d'objets n'est pas prise en charge sur ce serveur."
 
 #: includes/Cache/Types/ObjectCache.php:263
 msgid "Setting up object cache. Please wait a few seconds and try again."
-msgstr ""
+msgstr "Configuration du cache d'objets. Veuillez patienter quelques secondes et réessayer."
 
 #: includes/Cache/Types/ObjectCache.php:287
 #: includes/Cache/Types/ObjectCache.php:296
 #: build/performance/performance.min.js:5
 msgid "Could not download object cache files. Please try again later."
-msgstr ""
+msgstr "Impossible de télécharger les fichiers du cache d'objets. Veuillez réessayer plus tard."
 
 #: includes/Cache/Types/ObjectCache.php:305
 #: includes/Cache/Types/ObjectCache.php:702
@@ -52,40 +52,40 @@ msgstr ""
 #: includes/Helpers/RedisCredentialsProvisioner.php:54
 #: build/performance/performance.min.js:5
 msgid "Could not enable object cache right now. Please try again later."
-msgstr ""
+msgstr "Impossible d'activer le cache d'objets pour le moment. Veuillez réessayer plus tard."
 
 #: includes/Cache/Types/ObjectCache.php:329
 #: build/performance/performance.min.js:5
 msgid "Could not save object cache file. Check file permissions or contact support."
-msgstr ""
+msgstr "Impossible d'enregistrer le fichier du cache d'objets. Vérifiez les permissions des fichiers ou contactez l'assistance."
 
 #: includes/Cache/Types/ObjectCache.php:394
 msgid "Could not disable object cache. Check file permissions or contact support."
-msgstr ""
+msgstr "Impossible de désactiver le cache d'objets. Vérifiez les permissions des fichiers ou contactez l'assistance."
 
 #: includes/Cache/Types/ObjectCache.php:489
 msgid "Object cache is not configured yet."
-msgstr ""
+msgstr "Le cache d'objets n'est pas encore configuré."
 
 #: includes/Cache/Types/ObjectCache.php:500
 #: includes/Cache/Types/ObjectCache.php:704
 #: build/performance/performance.min.js:5
 msgid "Could not connect to the object cache. Please try again later."
-msgstr ""
+msgstr "Impossible de se connecter au cache d'objets. Veuillez réessayer plus tard."
 
 #: includes/Cache/Types/ObjectCache.php:701
 #: includes/Helpers/RedisCredentialsProvisioner.php:22
 #: build/performance/performance.min.js:5
 msgid "Object cache cannot be enabled automatically right now. Please contact support."
-msgstr ""
+msgstr "Le cache d'objets ne peut pas être activé automatiquement pour le moment. Veuillez contacter l'assistance."
 
 #: includes/Cache/Types/ObjectCachePreflight.php:46
 msgid "Object cache cannot be enabled automatically right now."
-msgstr ""
+msgstr "Le cache d'objets ne peut pas être activé automatiquement pour le moment."
 
 #: includes/Cache/Types/ObjectCachePreflight.php:61
 msgid "Could not connect to the object cache."
-msgstr ""
+msgstr "Impossible de se connecter au cache d'objets."
 
 #: includes/Cache/Types/PhpRedisPinger.php:24
 msgid "phpredis is not available."
@@ -1229,23 +1229,23 @@ msgstr "Le cache d’objets d’un autre plugin est actif. Désactive-le dans ce
 
 #: build/performance/performance.min.js:5
 msgid "Object caching is not supported on this server. Please contact your hosting provider for help."
-msgstr ""
+msgstr "La mise en cache d'objets n'est pas prise en charge sur ce serveur. Contactez votre hébergeur pour obtenir de l'aide."
 
 #: build/performance/performance.min.js:5
 msgid "Object cache is not configured yet. Please try again in a moment."
-msgstr ""
+msgstr "Le cache d'objets n'est pas encore configuré. Veuillez réessayer dans un instant."
 
 #: build/performance/performance.min.js:5
 msgid "Setting up object cache. We will retry automatically in a few seconds."
-msgstr ""
+msgstr "Configuration du cache d'objets. Nouvelle tentative automatique dans quelques secondes."
 
 #: build/performance/performance.min.js:5
 msgid "Object cache is not ready on this server yet. Please try again later."
-msgstr ""
+msgstr "Le cache d'objets n'est pas encore prêt sur ce serveur. Veuillez réessayer plus tard."
 
 #: build/performance/performance.min.js:5
 msgid "Could not enable object cache right now. Please contact support."
-msgstr ""
+msgstr "Impossible d'activer le cache d'objets pour le moment. Veuillez contacter l'assistance."
 
 #: build/performance/performance.min.js:5
 msgid "Skip 404"
