@@ -5,7 +5,7 @@ return [
 	'language' => 'es_MX',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-04-27T13:41:37+00:00',
+	'po-revision-date' => '2026-04-29T16:03:48+00:00',
 	'x-generator' => 'Poedit 3.2.2',
 	'messages' => [
 		'Another plugin\'s object cache is active. Disable it in that plugin first.' => 'La caché de objetos de otro plugin está activa. Desactívala primero en ese plugin.',
