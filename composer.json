@@ -36,23 +36,23 @@
         "colinmollenhour/credis": "^1.14",
         "newfold-labs/wp-module-context": "^1.0",
         "newfold-labs/wp-module-data": "^2.9",
+        "newfold-labs/wp-module-features": "^1.5",
+        "newfold-labs/wp-module-htaccess": "^1.0",
+        "newfold-labs/wp-module-installer": "^1.7",
+        "predis/predis": "2.4.1",
+        "wp-cli/wp-config-transformer": "^1.4",
         "wp-forge/collection": "^1.0",
         "wp-forge/wp-htaccess-manager": "^1.0",
-        "wpscholar/url": "^1.2",
-        "newfold-labs/wp-module-features": "^1.5",
-        "newfold-labs/wp-module-installer": "^1.7",
-        "newfold-labs/wp-module-htaccess": "^1.0",
-        "predis/predis": "2.4.1",
-        "wp-cli/wp-config-transformer": "^1.4"
+        "wpscholar/url": "^1.2"
     },
     "require-dev": {
-        "newfold-labs/wp-php-standards": "^1.2",
-        "wp-cli/wp-cli-bundle": "^2.8.1|^2.12",
-        "wp-cli/i18n-command": "^2.7",
         "10up/wp_mock": "^0.5.0|^1.0.0",
         "johnpbloch/wordpress": "6.9.4",
         "lucatume/wp-browser": "*",
-        "phpunit/phpcov": "*"
+        "newfold-labs/wp-php-standards": "^1.2",
+        "phpunit/phpcov": "*",
+        "wp-cli/i18n-command": "^2.7",
+        "wp-cli/wp-cli-bundle": "^2.8.1|^2.12"
     },
     "scripts": {
         "cs-fix": "phpcbf --standard=phpcs.xml .",
