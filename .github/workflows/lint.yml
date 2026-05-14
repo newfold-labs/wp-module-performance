@@ -27,6 +27,7 @@ jobs:
     permissions:
       contents: read # Required for actions/checkout to clone the repository.
       actions: write # Required for actions/cache to restore and save the Composer dependency cache.
+    timeout-minutes: 30
     steps:
 
       - name: Checkout
