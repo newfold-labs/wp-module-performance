@@ -67,7 +67,7 @@ class Performance {
 		new Skip404( $container );
 		new PerformanceWPCLI();
 		new Constants( $container );
-		new CloudflareFeaturesManager( $container );
+		new CloudflareFeaturesManager();
 		new ImageManager( $container );
 		new FontManager( $container );
 		new HealthChecks( $container );

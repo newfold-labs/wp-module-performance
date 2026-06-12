@@ -166,6 +166,10 @@ class CloudflareFeaturesManager {
 	 * the htaccess module's persisted state and removes the block on the next write,
 	 * so the cleanup rolls out across existing installs without manual edits.
 	 *
+	 * The guard flag is only set after the unregister actually runs. If the htaccess
+	 * module isn't loaded yet on this request, we leave the flag unset and retry on a
+	 * later request rather than permanently skipping the cleanup.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
@@ -175,9 +179,11 @@ class CloudflareFeaturesManager {
 			return;
 		}
 
-		if ( class_exists( HtaccessApi::class ) ) {
-			HtaccessApi::unregister( self::FRAGMENT_ID );
+		if ( ! class_exists( HtaccessApi::class ) ) {
+			return;
 		}
+
+		HtaccessApi::unregister( self::FRAGMENT_ID );
 
 		update_option( self::CLEANUP_FLAG, true, false );
 	}

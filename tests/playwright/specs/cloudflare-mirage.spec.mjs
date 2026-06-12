@@ -7,8 +7,9 @@ import {
   getCloudflareToggle,
   verifyCloudflareToggleState,
   setCloudflareToggle,
-  assertHtaccessHasRule,
-  assertHtaccessHasNoRule,
+  assertFrontendSetsOptimizationCookie,
+  assertFrontendOmitsOptimizationCookie,
+  assertHtaccessHasNoCfOptimizationBlock,
   navigateToPerformancePage,
   waitForPerformancePage,
   ensureHealthyHtaccess,
@@ -62,7 +63,7 @@ test.describe('Cloudflare Mirage Toggle', () => {
     await expect(toggle).toHaveCount(0);
   });
 
-  test('Writes correct rewrite rules to .htaccess when Mirage is enabled', async ({ page }) => {
+  test('Sets the optimization cookie via front-end script (no Set-Cookie header, no .htaccess block) when Mirage is enabled', async ({ page }) => {
     const pre = await setSiteCapabilities({ hasCloudflareMirage: true });
     test.skip(!pre.ok, pre.reason);
 
@@ -73,11 +74,13 @@ test.describe('Cloudflare Mirage Toggle', () => {
     // Verify toggle is enabled
     await verifyCloudflareToggleState(page, 'mirage', 'true');
 
-    // Check .htaccess has the rule
-    await assertHtaccessHasRule(CLOUDFLARE_HASHES.mirage);
+    // Front end sets the cookie client-side; the response stays cacheable and the
+    // legacy Set-Cookie .htaccess block must not be present.
+    await assertFrontendSetsOptimizationCookie(page, CLOUDFLARE_HASHES.mirage);
+    await assertHtaccessHasNoCfOptimizationBlock();
   });
 
-  test('Toggles Mirage on/off and updates .htaccess accordingly', async ({ page }) => {
+  test('Toggles Mirage on/off and updates the front-end cookie accordingly', async ({ page }) => {
     const pre = await setSiteCapabilities({ hasCloudflareMirage: true });
     test.skip(!pre.ok, pre.reason);
 
@@ -87,14 +90,14 @@ test.describe('Cloudflare Mirage Toggle', () => {
 
     // Verify initially enabled
     await verifyCloudflareToggleState(page, 'mirage', 'true');
-    await assertHtaccessHasRule(CLOUDFLARE_HASHES.mirage);
+    await assertFrontendSetsOptimizationCookie(page, CLOUDFLARE_HASHES.mirage);
 
     // Toggle OFF
     await setCloudflareToggle(page, 'mirage', false);
-    await assertHtaccessHasNoRule(CLOUDFLARE_HASHES.mirage);
+    await assertFrontendOmitsOptimizationCookie(page, CLOUDFLARE_HASHES.mirage);
 
     // Toggle ON again
     await setCloudflareToggle(page, 'mirage', true);
-    await assertHtaccessHasRule(CLOUDFLARE_HASHES.mirage);
+    await assertFrontendSetsOptimizationCookie(page, CLOUDFLARE_HASHES.mirage);
   });
 });
