@@ -65,8 +65,10 @@ class CloudflareFeaturesManager {
 	 * Constructor to register hooks.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param mixed $container Optional DI container retained for backwards compatibility.
 	 */
-	public function __construct() {
+	public function __construct( $container = null ) {
 		// Set the Cloudflare optimization cookie from the front end, client-side,
 		// so HTML responses stay cacheable.
 		add_action( 'wp_head', array( $this, 'print_cookie_script' ), 0 );
