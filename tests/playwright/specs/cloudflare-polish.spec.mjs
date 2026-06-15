@@ -7,8 +7,9 @@ import {
   getCloudflareToggle,
   verifyCloudflareToggleState,
   setCloudflareToggle,
-  assertHtaccessHasRule,
-  assertHtaccessHasNoRule,
+  assertFrontendSetsOptimizationCookie,
+  assertFrontendOmitsOptimizationCookie,
+  assertHtaccessHasNoCfOptimizationBlock,
   navigateToPerformancePage,
   waitForPerformancePage,
   ensureHealthyHtaccess,
@@ -62,7 +63,7 @@ test.describe('Cloudflare Polish Toggle', () => {
     await expect(toggle).toHaveCount(0);
   });
 
-  test('Writes correct rewrite rules to .htaccess when Polish is enabled', async ({ page }) => {
+  test('Sets the optimization cookie via front-end script (no Set-Cookie header, no .htaccess block) when Polish is enabled', async ({ page }) => {
     const pre = await setSiteCapabilities({ hasCloudflarePolish: true });
     test.skip(!pre.ok, pre.reason);
 
@@ -73,11 +74,13 @@ test.describe('Cloudflare Polish Toggle', () => {
     // Verify toggle is enabled
     await verifyCloudflareToggleState(page, 'polish', 'true');
 
-    // Check .htaccess has the rule
-    await assertHtaccessHasRule(CLOUDFLARE_HASHES.polish);
+    // Front end sets the cookie client-side; the response stays cacheable and the
+    // legacy Set-Cookie .htaccess block must not be present.
+    await assertFrontendSetsOptimizationCookie(page, CLOUDFLARE_HASHES.polish);
+    await assertHtaccessHasNoCfOptimizationBlock();
   });
 
-  test('Toggles Polish on/off and updates .htaccess accordingly', async ({ page }) => {
+  test('Toggles Polish on/off and updates the front-end cookie accordingly', async ({ page }) => {
     const pre = await setSiteCapabilities({ hasCloudflarePolish: true });
     test.skip(!pre.ok, pre.reason);
 
@@ -87,14 +90,14 @@ test.describe('Cloudflare Polish Toggle', () => {
 
     // Verify initially enabled
     await verifyCloudflareToggleState(page, 'polish', 'true');
-    await assertHtaccessHasRule(CLOUDFLARE_HASHES.polish);
+    await assertFrontendSetsOptimizationCookie(page, CLOUDFLARE_HASHES.polish);
 
     // Toggle OFF
     await setCloudflareToggle(page, 'polish', false);
-    await assertHtaccessHasNoRule(CLOUDFLARE_HASHES.polish);
+    await assertFrontendOmitsOptimizationCookie(page, CLOUDFLARE_HASHES.polish);
 
     // Toggle ON again
     await setCloudflareToggle(page, 'polish', true);
-    await assertHtaccessHasRule(CLOUDFLARE_HASHES.polish);
+    await assertFrontendSetsOptimizationCookie(page, CLOUDFLARE_HASHES.polish);
   });
 });

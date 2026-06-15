@@ -391,52 +391,116 @@ export async function readHtaccess() {
 // ============================================================================
 
 /**
- * Assert that .htaccess contains the expected Cloudflare optimization rule
- * Includes retry logic since .htaccess may be written asynchronously
- * @param {string} hash - The hash identifier for the rule (use CLOUDFLARE_HASHES)
- * @param {number} retries - Number of retry attempts (default: 3)
+ * Fetch the site front page as a raw HTTP response (no JS execution).
+ *
+ * Uses Playwright's request context so it runs host-side against the configured
+ * baseURL and follows WordPress's canonical redirect to the real home URL.
+ *
+ * @param {import('@playwright/test').Page} page
+ * @returns {Promise<{ status: number, body: string, setCookies: string[] }>}
  */
-export async function assertHtaccessHasRule(hash, retries = 8) {
-  let htaccess = '';
-
-  for (let i = 0; i < retries; i++) {
-    htaccess = await readHtaccess();
-    if (
-      htaccess.includes(hash) &&
-      htaccess.includes('# BEGIN Newfold CF Optimization Header')
-    ) {
-      expect(htaccess).toContain('# BEGIN Newfold CF Optimization Header');
-      expect(htaccess).toContain('# END Newfold CF Optimization Header');
-      expect(htaccess).toContain('nfd-enable-cf-opt');
-      expect(htaccess).toContain(hash);
-      expect(htaccess).toContain('Set-Cookie "nfd-enable-cf-opt=');
-      return;
-    }
-    if (i < retries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-
-  expect(htaccess).toContain(hash);
+export async function fetchHomepage(page) {
+  const response = await page.request.get('/');
+  const body = await response.text();
+  const setCookies = response
+    .headersArray()
+    .filter((h) => h.name.toLowerCase() === 'set-cookie')
+    .map((h) => h.value);
+  return { status: response.status(), body, setCookies };
 }
 
 /**
- * Assert that .htaccess does NOT contain the expected rule (retries: rules are removed async).
- * @param {string} hash - The hash identifier for the rule (use CLOUDFLARE_HASHES)
+ * Assert the front end advertises the active Cloudflare optimizations the
+ * cache-safe way: the cookie is set client-side via an inline script, and the
+ * response carries NO `Set-Cookie` header for it (a Set-Cookie on the response
+ * makes it uncacheable to nginx+/Cloudflare — the bug this replaced).
+ *
+ * @param {import('@playwright/test').Page} page
+ * @param {string} hash - Feature hash that must appear in the cookie value (use CLOUDFLARE_HASHES)
+ * @param {number} retries - Retry attempts; the value propagates asynchronously
+ */
+export async function assertFrontendSetsOptimizationCookie(page, hash, retries = 8) {
+  let last = { body: '', setCookies: [] };
+
+  for (let i = 0; i < retries; i++) {
+    last = await fetchHomepage(page);
+    if (
+      last.body.includes('nfd-enable-cf-opt') &&
+      last.body.includes('document.cookie') &&
+      last.body.includes(hash)
+    ) {
+      break;
+    }
+    if (i < retries - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
+
+  // Cookie is set client-side, with the value encoding the enabled feature.
+  expect(
+    last.body,
+    'front end should set nfd-enable-cf-opt via an inline script'
+  ).toContain('document.cookie');
+  expect(last.body).toContain('nfd-enable-cf-opt');
+  expect(last.body).toContain(hash);
+
+  // ...and never via a Set-Cookie response header.
+  const optCookieHeader = last.setCookies.find((value) =>
+    value.startsWith('nfd-enable-cf-opt')
+  );
+  expect(
+    optCookieHeader,
+    'response must not carry a Set-Cookie header for nfd-enable-cf-opt (it breaks caching)'
+  ).toBeUndefined();
+}
+
+/**
+ * Assert the front end does NOT set the optimization cookie (feature disabled).
+ *
+ * @param {import('@playwright/test').Page} page
+ * @param {string} hash - Feature hash that must be absent (use CLOUDFLARE_HASHES)
  * @param {number} retries
  */
-export async function assertHtaccessHasNoRule(hash, retries = 8) {
+export async function assertFrontendOmitsOptimizationCookie(page, hash, retries = 8) {
+  let body = '';
+
   for (let i = 0; i < retries; i++) {
-    const htaccess = await readHtaccess();
-    if (!htaccess.includes(hash)) {
+    ({ body } = await fetchHomepage(page));
+    if (!body.includes(hash)) {
       return;
     }
     if (i < retries - 1) {
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
-  const htaccess = await readHtaccess();
-  expect(htaccess).not.toContain(hash);
+
+  expect(
+    body,
+    'front end should not set the optimization cookie when the feature is disabled'
+  ).not.toContain(hash);
+}
+
+/**
+ * Assert the legacy Set-Cookie `.htaccess` block is absent (removed by the
+ * one-time cleanup, or never written). Retries: the rewrite is asynchronous.
+ *
+ * @param {number} retries
+ */
+export async function assertHtaccessHasNoCfOptimizationBlock(retries = 8) {
+  let htaccess = '';
+  for (let i = 0; i < retries; i++) {
+    htaccess = await readHtaccess();
+    if (!htaccess.includes('# BEGIN Newfold CF Optimization Header')) {
+      return;
+    }
+    if (i < retries - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
+  expect(
+    htaccess,
+    'legacy CF Optimization .htaccess block should be removed'
+  ).not.toContain('# BEGIN Newfold CF Optimization Header');
 }
 
 /**
