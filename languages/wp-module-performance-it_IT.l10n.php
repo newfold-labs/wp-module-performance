@@ -5,7 +5,7 @@ return [
 	'language' => 'it_IT',
 	'project-id-version' => 'wp-module-performance',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-04-29T16:03:48+00:00',
+	'po-revision-date' => '2026-06-15T11:40:23+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'Another plugin\'s object cache is active. Disable it in that plugin first.' => 'La cache a oggetti di un altro plugin è attiva. Disattivala prima in quel plugin.',
