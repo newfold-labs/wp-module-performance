@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-19T07:55:54+00:00\n"
+"PO-Revision-Date: 2026-06-19T08:43:58+00:00\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -80,160 +80,160 @@ msgid "Object cache cannot be enabled automatically right now. Please contact su
 msgstr "La cache degli oggetti non può essere abilitata automaticamente in questo momento. Contatta l'assistenza."
 
 #. translators: %s is the phpredis extension version.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:149
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:166
 #, php-format
 msgid "phpredis loaded (version %s)."
 msgstr "phpredis caricato (versione %s)."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:154
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:171
 msgid "phpredis is NOT loaded — object cache cannot work."
 msgstr "phpredis NON è caricato: la cache a oggetti non può funzionare."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:158
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:175
 msgid "Environment"
 msgstr "Ambiente"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:177
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:194
 msgid "Unix scheme requires WP_REDIS_PATH, which is not defined."
 msgstr "Lo schema unix richiede WP_REDIS_PATH, che non è definito."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:180
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:197
 msgid "WP_REDIS_HOST not defined — connection will default to 127.0.0.1:6379."
 msgstr "WP_REDIS_HOST non è definito: la connessione utilizzerà 127.0.0.1:6379 in modo predefinito."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:184
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:201
 msgid "Redis constants (this request)"
 msgstr "Costanti Redis (questa richiesta)"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:227
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:244
 msgid "Redis connection constants are present in wp-config.php."
 msgstr "Le costanti di connessione Redis sono presenti in wp-config.php."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:231
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:248
 msgid "Redis connection constants are not all present in wp-config.php. They may be provisioned on enable, or supplied by the environment."
 msgstr "Non tutte le costanti di connessione Redis sono presenti in wp-config.php. Potrebbero essere fornite durante l'attivazione o dall'ambiente."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:236
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:253
 msgid "wp-config.php constants"
 msgstr "Costanti di wp-config.php"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:257
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:274
 msgid "Scheme is unix but the socket path is empty."
 msgstr "Lo schema è unix, ma il percorso del socket è vuoto."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:259
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:284
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:276
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:301
 msgid "Socket / path checks"
 msgstr "Controlli socket/percorso"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:268
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:285
 msgid "Parent directory exists."
 msgstr "La directory superiore esiste."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:269
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:286
 msgid "Parent directory does not exist."
 msgstr "La directory superiore non esiste."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:272
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:289
 msgid "Parent directory is searchable by PHP."
 msgstr "La directory superiore è esplorabile da PHP."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:273
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:290
 msgid "Parent directory is NOT searchable by PHP (a common cause of \"file exists: no\")."
 msgstr "La directory superiore NON è esplorabile da PHP (una causa comune di \"file exists: no\")."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:276
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:293
 msgid "Socket file exists."
 msgstr "Il file socket esiste."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:277
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:294
 msgid "Socket file does NOT exist, or PHP cannot see it."
 msgstr "Il file socket NON esiste, oppure PHP non riesce a vederlo."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:280
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:297
 msgid "Socket file is readable by PHP."
 msgstr "Il file socket è leggibile da PHP."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:281
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:298
 msgid "Socket file is NOT readable by PHP."
 msgstr "Il file socket NON è leggibile da PHP."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:301
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:318
 msgid "Redis responded to PING (this is the same check used when enabling object cache)."
 msgstr "Redis ha risposto al PING (è lo stesso controllo usato durante l'attivazione della cache a oggetti)."
 
 #. translators: %s is the failure reason reported by Redis.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:308
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:325
 #, php-format
 msgid "Redis PING failed: %s"
 msgstr "PING di Redis non riuscito: %s"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:309
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:387
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:326
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:404
 msgid "unknown error"
 msgstr "errore sconosciuto"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:312
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:329
 msgid "This is the failure that produces the REST error code \"redis_unreachable\"."
 msgstr "Questo è l'errore che produce il codice di errore REST \"redis_unreachable\"."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:320
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:337
 msgid "Live Redis connection test"
 msgstr "Test di connessione a Redis in tempo reale"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:337
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:354
 msgid "object-cache.php is missing (expected until object cache is enabled)."
 msgstr "object-cache.php è mancante (previsto finché la cache a oggetti non viene attivata)."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:339
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:356
 msgid "object-cache.php is the Newfold Redis drop-in."
 msgstr "object-cache.php è il drop-in Redis di Newfold."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:341
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:358
 msgid "object-cache.php exists but is NOT the Newfold drop-in (another plugin may own it)."
 msgstr "object-cache.php esiste, ma NON è il drop-in di Newfold (potrebbe appartenere a un altro plugin)."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:345
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:362
 msgid "Object cache is enabled and active."
 msgstr "La cache a oggetti è attivata e attiva."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:346
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:363
 msgid "Object cache is not currently active for this request."
 msgstr "La cache a oggetti non è attualmente attiva per questa richiesta."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:355
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:372
 msgid "Object cache drop-in"
 msgstr "Drop-in della cache a oggetti"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:371
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:388
 msgid "Install or enable the phpredis PHP extension."
 msgstr "Installa o attiva l'estensione PHP phpredis."
 
 #. translators: %s is the Redis unix socket path.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:378
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:395
 #, php-format
 msgid "PHP cannot access the Redis unix socket at %s. Hosting must fix socket permissions or provide a TCP host/port."
 msgstr "PHP non riesce ad accedere al socket unix di Redis in %s. L'hosting deve correggere i permessi del socket o fornire un host/porta TCP."
 
 #. translators: %s is the failure reason reported by Redis.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:386
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:403
 #, php-format
 msgid "Direct Redis connection failed: %s"
 msgstr "Connessione diretta a Redis non riuscita: %s"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:392
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:409
 msgid "WP_REDIS_DISABLED is true — object cache may be intentionally turned off."
 msgstr "WP_REDIS_DISABLED è true: la cache a oggetti potrebbe essere stata disattivata intenzionalmente."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:396
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:413
 msgid "All checks passed. Object cache should be able to connect to Redis."
 msgstr "Tutti i controlli sono stati superati. La cache a oggetti dovrebbe essere in grado di connettersi a Redis."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:398
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:415
 msgid "Issues found:"
 msgstr "Problemi rilevati:"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:408
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:425
 msgid "Diagnosis summary"
 msgstr "Riepilogo della diagnosi"
 
@@ -303,11 +303,17 @@ msgstr "È richiesto un valore per l'esclusione della cache."
 msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
 msgstr "L'impostazione 'newfold_cache_exclusion' è stata aggiornata a: '%s'."
 
-#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:93
+#. translators: %s is the comma-separated list of valid --format values.
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:74
+#, php-format
+msgid "Invalid value for --format. Use one of: %s."
+msgstr "Valore non valido per --format. Usa uno dei seguenti: %s."
+
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:131
 msgid "Object cache diagnostics passed."
 msgstr "Diagnosi della cache a oggetti superata."
 
-#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:95
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:135
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "La diagnosi della cache a oggetti ha rilevato problemi. Consulta la sezione \"Riepilogo della diagnosi\" qui sopra."
 

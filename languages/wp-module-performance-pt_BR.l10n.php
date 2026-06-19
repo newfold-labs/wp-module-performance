@@ -5,7 +5,7 @@ return [
 	'language' => 'pt_BR',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-06-19T07:55:54+00:00',
+	'po-revision-date' => '2026-06-19T08:43:58+00:00',
 	'x-generator' => 'Poedit 3.2.2',
 	'messages' => [
 		'Another plugin\'s object cache is active. Disable it in that plugin first.' => 'O cache de objetos de outro plugin está ativo. Desative-o primeiro nesse plugin.',
@@ -69,6 +69,7 @@ return [
 		'Setting \'newfold_skip_404_handling\' has been set to \'%s\'.' => 'A definição de \'newfold_skip_404_handling\' foi definida para \'%s\'.',
 		'A value for cache exclusion is required.' => 'É necessário um valor para exclusão de cache.',
 		'Setting \'newfold_cache_exclusion\' has been updated to: \'%s\'.' => 'A configuração \'newfold_cache_exclusion\' foi atualizada para: \'%s\'.',
+		'Invalid value for --format. Use one of: %s.' => 'Valor inválido para --format. Use um dos seguintes: %s.',
 		'Object cache diagnostics passed.' => 'Diagnóstico do cache de objetos aprovado.',
 		'Object cache diagnostics found issues. See the "Diagnosis summary" section above.' => 'O diagnóstico do cache de objetos encontrou problemas. Consulte a seção "Resumo do diagnóstico" acima.',
 		'Settings for NFD Font Optimization.' => 'Configurações para otimização de fontes NFD.',

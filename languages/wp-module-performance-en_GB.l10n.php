@@ -5,7 +5,7 @@ return [
 	'language' => 'en_GB',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-06-19T07:55:54+00:00',
+	'po-revision-date' => '2026-06-19T08:43:58+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'Another plugin\'s object cache is active. Disable it in that plugin first.' => 'Another plugin\'s object cache is active. Disable it in that plugin first.',
@@ -69,6 +69,7 @@ return [
 		'Setting \'newfold_skip_404_handling\' has been set to \'%s\'.' => 'Setting \'newfold_skip_404_handling\' has been set to \'%s\'.',
 		'A value for cache exclusion is required.' => 'A value for cache exclusion is required.',
 		'Setting \'newfold_cache_exclusion\' has been updated to: \'%s\'.' => 'Setting \'newfold_cache_exclusion\' has been updated to: \'%s\'.',
+		'Invalid value for --format. Use one of: %s.' => 'Invalid value for --format. Use one of: %s.',
 		'Object cache diagnostics passed.' => 'Object cache diagnostics passed.',
 		'Object cache diagnostics found issues. See the "Diagnosis summary" section above.' => 'Object cache diagnostics found issues. See the "Diagnosis summary" section above.',
 		'Settings for NFD Font Optimization.' => 'Settings for NFD Font Optimization.',
