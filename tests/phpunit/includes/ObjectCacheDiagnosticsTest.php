@@ -17,6 +17,9 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 
 			WP_Mock::passthruFunction( '__' );
 
+			// Drop-in section probes this WP function; mock it so it has a handler in strict mode.
+			WP_Mock::userFunction( 'wp_using_ext_object_cache' )->andReturn( true );
+
 			// phpredis available so the report exercises the live-ping path.
 			Patchwork\redefine(
 				'extension_loaded',
