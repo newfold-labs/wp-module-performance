@@ -82,9 +82,12 @@ final class ObjectCacheDiagnostics {
 
 		$connection = self::run_connection_test();
 		$sections[] = $connection['section'];
-		$sections[] = self::section_dropin();
 
-		$summary    = self::build_summary( $connection['ok'], $connection['message'] );
+		// Resolve drop-in state once and share it with the section and the summary.
+		$state      = ObjectCache::get_state();
+		$sections[] = self::section_dropin( $state );
+
+		$summary    = self::build_summary( $connection['ok'], $connection['message'], $state );
 		$sections[] = $summary['section'];
 
 		return array(
@@ -261,14 +264,33 @@ final class ObjectCacheDiagnostics {
 	 * @return array{title:string, lines:array}|null Null when not applicable.
 	 */
 	private static function section_socket(): ?array {
-		$scheme = self::current_scheme();
-		$path   = self::configured_socket_path();
+		$scheme  = self::current_scheme();
+		$path    = self::configured_socket_path();
+		$is_unix = ( 'unix' === $scheme );
 
-		if ( 'unix' !== $scheme && '' === $path ) {
+		// Nothing socket-related to report: not a unix scheme and no path configured.
+		if ( ! $is_unix && '' === $path ) {
 			return null;
 		}
 
 		$lines = array( self::line( self::STATUS_INFO, 'Socket path: ' . ( '' === $path ? '(empty)' : $path ) ) );
+
+		// A socket path is set but the scheme is not unix, so the path is ignored for connecting.
+		// The file checks below would be misleading here, so report the mismatch and stop.
+		if ( ! $is_unix ) {
+			$lines[] = self::line(
+				self::STATUS_WARN,
+				sprintf(
+					/* translators: %s is the configured Redis scheme (e.g. tcp). */
+					__( 'WP_REDIS_PATH is set but WP_REDIS_SCHEME is "%s", so the socket path is ignored. Set the scheme to "unix" to connect via the socket.', 'wp-module-performance' ),
+					$scheme
+				)
+			);
+			return array(
+				'title' => __( 'Socket / path checks', 'wp-module-performance' ),
+				'lines' => $lines,
+			);
+		}
 
 		if ( '' === $path ) {
 			$lines[] = self::line( self::STATUS_FAIL, __( 'Scheme is unix but the socket path is empty.', 'wp-module-performance' ) );
@@ -343,11 +365,11 @@ final class ObjectCacheDiagnostics {
 	/**
 	 * Object cache drop-in status.
 	 *
+	 * @param array $state Result of ObjectCache::get_state().
 	 * @return array{title:string, lines:array}
 	 */
-	private static function section_dropin(): array {
-		$state = ObjectCache::get_state();
-		$path  = ObjectCache::get_drop_in_path();
+	private static function section_dropin( array $state ): array {
+		$path = ObjectCache::get_drop_in_path();
 		$lines = array( self::line( self::STATUS_INFO, 'Drop-in path: ' . $path ) );
 
 		if ( ! file_exists( $path ) ) {
@@ -379,9 +401,10 @@ final class ObjectCacheDiagnostics {
 	 *
 	 * @param bool   $connect_ok      Whether the live PING succeeded.
 	 * @param string $connect_message Failure message from the PING, if any.
+	 * @param array  $state           Result of ObjectCache::get_state().
 	 * @return array{ok:bool, issues:string[], section:array{title:string, lines:array}}
 	 */
-	private static function build_summary( bool $connect_ok, string $connect_message ): array {
+	private static function build_summary( bool $connect_ok, string $connect_message, array $state ): array {
 		$issues = array();
 
 		if ( ! extension_loaded( 'redis' ) ) {
@@ -389,12 +412,24 @@ final class ObjectCacheDiagnostics {
 		}
 
 		$socket_path = self::configured_socket_path();
-		if ( 'unix' === self::current_scheme() && '' !== $socket_path && ( ! file_exists( $socket_path ) || ! is_readable( $socket_path ) ) ) {
-			$issues[] = sprintf(
-				/* translators: %s is the Redis unix socket path. */
-				__( 'PHP cannot access the Redis unix socket at %s. Hosting must fix socket permissions or provide a TCP host/port.', 'wp-module-performance' ),
-				$socket_path
-			);
+		if ( 'unix' === self::current_scheme() ) {
+			if ( '' === $socket_path ) {
+				// A configuration error in its own right: surface it explicitly so --strict fails on it.
+				$issues[] = __( 'WP_REDIS_SCHEME is "unix" but WP_REDIS_PATH is empty or undefined. Set the socket path, or use a TCP host/port.', 'wp-module-performance' );
+			} elseif ( ! file_exists( $socket_path ) || ! is_readable( $socket_path ) ) {
+				$issues[] = sprintf(
+					/* translators: %s is the Redis unix socket path. */
+					__( 'PHP cannot access the Redis unix socket at %s. Hosting must fix socket permissions or provide a TCP host/port.', 'wp-module-performance' ),
+					$socket_path
+				);
+			}
+		}
+
+		// A foreign object-cache.php blocks the module from installing its own. Only surface it as a
+		// blocker when object cache is actually wanted (preference on), so an intentional third-party
+		// object cache is not flagged.
+		if ( ! empty( $state['overwritten'] ) && ObjectCache::is_preference_enabled() ) {
+			$issues[] = __( "Another plugin's object-cache.php drop-in is active and is blocking object cache. Remove it (or disable that plugin) so the Newfold drop-in can be installed.", 'wp-module-performance' );
 		}
 
 		if ( ! $connect_ok ) {

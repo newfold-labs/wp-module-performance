@@ -129,5 +129,86 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 			// The masked form and the non-secret host are still present for diagnosis.
 			$this->assertStringContainsString( 'redis://***:***@cache.example:6379', $json );
 		}
+
+		public function test_non_unix_scheme_with_socket_path_is_reported_as_ignored() {
+			Patchwork\redefine( array( ObjectCacheDiagnostics::class, 'current_scheme' ), function () {
+				return 'tcp';
+			} );
+			Patchwork\redefine( array( ObjectCacheDiagnostics::class, 'configured_socket_path' ), function () {
+				return '/tmp/redis.sock';
+			} );
+
+			$report = ObjectCacheDiagnostics::run();
+			$socket = $this->find_section( $report, 'Socket / path checks' );
+
+			$this->assertNotNull( $socket );
+			$joined = $this->join_messages( $socket['lines'] );
+			$this->assertStringContainsString( 'so the socket path is ignored', $joined );
+			// The unix-only file checks must not run for a tcp scheme.
+			$this->assertStringNotContainsString( 'Socket file exists', $joined );
+		}
+
+		public function test_empty_unix_socket_path_is_flagged_in_summary() {
+			Patchwork\redefine( array( ObjectCacheDiagnostics::class, 'current_scheme' ), function () {
+				return 'unix';
+			} );
+			Patchwork\redefine( array( ObjectCacheDiagnostics::class, 'configured_socket_path' ), function () {
+				return '';
+			} );
+
+			$report = ObjectCacheDiagnostics::run();
+
+			$this->assertFalse( $report['summary']['ok'] );
+			$this->assertStringContainsString(
+				'WP_REDIS_SCHEME is "unix" but WP_REDIS_PATH is empty',
+				implode( "\n", $report['summary']['issues'] )
+			);
+		}
+
+		public function test_foreign_dropin_is_flagged_only_when_preference_enabled() {
+			Patchwork\redefine( array( ObjectCache::class, 'get_state' ), function () {
+				return array(
+					'available'   => true,
+					'enabled'     => false,
+					'overwritten' => true,
+					'ours'        => false,
+				);
+			} );
+
+			// Preference off: an intentional third-party object cache is not flagged.
+			Patchwork\redefine( array( ObjectCache::class, 'is_preference_enabled' ), function () {
+				return false;
+			} );
+			$off = ObjectCacheDiagnostics::run();
+			$this->assertStringNotContainsString( "Another plugin's object-cache.php", implode( "\n", $off['summary']['issues'] ) );
+
+			// Preference on: the foreign drop-in is surfaced as a blocker.
+			Patchwork\redefine( array( ObjectCache::class, 'is_preference_enabled' ), function () {
+				return true;
+			} );
+			$on = ObjectCacheDiagnostics::run();
+			$this->assertStringContainsString( "Another plugin's object-cache.php drop-in is active", implode( "\n", $on['summary']['issues'] ) );
+		}
+
+		private function find_section( array $report, $title ) {
+			foreach ( $report['sections'] as $section ) {
+				if ( $title === $section['title'] ) {
+					return $section;
+				}
+			}
+			return null;
+		}
+
+		private function join_messages( array $lines ) {
+			return implode(
+				"\n",
+				array_map(
+					function ( $line ) {
+						return $line['message'];
+					},
+					$lines
+				)
+			);
+		}
 	}
 }

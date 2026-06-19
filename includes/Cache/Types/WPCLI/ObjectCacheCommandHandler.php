@@ -135,6 +135,7 @@ class ObjectCacheCommandHandler {
 		$message = __( 'Object cache diagnostics found issues. See the "Diagnosis summary" section above.', 'wp-module-performance' );
 		if ( $strict ) {
 			WP_CLI::error( $message ); // Non-zero exit for scripts/CI.
+			return; // WP_CLI::error() already exits; explicit for readability and safety.
 		}
 		WP_CLI::warning( $message );
 	}
