@@ -28,6 +28,7 @@ controls; each public method on a handler is a subcommand.
 ```bash
 wp nfd performance object_cache diagnose
 wp nfd performance object_cache diagnose --format=json
+wp nfd performance object_cache diagnose --strict   # non-zero exit if issues are found
 ```
 
 Reports phpredis availability, the Redis connection constants, whether they are present in
@@ -40,8 +41,11 @@ site root for one-off debugging. It is **read-only**: it never writes files, opt
 it never prints Redis credentials — `WP_REDIS_PASSWORD` and `WP_REDIS_USERNAME` are reported as
 presence only (`(set)` / `(not defined)`), never as values.
 
+Pass `--strict` to make the command exit with a non-zero status when issues are found — useful in
+shell pipelines and CI. Without it, the command always exits 0 and reports findings as a warning.
+
 The diagnostics engine (`includes/Cache/Types/ObjectCacheDiagnostics.php`) is render-agnostic and
-reuses the module's own `ObjectCache`, `ObjectCachePreflight`, and `PhpRedisPinger` classes so the
-report reflects exactly what the enable flow sees. The handler
-(`includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php`) renders it as a human-readable report
-or as JSON.
+reuses the module's own `ObjectCache` (constant bootstrap, wp-config and drop-in state) and
+`PhpRedisPinger` (the live `PING`) so the report reflects exactly what the enable flow sees. The
+handler (`includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php`) renders it as a human-readable
+report or as JSON.

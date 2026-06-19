@@ -130,11 +130,28 @@ final class ObjectCacheDiagnostics {
 	}
 
 	/**
+	 * Mask credentials embedded in connection URIs (e.g. redis://user:pass@host) before a message
+	 * is included in the report. PhpRedisPinger does not currently emit credentials, but this keeps
+	 * the diagnostic safe if an upstream error message ever echoes a DSN.
+	 *
+	 * @param string $message Message from the pinger.
+	 * @return string
+	 */
+	private static function redact_secrets( string $message ): string {
+		$masked = preg_replace( '#([a-z][a-z0-9+.\-]*://)[^/@\s]*:[^/@\s]*@#i', '${1}***:***@', $message );
+		return is_string( $masked ) ? $masked : $message;
+	}
+
+	/**
 	 * Environment section: PHP, SAPI, phpredis availability.
 	 *
 	 * @return array{title:string, lines:array}
 	 */
 	private static function section_environment(): array {
+		// Raw "label: value" readouts (PHP version, SAPI, paths, "function() = value") are intentionally
+		// left untranslated throughout this class: the value is a non-localizable technical token, and
+		// translating only the label half yields awkward half-translated lines. Diagnostic *findings*
+		// (the full sentences with OK/WARN/FAIL status) are localized.
 		$lines = array(
 			self::line( self::STATUS_INFO, 'PHP version: ' . PHP_VERSION ),
 			self::line( self::STATUS_INFO, 'PHP SAPI: ' . PHP_SAPI ),
@@ -295,7 +312,7 @@ final class ObjectCacheDiagnostics {
 		// Connection constants are already bootstrapped in run() before any section is built.
 		$ping    = PhpRedisPinger::ping();
 		$ok      = (bool) ( $ping['ok'] ?? false );
-		$message = isset( $ping['message'] ) && is_string( $ping['message'] ) ? $ping['message'] : '';
+		$message = isset( $ping['message'] ) && is_string( $ping['message'] ) ? self::redact_secrets( $ping['message'] ) : '';
 
 		if ( $ok ) {
 			$lines = array( self::line( self::STATUS_OK, __( 'Redis responded to PING (this is the same check used when enabling object cache).', 'wp-module-performance' ) ) );

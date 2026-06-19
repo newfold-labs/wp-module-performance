@@ -42,6 +42,9 @@ class ObjectCacheCommandHandler {
 	 *   - json
 	 * ---
 	 *
+	 * [--strict]
+	 * : Exit with a non-zero status when diagnostics find issues (useful in scripts and CI).
+	 *
 	 * ## EXAMPLES
 	 *
 	 *     # Print a human-readable diagnostics report.
@@ -50,25 +53,47 @@ class ObjectCacheCommandHandler {
 	 *     # Emit the report as JSON for scripting or support tooling.
 	 *     wp nfd performance object_cache diagnose --format=json
 	 *
+	 *     # Fail the command (non-zero exit) when issues are found.
+	 *     wp nfd performance object_cache diagnose --strict
+	 *
 	 * @param array $args       Positional arguments (unused).
 	 * @param array $assoc_args Associative arguments.
 	 *
 	 * @return void
 	 */
 	public function diagnose( $args, $assoc_args ) {
-		$report = ObjectCacheDiagnostics::run();
+		$format = (string) \WP_CLI\Utils\get_flag_value( $assoc_args, 'format', 'report' );
+		$strict = (bool) \WP_CLI\Utils\get_flag_value( $assoc_args, 'strict', false );
 
-		$format = isset( $assoc_args['format'] ) ? (string) $assoc_args['format'] : 'report';
+		// WP-CLI validates --format against the synopsis options above; this guards direct/programmatic calls too.
+		$allowed_formats = array( 'report', 'json' );
+		if ( ! in_array( $format, $allowed_formats, true ) ) {
+			WP_CLI::error(
+				sprintf(
+					/* translators: %s is the comma-separated list of valid --format values. */
+					__( 'Invalid value for --format. Use one of: %s.', 'wp-module-performance' ),
+					implode( ', ', $allowed_formats )
+				)
+			);
+		}
+
+		$report = ObjectCacheDiagnostics::run();
+		$passed = ! empty( $report['summary']['ok'] );
+
 		if ( 'json' === $format ) {
-			WP_CLI::line( (string) wp_json_encode( $report, JSON_PRETTY_PRINT ) );
+			WP_CLI::line( (string) wp_json_encode( $report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) );
+			if ( $strict && ! $passed ) {
+				WP_CLI::halt( 1 );
+			}
 			return;
 		}
 
 		$this->render_report( $report );
+		$this->render_verdict( $passed, $strict );
 	}
 
 	/**
-	 * Renders the structured report as a readable terminal report.
+	 * Renders the report sections as readable terminal output.
 	 *
 	 * @param array $report Report from ObjectCacheDiagnostics::run().
 	 *
@@ -79,9 +104,11 @@ class ObjectCacheCommandHandler {
 		WP_CLI::line( 'Generated: ' . ( $report['generated'] ?? '' ) );
 
 		foreach ( $report['sections'] as $section ) {
+			$title = (string) $section['title'];
+			$width = function_exists( 'mb_strlen' ) ? mb_strlen( $title ) : strlen( $title );
 			WP_CLI::line( '' );
-			WP_CLI::line( WP_CLI::colorize( '%Y' . $section['title'] . '%n' ) );
-			WP_CLI::line( str_repeat( '-', max( 8, strlen( $section['title'] ) ) ) );
+			WP_CLI::line( WP_CLI::colorize( '%Y' . $title . '%n' ) );
+			WP_CLI::line( str_repeat( '-', max( 8, $width ) ) );
 			foreach ( $section['lines'] as $line ) {
 				$tag = self::STATUS_TAGS[ $line['status'] ] ?? self::STATUS_TAGS[ ObjectCacheDiagnostics::STATUS_INFO ];
 				WP_CLI::line( WP_CLI::colorize( $tag ) . ' ' . $line['message'] );
@@ -89,10 +116,26 @@ class ObjectCacheCommandHandler {
 		}
 
 		WP_CLI::line( '' );
-		if ( ! empty( $report['summary']['ok'] ) ) {
+	}
+
+	/**
+	 * Emits the final pass/fail verdict. In strict mode a failure exits non-zero.
+	 *
+	 * @param bool $passed Whether all diagnostics passed.
+	 * @param bool $strict Whether --strict was supplied.
+	 *
+	 * @return void
+	 */
+	private function render_verdict( $passed, $strict ) {
+		if ( $passed ) {
 			WP_CLI::success( __( 'Object cache diagnostics passed.', 'wp-module-performance' ) );
-		} else {
-			WP_CLI::warning( __( 'Object cache diagnostics found issues. See the "Diagnosis summary" section above.', 'wp-module-performance' ) );
+			return;
 		}
+
+		$message = __( 'Object cache diagnostics found issues. See the "Diagnosis summary" section above.', 'wp-module-performance' );
+		if ( $strict ) {
+			WP_CLI::error( $message ); // Non-zero exit for scripts/CI.
+		}
+		WP_CLI::warning( $message );
 	}
 }

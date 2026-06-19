@@ -108,5 +108,26 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 			// Non-sensitive infrastructure values are allowed through.
 			$this->assertStringContainsString( '127.0.0.1', $json );
 		}
+
+		public function test_connection_error_message_credentials_are_masked() {
+			// Simulate an upstream pinger message that echoes a DSN with embedded credentials.
+			Patchwork\redefine(
+				array( PhpRedisPinger::class, 'ping' ),
+				function () {
+					return array(
+						'ok'      => false,
+						'message' => 'Connection failed for redis://admin:topsecretpw@cache.example:6379',
+					);
+				}
+			);
+
+			$report = ObjectCacheDiagnostics::run();
+			$json   = json_encode( $report, JSON_UNESCAPED_SLASHES );
+
+			$this->assertStringNotContainsString( 'topsecretpw', $json );
+			$this->assertStringNotContainsString( 'admin:topsecretpw', $json );
+			// The masked form and the non-secret host are still present for diagnosis.
+			$this->assertStringContainsString( 'redis://***:***@cache.example:6379', $json );
+		}
 	}
 }
