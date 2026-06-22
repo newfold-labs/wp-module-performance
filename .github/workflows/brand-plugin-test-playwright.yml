@@ -6,19 +6,20 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
   cancel-in-progress: true
+
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
+permissions: {}
 
 jobs:
   setup:
     name: Setup
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    permissions: {} # No steps use the GitHub token; branch name comes from context and bash only.
+    timeout-minutes: 10
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
@@ -31,9 +32,10 @@ jobs:
   bluehost:
     name: Bluehost Build and Test Cypress
     needs: setup
-    permissions:
-      contents: read
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    permissions:
+      contents: read # Required so the reusable workflow can clone private plugin and module repositories via actions/checkout.
+    timeout-minutes: 90
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -44,6 +46,9 @@ jobs:
     name: Bluehost DEV Build and Test Playwright
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    permissions:
+      contents: read # Required so the reusable workflow can clone private plugin and module repositories via actions/checkout.
+    timeout-minutes: 90
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -56,6 +61,9 @@ jobs:
     name: Hostgator Build and Test Playwright
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    permissions:
+      contents: read # Required so the reusable workflow can clone private plugin and module repositories via actions/checkout.
+    timeout-minutes: 90
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
