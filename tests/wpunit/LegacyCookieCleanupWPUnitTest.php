@@ -33,6 +33,9 @@ class LegacyCookieCleanupWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestC
 	/** Flag recording the cleanup has run. */
 	private const CLEANUP_FLAG = 'nfd_cf_opt_cookie_htaccess_cleaned';
 
+	/** Flag recording the orphaned-option cleanup has run. */
+	private const OPTIONS_CLEANUP_FLAG = 'nfd_cf_opt_options_cleaned';
+
 	/** Option where the htaccess module persists its composed state. */
 	private const HTACCESS_STATE_OPTION = 'nfd_module_htaccess_saved_state';
 
@@ -43,7 +46,10 @@ class LegacyCookieCleanupWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestC
 	 */
 	public function tearDown(): void {
 		delete_option( self::CLEANUP_FLAG );
+		delete_option( self::OPTIONS_CLEANUP_FLAG );
 		delete_option( self::HTACCESS_STATE_OPTION );
+		delete_option( 'nfd_fonts_optimization' );
+		delete_option( 'nfd_image_optimization' );
 		if ( class_exists( HtaccessApi::class ) ) {
 			HtaccessApi::registry()->unregister( self::LEGACY_FRAGMENT_ID );
 		}
@@ -264,6 +270,90 @@ class LegacyCookieCleanupWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestC
 			self::LEGACY_FRAGMENT_ID,
 			$state['blocks'],
 			'A second cleanup run must be a no-op once the guard flag is set'
+		);
+	}
+
+	/**
+	 * The fully-orphaned fonts option is deleted, and the stale cloudflare sub-key is
+	 * stripped from the image option while every other image key is left intact.
+	 *
+	 * @return void
+	 */
+	public function test_orphaned_option_cleanup_removes_dead_cf_data() {
+		update_option(
+			'nfd_fonts_optimization',
+			array( 'cloudflare' => array( 'fonts' => array( 'value' => true ) ) )
+		);
+		update_option(
+			'nfd_image_optimization',
+			array(
+				'enabled'      => true,
+				'lazy_loading' => array( 'enabled' => true ),
+				'cloudflare'   => array(
+					'polish' => array( 'value' => true ),
+					'mirage' => array( 'value' => true ),
+				),
+			)
+		);
+
+		( new LegacyCookieCleanup() )->maybe_remove_orphaned_options();
+
+		$this->assertFalse( get_option( 'nfd_fonts_optimization' ), 'Orphaned fonts option must be deleted' );
+
+		$image = get_option( 'nfd_image_optimization' );
+		$this->assertIsArray( $image );
+		$this->assertArrayNotHasKey( 'cloudflare', $image, 'Stale cloudflare sub-key must be stripped' );
+		$this->assertTrue( $image['enabled'], 'Other image keys must be preserved' );
+		$this->assertSame( array( 'enabled' => true ), $image['lazy_loading'], 'Other image keys must be preserved verbatim' );
+		$this->assertTrue( (bool) get_option( self::OPTIONS_CLEANUP_FLAG ), 'Cleanup should record that it ran' );
+	}
+
+	/**
+	 * The image option is only written when it actually carries a cloudflare key —
+	 * a clean install (no dead data) is a no-op beyond setting the guard.
+	 *
+	 * @return void
+	 */
+	public function test_orphaned_option_cleanup_is_noop_without_dead_data() {
+		update_option( 'nfd_image_optimization', array( 'enabled' => true ) );
+
+		( new LegacyCookieCleanup() )->maybe_remove_orphaned_options();
+
+		$this->assertSame( array( 'enabled' => true ), get_option( 'nfd_image_optimization' ) );
+		$this->assertFalse( get_option( 'nfd_fonts_optimization' ) );
+		$this->assertTrue( (bool) get_option( self::OPTIONS_CLEANUP_FLAG ) );
+	}
+
+	/**
+	 * The orphaned-option cleanup uses its OWN guard, independent of the htaccess flag —
+	 * so installs that already ran the 3.8.0 htaccess cleanup (htaccess flag set) still
+	 * get their orphaned options removed.
+	 *
+	 * @return void
+	 */
+	public function test_orphaned_option_cleanup_runs_even_when_htaccess_flag_already_set() {
+		update_option( self::CLEANUP_FLAG, true, false ); // 3.8.0 htaccess cleanup already done.
+		update_option( 'nfd_fonts_optimization', array( 'cloudflare' => array( 'fonts' => array( 'value' => true ) ) ) );
+
+		( new LegacyCookieCleanup() )->maybe_remove_orphaned_options();
+
+		$this->assertFalse( get_option( 'nfd_fonts_optimization' ), 'Option cleanup must not be gated by the htaccess flag' );
+	}
+
+	/**
+	 * Once the option cleanup has run (its flag set), it does not run again.
+	 *
+	 * @return void
+	 */
+	public function test_orphaned_option_cleanup_is_guarded_against_rerunning() {
+		update_option( self::OPTIONS_CLEANUP_FLAG, true, false );
+		update_option( 'nfd_fonts_optimization', array( 'cloudflare' => array( 'fonts' => array( 'value' => true ) ) ) );
+
+		( new LegacyCookieCleanup() )->maybe_remove_orphaned_options();
+
+		$this->assertNotFalse(
+			get_option( 'nfd_fonts_optimization' ),
+			'A second option-cleanup run must be a no-op once its guard flag is set'
 		);
 	}
 }

@@ -14,9 +14,11 @@
  *
  * The whole cookie mechanism has now been removed — the Cloudflare optimizations
  * are enabled at the zone level instead, so no cookie is needed. This class is all
- * that remains: a guarded, run-once cleanup that strips the legacy `Set-Cookie`
+ * that remains: guarded, run-once cleanups that (1) strip the legacy `Set-Cookie`
  * block from sites that still carry it (installs upgrading straight from a version
- * before the block was first removed).
+ * before the block was first removed) and (2) delete the option data orphaned by
+ * removing the feature (`nfd_fonts_optimization`, and the stale `cloudflare` sub-key
+ * of `nfd_image_optimization`).
  *
  * @package NewfoldLabs\WP\Module\Performance\Cloudflare
  * @since 1.0.0
@@ -73,6 +75,33 @@ class LegacyCookieCleanup {
 	private const CLEANUP_FLAG = 'nfd_cf_opt_cookie_htaccess_cleaned';
 
 	/**
+	 * Option flag recording that the orphaned Cloudflare option data has been removed.
+	 *
+	 * Deliberately separate from {@see self::CLEANUP_FLAG}: installs that already ran
+	 * the 3.8.0 htaccess cleanup have that flag set, so reusing it here would skip the
+	 * option cleanup on exactly those installs. A distinct flag guarantees the option
+	 * cleanup runs once on every install regardless of upgrade path.
+	 *
+	 * @var string
+	 */
+	private const OPTIONS_CLEANUP_FLAG = 'nfd_cf_opt_options_cleaned';
+
+	/**
+	 * Option that stored the now-removed Cloudflare font optimization settings.
+	 *
+	 * @var string
+	 */
+	private const FONTS_OPTION = 'nfd_fonts_optimization';
+
+	/**
+	 * Option for the in-house image optimizer. Retained — only its stale `cloudflare`
+	 * (polish/mirage) sub-key is stripped.
+	 *
+	 * @var string
+	 */
+	private const IMAGE_OPTION = 'nfd_image_optimization';
+
+	/**
 	 * Constructor to register hooks.
 	 *
 	 * @since 1.0.0
@@ -80,6 +109,42 @@ class LegacyCookieCleanup {
 	public function __construct() {
 		// One-time removal of the obsolete Set-Cookie `.htaccess` block.
 		add_action( 'init', array( $this, 'maybe_remove_legacy_htaccess_fragment' ) );
+
+		// One-time removal of the orphaned Cloudflare optimization option data.
+		add_action( 'init', array( $this, 'maybe_remove_orphaned_options' ) );
+	}
+
+	/**
+	 * Remove option data orphaned by deleting the Cloudflare optimization feature.
+	 *
+	 * Runs EXACTLY ONCE per site (separate guard from the htaccess cleanup; see
+	 * {@see self::OPTIONS_CLEANUP_FLAG}). Two things are now dead data:
+	 *
+	 *  - `nfd_fonts_optimization` is fully orphaned (the Fonts subsystem is gone), so
+	 *    the whole option is deleted.
+	 *  - `nfd_image_optimization` is still used by the in-house image optimizer, so only
+	 *    its stale `cloudflare` (polish/mirage) sub-key is stripped — every other key is
+	 *    left exactly as stored.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function maybe_remove_orphaned_options(): void {
+		if ( $this->is_options_cleanup_done() ) {
+			return;
+		}
+
+		// Set the guard up front so this runs once and only once per site.
+		$this->set_options_cleanup_done();
+
+		delete_option( self::FONTS_OPTION );
+
+		$image = get_option( self::IMAGE_OPTION );
+		if ( is_array( $image ) && array_key_exists( 'cloudflare', $image ) ) {
+			unset( $image['cloudflare'] );
+			update_option( self::IMAGE_OPTION, $image );
+		}
 	}
 
 	/**
@@ -256,5 +321,34 @@ class LegacyCookieCleanup {
 		}
 
 		update_option( self::CLEANUP_FLAG, true, true );
+	}
+
+	/**
+	 * Whether the one-time orphaned-option cleanup has already completed.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	private function is_options_cleanup_done(): bool {
+		return (bool) ( is_multisite()
+			? get_site_option( self::OPTIONS_CLEANUP_FLAG )
+			: get_option( self::OPTIONS_CLEANUP_FLAG ) );
+	}
+
+	/**
+	 * Record that the one-time orphaned-option cleanup has completed.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	private function set_options_cleanup_done(): void {
+		if ( is_multisite() ) {
+			update_site_option( self::OPTIONS_CLEANUP_FLAG, true );
+			return;
+		}
+
+		update_option( self::OPTIONS_CLEANUP_FLAG, true, true );
 	}
 }
