@@ -48,6 +48,7 @@
     "i18n": "npm run -s i18n-build && npm run i18n-rename-json",
     "i18n-ci-pre": "composer run-script i18n-ci-pre",
     "i18n-ci-post": "composer run-script i18n-ci-post && npm run i18n-rename-json",
-    "lint-js": "wp-scripts lint-js"
+    "lint-js": "wp-scripts lint-js",
+    "lint:css-build": "node scripts/validate-build-css.mjs"
   }
 }

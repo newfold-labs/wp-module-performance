@@ -34,10 +34,6 @@ const ImageOptimization = () => {
 		imageOptimizationUpdatedDescription,
 		imageOptimizationUpdateErrorTitle,
 		imageOptimizationGenericErrorMessage,
-		imageOptimizationPolishLabel,
-		imageOptimizationPolishDescription,
-		imageOptimizationMirageLabel,
-		imageOptimizationMirageDescription,
 	} = getImageOptimizationText();
 
 	const [ settings, setSettings ] = useState( null );
@@ -111,30 +107,6 @@ const ImageOptimization = () => {
 		}
 	};
 
-	function capabilityKeyExists( key ) {
-		if (
-			typeof window.NewfoldRuntime !== 'undefined' &&
-			window.NewfoldRuntime.capabilities &&
-			Object.prototype.hasOwnProperty.call(
-				window.NewfoldRuntime.capabilities,
-				key
-			)
-		) {
-			return true;
-		}
-		return false;
-	}
-
-	function isCapabilityEnabled( key ) {
-		return (
-			capabilityKeyExists( key ) &&
-			window.NewfoldRuntime.capabilities[ key ] === true
-		);
-	}
-
-	const polishEnabled = isCapabilityEnabled( 'hasCloudflarePolish' );
-	const mirageEnabled = isCapabilityEnabled( 'hasCloudflareMirage' );
-
 	const handleToggle = ( field, value ) => {
 		if ( isBanned ) return;
 
@@ -150,16 +122,6 @@ const ImageOptimization = () => {
 				updated.bulk_optimization = value;
 				updated.lazy_loading.enabled = value;
 				updated.prefer_optimized_image_when_exists = value;
-				updated.cloudflare = {
-					polish: {
-						value: value && polishEnabled,
-						user_set: true,
-					},
-					mirage: {
-						value: value && mirageEnabled,
-						user_set: true,
-					},
-				};
 				break;
 			case 'autoOptimizeEnabled':
 				setUpdating( 'autoOptimizeEnabled' );
@@ -181,20 +143,6 @@ const ImageOptimization = () => {
 			case 'preferOptimizedImageWhenExists':
 				setUpdating( 'preferOptimizedImageWhenExists' );
 				updated.prefer_optimized_image_when_exists = value;
-				break;
-			case 'cloudflarePolish':
-				setUpdating( 'cloudflarePolish' );
-				updated.cloudflare.polish = {
-					value,
-					user_set: true,
-				};
-				break;
-			case 'cloudflareMirage':
-				setUpdating( 'cloudflareMirage' );
-				updated.cloudflare.mirage = {
-					value,
-					user_set: true,
-				};
 				break;
 			default:
 				break;
@@ -238,13 +186,7 @@ const ImageOptimization = () => {
 		auto_optimized_uploaded_images: auto = {},
 		lazy_loading: lazy = { enabled: true },
 		bulk_optimization: bulk = false,
-		cloudflare = {},
 	} = settings;
-
-	const {
-		mirage: { value: mirage = false } = {},
-		polish: { value: polish = false } = {},
-	} = cloudflare;
 
 	const { enabled: autoEnabled, auto_delete_original_image: autoDelete } =
 		auto;
@@ -259,7 +201,6 @@ const ImageOptimization = () => {
 	};
 
 	const beingEnabled = updating === 'enabled';
-	const showToggles = polishEnabled || mirageEnabled;
 
 	return (
 		<Container.SettingsField
@@ -413,51 +354,6 @@ const ImageOptimization = () => {
 								updating === 'lazyLoading'
 							}
 						/>
-
-						{ showToggles && (
-							<>
-								{ polishEnabled && (
-									<ToggleField
-										id="cloudflare-polish"
-										label={ imageOptimizationPolishLabel }
-										description={
-											imageOptimizationPolishDescription
-										}
-										checked={ polish }
-										onChange={ () =>
-											handleToggle(
-												'cloudflarePolish',
-												! polish
-											)
-										}
-										disabled={
-											beingEnabled ||
-											updating === 'cloudflarePolish'
-										}
-									/>
-								) }
-								{ mirageEnabled && (
-									<ToggleField
-										id="cloudflare-mirage"
-										label={ imageOptimizationMirageLabel }
-										description={
-											imageOptimizationMirageDescription
-										}
-										checked={ mirage }
-										onChange={ () =>
-											handleToggle(
-												'cloudflareMirage',
-												! mirage
-											)
-										}
-										disabled={
-											beingEnabled ||
-											updating === 'cloudflareMirage'
-										}
-									/>
-								) }
-							</>
-						) }
 					</>
 				) }
 			</div>
