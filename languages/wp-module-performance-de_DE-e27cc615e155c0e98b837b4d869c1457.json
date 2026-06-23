@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-06-15T11:40:23+00:00",
+    "translation-revision-date": "2026-06-23T09:55:57+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/assets\/image-bulk-optimizer\/image-bulk-optimizer.js",
     "domain": "messages",
@@ -7,32 +7,32 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "es_MX",
+                "lang": "de_DE",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Optimizing Images\u2026": [
-                "Optimizando im\u00e1genes\u2026"
+                "Bilder werden optimiert\u2026"
             ],
             "Preparing files\u2026": [
-                "Preparando archivos\u2026"
+                "Dateien werden vorbereitet\u2026"
             ],
             "Done": [
-                "Listo"
+                "Fertig"
             ],
             "Optimization Canceled": [
-                "Optimizaci\u00f3n cancelada"
+                "Optimierung abgebrochen"
             ],
             "Optimizing:": [
-                "Optimizando:"
+                "Optimierung:"
             ],
             "Optimization Complete!": [
-                "\u00a1Optimizaci\u00f3n completada!"
+                "Optimierung abgeschlossen!"
             ],
             "An error occurred.": [
-                "Ha ocurrido un error."
+                "Ein Fehler ist aufgetreten."
             ],
             "Optimize": [
-                "Optimizar"
+                "Optimieren"
             ]
         }
     }

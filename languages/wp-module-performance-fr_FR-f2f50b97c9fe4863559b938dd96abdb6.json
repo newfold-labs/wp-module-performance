@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-06-15T11:40:23+00:00",
+    "translation-revision-date": "2026-06-23T09:55:57+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -118,36 +118,6 @@
             "Cache cleared": [
                 "Cache vid\u00e9"
             ],
-            "Font Optimization": [
-                "Optimisation des polices"
-            ],
-            "Improve load times by replacing Google Fonts with optimized local versions.": [
-                "Am\u00e9liorez les temps de chargement en rempla\u00e7ant Google Fonts par des versions locales optimis\u00e9es."
-            ],
-            "Optimize Fonts via Cloudflare": [
-                "Optimiser les polices via Cloudflare"
-            ],
-            "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                "Remplace Google Fonts par des versions locales plus rapides et respectueuses de la vie priv\u00e9e."
-            ],
-            "Loading font optimization settings\u2026": [
-                "Chargement des param\u00e8tres d\u2019optimisation des polices\u2026"
-            ],
-            "Error loading settings.": [
-                "Erreur lors du chargement des param\u00e8tres."
-            ],
-            "Fonts optimization updated": [
-                "Optimisation des polices mise \u00e0 jour"
-            ],
-            "Font optimization setting saved successfully.": [
-                "Param\u00e8tre d\u2019optimisation des polices enregistr\u00e9 avec succ\u00e8s."
-            ],
-            "Update failed": [
-                "\u00c9chec de la mise \u00e0 jour"
-            ],
-            "Could not save font optimization setting.": [
-                "Impossible d\u2019enregistrer le param\u00e8tre d\u2019optimisation des polices."
-            ],
             "Image Optimization": [
                 "Optimisation d'image"
             ],
@@ -222,18 +192,6 @@
             ],
             "Something went wrong while updating the settings. Please try again.": [
                 "Une erreur s'est produite lors de la mise \u00e0 jour des param\u00e8tres. Veuillez r\u00e9essayer."
-            ],
-            "Optimize Images via Cloudflare": [
-                "Optimiser les images via Cloudflare"
-            ],
-            "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                "Active la compression d\u2019images de Cloudflare pour r\u00e9duire les temps de chargement et la bande passante."
-            ],
-            "Improve Image Loading on Slow Connections": [
-                "Am\u00e9liorer le chargement des images sur connexions lentes"
-            ],
-            "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                "Cloudflare Mirage acc\u00e9l\u00e8re le chargement d\u2019images sur r\u00e9seaux mobiles et lents."
             ],
             "Advanced settings": [
                 "Param\u00e8tres avanc\u00e9s"

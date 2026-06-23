@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-06-15T11:40:23+00:00",
+    "translation-revision-date": "2026-06-23T09:55:57+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -118,36 +118,6 @@
             "Cache cleared": [
                 "Cache cleared"
             ],
-            "Font Optimization": [
-                "Font Optimisation"
-            ],
-            "Improve load times by replacing Google Fonts with optimized local versions.": [
-                "Improve load times by replacing Google Fonts with optimised local versions."
-            ],
-            "Optimize Fonts via Cloudflare": [
-                "Optimise Fonts via Cloudflare"
-            ],
-            "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-            ],
-            "Loading font optimization settings\u2026": [
-                "Loading font optimisation settings\u2026"
-            ],
-            "Error loading settings.": [
-                "Error loading settings."
-            ],
-            "Fonts optimization updated": [
-                "Fonts optimisation updated"
-            ],
-            "Font optimization setting saved successfully.": [
-                "Font optimisation setting saved successfully."
-            ],
-            "Update failed": [
-                "Update failed"
-            ],
-            "Could not save font optimization setting.": [
-                "Could not save font optimisation setting."
-            ],
             "Image Optimization": [
                 "Image Optimisation"
             ],
@@ -222,18 +192,6 @@
             ],
             "Something went wrong while updating the settings. Please try again.": [
                 "Something went wrong while updating the settings. Please try again."
-            ],
-            "Optimize Images via Cloudflare": [
-                "Optimise Images via Cloudflare"
-            ],
-            "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-            ],
-            "Improve Image Loading on Slow Connections": [
-                "Improve Image Loading on Slow Connections"
-            ],
-            "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                "Cloudflare Mirage accelerates image loading for mobile and slow networks."
             ],
             "Advanced settings": [
                 "Advanced settings"
