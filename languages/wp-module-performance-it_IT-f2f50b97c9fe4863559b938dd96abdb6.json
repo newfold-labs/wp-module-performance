@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-06-15T11:40:23+00:00",
+    "translation-revision-date": "2026-06-23T09:55:57+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -118,36 +118,6 @@
             "Cache cleared": [
                 "Cache svuotata"
             ],
-            "Font Optimization": [
-                "Ottimizzazione dei font"
-            ],
-            "Improve load times by replacing Google Fonts with optimized local versions.": [
-                "Migliora i tempi di caricamento sostituendo Google Fonts con versioni locali ottimizzate."
-            ],
-            "Optimize Fonts via Cloudflare": [
-                "Ottimizza i font via Cloudflare"
-            ],
-            "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                "Sostituisce Google Fonts con versioni locali pi\u00f9 veloci e rispettose della privacy."
-            ],
-            "Loading font optimization settings\u2026": [
-                "Caricamento impostazioni ottimizzazione font\u2026"
-            ],
-            "Error loading settings.": [
-                "Errore nel caricamento delle impostazioni."
-            ],
-            "Fonts optimization updated": [
-                "Ottimizzazione dei font aggiornata"
-            ],
-            "Font optimization setting saved successfully.": [
-                "Impostazione di ottimizzazione dei font salvata con successo."
-            ],
-            "Update failed": [
-                "Aggiornamento fallito"
-            ],
-            "Could not save font optimization setting.": [
-                "Impossibile salvare l\u2019impostazione di ottimizzazione dei font."
-            ],
             "Image Optimization": [
                 "Ottimizzazione delle immagini"
             ],
@@ -222,18 +192,6 @@
             ],
             "Something went wrong while updating the settings. Please try again.": [
                 "Qualcosa \u00e8 andato storto durante l'aggiornamento delle impostazioni. Per favore riprova."
-            ],
-            "Optimize Images via Cloudflare": [
-                "Ottimizza le immagini via Cloudflare"
-            ],
-            "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                "Attiva la compressione delle immagini di Cloudflare per ridurre tempi di caricamento e banda."
-            ],
-            "Improve Image Loading on Slow Connections": [
-                "Migliora il caricamento delle immagini su connessioni lente"
-            ],
-            "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                "Cloudflare Mirage accelera il caricamento delle immagini su reti mobili e lente."
             ],
             "Advanced settings": [
                 "Impostazioni avanzate"

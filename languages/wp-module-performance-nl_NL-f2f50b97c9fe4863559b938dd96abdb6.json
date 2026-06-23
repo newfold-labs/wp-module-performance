@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-06-15T11:40:23+00:00",
+    "translation-revision-date": "2026-06-23T09:55:57+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -118,36 +118,6 @@
             "Cache cleared": [
                 "Cache geleegd"
             ],
-            "Font Optimization": [
-                "Lettertype-optimalisatie"
-            ],
-            "Improve load times by replacing Google Fonts with optimized local versions.": [
-                "Verbeter laadtijden door Google Fonts te vervangen door geoptimaliseerde lokale versies."
-            ],
-            "Optimize Fonts via Cloudflare": [
-                "Optimaliseer lettertypen via Cloudflare"
-            ],
-            "Replaces Google Fonts with faster, privacy-friendly versions served locally.": [
-                "Vervangt Google Fonts door snellere, privacyvriendelijke lokale versies."
-            ],
-            "Loading font optimization settings\u2026": [
-                "Lettertype-optimalisatie-instellingen laden\u2026"
-            ],
-            "Error loading settings.": [
-                "Fout bij het laden van instellingen."
-            ],
-            "Fonts optimization updated": [
-                "Lettertype-optimalisatie bijgewerkt"
-            ],
-            "Font optimization setting saved successfully.": [
-                "Lettertype-optimalisatie-instelling succesvol opgeslagen."
-            ],
-            "Update failed": [
-                "Bijwerken mislukt"
-            ],
-            "Could not save font optimization setting.": [
-                "Kon de lettertype-optimalisatie-instelling niet opslaan."
-            ],
             "Image Optimization": [
                 "Afbeeldingsoptimalisatie"
             ],
@@ -222,18 +192,6 @@
             ],
             "Something went wrong while updating the settings. Please try again.": [
                 "Er is iets misgegaan bij het bijwerken van de instellingen. Probeer het opnieuw."
-            ],
-            "Optimize Images via Cloudflare": [
-                "Optimaliseer afbeeldingen via Cloudflare"
-            ],
-            "Enables Cloudflare's image compression to reduce load times and bandwidth usage.": [
-                "Schakelt Cloudflare-beeldcompressie in om laadtijden en bandbreedtegebruik te verminderen."
-            ],
-            "Improve Image Loading on Slow Connections": [
-                "Afbeelding laden bij trage verbindingen verbeteren"
-            ],
-            "Cloudflare Mirage accelerates image loading for mobile and slow networks.": [
-                "Cloudflare Mirage versnelt het laden van afbeeldingen op mobiele en trage netwerken."
             ],
             "Advanced settings": [
                 "Geavanceerde instellingen"
