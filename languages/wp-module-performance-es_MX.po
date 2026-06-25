@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-19T08:56:05+00:00\n"
+"PO-Revision-Date: 2026-06-23T09:55:57+00:00\n"
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-performance\n"
@@ -327,21 +327,9 @@ msgstr "El diagnóstico de la caché de objetos se superó correctamente."
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "El diagnóstico de la caché de objetos encontró problemas. Consulte la sección \"Resumen del diagnóstico\" más arriba."
 
-#: includes/Fonts/FontSettings.php:56
-msgid "Settings for NFD Font Optimization."
-msgstr "Ajustes para la optimización de fuentes NFD."
 
-#: includes/Fonts/FontSettings.php:65
-msgid "Cloudflare-related font optimization settings."
-msgstr "Ajustes de optimización de fuentes relacionados con Cloudflare."
 
-#: includes/Fonts/FontSettings.php:69
-msgid "Enable Cloudflare Font Optimization."
-msgstr "Activa la optimización de fuentes de Cloudflare."
 
-#: includes/Fonts/FontSettings.php:83
-msgid "Timestamp of last update."
-msgstr "Marca de tiempo de la última actualización."
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
@@ -675,69 +663,57 @@ msgstr "No se han generado los metadatos de los archivos adjuntos."
 msgid "Unexpected response from Cloudflare Worker: HTTP %s"
 msgstr "Respuesta inesperada de Cloudflare Worker: HTTP %s"
 
-#: includes/Images/ImageSettings.php:89
+#: includes/Images/ImageSettings.php:68
 msgid "Settings for NFD Image Optimization."
 msgstr "Ajustes para optimización de imágenes NFD."
 
-#: includes/Images/ImageSettings.php:98
+#: includes/Images/ImageSettings.php:77
 msgid "Enable image optimization."
 msgstr "Activa la optimización de imágenes."
 
-#: includes/Images/ImageSettings.php:103
+#: includes/Images/ImageSettings.php:82
 msgid "Prefer WebP format when it exists."
 msgstr "Prefiero el formato WebP cuando exista."
 
-#: includes/Images/ImageSettings.php:108
+#: includes/Images/ImageSettings.php:87
 msgid "Auto-optimized uploaded images settings."
 msgstr "Configuración de imágenes subidas optimizada automáticamente."
 
-#: includes/Images/ImageSettings.php:112
+#: includes/Images/ImageSettings.php:91
 msgid "Automatically optimize uploaded images."
 msgstr "Optimiza automáticamente las imágenes subidas."
 
-#: includes/Images/ImageSettings.php:117
+#: includes/Images/ImageSettings.php:96
 msgid "Delete the original uploaded image after optimization."
 msgstr "Elimina la imagen original subida después de optimizar."
 
-#: includes/Images/ImageSettings.php:124
+#: includes/Images/ImageSettings.php:103
 msgid "Settings for lazy loading."
 msgstr "Ajustes para cargar con pereza."
 
-#: includes/Images/ImageSettings.php:128
+#: includes/Images/ImageSettings.php:107
 msgid "Enable lazy loading."
 msgstr "Activa la carga perezosa."
 
-#: includes/Images/ImageSettings.php:135
+#: includes/Images/ImageSettings.php:114
 msgid "Enable bulk optimization of images."
 msgstr "Habilitar la optimización masiva de imágenes."
 
-#: includes/Images/ImageSettings.php:140
+#: includes/Images/ImageSettings.php:119
 msgid "Indicates if the site is banned from image optimization."
 msgstr "Indica si el sitio está prohibido de optimizar imágenes."
 
-#: includes/Images/ImageSettings.php:145
+#: includes/Images/ImageSettings.php:124
 msgid "Monthly usage statistics for image optimization."
 msgstr "Estadísticas mensuales de uso para optimización de imágenes."
 
-#: includes/Images/ImageSettings.php:149
+#: includes/Images/ImageSettings.php:128
 msgid "Number of requests made this month."
 msgstr "Número de solicitudes realizadas este mes."
 
-#: includes/Images/ImageSettings.php:154
+#: includes/Images/ImageSettings.php:133
 msgid "Maximum allowed requests per month."
 msgstr "Máximo de solicitudes permitidas al mes."
-
-#: includes/Images/ImageSettings.php:161
-msgid "Cloudflare-related image optimization options."
-msgstr "Opciones de optimización de imágenes relacionadas con Cloudflare."
-
-#: includes/Images/ImageSettings.php:165
-msgid "Enable Cloudflare Polish optimization."
-msgstr "Activa la optimización de Cloudflare Polish."
-
-#: includes/Images/ImageSettings.php:180
-msgid "Enable Cloudflare Mirage optimization."
-msgstr "Activa la optimización de Cloudflare Mirage."
 
 #: includes/Images/RestApi/ImagesController.php:60
 msgid "The ID of the media item to optimize."
@@ -850,25 +826,25 @@ msgstr "CLI de Newfold: Porcentajes inválidos proporcionados a NFD_WPCLI::add_c
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "Cli de Newfold: La clase handler %s no existe."
 
-#: includes/Performance.php:232
+#: includes/Performance.php:230
 msgid "Caching"
 msgstr "Caché"
 
-#: includes/Performance.php:241
+#: includes/Performance.php:239
 msgid "Purge All"
 msgstr "Purga Todo"
 
-#: includes/Performance.php:251
+#: includes/Performance.php:249
 msgid "Purge This Page"
 msgstr "Purgar esta página"
 
-#: includes/Performance.php:262
+#: includes/Performance.php:260
 msgid "Cache Settings"
 msgstr "Configuración de caché"
 
-#: includes/Performance.php:278
-#: includes/Performance.php:279
-#: includes/Performance.php:305
+#: includes/Performance.php:276
+#: includes/Performance.php:277
+#: includes/Performance.php:303
 #: build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Rendimiento"
@@ -1059,46 +1035,6 @@ msgid "Cache cleared"
 msgstr "Caché borrada"
 
 #: build/performance/performance.min.js:2
-msgid "Font Optimization"
-msgstr "Optimización de fuentes"
-
-#: build/performance/performance.min.js:2
-msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr "Mejora los tiempos de carga reemplazando Google Fonts por versiones locales optimizadas."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Fonts via Cloudflare"
-msgstr "Optimizar fuentes con Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr "Reemplaza Google Fonts por versiones locales más rápidas y amigables con la privacidad."
-
-#: build/performance/performance.min.js:2
-msgid "Loading font optimization settings…"
-msgstr "Cargando ajustes de optimización de fuentes…"
-
-#: build/performance/performance.min.js:2
-msgid "Error loading settings."
-msgstr "Error al cargar los ajustes."
-
-#: build/performance/performance.min.js:2
-msgid "Fonts optimization updated"
-msgstr "Optimización de fuentes actualizada"
-
-#: build/performance/performance.min.js:2
-msgid "Font optimization setting saved successfully."
-msgstr "Ajuste de optimización de fuentes guardado exitosamente."
-
-#: build/performance/performance.min.js:2
-msgid "Update failed"
-msgstr "Actualización fallida"
-
-#: build/performance/performance.min.js:2
-msgid "Could not save font optimization setting."
-msgstr "No se pudo guardar el ajuste de optimización de fuentes."
-
-#: build/performance/performance.min.js:2
 msgid "Image Optimization"
 msgstr "Optimización de imágenes"
 
@@ -1197,22 +1133,6 @@ msgstr "Error al actualizar la configuración"
 #: build/performance/performance.min.js:2
 msgid "Something went wrong while updating the settings. Please try again."
 msgstr "Algo salió mal al actualizar la configuración. Por favor, intenta de nuevo."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Images via Cloudflare"
-msgstr "Optimizar imágenes con Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr "Activa la compresión de imágenes de Cloudflare para reducir tiempos de carga y uso de ancho de banda."
-
-#: build/performance/performance.min.js:2
-msgid "Improve Image Loading on Slow Connections"
-msgstr "Mejorar la carga de imágenes en conexiones lentas"
-
-#: build/performance/performance.min.js:2
-msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr "Cloudflare Mirage acelera la carga de imágenes en redes móviles y lentas."
 
 #: build/performance/performance.min.js:2
 msgid "Advanced settings"

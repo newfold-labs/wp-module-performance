@@ -20,7 +20,6 @@ import LinkPrefetch from '../../sections/LinkPrefetch';
 import ImageOptimization from '../../sections/ImageOptimization';
 
 import getAppText from './getAppText';
-import FontOptimization from '../../sections/FontOptimization';
 
 const App = () => {
 	
@@ -36,17 +35,6 @@ const App = () => {
 			document.body.classList.add( `nfd-brand--${ brand }` );
 		}
 	}, [] );
-
-	function capabilityKeyExists( key ) {
-		return (
-			typeof window.NewfoldRuntime !== 'undefined' &&
-			window.NewfoldRuntime.capabilities &&
-			Object.prototype.hasOwnProperty.call(
-				window.NewfoldRuntime.capabilities,
-				key
-			)
-		);
-	}
 
 	return (
 		<Root context={ { isRTL: false } }>
@@ -108,11 +96,6 @@ const App = () => {
 					>
 						<ImageOptimization />
 					</Container.Block>
-					{ capabilityKeyExists( 'hasCloudflareFonts' ) && (
-						<Container.Block className="newfold-font-optimization">
-							<FontOptimization />
-						</Container.Block>
-					) }
 				</Container>
 			</Page>
 		</Root>

@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-19T08:56:05+00:00\n"
+"PO-Revision-Date: 2026-06-23T09:55:57+00:00\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -332,21 +332,9 @@ msgstr "Objectcachediagnose geslaagd."
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "De objectcachediagnose heeft problemen gevonden. Zie het gedeelte \"Diagnoseoverzicht\" hierboven."
 
-#: includes/Fonts/FontSettings.php:56
-msgid "Settings for NFD Font Optimization."
-msgstr "Instellingen voor NFD-lettertypeoptimalisatie."
 
-#: includes/Fonts/FontSettings.php:65
-msgid "Cloudflare-related font optimization settings."
-msgstr "Cloudflare-gerelateerde lettertypeoptimalisatie-instellingen."
 
-#: includes/Fonts/FontSettings.php:69
-msgid "Enable Cloudflare Font Optimization."
-msgstr "Schakel Cloudflare-lettertypeoptimalisatie in."
 
-#: includes/Fonts/FontSettings.php:83
-msgid "Timestamp of last update."
-msgstr "Tijdstempel van de laatste update."
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
@@ -680,69 +668,57 @@ msgstr "Er is niet gelukt om metadata van de bijlage te genereren."
 msgid "Unexpected response from Cloudflare Worker: HTTP %s"
 msgstr "Onverwachte reactie van Cloudflare Worker: HTTP %s"
 
-#: includes/Images/ImageSettings.php:89
+#: includes/Images/ImageSettings.php:68
 msgid "Settings for NFD Image Optimization."
 msgstr "Instellingen voor NFD Image Optimization."
 
-#: includes/Images/ImageSettings.php:98
+#: includes/Images/ImageSettings.php:77
 msgid "Enable image optimization."
 msgstr "Schakel beeldoptimalisatie in."
 
-#: includes/Images/ImageSettings.php:103
+#: includes/Images/ImageSettings.php:82
 msgid "Prefer WebP format when it exists."
 msgstr "Geef de voorkeur aan het WebP-formaat als het bestaat."
 
-#: includes/Images/ImageSettings.php:108
+#: includes/Images/ImageSettings.php:87
 msgid "Auto-optimized uploaded images settings."
 msgstr "Automatisch geoptimaliseerde instellingen voor geüploade afbeeldingen."
 
-#: includes/Images/ImageSettings.php:112
+#: includes/Images/ImageSettings.php:91
 msgid "Automatically optimize uploaded images."
 msgstr "Optimaliseer automatisch geüploade afbeeldingen."
 
-#: includes/Images/ImageSettings.php:117
+#: includes/Images/ImageSettings.php:96
 msgid "Delete the original uploaded image after optimization."
 msgstr "Verwijder de originele geüploade afbeelding na optimalisatie."
 
-#: includes/Images/ImageSettings.php:124
+#: includes/Images/ImageSettings.php:103
 msgid "Settings for lazy loading."
 msgstr "Instellingen voor lui laden."
 
-#: includes/Images/ImageSettings.php:128
+#: includes/Images/ImageSettings.php:107
 msgid "Enable lazy loading."
 msgstr "Schakel lui laden in."
 
-#: includes/Images/ImageSettings.php:135
+#: includes/Images/ImageSettings.php:114
 msgid "Enable bulk optimization of images."
 msgstr "Schakel bulkoptimalisatie van afbeeldingen in."
 
-#: includes/Images/ImageSettings.php:140
+#: includes/Images/ImageSettings.php:119
 msgid "Indicates if the site is banned from image optimization."
 msgstr "Geeft aan of de site is verboden voor beeldoptimalisatie."
 
-#: includes/Images/ImageSettings.php:145
+#: includes/Images/ImageSettings.php:124
 msgid "Monthly usage statistics for image optimization."
 msgstr "Maandelijkse gebruiksstatistieken voor beeldoptimalisatie."
 
-#: includes/Images/ImageSettings.php:149
+#: includes/Images/ImageSettings.php:128
 msgid "Number of requests made this month."
 msgstr "Aantal verzoeken die deze maand zijn ingediend."
 
-#: includes/Images/ImageSettings.php:154
+#: includes/Images/ImageSettings.php:133
 msgid "Maximum allowed requests per month."
 msgstr "Maximaal toegestane verzoeken per maand."
-
-#: includes/Images/ImageSettings.php:161
-msgid "Cloudflare-related image optimization options."
-msgstr "Cloudflare-gerelateerde beeldoptimalisatieopties."
-
-#: includes/Images/ImageSettings.php:165
-msgid "Enable Cloudflare Polish optimization."
-msgstr "Schakel Cloudflare Polish optimalisatie in."
-
-#: includes/Images/ImageSettings.php:180
-msgid "Enable Cloudflare Mirage optimization."
-msgstr "Schakel Cloudflare Mirage-optimalisatie in."
 
 #: includes/Images/RestApi/ImagesController.php:60
 msgid "The ID of the media item to optimize."
@@ -855,25 +831,25 @@ msgstr "Newfold CLI: Ongeldige percentages verstrekt aan NFD_WPCLI::add_command(
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "Newfold CLI: De handlerklasse %s bestaat niet."
 
-#: includes/Performance.php:232
+#: includes/Performance.php:230
 msgid "Caching"
 msgstr "Caching"
 
-#: includes/Performance.php:241
+#: includes/Performance.php:239
 msgid "Purge All"
 msgstr "Zuiver alles"
 
-#: includes/Performance.php:251
+#: includes/Performance.php:249
 msgid "Purge This Page"
 msgstr "Zuiver deze pagina"
 
-#: includes/Performance.php:262
+#: includes/Performance.php:260
 msgid "Cache Settings"
 msgstr "Cache-instellingen"
 
-#: includes/Performance.php:278
-#: includes/Performance.php:279
-#: includes/Performance.php:305
+#: includes/Performance.php:276
+#: includes/Performance.php:277
+#: includes/Performance.php:303
 #: build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Prestaties"
@@ -1064,46 +1040,6 @@ msgid "Cache cleared"
 msgstr "Cache geleegd"
 
 #: build/performance/performance.min.js:2
-msgid "Font Optimization"
-msgstr "Lettertype-optimalisatie"
-
-#: build/performance/performance.min.js:2
-msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr "Verbeter laadtijden door Google Fonts te vervangen door geoptimaliseerde lokale versies."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Fonts via Cloudflare"
-msgstr "Optimaliseer lettertypen via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr "Vervangt Google Fonts door snellere, privacyvriendelijke lokale versies."
-
-#: build/performance/performance.min.js:2
-msgid "Loading font optimization settings…"
-msgstr "Lettertype-optimalisatie-instellingen laden…"
-
-#: build/performance/performance.min.js:2
-msgid "Error loading settings."
-msgstr "Fout bij het laden van instellingen."
-
-#: build/performance/performance.min.js:2
-msgid "Fonts optimization updated"
-msgstr "Lettertype-optimalisatie bijgewerkt"
-
-#: build/performance/performance.min.js:2
-msgid "Font optimization setting saved successfully."
-msgstr "Lettertype-optimalisatie-instelling succesvol opgeslagen."
-
-#: build/performance/performance.min.js:2
-msgid "Update failed"
-msgstr "Bijwerken mislukt"
-
-#: build/performance/performance.min.js:2
-msgid "Could not save font optimization setting."
-msgstr "Kon de lettertype-optimalisatie-instelling niet opslaan."
-
-#: build/performance/performance.min.js:2
 msgid "Image Optimization"
 msgstr "Afbeeldingsoptimalisatie"
 
@@ -1202,22 +1138,6 @@ msgstr "Fout bij bijwerken instellingen"
 #: build/performance/performance.min.js:2
 msgid "Something went wrong while updating the settings. Please try again."
 msgstr "Er is iets misgegaan bij het bijwerken van de instellingen. Probeer het opnieuw."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Images via Cloudflare"
-msgstr "Optimaliseer afbeeldingen via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr "Schakelt Cloudflare-beeldcompressie in om laadtijden en bandbreedtegebruik te verminderen."
-
-#: build/performance/performance.min.js:2
-msgid "Improve Image Loading on Slow Connections"
-msgstr "Afbeelding laden bij trage verbindingen verbeteren"
-
-#: build/performance/performance.min.js:2
-msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr "Cloudflare Mirage versnelt het laden van afbeeldingen op mobiele en trage netwerken."
 
 #: build/performance/performance.min.js:2
 msgid "Advanced settings"

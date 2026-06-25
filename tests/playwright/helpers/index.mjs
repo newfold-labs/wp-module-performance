@@ -36,13 +36,6 @@ const { fancyLog } = utils;
 /** Plugin ID from environment */
 export const pluginId = process.env.PLUGIN_ID || 'bluehost';
 
-/** Cloudflare feature hashes for .htaccess rule identification */
-export const CLOUDFLARE_HASHES = {
-  fonts: '04d3b602',
-  mirage: '63a6825d',
-  polish: '27cab0f2',
-};
-
 /** Common selectors used across performance tests */
 export const SELECTORS = {
   // Page container
@@ -60,11 +53,6 @@ export const SELECTORS = {
   linkPrefetchBehaviorDropdown: '[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label',
   linkPrefetchDropdownOptions: '[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > .nfd-select__option',
   linkPrefetchDesktopToggle: '[data-cy="link-prefetch-active-desktop-toggle"]',
-
-  // Cloudflare toggles
-  cloudflareFontsToggle: '[data-id="cloudflare-fonts"]',
-  cloudflareMirageToggle: '[data-id="cloudflare-mirage"]',
-  cloudflarePolishToggle: '[data-id="cloudflare-polish"]',
 
   // Notifications
   notifications: '.nfd-notifications',
@@ -281,7 +269,7 @@ async function verifySiteCapabilities(expectedCapabilities) {
 /**
  * Set site capabilities transient using PHP eval
  * @param {Object} capabilities - Object with capability key-value pairs
- * @example setSiteCapabilities({ hasCloudflareFonts: true, hasLinkPrefetchClick: true })
+ * @example setSiteCapabilities({ hasLinkPrefetchClick: true, hasLinkPrefetchHover: false })
  */
 export async function setSiteCapabilities(capabilities) {
   return setSiteCapabilitiesWithRetry(capabilities);
@@ -346,14 +334,7 @@ export async function clearSiteCapabilities() {
 }
 
 /**
- * Clear font optimization option
- */
-export async function clearFontOptimizationOption() {
-  await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
-}
-
-/**
- * Clear image optimization option (used by Mirage and Polish)
+ * Clear image optimization option
  */
 export async function clearImageOptimizationOption() {
   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
@@ -410,100 +391,6 @@ export async function fetchHomepage(page) {
 }
 
 /**
- * Assert the front end advertises the active Cloudflare optimizations the
- * cache-safe way: the cookie is set client-side via an inline script, and the
- * response carries NO `Set-Cookie` header for it (a Set-Cookie on the response
- * makes it uncacheable to nginx+/Cloudflare — the bug this replaced).
- *
- * @param {import('@playwright/test').Page} page
- * @param {string} hash - Feature hash that must appear in the cookie value (use CLOUDFLARE_HASHES)
- * @param {number} retries - Retry attempts; the value propagates asynchronously
- */
-export async function assertFrontendSetsOptimizationCookie(page, hash, retries = 8) {
-  let last = { body: '', setCookies: [] };
-
-  for (let i = 0; i < retries; i++) {
-    last = await fetchHomepage(page);
-    if (
-      last.body.includes('nfd-enable-cf-opt') &&
-      last.body.includes('document.cookie') &&
-      last.body.includes(hash)
-    ) {
-      break;
-    }
-    if (i < retries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-
-  // Cookie is set client-side, with the value encoding the enabled feature.
-  expect(
-    last.body,
-    'front end should set nfd-enable-cf-opt via an inline script'
-  ).toContain('document.cookie');
-  expect(last.body).toContain('nfd-enable-cf-opt');
-  expect(last.body).toContain(hash);
-
-  // ...and never via a Set-Cookie response header.
-  const optCookieHeader = last.setCookies.find((value) =>
-    value.startsWith('nfd-enable-cf-opt')
-  );
-  expect(
-    optCookieHeader,
-    'response must not carry a Set-Cookie header for nfd-enable-cf-opt (it breaks caching)'
-  ).toBeUndefined();
-}
-
-/**
- * Assert the front end does NOT set the optimization cookie (feature disabled).
- *
- * @param {import('@playwright/test').Page} page
- * @param {string} hash - Feature hash that must be absent (use CLOUDFLARE_HASHES)
- * @param {number} retries
- */
-export async function assertFrontendOmitsOptimizationCookie(page, hash, retries = 8) {
-  let body = '';
-
-  for (let i = 0; i < retries; i++) {
-    ({ body } = await fetchHomepage(page));
-    if (!body.includes(hash)) {
-      return;
-    }
-    if (i < retries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-
-  expect(
-    body,
-    'front end should not set the optimization cookie when the feature is disabled'
-  ).not.toContain(hash);
-}
-
-/**
- * Assert the legacy Set-Cookie `.htaccess` block is absent (removed by the
- * one-time cleanup, or never written). Retries: the rewrite is asynchronous.
- *
- * @param {number} retries
- */
-export async function assertHtaccessHasNoCfOptimizationBlock(retries = 8) {
-  let htaccess = '';
-  for (let i = 0; i < retries; i++) {
-    htaccess = await readHtaccess();
-    if (!htaccess.includes('# BEGIN Newfold CF Optimization Header')) {
-      return;
-    }
-    if (i < retries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-  expect(
-    htaccess,
-    'legacy CF Optimization .htaccess block should be removed'
-  ).not.toContain('# BEGIN Newfold CF Optimization Header');
-}
-
-/**
  * Assert that a notification with specific text is visible
  * @param {import('@playwright/test').Page} page
  * @param {string} text - Text to expect in the notification
@@ -517,57 +404,6 @@ export async function expectNotification(page, text) {
 // ============================================================================
 // UI INTERACTION HELPERS
 // ============================================================================
-
-/**
- * Get Cloudflare toggle locator by type
- * @param {import('@playwright/test').Page} page
- * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
- * @returns {import('@playwright/test').Locator}
- */
-export function getCloudflareToggle(page, type) {
-  const selectors = {
-    fonts: SELECTORS.cloudflareFontsToggle,
-    mirage: SELECTORS.cloudflareMirageToggle,
-    polish: SELECTORS.cloudflarePolishToggle,
-  };
-  return page.locator(selectors[type]);
-}
-
-/**
- * Verify Cloudflare toggle exists and has expected state
- * @param {import('@playwright/test').Page} page
- * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
- * @param {'true' | 'false'} expectedState - Expected aria-checked value
- */
-export async function verifyCloudflareToggleState(page, type, expectedState) {
-  const toggle = getCloudflareToggle(page, type);
-  await expect(toggle).toBeVisible({ timeout: 20000 });
-  await expect(toggle).toHaveAttribute('aria-checked', expectedState, {
-    timeout: 20000,
-  });
-}
-
-/**
- * Toggle a Cloudflare feature on or off. Avoids `networkidle` (unreliable in wp-admin);
- * relies on attribute assertion and a short delay for async .htaccess writes.
- * @param {import('@playwright/test').Page} page
- * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
- * @param {boolean} enable - Whether to enable (true) or disable (false)
- */
-export async function setCloudflareToggle(page, type, enable) {
-  const toggle = getCloudflareToggle(page, type);
-  const currentState = await toggle.getAttribute('aria-checked');
-  const wantEnabled = enable ? 'true' : 'false';
-
-  if (currentState !== wantEnabled) {
-    await toggle.click();
-  }
-  await expect(toggle).toHaveAttribute('aria-checked', wantEnabled, {
-    timeout: 20000,
-  });
-  await page.waitForLoadState('load').catch(() => { });
-  await new Promise((resolve) => setTimeout(resolve, 400));
-}
 
 /**
  * Verify Link Prefetch section is displayed

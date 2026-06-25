@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-19T08:56:05+00:00\n"
+"PO-Revision-Date: 2026-06-23T09:55:57+00:00\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -332,21 +332,9 @@ msgstr "Diagnosi della cache a oggetti superata."
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "La diagnosi della cache a oggetti ha rilevato problemi. Consulta la sezione \"Riepilogo della diagnosi\" qui sopra."
 
-#: includes/Fonts/FontSettings.php:56
-msgid "Settings for NFD Font Optimization."
-msgstr "Impostazioni per l'ottimizzazione dei font NFD."
 
-#: includes/Fonts/FontSettings.php:65
-msgid "Cloudflare-related font optimization settings."
-msgstr "Impostazioni di ottimizzazione dei font legate a Cloudflare."
 
-#: includes/Fonts/FontSettings.php:69
-msgid "Enable Cloudflare Font Optimization."
-msgstr "Abilita l'ottimizzazione dei font Cloudflare."
 
-#: includes/Fonts/FontSettings.php:83
-msgid "Timestamp of last update."
-msgstr "Timestamp dell'ultimo aggiornamento."
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
@@ -680,69 +668,57 @@ msgstr "Non è riuscito a generare i metadati degli allegati."
 msgid "Unexpected response from Cloudflare Worker: HTTP %s"
 msgstr "Risposta inaspettata da Cloudflare Worker: HTTP %s"
 
-#: includes/Images/ImageSettings.php:89
+#: includes/Images/ImageSettings.php:68
 msgid "Settings for NFD Image Optimization."
 msgstr "Impostazioni per l'ottimizzazione dell'immagine NFD."
 
-#: includes/Images/ImageSettings.php:98
+#: includes/Images/ImageSettings.php:77
 msgid "Enable image optimization."
 msgstr "Abilita l'ottimizzazione dell'immagine."
 
-#: includes/Images/ImageSettings.php:103
+#: includes/Images/ImageSettings.php:82
 msgid "Prefer WebP format when it exists."
 msgstr "Preferisci il formato WebP quando esiste."
 
-#: includes/Images/ImageSettings.php:108
+#: includes/Images/ImageSettings.php:87
 msgid "Auto-optimized uploaded images settings."
 msgstr "Impostazioni delle immagini caricate automaticamente."
 
-#: includes/Images/ImageSettings.php:112
+#: includes/Images/ImageSettings.php:91
 msgid "Automatically optimize uploaded images."
 msgstr "Ottimizza automaticamente le immagini caricate."
 
-#: includes/Images/ImageSettings.php:117
+#: includes/Images/ImageSettings.php:96
 msgid "Delete the original uploaded image after optimization."
 msgstr "Elimina l'immagine caricata originale dopo l'ottimizzazione."
 
-#: includes/Images/ImageSettings.php:124
+#: includes/Images/ImageSettings.php:103
 msgid "Settings for lazy loading."
 msgstr "Impostazioni per caricamento lento."
 
-#: includes/Images/ImageSettings.php:128
+#: includes/Images/ImageSettings.php:107
 msgid "Enable lazy loading."
 msgstr "Abilita il caricamento pigro."
 
-#: includes/Images/ImageSettings.php:135
+#: includes/Images/ImageSettings.php:114
 msgid "Enable bulk optimization of images."
 msgstr "Abilita l'ottimizzazione in massa delle immagini."
 
-#: includes/Images/ImageSettings.php:140
+#: includes/Images/ImageSettings.php:119
 msgid "Indicates if the site is banned from image optimization."
 msgstr "Indica se il sito è bandito dall'ottimizzazione delle immagini."
 
-#: includes/Images/ImageSettings.php:145
+#: includes/Images/ImageSettings.php:124
 msgid "Monthly usage statistics for image optimization."
 msgstr "Statistiche mensili di utilizzo per l'ottimizzazione delle immagini."
 
-#: includes/Images/ImageSettings.php:149
+#: includes/Images/ImageSettings.php:128
 msgid "Number of requests made this month."
 msgstr "Numero di richieste fatte questo mese."
 
-#: includes/Images/ImageSettings.php:154
+#: includes/Images/ImageSettings.php:133
 msgid "Maximum allowed requests per month."
 msgstr "Richieste massime consentite al mese."
-
-#: includes/Images/ImageSettings.php:161
-msgid "Cloudflare-related image optimization options."
-msgstr "Opzioni di ottimizzazione delle immagini legate a Cloudflare."
-
-#: includes/Images/ImageSettings.php:165
-msgid "Enable Cloudflare Polish optimization."
-msgstr "Abilita l'ottimizzazione Cloudflare Polish."
-
-#: includes/Images/ImageSettings.php:180
-msgid "Enable Cloudflare Mirage optimization."
-msgstr "Abilita l'ottimizzazione di Cloudflare Mirage."
 
 #: includes/Images/RestApi/ImagesController.php:60
 msgid "The ID of the media item to optimize."
@@ -855,25 +831,25 @@ msgstr "CLI Newfold: percentuali invalidi forniti a NFD_WPCLI::add_command()."
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "CLI-Fi Newfold: La classe handler %s non esiste."
 
-#: includes/Performance.php:232
+#: includes/Performance.php:230
 msgid "Caching"
 msgstr "Cache"
 
-#: includes/Performance.php:241
+#: includes/Performance.php:239
 msgid "Purge All"
 msgstr "Purifica Tutto"
 
-#: includes/Performance.php:251
+#: includes/Performance.php:249
 msgid "Purge This Page"
 msgstr "Elimina questa pagina"
 
-#: includes/Performance.php:262
+#: includes/Performance.php:260
 msgid "Cache Settings"
 msgstr "Impostazioni della cache"
 
-#: includes/Performance.php:278
-#: includes/Performance.php:279
-#: includes/Performance.php:305
+#: includes/Performance.php:276
+#: includes/Performance.php:277
+#: includes/Performance.php:303
 #: build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Prestazioni"
@@ -1064,46 +1040,6 @@ msgid "Cache cleared"
 msgstr "Cache svuotata"
 
 #: build/performance/performance.min.js:2
-msgid "Font Optimization"
-msgstr "Ottimizzazione dei font"
-
-#: build/performance/performance.min.js:2
-msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr "Migliora i tempi di caricamento sostituendo Google Fonts con versioni locali ottimizzate."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Fonts via Cloudflare"
-msgstr "Ottimizza i font via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr "Sostituisce Google Fonts con versioni locali più veloci e rispettose della privacy."
-
-#: build/performance/performance.min.js:2
-msgid "Loading font optimization settings…"
-msgstr "Caricamento impostazioni ottimizzazione font…"
-
-#: build/performance/performance.min.js:2
-msgid "Error loading settings."
-msgstr "Errore nel caricamento delle impostazioni."
-
-#: build/performance/performance.min.js:2
-msgid "Fonts optimization updated"
-msgstr "Ottimizzazione dei font aggiornata"
-
-#: build/performance/performance.min.js:2
-msgid "Font optimization setting saved successfully."
-msgstr "Impostazione di ottimizzazione dei font salvata con successo."
-
-#: build/performance/performance.min.js:2
-msgid "Update failed"
-msgstr "Aggiornamento fallito"
-
-#: build/performance/performance.min.js:2
-msgid "Could not save font optimization setting."
-msgstr "Impossibile salvare l’impostazione di ottimizzazione dei font."
-
-#: build/performance/performance.min.js:2
 msgid "Image Optimization"
 msgstr "Ottimizzazione delle immagini"
 
@@ -1202,22 +1138,6 @@ msgstr "Errore durante l'aggiornamento delle impostazioni"
 #: build/performance/performance.min.js:2
 msgid "Something went wrong while updating the settings. Please try again."
 msgstr "Qualcosa è andato storto durante l'aggiornamento delle impostazioni. Per favore riprova."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Images via Cloudflare"
-msgstr "Ottimizza le immagini via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr "Attiva la compressione delle immagini di Cloudflare per ridurre tempi di caricamento e banda."
-
-#: build/performance/performance.min.js:2
-msgid "Improve Image Loading on Slow Connections"
-msgstr "Migliora il caricamento delle immagini su connessioni lente"
-
-#: build/performance/performance.min.js:2
-msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr "Cloudflare Mirage accelera il caricamento delle immagini su reti mobili e lente."
 
 #: build/performance/performance.min.js:2
 msgid "Advanced settings"
