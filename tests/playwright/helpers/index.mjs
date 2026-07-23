@@ -279,7 +279,12 @@ export async function setSiteCapabilitiesWithRetry(
   capabilities,
   retries = DEFAULT_CAPABILITY_RETRIES,
 ) {
-  const phpArray = toPhpArray(capabilities);
+  // wp-module-data's SiteCapabilities::is_valid_capabilities() only accepts a
+  // capabilities array as a real Hiive response if it contains the canAccessAI
+  // marker key; otherwise all() discards it and falls back to an (empty, in CI)
+  // Hiive fetch. Include the marker so the value we set here is actually read
+  // back by SiteCapabilities::all() instead of being silently dropped.
+  const phpArray = toPhpArray({ canAccessAI: true, ...capabilities });
   let lastReason = '';
 
   for (let attempt = 1; attempt <= retries; attempt += 1) {
