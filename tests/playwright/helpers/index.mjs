@@ -222,15 +222,6 @@ async function runWpCli(command) {
   };
 }
 
-function toPhpArray(capabilities) {
-  return Object.entries(capabilities)
-    .map(([key, value]) => {
-      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
-      return `'${key}' => ${phpValue}`;
-    })
-    .join(', ');
-}
-
 async function verifySiteCapabilities(expectedCapabilities) {
   const result = await runWpCli('option get _transient_nfd_site_capabilities --format=json');
   if (!result.ok) {
@@ -267,7 +258,7 @@ async function verifySiteCapabilities(expectedCapabilities) {
 // ============================================================================
 
 /**
- * Set site capabilities transient using PHP eval
+ * Set site capabilities transient using the plugin's shared setCapability helper
  * @param {Object} capabilities - Object with capability key-value pairs
  * @example setSiteCapabilities({ hasLinkPrefetchClick: true, hasLinkPrefetchHover: false })
  */
@@ -279,26 +270,22 @@ export async function setSiteCapabilitiesWithRetry(
   capabilities,
   retries = DEFAULT_CAPABILITY_RETRIES,
 ) {
-  // wp-module-data's SiteCapabilities::is_valid_capabilities() only accepts a
-  // capabilities array as a real Hiive response if it contains the canAccessAI
-  // marker key; otherwise all() discards it and falls back to an (empty, in CI)
-  // Hiive fetch. Include the marker so the value we set here is actually read
-  // back by SiteCapabilities::all() instead of being silently dropped.
-  const phpArray = toPhpArray({ canAccessAI: true, ...capabilities });
   let lastReason = '';
 
   for (let attempt = 1; attempt <= retries; attempt += 1) {
-    const setResult = await runWpCli(
-      `eval "set_transient('nfd_site_capabilities', array(${phpArray}), 4 * HOUR_IN_SECONDS);"`,
-    );
-    if (!setResult.ok) {
-      lastReason = setResult.output;
-    } else {
+    try {
+      // Delegate to the plugin's shared helper so the canAccessAI marker
+      // requirement (wp-module-data SiteCapabilities::is_valid_capabilities(),
+      // see newfold-labs/wp-module-data#285) is handled in one place instead
+      // of being duplicated in every module's own test helper.
+      await newfold.setCapability(capabilities);
       const verify = await verifySiteCapabilities(capabilities);
       if (verify.ok) {
         return { ok: true, reason: '' };
       }
       lastReason = verify.reason;
+    } catch (error) {
+      lastReason = error?.message || String(error);
     }
 
     fancyLog(
