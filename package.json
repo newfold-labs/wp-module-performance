@@ -32,7 +32,7 @@
     "chalk": "^6.0.0",
     "css-minimizer-webpack-plugin": "^8.0.0",
     "glob": "^13.0.6",
-    "postcss": "^8.5.25",
+    "postcss": "^8.5.26",
     "postcss-loader": "^8.2.1",
     "tailwindcss": "^3.4.19"
   },
