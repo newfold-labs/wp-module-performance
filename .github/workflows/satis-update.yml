@@ -5,10 +5,13 @@ on:
     types:
       - created
 
+permissions: {}
+
 jobs:
   webhook:
     name: Send Webhook
     runs-on: ubuntu-latest
+    permissions: {}  # No checkout; the dispatch uses secrets.WEBHOOK_TOKEN, not GITHUB_TOKEN.
     steps:
 
       - name: Set Package
