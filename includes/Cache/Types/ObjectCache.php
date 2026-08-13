@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
 
 use NewfoldLabs\WP\Module\Performance\Helpers\RedisEnv;
 use NewfoldLabs\WP\Module\Performance\Helpers\RedisCredentialsProvisioner;
+use NewfoldLabs\WP\Module\Performance\Helpers\RedisServiceAvailability;
 
 /**
  * Object cache (Redis drop-in) management for the performance module.
@@ -189,12 +190,16 @@ class ObjectCache {
 		$ours            = $exists && self::is_our_drop_in( $path );
 
 		/**
-		 * Whether to show the Object Cache UI (toggle + copy). Defaults to true so users can enable
-		 * object cache and trigger credential provisioning when constants are not present yet.
+		 * Whether to show the Object Cache UI (toggle + copy).
 		 *
-		 * @param bool $show_ui Default true.
+		 * The default is no longer a hard `true`: it is the authoritative server-side Redis
+		 * availability signal (see self::default_ui_availability()), so the toggle is not offered on
+		 * boxes that cannot run Redis. A brand/host may still override this filter to force-hide (or,
+		 * intentionally, force-show) the UI.
+		 *
+		 * @param bool $show_ui Default: server-side Redis availability for this site.
 		 */
-		$ui_available = (bool) apply_filters( 'newfold_performance_object_cache_ui_available', true );
+		$ui_available = (bool) apply_filters( 'newfold_performance_object_cache_ui_available', self::default_ui_availability() );
 
 		return array(
 			'available'   => $ui_available,
@@ -203,6 +208,32 @@ class ObjectCache {
 			'ours'        => $ours,
 			'preflight'   => ObjectCachePreflight::snapshot( false ),
 		);
+	}
+
+	/**
+	 * Default visibility for the Object Cache UI (the value the
+	 * `newfold_performance_object_cache_ui_available` filter receives).
+	 *
+	 * Historically this defaulted to a hard `true`, which offered the toggle on every server —
+	 * including boxes where the Redis daemon is down or was never deployed (phpredis extension
+	 * present, service absent). Enabling there fails with "Could not enable object cache".
+	 *
+	 * Now:
+	 * - If Redis is already configured locally (connection constants defined in wp-config), always
+	 *   show the UI without a network round-trip, so an already-provisioned/enabled site can still be
+	 *   turned off and managed.
+	 * - Otherwise consult the authoritative, cached server-side signal (HUAPI redis status -> HAL
+	 *   `daemon_active`) and only offer first-enable where Redis can actually run. This fails safe to
+	 *   hidden when availability cannot be determined.
+	 *
+	 * @return bool
+	 */
+	private static function default_ui_availability() {
+		if ( self::is_available() ) {
+			return true;
+		}
+
+		return RedisServiceAvailability::is_daemon_available();
 	}
 
 	/**
@@ -912,8 +943,11 @@ class ObjectCache {
 	 * @return void
 	 */
 	public static function flush_object_cache() {
-		$state = self::get_state();
-		if ( ! $state['enabled'] ) {
+		// Compute enabled directly (constants + our drop-in) rather than via get_state(), so a cache
+		// purge never triggers the server-side availability probe that feeds the UI `available` flag.
+		$path    = self::get_drop_in_path();
+		$enabled = self::is_available() && file_exists( $path ) && self::is_our_drop_in( $path );
+		if ( ! $enabled ) {
 			return;
 		}
 		if ( function_exists( 'wp_using_ext_object_cache' ) && wp_using_ext_object_cache() && function_exists( 'wp_cache_flush' ) ) {

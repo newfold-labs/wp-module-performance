@@ -11,11 +11,14 @@ use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCacheErrorCodes;
 final class RedisCredentialsProvisioner {
 
 	/**
-	 * Attempt to enable Redis at the host layer (writes wp-config constants via GT).
+	 * Fetch the hosting API context (HUAPI token + HAL site id) from the Hiive customer payload.
 	 *
-	 * @return true|\WP_Error
+	 * Shared by the provisioning (PUT) path and the availability (GET) probe so both use the same
+	 * Hiive-connection and token/site-id resolution, with identical error codes.
+	 *
+	 * @return array{token:string, site_id:string}|\WP_Error
 	 */
-	public static function provision_enable_redis_via_hosting_api() {
+	public static function get_hosting_context() {
 		if ( ! HiiveConnection::is_connected() ) {
 			return new \WP_Error(
 				ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED,
@@ -55,7 +58,24 @@ final class RedisCredentialsProvisioner {
 			);
 		}
 
-		$result = HostingUapiClient::put_site_performance_redis( $token, $site_id, true );
+		return array(
+			'token'   => $token,
+			'site_id' => $site_id,
+		);
+	}
+
+	/**
+	 * Attempt to enable Redis at the host layer (writes wp-config constants via GT).
+	 *
+	 * @return true|\WP_Error
+	 */
+	public static function provision_enable_redis_via_hosting_api() {
+		$context = self::get_hosting_context();
+		if ( is_wp_error( $context ) ) {
+			return $context;
+		}
+
+		$result = HostingUapiClient::put_site_performance_redis( $context['token'], $context['site_id'], true );
 
 		if ( is_wp_error( $result ) ) {
 			return $result;
