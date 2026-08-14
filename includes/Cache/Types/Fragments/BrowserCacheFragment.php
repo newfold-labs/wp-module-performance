@@ -128,14 +128,24 @@ final class BrowserCacheFragment implements Fragment {
 
 		// Optional cache-exclusion rules.
 		if ( '' !== $this->exclusion_pattern ) {
-			$lines[] = '<IfModule mod_rewrite.c>';
-			$lines[] = 'RewriteEngine On';
-			$lines[] = "RewriteCond %{REQUEST_URI} ^/({$this->exclusion_pattern}) [NC]";
+			$condition = '"expr=%{THE_REQUEST} =~ m#^[A-Z]+[[:space:]]+/('
+				. $this->exclusion_pattern
+				. ')(/|\?|[[:space:]])#i"';
+
 			$lines[] = '<IfModule mod_headers.c>';
-			$lines[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
-			$lines[] = 'Header set Pragma "no-cache"';
-			$lines[] = 'Header set Expires 0';
-			$lines[] = '</IfModule>';
+
+			$lines[] = 'Header onsuccess unset Cache-Control ' . $condition;
+			$lines[] = 'Header always unset Cache-Control ' . $condition;
+
+			$lines[] = 'Header onsuccess unset Expires ' . $condition;
+			$lines[] = 'Header always unset Expires ' . $condition;
+
+			$lines[] = 'Header onsuccess unset Pragma ' . $condition;
+			$lines[] = 'Header always unset Pragma ' . $condition;
+
+			$lines[] = 'Header always set Cache-Control "no-cache, no-store, must-revalidate" ' . $condition;
+			$lines[] = 'Header always set Pragma "no-cache" ' . $condition;
+
 			$lines[] = '</IfModule>';
 		}
 
