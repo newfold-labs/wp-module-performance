@@ -93,6 +93,21 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		}
 
 		/**
+		 * A 2xx response with an unparseable body becomes a WP_Error (indeterminate), not an empty array.
+		 */
+		public function test_get_treats_unparseable_2xx_as_error() {
+			WP_Mock::userFunction( 'wp_remote_request' )->once()->andReturn( array( 'stub' => true ) );
+			WP_Mock::userFunction( 'wp_remote_retrieve_response_code' )->andReturn( 200 );
+			WP_Mock::userFunction( 'wp_remote_retrieve_body' )->andReturn( 'not json at all' );
+
+			$result = HostingUapiClient::get_site_performance_redis( 'jwt-token', '12345' );
+
+			$this->assertInstanceOf( \WP_Error::class, $result );
+			$data = $result->get_error_data();
+			$this->assertSame( 200, $data['status'] );
+		}
+
+		/**
 		 * A non-2xx response becomes a WP_Error carrying the customer_error string from the body.
 		 */
 		public function test_get_maps_non_2xx_to_wp_error_with_customer_error() {

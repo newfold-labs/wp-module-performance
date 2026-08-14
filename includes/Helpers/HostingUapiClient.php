@@ -110,7 +110,7 @@ final class HostingUapiClient {
 			'method'  => 'GET',
 			'timeout' => SiteApisConfig::hosting_uapi_request_timeout_seconds(),
 			'headers' => array(
-				'Content-Type'  => 'application/json',
+				'Accept'        => 'application/json',
 				'Authorization' => 'Bearer ' . $huapi_jwt,
 			),
 		);
@@ -140,7 +140,21 @@ final class HostingUapiClient {
 			);
 		}
 
-		return is_array( $data ) ? $data : array();
+		// A 2xx with an unparseable body is not a usable status. Treat it as an error (indeterminate)
+		// rather than silently returning an empty array, so the availability probe re-checks soon
+		// instead of caching a false "unavailable" from a malformed upstream response.
+		if ( ! is_array( $data ) ) {
+			return new \WP_Error(
+				'nfd_hosting_uapi_error',
+				__( 'Could not read object cache status right now.', 'wp-module-performance' ),
+				array(
+					'status' => $code,
+					'body'   => $raw,
+				)
+			);
+		}
+
+		return $data;
 	}
 
 	/**
