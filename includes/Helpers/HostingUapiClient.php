@@ -160,18 +160,31 @@ final class HostingUapiClient {
 	/**
 	 * Extract a stable customer-facing error string from a decoded JSON body when present.
 	 *
+	 * HUAPI sends its errors as `{"error": "redisServiceInactive"}`, so the string form has to be
+	 * read or callers that branch on a specific error never match. The other shapes are kept for
+	 * anything sitting in front of HUAPI that wraps or renames the field.
+	 *
 	 * @param array $data Decoded JSON.
 	 */
 	private static function extract_customer_error( array $data ): ?string {
-		// Common shapes: { "customer_error": "..." } or nested under error/details.
 		if ( isset( $data['customer_error'] ) && is_string( $data['customer_error'] ) && '' !== $data['customer_error'] ) {
 			return $data['customer_error'];
 		}
 
-		if ( isset( $data['error'] ) && is_array( $data['error'] ) ) {
-			$err = $data['error'];
-			if ( isset( $err['customer_error'] ) && is_string( $err['customer_error'] ) ) {
-				return $err['customer_error'];
+		if ( isset( $data['error'] ) ) {
+			// HUAPI's own shape, where the error field holds the customer error string itself.
+			if ( is_string( $data['error'] ) && '' !== $data['error'] ) {
+				return $data['error'];
+			}
+
+			// A gateway in front of HUAPI that nests the customer error under an error object.
+			if (
+				is_array( $data['error'] )
+				&& isset( $data['error']['customer_error'] )
+				&& is_string( $data['error']['customer_error'] )
+				&& '' !== $data['error']['customer_error']
+			) {
+				return $data['error']['customer_error'];
 			}
 		}
 

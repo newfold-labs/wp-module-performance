@@ -127,6 +127,60 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		}
 
 		/**
+		 * HUAPI sends its errors as {"error": "redisServiceInactive"}. The probe needs that string to
+		 * tell a box with no Redis daemon apart from a passing blip, so it has to survive extraction.
+		 */
+		public function test_get_extracts_customer_error_from_huapi_string_shape() {
+			WP_Mock::userFunction( 'wp_remote_request' )->once()->andReturn( array( 'stub' => true ) );
+			WP_Mock::userFunction( 'wp_remote_retrieve_response_code' )->andReturn( 512 );
+			WP_Mock::userFunction( 'wp_remote_retrieve_body' )->andReturn(
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Test fixture.
+				json_encode( array( 'error' => 'redisServiceInactive' ) )
+			);
+
+			$result = HostingUapiClient::get_site_performance_redis( 'jwt-token', '12345' );
+
+			$this->assertInstanceOf( \WP_Error::class, $result );
+			$data = $result->get_error_data();
+			$this->assertSame( 512, $data['status'] );
+			$this->assertSame( 'redisServiceInactive', $data['customer_error'] );
+		}
+
+		/**
+		 * A gateway that wraps the error in an object is still understood.
+		 */
+		public function test_get_extracts_customer_error_from_wrapped_shape() {
+			WP_Mock::userFunction( 'wp_remote_request' )->once()->andReturn( array( 'stub' => true ) );
+			WP_Mock::userFunction( 'wp_remote_retrieve_response_code' )->andReturn( 512 );
+			WP_Mock::userFunction( 'wp_remote_retrieve_body' )->andReturn(
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Test fixture.
+				json_encode( array( 'error' => array( 'customer_error' => 'phpVersionUnsupported' ) ) )
+			);
+
+			$result = HostingUapiClient::get_site_performance_redis( 'jwt-token', '12345' );
+
+			$data = $result->get_error_data();
+			$this->assertSame( 'phpVersionUnsupported', $data['customer_error'] );
+		}
+
+		/**
+		 * An error body with no recognisable customer error yields null rather than a guess.
+		 */
+		public function test_get_customer_error_is_null_when_absent() {
+			WP_Mock::userFunction( 'wp_remote_request' )->once()->andReturn( array( 'stub' => true ) );
+			WP_Mock::userFunction( 'wp_remote_retrieve_response_code' )->andReturn( 500 );
+			WP_Mock::userFunction( 'wp_remote_retrieve_body' )->andReturn(
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Test fixture.
+				json_encode( array( 'detail' => 'upstream exploded' ) )
+			);
+
+			$result = HostingUapiClient::get_site_performance_redis( 'jwt-token', '12345' );
+
+			$data = $result->get_error_data();
+			$this->assertNull( $data['customer_error'] );
+		}
+
+		/**
 		 * Missing token or site id short-circuits to a WP_Error without any HTTP call.
 		 */
 		public function test_get_returns_wp_error_on_missing_args() {
