@@ -127,6 +127,7 @@ final class BrowserCacheFragment implements Fragment {
 		$lines[] = '</IfModule>';
 
 		// Optional cache-exclusion rules.
+
 		/*
 		* Clear both Apache response-header tables. "always" is not a
 		* superset of "onsuccess" for existing headers, so both are
