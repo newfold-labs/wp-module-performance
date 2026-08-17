@@ -127,10 +127,13 @@ final class BrowserCacheFragment implements Fragment {
 		$lines[] = '</IfModule>';
 
 		// Optional cache-exclusion rules.
+		/*
+		* Clear both Apache response-header tables. "always" is not a
+		* superset of "onsuccess" for existing headers, so both are
+		* cleared to prevent conflicting cache headers from surviving.
+		*/
 		if ( '' !== $this->exclusion_pattern ) {
-			$condition = '"expr=%{THE_REQUEST} =~ m#^[A-Z]+[[:space:]]+/('
-				. $this->exclusion_pattern
-				. ')(/|\?|[[:space:]])#i"';
+			$condition = $this->get_exclusion_condition();
 
 			$lines[] = '<IfModule mod_headers.c>';
 
@@ -152,6 +155,25 @@ final class BrowserCacheFragment implements Fragment {
 		$lines[] = '# END ' . $this->marker_label;
 
 		return implode( "\n", $lines );
+	}
+
+	/**
+	 * Build the Apache expression used for browser-cache exclusions.
+	 *
+	 * THE_REQUEST is used instead of a SetEnvIf environment variable because
+	 * WordPress front-controller processing may make that variable unavailable
+	 * by the time response headers are applied.
+	 *
+	 * The trailing boundary allows a path separator, query string, or the
+	 * whitespace before the HTTP version, preventing "team" from matching
+	 * paths such as "team-available".
+	 *
+	 * @return string
+	 */
+	private function get_exclusion_condition() {
+		return '"expr=%{THE_REQUEST} =~ m#^[A-Z]+[[:space:]]+/('
+			. $this->exclusion_pattern
+			. ')(/|\?|[[:space:]])#i"';
 	}
 
 	/**
