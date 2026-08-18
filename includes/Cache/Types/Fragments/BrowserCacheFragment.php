@@ -48,18 +48,27 @@ final class BrowserCacheFragment implements Fragment {
 	private $exclusion_pattern;
 
 	/**
+	 * Site base path (parsed from home_url('/')).
+	 *
+	 * @var string
+	 */
+	private $base_path;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $id                Unique fragment ID.
 	 * @param string $marker_label      Marker label for readability in the file.
 	 * @param int    $cache_level       Cache level (1–3). Higher = longer TTLs.
 	 * @param string $exclusion_pattern Pipe-separated pattern to exclude, or empty string.
+	 * @param string $base_path         Site base path from home_url('/'), e.g. "/".
 	 */
-	public function __construct( $id, $marker_label, $cache_level, $exclusion_pattern = '' ) {
+	public function __construct( $id, $marker_label, $cache_level, $exclusion_pattern = '', $base_path = '/' ) {
 		$this->id                = (string) $id;
 		$this->marker_label      = (string) $marker_label;
 		$this->cache_level       = (int) $cache_level;
 		$this->exclusion_pattern = (string) $exclusion_pattern;
+		$this->base_path         = (string) $base_path;
 	}
 
 	/**
@@ -161,20 +170,29 @@ final class BrowserCacheFragment implements Fragment {
 	/**
 	 * Build the Apache expression used for browser-cache exclusions.
 	 *
-	 * THE_REQUEST is used instead of a SetEnvIf environment variable because
-	 * WordPress front-controller processing may make that variable unavailable
-	 * by the time response headers are applied.
+	 * THE_REQUEST covers raw request lines, while REQUEST_URI covers URL-decoded
+	 * paths. Using both ensures exclusions apply to encoded request paths.
 	 *
-	 * The trailing boundary allows a path separator, query string, or the
-	 * whitespace before the HTTP version, preventing "team" from matching
-	 * paths such as "team-available".
+	 * The site base path supports WordPress installations in a subdirectory.
+	 * Trailing boundaries prevent "team" from matching paths such as
+	 * "team-available".
 	 *
 	 * @return string
 	 */
 	private function get_exclusion_condition() {
-		return '"expr=%{THE_REQUEST} =~ m#^[A-Z]+[[:space:]]+/('
+		$base_path   = trim( $this->base_path, '/' );
+		$path_prefix = '' !== $base_path ? preg_quote( $base_path, '#' ) . '/' : '';
+
+		$the_request_pattern = '^[A-Z]+[[:space:]]+/' . $path_prefix . '('
 			. $this->exclusion_pattern
-			. ')(/|\?|[[:space:]])#i"';
+			. ')(/|\?|[[:space:]])';
+		$request_uri_pattern = '^/' . $path_prefix . '('
+			. $this->exclusion_pattern
+			. ')(/|\?|$)';
+
+		return '"expr=( %{THE_REQUEST} =~ m#' . $the_request_pattern
+			. '#i || %{REQUEST_URI} =~ m#' . $request_uri_pattern
+			. '#i )"';
 	}
 
 	/**

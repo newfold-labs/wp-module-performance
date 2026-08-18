@@ -31,28 +31,75 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments {
 		 *
 		 * @param int    $cache_level       Cache level.
 		 * @param string $exclusion_pattern Pipe-separated exclusion slugs.
+		 * @param string $base_path         Site base path.
 		 * @return BrowserCacheFragment
 		 */
-		private function make_fragment( $cache_level, $exclusion_pattern = '' ) {
+		private function make_fragment( $cache_level, $exclusion_pattern = '', $base_path = '/' ) {
 			return new BrowserCacheFragment(
 				'nfd.cache.browser',
 				'Newfold Browser Cache',
 				$cache_level,
-				$exclusion_pattern
+				$exclusion_pattern,
+				$base_path
 			);
 		}
 
 		/**
-		 * Simulates Apache THE_REQUEST expr matching for boundary tests.
+		 * Invoke the fragment's private exclusion-condition builder.
 		 *
-		 * @param string $pattern      Pipe-separated slug alternation.
-		 * @param string $the_request  Simulated request line, e.g. "GET /team/ HTTP/1.1".
+		 * @param BrowserCacheFragment $fragment Fragment under test.
+		 * @return string
+		 */
+		private function get_exclusion_condition( BrowserCacheFragment $fragment ) {
+			$method = new \ReflectionMethod( BrowserCacheFragment::class, 'get_exclusion_condition' );
+			$method->setAccessible( true );
+
+			return $method->invoke( $fragment );
+		}
+
+		/**
+		 * Extract a regex from the rendered Apache expression.
+		 *
+		 * @param BrowserCacheFragment $fragment         Fragment under test.
+		 * @param string               $request_variable Apache request variable.
+		 * @return string
+		 */
+		private function get_exclusion_regex( BrowserCacheFragment $fragment, $request_variable ) {
+			$condition = $this->get_exclusion_condition( $fragment );
+			$pattern   = '/%\{' . preg_quote( $request_variable, '/' ) . '\}\s*=~\s*m#(.+?)#i/';
+
+			if ( 1 !== preg_match( $pattern, $condition, $matches ) ) {
+				$this->fail( 'Could not extract the exclusion regex from: ' . $condition );
+			}
+
+			return '#' . $matches[1] . '#i';
+		}
+
+		/**
+		 * Match a simulated raw request line against the production THE_REQUEST regex.
+		 *
+		 * @param BrowserCacheFragment $fragment    Fragment under test.
+		 * @param string               $the_request Simulated request line.
 		 * @return bool
 		 */
-		private function the_request_matches( $pattern, $the_request ) {
+		private function the_request_matches( BrowserCacheFragment $fragment, $the_request ) {
 			return 1 === preg_match(
-				'#^[A-Z]+\s+/(' . $pattern . ')(/|\?|\s)#i',
+				$this->get_exclusion_regex( $fragment, 'THE_REQUEST' ),
 				$the_request
+			);
+		}
+
+		/**
+		 * Match a simulated decoded URI against the production REQUEST_URI regex.
+		 *
+		 * @param BrowserCacheFragment $fragment    Fragment under test.
+		 * @param string               $request_uri Simulated decoded request URI.
+		 * @return bool
+		 */
+		private function request_uri_matches( BrowserCacheFragment $fragment, $request_uri ) {
+			return 1 === preg_match(
+				$this->get_exclusion_regex( $fragment, 'REQUEST_URI' ),
+				$request_uri
 			);
 		}
 
@@ -71,17 +118,16 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments {
 		}
 
 		/**
-		 * Test render output contains THE_REQUEST expression when exclusions exist.
+		 * Test render output contains the generated exclusion expression.
 		 */
-		public function test_render_with_exclusions_contains_the_request_expr() {
-			$pattern = 'cart|checkout|wp-admin|wp-json|team';
-			$output  = $this->make_fragment( 3, $pattern )->render( null );
+		public function test_render_with_exclusions_contains_generated_expr() {
+			$fragment  = $this->make_fragment( 3, 'cart|checkout|wp-admin|wp-json|team' );
+			$output    = $fragment->render( null );
+			$condition = trim( $this->get_exclusion_condition( $fragment ), '"' );
 
-			$expected_expr = 'expr=%{THE_REQUEST} =~ m#^[A-Z]+[[:space:]]+/('
-				. $pattern
-				. ')(/|\?|[[:space:]])#i';
-
-			$this->assertStringContainsString( $expected_expr, $output );
+			$this->assertStringContainsString( $condition, $output );
+			$this->assertStringContainsString( '%{THE_REQUEST}', $condition );
+			$this->assertStringContainsString( '%{REQUEST_URI}', $condition );
 		}
 
 		/**
@@ -135,8 +181,8 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments {
 		 * @param string $the_request Simulated THE_REQUEST value.
 		 */
 		public function test_exclusion_regex_matches_intended_requests( $the_request ) {
-			$pattern = 'cart|checkout|wp-admin|wp-json|team';
-			$this->assertTrue( $this->the_request_matches( $pattern, $the_request ) );
+			$fragment = $this->make_fragment( 3, 'cart|checkout|wp-admin|wp-json|team' );
+			$this->assertTrue( $this->the_request_matches( $fragment, $the_request ) );
 		}
 
 		/**
@@ -164,8 +210,8 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments {
 		 * @param string $the_request Simulated THE_REQUEST value.
 		 */
 		public function test_exclusion_regex_does_not_match_false_positives( $the_request ) {
-			$pattern = 'cart|checkout|wp-admin|wp-json|team';
-			$this->assertFalse( $this->the_request_matches( $pattern, $the_request ) );
+			$fragment = $this->make_fragment( 3, 'cart|checkout|wp-admin|wp-json|team' );
+			$this->assertFalse( $this->the_request_matches( $fragment, $the_request ) );
 		}
 
 		/**
@@ -182,6 +228,28 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments {
 				array( 'GET /wp-admin-available HTTP/1.1' ),
 				array( 'GET /wp-administrator HTTP/1.1' ),
 			);
+		}
+
+		/**
+		 * Test exclusion regex includes the site base path for subfolder installs.
+		 */
+		public function test_exclusion_regex_matches_subfolder_install_requests() {
+			$fragment  = $this->make_fragment( 3, 'cart|checkout|wp-admin|wp-json|team', '/blog/' );
+			$condition = $this->get_exclusion_condition( $fragment );
+
+			$this->assertStringContainsString( '/blog/(cart|checkout|wp-admin|wp-json|team)', $condition );
+			$this->assertTrue( $this->the_request_matches( $fragment, 'GET /blog/wp-admin/ HTTP/1.1' ) );
+			$this->assertFalse( $this->the_request_matches( $fragment, 'GET /wp-admin/ HTTP/1.1' ) );
+		}
+
+		/**
+		 * Test REQUEST_URI covers decoded paths that THE_REQUEST leaves encoded.
+		 */
+		public function test_request_uri_regex_matches_decoded_encoded_path() {
+			$fragment = $this->make_fragment( 3, 'cart|checkout|wp-admin|wp-json|team' );
+
+			$this->assertFalse( $this->the_request_matches( $fragment, 'GET /%77p-admin/ HTTP/1.1' ) );
+			$this->assertTrue( $this->request_uri_matches( $fragment, '/wp-admin/' ) );
 		}
 	}
 }
