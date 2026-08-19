@@ -130,13 +130,12 @@ final class BrowserCacheFragment implements Fragment {
 		if ( '' !== $this->exclusion_pattern ) {
 			$lines[] = '<IfModule mod_rewrite.c>';
 			$lines[] = 'RewriteEngine On';
-			$lines[] = "RewriteCond %{REQUEST_URI} (^|/)({$this->exclusion_pattern})(/|$) [NC]";
-			$lines[] = 'RewriteRule .* - [E=no_cache:1]';
-			$lines[] = '</IfModule>';
+			$lines[] = "RewriteCond %{REQUEST_URI} ^/({$this->exclusion_pattern}) [NC]";
 			$lines[] = '<IfModule mod_headers.c>';
-			$lines[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate" env=no_cache';
-			$lines[] = 'Header set Pragma "no-cache" env=no_cache';
-			$lines[] = 'Header set Expires 0 env=no_cache';
+			$lines[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
+			$lines[] = 'Header set Pragma "no-cache"';
+			$lines[] = 'Header set Expires 0';
+			$lines[] = '</IfModule>';
 			$lines[] = '</IfModule>';
 		}
 
