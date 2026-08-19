@@ -119,8 +119,8 @@ final class ExistingImageRedirectFragment implements Fragment {
 		$lines[] = '<IfModule mod_rewrite.c>';
 		$lines[] = "\tRewriteEngine On";
 		$lines[] = "\tRewriteCond %{REQUEST_FILENAME} -f";
-		$lines[] = "\tRewriteCond %{REQUEST_URI} (.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ [NC]";
-		$lines[] = "\tRewriteCond %{DOCUMENT_ROOT}%1.webp -f";
+		$lines[] = "\tRewriteCond %{REQUEST_FILENAME} ^(.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ [NC]";
+		$lines[] = "\tRewriteCond %1.webp -f";
 		$lines[] = "\tRewriteRule ^(.+)\\.(gif|bmp|jpg|jpeg|png|tiff|svg|webp)$ $1.webp [T=image/webp,E=WEBP_REDIRECT:1,L]";
 		$lines[] = '</IfModule>';
 		$lines[] = '# END ' . $this->marker_label;
