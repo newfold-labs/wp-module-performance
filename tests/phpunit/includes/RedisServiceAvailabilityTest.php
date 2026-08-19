@@ -182,6 +182,55 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		}
 
 		/**
+		 * Same classification, but through the real client with only the HTTP layer faked, using the
+		 * body HUAPI actually sends.
+		 *
+		 * The test above stubs the client, so it only checks our own idea of the error shape. This one
+		 * covers the wire format, where a mismatch shows up as the wrong TTL instead of passing quietly.
+		 */
+		public function test_huapi_wire_error_shape_classifies_as_definitive_unavailable() {
+			WP_Mock::userFunction( 'get_transient' )->once()->andReturn( false );
+
+			if ( ! defined( 'NFD_SITES_API' ) ) {
+				define( 'NFD_SITES_API', 'https://hosting.uapi.newfold.com/' );
+			}
+			WP_Mock::onFilter( 'newfold_performance_hosting_uapi_base_url' )
+				->with( 'https://hosting.uapi.newfold.com/' )
+				->reply( 'https://hosting.uapi.newfold.com/' );
+			WP_Mock::onFilter( 'newfold_performance_hosting_uapi_request_timeout_seconds' )
+				->with( 30 )
+				->reply( 30 );
+			WP_Mock::userFunction( 'trailingslashit' )->andReturnUsing(
+				function ( $s ) {
+					return rtrim( (string) $s, '/' ) . '/';
+				}
+			);
+
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () {
+					return array(
+						'token'   => 'jwt',
+						'site_id' => '12345',
+					);
+				}
+			);
+
+			WP_Mock::userFunction( 'wp_remote_request' )->once()->andReturn( array( 'stub' => true ) );
+			WP_Mock::userFunction( 'wp_remote_retrieve_response_code' )->andReturn( 512 );
+			WP_Mock::userFunction( 'wp_remote_retrieve_body' )->andReturn(
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Test fixture.
+				json_encode( array( 'error' => RedisServiceAvailability::CUSTOMER_ERROR_SERVICE_INACTIVE ) )
+			);
+
+			WP_Mock::userFunction( 'set_transient' )
+				->once()
+				->with( RedisServiceAvailability::TRANSIENT_KEY, '0', RedisServiceAvailability::TTL_UNAVAILABLE );
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+		}
+
+		/**
 		 * An unknown HUAPI error is indeterminate: fails safe to false, cached only for the short TTL so it re-probes soon.
 		 */
 		public function test_probe_unknown_error_is_indeterminate() {
