@@ -8,68 +8,68 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-23T17:35:11+00:00\n"
+"PO-Revision-Date: 2026-08-19T13:59:41+00:00\n"
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-performance\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: includes/Cache/Types/ObjectCache.php:222
+#: includes/Cache/Types/ObjectCache.php:253
 msgid "Another plugin's object cache is active. Disable it in that plugin first."
 msgstr "La caché de objetos de otro plugin está activa. Desactívala primero en ese plugin."
 
-#: includes/Cache/Types/ObjectCache.php:230
+#: includes/Cache/Types/ObjectCache.php:261
 #: includes/Cache/Types/ObjectCachePreflight.php:40
 msgid "Object caching is not supported on this server."
 msgstr "La caché de objetos no es compatible con este servidor."
 
-#: includes/Cache/Types/ObjectCache.php:263
+#: includes/Cache/Types/ObjectCache.php:294
 msgid "Setting up object cache. Please wait a few seconds and try again."
 msgstr "Configurando la caché de objetos. Espera unos segundos e inténtalo de nuevo."
 
-#: includes/Cache/Types/ObjectCache.php:287
-#: includes/Cache/Types/ObjectCache.php:296
+#: includes/Cache/Types/ObjectCache.php:318
+#: includes/Cache/Types/ObjectCache.php:327
 #: build/performance/performance.min.js:5
 msgid "Could not download object cache files. Please try again later."
 msgstr "No se pudieron descargar los archivos de caché de objetos. Inténtalo de nuevo más tarde."
 
-#: includes/Cache/Types/ObjectCache.php:305
-#: includes/Cache/Types/ObjectCache.php:702
-#: includes/Cache/Types/ObjectCache.php:703
-#: includes/Cache/Types/ObjectCache.php:705
-#: includes/Cache/Types/ObjectCache.php:706
+#: includes/Cache/Types/ObjectCache.php:336
+#: includes/Cache/Types/ObjectCache.php:733
+#: includes/Cache/Types/ObjectCache.php:734
+#: includes/Cache/Types/ObjectCache.php:736
+#: includes/Cache/Types/ObjectCache.php:737
 #: includes/Helpers/HiiveHelper.php:68
 #: includes/Helpers/HiiveHelper.php:101
 #: includes/Helpers/HostingUapiClient.php:23
 #: includes/Helpers/HostingUapiClient.php:64
-#: includes/Helpers/RedisCredentialsProvisioner.php:37
-#: includes/Helpers/RedisCredentialsProvisioner.php:47
-#: includes/Helpers/RedisCredentialsProvisioner.php:54
+#: includes/Helpers/RedisCredentialsProvisioner.php:40
+#: includes/Helpers/RedisCredentialsProvisioner.php:50
+#: includes/Helpers/RedisCredentialsProvisioner.php:57
 #: build/performance/performance.min.js:5
 msgid "Could not enable object cache right now. Please try again later."
 msgstr "No se pudo habilitar la caché de objetos en este momento. Inténtalo de nuevo más tarde."
 
-#: includes/Cache/Types/ObjectCache.php:329
+#: includes/Cache/Types/ObjectCache.php:360
 #: build/performance/performance.min.js:5
 msgid "Could not save object cache file. Check file permissions or contact support."
 msgstr "No se pudo guardar el archivo de caché de objetos. Comprueba los permisos de archivos o contacta al soporte."
 
-#: includes/Cache/Types/ObjectCache.php:394
+#: includes/Cache/Types/ObjectCache.php:425
 msgid "Could not disable object cache. Check file permissions or contact support."
 msgstr "No se pudo desactivar la caché de objetos. Comprueba los permisos de archivos o contacta al soporte."
 
-#: includes/Cache/Types/ObjectCache.php:489
+#: includes/Cache/Types/ObjectCache.php:520
 msgid "Object cache is not configured yet."
 msgstr "La caché de objetos aún no está configurada."
 
-#: includes/Cache/Types/ObjectCache.php:500
-#: includes/Cache/Types/ObjectCache.php:704
+#: includes/Cache/Types/ObjectCache.php:531
+#: includes/Cache/Types/ObjectCache.php:735
 #: build/performance/performance.min.js:5
 msgid "Could not connect to the object cache. Please try again later."
 msgstr "No se pudo conectar con la caché de objetos. Inténtalo de nuevo más tarde."
 
-#: includes/Cache/Types/ObjectCache.php:701
-#: includes/Helpers/RedisCredentialsProvisioner.php:22
+#: includes/Cache/Types/ObjectCache.php:732
+#: includes/Helpers/RedisCredentialsProvisioner.php:25
 #: build/performance/performance.min.js:5
 msgid "Object cache cannot be enabled automatically right now. Please contact support."
 msgstr "La caché de objetos no puede habilitarse automáticamente en este momento. Contacta al soporte."
@@ -327,10 +327,6 @@ msgstr "El diagnóstico de la caché de objetos se superó correctamente."
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "El diagnóstico de la caché de objetos encontró problemas. Consulte la sección \"Resumen del diagnóstico\" más arriba."
 
-
-
-
-
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
 msgstr "Intervalo de guardado automático"
@@ -573,6 +569,12 @@ msgstr "El CSS crítico no tiene prioridad"
 #: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 msgstr "Priorizar CSS crítico puede mejorar el rendimiento cargando primero el CSS más importante."
+
+#: includes/Helpers/HostingUapiClient.php:103
+#: includes/Helpers/HostingUapiClient.php:133
+#: includes/Helpers/HostingUapiClient.php:149
+msgid "Could not read object cache status right now."
+msgstr ""
 
 #. translators: %s: Time remaining
 #: includes/Images/ImageLimitBanner.php:56

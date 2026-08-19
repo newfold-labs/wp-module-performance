@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-23T17:35:11+00:00\n"
+"PO-Revision-Date: 2026-08-19T13:59:41+00:00\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -19,62 +19,62 @@ msgstr ""
 "X-Domain: wp-module-performance\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: includes/Cache/Types/ObjectCache.php:222
+#: includes/Cache/Types/ObjectCache.php:253
 msgid "Another plugin's object cache is active. Disable it in that plugin first."
 msgstr "Le cache d'objets d'un autre plugin est actif. Désactivez-le d'abord dans ce plugin."
 
-#: includes/Cache/Types/ObjectCache.php:230
+#: includes/Cache/Types/ObjectCache.php:261
 #: includes/Cache/Types/ObjectCachePreflight.php:40
 msgid "Object caching is not supported on this server."
 msgstr "La mise en cache d'objets n'est pas prise en charge sur ce serveur."
 
-#: includes/Cache/Types/ObjectCache.php:263
+#: includes/Cache/Types/ObjectCache.php:294
 msgid "Setting up object cache. Please wait a few seconds and try again."
 msgstr "Configuration du cache d'objets. Veuillez patienter quelques secondes et réessayer."
 
-#: includes/Cache/Types/ObjectCache.php:287
-#: includes/Cache/Types/ObjectCache.php:296
+#: includes/Cache/Types/ObjectCache.php:318
+#: includes/Cache/Types/ObjectCache.php:327
 #: build/performance/performance.min.js:5
 msgid "Could not download object cache files. Please try again later."
 msgstr "Impossible de télécharger les fichiers du cache d'objets. Veuillez réessayer plus tard."
 
-#: includes/Cache/Types/ObjectCache.php:305
-#: includes/Cache/Types/ObjectCache.php:702
-#: includes/Cache/Types/ObjectCache.php:703
-#: includes/Cache/Types/ObjectCache.php:705
-#: includes/Cache/Types/ObjectCache.php:706
+#: includes/Cache/Types/ObjectCache.php:336
+#: includes/Cache/Types/ObjectCache.php:733
+#: includes/Cache/Types/ObjectCache.php:734
+#: includes/Cache/Types/ObjectCache.php:736
+#: includes/Cache/Types/ObjectCache.php:737
 #: includes/Helpers/HiiveHelper.php:68
 #: includes/Helpers/HiiveHelper.php:101
 #: includes/Helpers/HostingUapiClient.php:23
 #: includes/Helpers/HostingUapiClient.php:64
-#: includes/Helpers/RedisCredentialsProvisioner.php:37
-#: includes/Helpers/RedisCredentialsProvisioner.php:47
-#: includes/Helpers/RedisCredentialsProvisioner.php:54
+#: includes/Helpers/RedisCredentialsProvisioner.php:40
+#: includes/Helpers/RedisCredentialsProvisioner.php:50
+#: includes/Helpers/RedisCredentialsProvisioner.php:57
 #: build/performance/performance.min.js:5
 msgid "Could not enable object cache right now. Please try again later."
 msgstr "Impossible d'activer le cache d'objets pour le moment. Veuillez réessayer plus tard."
 
-#: includes/Cache/Types/ObjectCache.php:329
+#: includes/Cache/Types/ObjectCache.php:360
 #: build/performance/performance.min.js:5
 msgid "Could not save object cache file. Check file permissions or contact support."
 msgstr "Impossible d'enregistrer le fichier du cache d'objets. Vérifiez les permissions des fichiers ou contactez l'assistance."
 
-#: includes/Cache/Types/ObjectCache.php:394
+#: includes/Cache/Types/ObjectCache.php:425
 msgid "Could not disable object cache. Check file permissions or contact support."
 msgstr "Impossible de désactiver le cache d'objets. Vérifiez les permissions des fichiers ou contactez l'assistance."
 
-#: includes/Cache/Types/ObjectCache.php:489
+#: includes/Cache/Types/ObjectCache.php:520
 msgid "Object cache is not configured yet."
 msgstr "Le cache d'objets n'est pas encore configuré."
 
-#: includes/Cache/Types/ObjectCache.php:500
-#: includes/Cache/Types/ObjectCache.php:704
+#: includes/Cache/Types/ObjectCache.php:531
+#: includes/Cache/Types/ObjectCache.php:735
 #: build/performance/performance.min.js:5
 msgid "Could not connect to the object cache. Please try again later."
 msgstr "Impossible de se connecter au cache d'objets. Veuillez réessayer plus tard."
 
-#: includes/Cache/Types/ObjectCache.php:701
-#: includes/Helpers/RedisCredentialsProvisioner.php:22
+#: includes/Cache/Types/ObjectCache.php:732
+#: includes/Helpers/RedisCredentialsProvisioner.php:25
 #: build/performance/performance.min.js:5
 msgid "Object cache cannot be enabled automatically right now. Please contact support."
 msgstr "Le cache d'objets ne peut pas être activé automatiquement pour le moment. Veuillez contacter l'assistance."
@@ -332,10 +332,6 @@ msgstr "Diagnostic du cache d'objets réussi."
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "Le diagnostic du cache d'objets a détecté des problèmes. Consultez la section \"Résumé du diagnostic\" ci-dessus."
 
-
-
-
-
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
 msgstr "Intervalle de sauvegarde automatique"
@@ -578,6 +574,12 @@ msgstr "Le CSS critique n’est pas priorisé"
 #: includes/HealthChecks/PrioritizeCssHealthCheck.php:17
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 msgstr "Prioriser le CSS critique peut améliorer les performances en chargeant d’abord le CSS le plus important."
+
+#: includes/Helpers/HostingUapiClient.php:103
+#: includes/Helpers/HostingUapiClient.php:133
+#: includes/Helpers/HostingUapiClient.php:149
+msgid "Could not read object cache status right now."
+msgstr ""
 
 #. translators: %s: Time remaining
 #: includes/Images/ImageLimitBanner.php:56
