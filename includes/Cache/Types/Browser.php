@@ -108,7 +108,8 @@ class Browser extends CacheBase {
 	 */
 	public static function addRules( $cache_level ) {
 
-		// Build exclusion pattern (same logic as before).
+		// Build the site base path and exclusion pattern.
+		$base_path         = (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$exclusion_pattern = '';
 		$cache_exclusion   = get_cache_exclusion();
 
@@ -123,7 +124,8 @@ class Browser extends CacheBase {
 				self::FRAGMENT_ID,
 				self::MARKER,
 				absint( $cache_level ),
-				$exclusion_pattern
+				$exclusion_pattern,
+				$base_path
 			),
 			true // queue apply
 		);

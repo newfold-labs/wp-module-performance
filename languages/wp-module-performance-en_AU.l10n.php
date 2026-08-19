@@ -5,7 +5,7 @@ return [
 	'language' => 'en_AU',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-06-23T09:55:57+00:00',
+	'po-revision-date' => '2026-07-23T17:35:11+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'Another plugin\'s object cache is active. Disable it in that plugin first.' => 'Another plugin\'s object cache is active. Disable it in that plugin first.',
