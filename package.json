@@ -36,6 +36,14 @@
     "postcss-loader": "^8.2.1",
     "tailwindcss": "^3.4.19"
   },
+  "overrides": {
+    "adm-zip": "^0.6.0",
+    "markdown-it": "^14.2.0",
+    "linkify-it": "^5.0.2",
+    "serialize-javascript": "^7.0.5",
+    "uuid": "^11.1.1",
+    "minimatch@<4": "^3.1.5"
+  },
   "scripts": {
     "build": "npm run build:assets && npm run build:react",
     "start": "npm run start:assets & npm run start:react",
