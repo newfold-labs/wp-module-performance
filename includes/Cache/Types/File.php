@@ -62,6 +62,39 @@ class File extends CacheBase implements Purgeable {
 
 		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
 		add_action( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
+
+		// Re-render on boot so the persisted block keeps up with the current code.
+		//
+		// Admin only, unlike the browser cache. addRules() needs get_home_path(),
+		// which lives in wp-admin/includes/file.php and reads SCRIPT_FILENAME, so
+		// it is neither loaded nor reliable on REST, cron and CLI requests.
+		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+	}
+
+	/**
+	 * Re-render the fragment so the saved state matches what this version renders.
+	 *
+	 * Without this the block is only rebuilt when a setting changes or the plugin
+	 * is activated, so a rule change shipped in an update never reaches sites that
+	 * are already running. The same applies to the base path in the rules, which
+	 * goes stale when home_url changes.
+	 *
+	 * Api::register only queues a write when the rendered body actually differs,
+	 * so this costs nothing once a site is in sync.
+	 *
+	 * @return void
+	 */
+	public static function bootstrap_register() {
+		$brand       = getContainer()->plugin()->brand;
+		$cache_level = get_cache_level();
+
+		// Same conditions as maybeAddRules(). Removal is left to the option
+		// listeners so that booting never queues a write of its own.
+		if ( absint( $cache_level ) <= 1 || 'bluehost' === $brand || 'hostgator' === $brand ) {
+			return;
+		}
+
+		self::addRules();
 	}
 
 	/**

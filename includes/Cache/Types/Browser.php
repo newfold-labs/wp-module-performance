@@ -61,6 +61,51 @@ class Browser extends CacheBase {
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
+
+		// Re-render on boot so the persisted block keeps up with the current code.
+		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+		add_action( 'rest_api_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+		add_action( 'init', array( __CLASS__, 'maybe_bootstrap_register' ), 5 );
+	}
+
+	/**
+	 * Bootstrap-register in the contexts where admin_init never fires.
+	 *
+	 * @return void
+	 */
+	public static function maybe_bootstrap_register() {
+		$is_ajax = function_exists( 'wp_doing_ajax' ) && wp_doing_ajax();
+		$is_cron = function_exists( 'wp_doing_cron' ) && wp_doing_cron();
+		$is_cli  = defined( 'WP_CLI' ) && WP_CLI;
+
+		if ( $is_ajax || $is_cron || $is_cli ) {
+			self::bootstrap_register();
+		}
+	}
+
+	/**
+	 * Re-render the fragment so the saved state matches what this version renders.
+	 *
+	 * Without this the block is only rebuilt when a setting changes or the plugin
+	 * is activated, so a rule change shipped in an update never reaches sites that
+	 * are already running. The same applies to the base path in the rules, which
+	 * goes stale when home_url changes.
+	 *
+	 * Api::register only queues a write when the rendered body actually differs,
+	 * so this costs nothing once a site is in sync.
+	 *
+	 * @return void
+	 */
+	public static function bootstrap_register() {
+		$cache_level = get_cache_level();
+
+		// Nothing to register when browser caching is off. Removal is left to the
+		// option listeners so that booting never queues a write of its own.
+		if ( absint( $cache_level ) < 1 ) {
+			return;
+		}
+
+		self::addRules( $cache_level );
 	}
 
 	/**
