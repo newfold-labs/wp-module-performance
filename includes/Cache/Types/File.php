@@ -65,10 +65,10 @@ class File extends CacheBase implements Purgeable {
 
 		// Re-render on boot so the persisted block keeps up with the current code.
 		//
-		// admin_init rather than init, unlike the browser cache. addRules() needs
-		// get_home_path(), and wp-admin/includes/file.php is only pulled in after
-		// init has already run. It also reads SCRIPT_FILENAME, which points at the
-		// wp binary under WP-CLI, so cron and CLI are left out too.
+		// admin_init only, with no cron counterpart to the browser cache one.
+		// addRules() calls get_home_path() directly, which is undefined until
+		// wp-admin/includes/file.php loads and reads SCRIPT_FILENAME, so it only
+		// gives the right answer on an actual admin request.
 		add_action( 'admin_init', array( __CLASS__, 'maybe_bootstrap_register' ), 20 );
 	}
 
@@ -82,6 +82,14 @@ class File extends CacheBase implements Purgeable {
 	 */
 	public static function maybe_bootstrap_register() {
 		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+			return;
+		}
+
+		// A network shares one .htaccess, but the cache level and the base path
+		// baked into the rules are per site. Re-rendering here would make each
+		// site rewrite the file with its own values and undo the last one, so
+		// multisite keeps to the existing setting-change path.
+		if ( is_multisite() ) {
 			return;
 		}
 
@@ -105,8 +113,9 @@ class File extends CacheBase implements Purgeable {
 		$brand       = getContainer()->plugin()->brand;
 		$cache_level = get_cache_level();
 
-		// Same conditions as maybeAddRules(). Removal is left to the option
-		// listeners so that booting never queues a write of its own.
+		// Same conditions as maybeAddRules(). Only registration happens here:
+		// unregistering queues a write whether or not anything changed, so
+		// removal stays with the option listeners.
 		if ( absint( $cache_level ) <= 1 || 'bluehost' === $brand || 'hostgator' === $brand ) {
 			return;
 		}

@@ -32,21 +32,34 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 		}
 
 		/**
-		 * Front-end and REST traffic must not pay for this.
+		 * The init hook exists for cron only. Front-end and REST traffic reach it
+		 * too, and must not pay for this.
 		 */
 		public function test_front_end_request_does_nothing() {
-			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( false );
 			WP_Mock::userFunction( 'wp_doing_cron' )->andReturn( false );
-			WP_Mock::userFunction( 'is_admin' )->andReturn( false );
 			WP_Mock::userFunction( 'get_option' )->never();
 
-			Browser::maybe_bootstrap_register();
+			Browser::maybe_bootstrap_register_on_cron();
 
 			$this->assertConditionsMet();
 		}
 
 		/**
-		 * admin-ajax counts as admin, and heartbeat hits it every few seconds, so
+		 * Cron has no admin_init, so it goes through the init hook instead.
+		 */
+		public function test_cron_request_reads_the_cache_level() {
+			WP_Mock::userFunction( 'wp_doing_cron' )->andReturn( true );
+			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( false );
+			WP_Mock::userFunction( 'is_multisite' )->andReturn( false );
+			WP_Mock::userFunction( 'get_option' )->once()->andReturn( 0 );
+
+			Browser::maybe_bootstrap_register_on_cron();
+
+			$this->assertConditionsMet();
+		}
+
+		/**
+		 * admin-ajax fires admin_init, and heartbeat hits it every few seconds, so
 		 * it is skipped rather than re-rendering on every poll.
 		 */
 		public function test_admin_ajax_request_does_nothing() {
@@ -59,12 +72,25 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 		}
 
 		/**
-		 * Cron has no admin_init, so it goes through this path instead.
+		 * A network shares one .htaccess while the rendered rules are per site, so
+		 * re-rendering on boot would have each site undo the last one.
 		 */
-		public function test_cron_request_reads_the_cache_level() {
+		public function test_multisite_does_nothing() {
 			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( false );
-			WP_Mock::userFunction( 'wp_doing_cron' )->andReturn( true );
-			WP_Mock::userFunction( 'is_admin' )->andReturn( false );
+			WP_Mock::userFunction( 'is_multisite' )->andReturn( true );
+			WP_Mock::userFunction( 'get_option' )->never();
+
+			Browser::maybe_bootstrap_register();
+
+			$this->assertConditionsMet();
+		}
+
+		/**
+		 * An ordinary admin page load is what this is for.
+		 */
+		public function test_admin_request_reads_the_cache_level() {
+			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( false );
+			WP_Mock::userFunction( 'is_multisite' )->andReturn( false );
 			WP_Mock::userFunction( 'get_option' )->once()->andReturn( 0 );
 
 			Browser::maybe_bootstrap_register();

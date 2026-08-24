@@ -63,15 +63,41 @@ class Browser extends CacheBase {
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
 
 		// Re-render on boot so the persisted block keeps up with the current code.
-		add_action( 'init', array( __CLASS__, 'maybe_bootstrap_register' ), 5 );
+		//
+		// admin_init rather than init: registering ends up requiring
+		// wp-admin/includes/file.php, and on an admin request that file is only
+		// loaded at global scope after init has run. Pulling it in earlier would
+		// scope the globals it defines to the function that required it.
+		add_action( 'admin_init', array( __CLASS__, 'maybe_bootstrap_register' ), 20 );
+
+		// Cron never reaches admin_init, so it needs its own entry point.
+		add_action( 'init', array( __CLASS__, 'maybe_bootstrap_register_on_cron' ), 5 );
+	}
+
+	/**
+	 * Re-render on cron, where admin_init never fires.
+	 *
+	 * Sites nobody signs into still need to pick up a rule change, and the cron
+	 * request is the only other context that can write safely. WP-CLI is left
+	 * out on purpose: the writer resolves the .htaccess path from
+	 * SCRIPT_FILENAME, which points at the wp binary there.
+	 *
+	 * @return void
+	 */
+	public static function maybe_bootstrap_register_on_cron() {
+		if ( ! function_exists( 'wp_doing_cron' ) || ! wp_doing_cron() ) {
+			return;
+		}
+
+		self::maybe_bootstrap_register();
 	}
 
 	/**
 	 * Decide whether this request should re-render the fragment.
 	 *
 	 * Re-rendering costs a couple of option reads and a string compare, so it is
-	 * kept off the hot paths. Front-end and REST requests skip it entirely, and
-	 * so does admin-ajax, where heartbeat would otherwise run this every few
+	 * kept off the hot paths. Front-end and REST requests never get here, and
+	 * admin-ajax is skipped because heartbeat would otherwise run this every few
 	 * seconds for no reason. An ordinary admin page load picks up any change.
 	 *
 	 * @return void
@@ -81,10 +107,11 @@ class Browser extends CacheBase {
 			return;
 		}
 
-		$is_cron = function_exists( 'wp_doing_cron' ) && wp_doing_cron();
-		$is_cli  = defined( 'WP_CLI' ) && WP_CLI;
-
-		if ( ! is_admin() && ! $is_cron && ! $is_cli ) {
+		// A network shares one .htaccess, but the cache level and the base path
+		// baked into the rules are per site. Re-rendering here would make each
+		// site rewrite the file with its own values and undo the last one, so
+		// multisite keeps to the existing setting-change path.
+		if ( is_multisite() ) {
 			return;
 		}
 
@@ -107,8 +134,9 @@ class Browser extends CacheBase {
 	public static function bootstrap_register() {
 		$cache_level = get_cache_level();
 
-		// Nothing to register when browser caching is off. Removal is left to the
-		// option listeners so that booting never queues a write of its own.
+		// Nothing to register when browser caching is off. Only registration
+		// happens here: unregistering queues a write whether or not anything
+		// changed, so removal stays with the option listeners.
 		if ( absint( $cache_level ) < 1 ) {
 			return;
 		}
