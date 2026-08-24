@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@newfold/ui-component-library": "^2.1.1",
-    "@newfold/wp-module-runtime": "^1.2.2",
+    "@newfold/wp-module-runtime": "^1.2.3",
     "html-react-parser": "^6.1.7"
   },
   "devDependencies": {
