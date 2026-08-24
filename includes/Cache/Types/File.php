@@ -65,10 +65,27 @@ class File extends CacheBase implements Purgeable {
 
 		// Re-render on boot so the persisted block keeps up with the current code.
 		//
-		// Admin only, unlike the browser cache. addRules() needs get_home_path(),
-		// which lives in wp-admin/includes/file.php and reads SCRIPT_FILENAME, so
-		// it is neither loaded nor reliable on REST, cron and CLI requests.
-		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
+		// admin_init rather than init, unlike the browser cache. addRules() needs
+		// get_home_path(), and wp-admin/includes/file.php is only pulled in after
+		// init has already run. It also reads SCRIPT_FILENAME, which points at the
+		// wp binary under WP-CLI, so cron and CLI are left out too.
+		add_action( 'admin_init', array( __CLASS__, 'maybe_bootstrap_register' ), 20 );
+	}
+
+	/**
+	 * Decide whether this request should re-render the fragment.
+	 *
+	 * Skips admin-ajax, where heartbeat would otherwise run this every few
+	 * seconds for no reason. An ordinary admin page load picks up any change.
+	 *
+	 * @return void
+	 */
+	public static function maybe_bootstrap_register() {
+		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+			return;
+		}
+
+		self::bootstrap_register();
 	}
 
 	/**

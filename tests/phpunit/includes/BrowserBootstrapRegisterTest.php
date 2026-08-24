@@ -32,12 +32,12 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 		}
 
 		/**
-		 * A normal front-end request should not look anything up. admin_init and
-		 * rest_api_init cover the contexts we care about, so init has nothing to do.
+		 * Front-end and REST traffic must not pay for this.
 		 */
 		public function test_front_end_request_does_nothing() {
 			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( false );
 			WP_Mock::userFunction( 'wp_doing_cron' )->andReturn( false );
+			WP_Mock::userFunction( 'is_admin' )->andReturn( false );
 			WP_Mock::userFunction( 'get_option' )->never();
 
 			Browser::maybe_bootstrap_register();
@@ -46,11 +46,25 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types {
 		}
 
 		/**
-		 * Cron has no admin_init, so it goes through the init path instead.
+		 * admin-ajax counts as admin, and heartbeat hits it every few seconds, so
+		 * it is skipped rather than re-rendering on every poll.
+		 */
+		public function test_admin_ajax_request_does_nothing() {
+			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( true );
+			WP_Mock::userFunction( 'get_option' )->never();
+
+			Browser::maybe_bootstrap_register();
+
+			$this->assertConditionsMet();
+		}
+
+		/**
+		 * Cron has no admin_init, so it goes through this path instead.
 		 */
 		public function test_cron_request_reads_the_cache_level() {
 			WP_Mock::userFunction( 'wp_doing_ajax' )->andReturn( false );
 			WP_Mock::userFunction( 'wp_doing_cron' )->andReturn( true );
+			WP_Mock::userFunction( 'is_admin' )->andReturn( false );
 			WP_Mock::userFunction( 'get_option' )->once()->andReturn( 0 );
 
 			Browser::maybe_bootstrap_register();

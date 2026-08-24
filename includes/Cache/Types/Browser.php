@@ -63,24 +63,32 @@ class Browser extends CacheBase {
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
 
 		// Re-render on boot so the persisted block keeps up with the current code.
-		add_action( 'admin_init', array( __CLASS__, 'bootstrap_register' ), 20 );
-		add_action( 'rest_api_init', array( __CLASS__, 'bootstrap_register' ), 20 );
 		add_action( 'init', array( __CLASS__, 'maybe_bootstrap_register' ), 5 );
 	}
 
 	/**
-	 * Bootstrap-register in the contexts where admin_init never fires.
+	 * Decide whether this request should re-render the fragment.
+	 *
+	 * Re-rendering costs a couple of option reads and a string compare, so it is
+	 * kept off the hot paths. Front-end and REST requests skip it entirely, and
+	 * so does admin-ajax, where heartbeat would otherwise run this every few
+	 * seconds for no reason. An ordinary admin page load picks up any change.
 	 *
 	 * @return void
 	 */
 	public static function maybe_bootstrap_register() {
-		$is_ajax = function_exists( 'wp_doing_ajax' ) && wp_doing_ajax();
+		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+			return;
+		}
+
 		$is_cron = function_exists( 'wp_doing_cron' ) && wp_doing_cron();
 		$is_cli  = defined( 'WP_CLI' ) && WP_CLI;
 
-		if ( $is_ajax || $is_cron || $is_cli ) {
-			self::bootstrap_register();
+		if ( ! is_admin() && ! $is_cron && ! $is_cli ) {
+			return;
 		}
+
+		self::bootstrap_register();
 	}
 
 	/**
