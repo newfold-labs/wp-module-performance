@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-29T16:03:48+00:00\n"
+"PO-Revision-Date: 2026-08-25T07:35:09+00:00\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-performance.pot\n"
@@ -19,65 +19,238 @@ msgstr ""
 "X-Domain: wp-module-performance\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: includes/Cache/Types/ObjectCache.php:222
+#: includes/Cache/Types/ObjectCache.php:253
 msgid "Another plugin's object cache is active. Disable it in that plugin first."
 msgstr "La cache a oggetti di un altro plugin è attiva. Disattivala prima in quel plugin."
 
-#: includes/Cache/Types/ObjectCache.php:230
+#: includes/Cache/Types/ObjectCache.php:261
 #: includes/Cache/Types/ObjectCachePreflight.php:40
 msgid "Object caching is not supported on this server."
 msgstr "La cache degli oggetti non è supportata su questo server."
 
-#: includes/Cache/Types/ObjectCache.php:263
+#: includes/Cache/Types/ObjectCache.php:294
 msgid "Setting up object cache. Please wait a few seconds and try again."
 msgstr "Configurazione della cache degli oggetti in corso. Attendi qualche secondo e riprova."
 
-#: includes/Cache/Types/ObjectCache.php:287
-#: includes/Cache/Types/ObjectCache.php:296
+#: includes/Cache/Types/ObjectCache.php:318
+#: includes/Cache/Types/ObjectCache.php:327
 #: build/performance/performance.min.js:5
 msgid "Could not download object cache files. Please try again later."
 msgstr "Impossibile scaricare i file della cache degli oggetti. Riprova più tardi."
 
-#: includes/Cache/Types/ObjectCache.php:305
-#: includes/Cache/Types/ObjectCache.php:702
-#: includes/Cache/Types/ObjectCache.php:703
-#: includes/Cache/Types/ObjectCache.php:705
-#: includes/Cache/Types/ObjectCache.php:706
+#: includes/Cache/Types/ObjectCache.php:336
+#: includes/Cache/Types/ObjectCache.php:733
+#: includes/Cache/Types/ObjectCache.php:734
+#: includes/Cache/Types/ObjectCache.php:736
+#: includes/Cache/Types/ObjectCache.php:737
 #: includes/Helpers/HiiveHelper.php:68
 #: includes/Helpers/HiiveHelper.php:101
 #: includes/Helpers/HostingUapiClient.php:23
 #: includes/Helpers/HostingUapiClient.php:64
-#: includes/Helpers/RedisCredentialsProvisioner.php:37
-#: includes/Helpers/RedisCredentialsProvisioner.php:47
-#: includes/Helpers/RedisCredentialsProvisioner.php:54
+#: includes/Helpers/RedisCredentialsProvisioner.php:40
+#: includes/Helpers/RedisCredentialsProvisioner.php:50
+#: includes/Helpers/RedisCredentialsProvisioner.php:57
 #: build/performance/performance.min.js:5
 msgid "Could not enable object cache right now. Please try again later."
 msgstr "Impossibile abilitare la cache degli oggetti in questo momento. Riprova più tardi."
 
-#: includes/Cache/Types/ObjectCache.php:329
+#: includes/Cache/Types/ObjectCache.php:360
 #: build/performance/performance.min.js:5
 msgid "Could not save object cache file. Check file permissions or contact support."
 msgstr "Impossibile salvare il file della cache degli oggetti. Controlla i permessi dei file o contatta l'assistenza."
 
-#: includes/Cache/Types/ObjectCache.php:394
+#: includes/Cache/Types/ObjectCache.php:425
 msgid "Could not disable object cache. Check file permissions or contact support."
 msgstr "Impossibile disabilitare la cache degli oggetti. Controlla i permessi dei file o contatta l'assistenza."
 
-#: includes/Cache/Types/ObjectCache.php:489
+#: includes/Cache/Types/ObjectCache.php:520
 msgid "Object cache is not configured yet."
 msgstr "La cache degli oggetti non è ancora configurata."
 
-#: includes/Cache/Types/ObjectCache.php:500
-#: includes/Cache/Types/ObjectCache.php:704
+#: includes/Cache/Types/ObjectCache.php:531
+#: includes/Cache/Types/ObjectCache.php:735
 #: build/performance/performance.min.js:5
 msgid "Could not connect to the object cache. Please try again later."
 msgstr "Impossibile connettersi alla cache degli oggetti. Riprova più tardi."
 
-#: includes/Cache/Types/ObjectCache.php:701
-#: includes/Helpers/RedisCredentialsProvisioner.php:22
+#: includes/Cache/Types/ObjectCache.php:732
+#: includes/Helpers/RedisCredentialsProvisioner.php:25
 #: build/performance/performance.min.js:5
 msgid "Object cache cannot be enabled automatically right now. Please contact support."
 msgstr "La cache degli oggetti non può essere abilitata automaticamente in questo momento. Contatta l'assistenza."
+
+#. translators: %s is the phpredis extension version.
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:169
+#, php-format
+msgid "phpredis loaded (version %s)."
+msgstr "phpredis caricato (versione %s)."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:174
+msgid "phpredis is NOT loaded — object cache cannot work."
+msgstr "phpredis NON è caricato: la cache a oggetti non può funzionare."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:178
+msgid "Environment"
+msgstr "Ambiente"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:197
+msgid "Unix scheme requires WP_REDIS_PATH, which is not defined."
+msgstr "Lo schema unix richiede WP_REDIS_PATH, che non è definito."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:200
+msgid "WP_REDIS_HOST not defined — connection will default to 127.0.0.1:6379."
+msgstr "WP_REDIS_HOST non è definito: la connessione utilizzerà 127.0.0.1:6379 in modo predefinito."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:204
+msgid "Redis constants (this request)"
+msgstr "Costanti Redis (questa richiesta)"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:247
+msgid "Redis connection constants are present in wp-config.php."
+msgstr "Le costanti di connessione Redis sono presenti in wp-config.php."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:251
+msgid "Redis connection constants are not all present in wp-config.php. They may be provisioned on enable, or supplied by the environment."
+msgstr "Non tutte le costanti di connessione Redis sono presenti in wp-config.php. Potrebbero essere fornite durante l'attivazione o dall'ambiente."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:256
+msgid "wp-config.php constants"
+msgstr "Costanti di wp-config.php"
+
+#. translators: %s is the configured Redis scheme (e.g. tcp).
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:285
+#, php-format
+msgid "WP_REDIS_PATH is set but WP_REDIS_SCHEME is \"%s\", so the socket path is ignored. Set the scheme to \"unix\" to connect via the socket."
+msgstr "WP_REDIS_PATH è impostato, ma WP_REDIS_SCHEME è \"%s\", quindi il percorso del socket viene ignorato. Imposta lo schema su \"unix\" per connetterti tramite il socket."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:290
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:298
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:323
+msgid "Socket / path checks"
+msgstr "Controlli socket/percorso"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:296
+msgid "Scheme is unix but the socket path is empty."
+msgstr "Lo schema è unix, ma il percorso del socket è vuoto."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:307
+msgid "Parent directory exists."
+msgstr "La directory superiore esiste."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:308
+msgid "Parent directory does not exist."
+msgstr "La directory superiore non esiste."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:311
+msgid "Parent directory is searchable by PHP."
+msgstr "La directory superiore è esplorabile da PHP."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:312
+msgid "Parent directory is NOT searchable by PHP (a common cause of \"file exists: no\")."
+msgstr "La directory superiore NON è esplorabile da PHP (una causa comune di \"file exists: no\")."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:315
+msgid "Socket file exists."
+msgstr "Il file socket esiste."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:316
+msgid "Socket file does NOT exist, or PHP cannot see it."
+msgstr "Il file socket NON esiste, oppure PHP non riesce a vederlo."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:319
+msgid "Socket file is readable by PHP."
+msgstr "Il file socket è leggibile da PHP."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:320
+msgid "Socket file is NOT readable by PHP."
+msgstr "Il file socket NON è leggibile da PHP."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:340
+msgid "Redis responded to PING (this is the same check used when enabling object cache)."
+msgstr "Redis ha risposto al PING (è lo stesso controllo usato durante l'attivazione della cache a oggetti)."
+
+#. translators: %s is the failure reason reported by Redis.
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:347
+#, php-format
+msgid "Redis PING failed: %s"
+msgstr "PING di Redis non riuscito: %s"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:348
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:439
+msgid "unknown error"
+msgstr "errore sconosciuto"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:351
+msgid "This is the failure that produces the REST error code \"redis_unreachable\"."
+msgstr "Questo è l'errore che produce il codice di errore REST \"redis_unreachable\"."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:359
+msgid "Live Redis connection test"
+msgstr "Test di connessione a Redis in tempo reale"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:376
+msgid "object-cache.php is missing (expected until object cache is enabled)."
+msgstr "object-cache.php è mancante (previsto finché la cache a oggetti non viene attivata)."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:378
+msgid "object-cache.php is the Newfold Redis drop-in."
+msgstr "object-cache.php è il drop-in Redis di Newfold."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:380
+msgid "object-cache.php exists but is NOT the Newfold drop-in (another plugin may own it)."
+msgstr "object-cache.php esiste, ma NON è il drop-in di Newfold (potrebbe appartenere a un altro plugin)."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:384
+msgid "Object cache is enabled and active."
+msgstr "La cache a oggetti è attivata e attiva."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:385
+msgid "Object cache is not currently active for this request."
+msgstr "La cache a oggetti non è attualmente attiva per questa richiesta."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:394
+msgid "Object cache drop-in"
+msgstr "Drop-in della cache a oggetti"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:411
+msgid "Install or enable the phpredis PHP extension."
+msgstr "Installa o attiva l'estensione PHP phpredis."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:418
+msgid "WP_REDIS_SCHEME is \"unix\" but WP_REDIS_PATH is empty or undefined. Set the socket path, or use a TCP host/port."
+msgstr "WP_REDIS_SCHEME è \"unix\", ma WP_REDIS_PATH è vuoto o non definito. Imposta il percorso del socket oppure usa un host/porta TCP."
+
+#. translators: %s is the Redis unix socket path.
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:422
+#, php-format
+msgid "PHP cannot access the Redis unix socket at %s. Hosting must fix socket permissions or provide a TCP host/port."
+msgstr "PHP non riesce ad accedere al socket unix di Redis in %s. L'hosting deve correggere i permessi del socket o fornire un host/porta TCP."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:432
+msgid "Another plugin's object-cache.php drop-in is active and is blocking object cache. Remove it (or disable that plugin) so the Newfold drop-in can be installed."
+msgstr "Il drop-in object-cache.php di un altro plugin è attivo e blocca la cache a oggetti. Rimuovilo (o disattiva quel plugin) affinché sia possibile installare il drop-in di Newfold."
+
+#. translators: %s is the failure reason reported by Redis.
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:438
+#, php-format
+msgid "Direct Redis connection failed: %s"
+msgstr "Connessione diretta a Redis non riuscita: %s"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:444
+msgid "WP_REDIS_DISABLED is true — object cache may be intentionally turned off."
+msgstr "WP_REDIS_DISABLED è true: la cache a oggetti potrebbe essere stata disattivata intenzionalmente."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:448
+msgid "All checks passed. Object cache should be able to connect to Redis."
+msgstr "Tutti i controlli sono stati superati. La cache a oggetti dovrebbe essere in grado di connettersi a Redis."
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:450
+msgid "Issues found:"
+msgstr "Problemi rilevati:"
+
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:460
+msgid "Diagnosis summary"
+msgstr "Riepilogo della diagnosi"
 
 #: includes/Cache/Types/ObjectCachePreflight.php:46
 msgid "Object cache cannot be enabled automatically right now."
@@ -145,21 +318,19 @@ msgstr "È richiesto un valore per l'esclusione della cache."
 msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
 msgstr "L'impostazione 'newfold_cache_exclusion' è stata aggiornata a: '%s'."
 
-#: includes/Fonts/FontSettings.php:56
-msgid "Settings for NFD Font Optimization."
-msgstr "Impostazioni per l'ottimizzazione dei font NFD."
+#. translators: %s is the comma-separated list of valid --format values.
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:74
+#, php-format
+msgid "Invalid value for --format. Use one of: %s."
+msgstr "Valore non valido per --format. Usa uno dei seguenti: %s."
 
-#: includes/Fonts/FontSettings.php:65
-msgid "Cloudflare-related font optimization settings."
-msgstr "Impostazioni di ottimizzazione dei font legate a Cloudflare."
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:131
+msgid "Object cache diagnostics passed."
+msgstr "Diagnosi della cache a oggetti superata."
 
-#: includes/Fonts/FontSettings.php:69
-msgid "Enable Cloudflare Font Optimization."
-msgstr "Abilita l'ottimizzazione dei font Cloudflare."
-
-#: includes/Fonts/FontSettings.php:83
-msgid "Timestamp of last update."
-msgstr "Timestamp dell'ultimo aggiornamento."
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:135
+msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
+msgstr "La diagnosi della cache a oggetti ha rilevato problemi. Consulta la sezione \"Riepilogo della diagnosi\" qui sopra."
 
 #: includes/HealthChecks/AutosaveIntervalHealthCheck.php:14
 msgid "Autosave Interval"
@@ -404,6 +575,12 @@ msgstr "Il CSS critico non è prioritario"
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 msgstr "Dare priorità al CSS critico può migliorare le prestazioni caricando prima il CSS più importante."
 
+#: includes/Helpers/HostingUapiClient.php:103
+#: includes/Helpers/HostingUapiClient.php:133
+#: includes/Helpers/HostingUapiClient.php:149
+msgid "Could not read object cache status right now."
+msgstr ""
+
 #. translators: %s: Time remaining
 #: includes/Images/ImageLimitBanner.php:56
 #: includes/Images/ImageService.php:80
@@ -493,69 +670,57 @@ msgstr "Non è riuscito a generare i metadati degli allegati."
 msgid "Unexpected response from Cloudflare Worker: HTTP %s"
 msgstr "Risposta inaspettata da Cloudflare Worker: HTTP %s"
 
-#: includes/Images/ImageSettings.php:89
+#: includes/Images/ImageSettings.php:68
 msgid "Settings for NFD Image Optimization."
 msgstr "Impostazioni per l'ottimizzazione dell'immagine NFD."
 
-#: includes/Images/ImageSettings.php:98
+#: includes/Images/ImageSettings.php:77
 msgid "Enable image optimization."
 msgstr "Abilita l'ottimizzazione dell'immagine."
 
-#: includes/Images/ImageSettings.php:103
+#: includes/Images/ImageSettings.php:82
 msgid "Prefer WebP format when it exists."
 msgstr "Preferisci il formato WebP quando esiste."
 
-#: includes/Images/ImageSettings.php:108
+#: includes/Images/ImageSettings.php:87
 msgid "Auto-optimized uploaded images settings."
 msgstr "Impostazioni delle immagini caricate automaticamente."
 
-#: includes/Images/ImageSettings.php:112
+#: includes/Images/ImageSettings.php:91
 msgid "Automatically optimize uploaded images."
 msgstr "Ottimizza automaticamente le immagini caricate."
 
-#: includes/Images/ImageSettings.php:117
+#: includes/Images/ImageSettings.php:96
 msgid "Delete the original uploaded image after optimization."
 msgstr "Elimina l'immagine caricata originale dopo l'ottimizzazione."
 
-#: includes/Images/ImageSettings.php:124
+#: includes/Images/ImageSettings.php:103
 msgid "Settings for lazy loading."
 msgstr "Impostazioni per caricamento lento."
 
-#: includes/Images/ImageSettings.php:128
+#: includes/Images/ImageSettings.php:107
 msgid "Enable lazy loading."
 msgstr "Abilita il caricamento pigro."
 
-#: includes/Images/ImageSettings.php:135
+#: includes/Images/ImageSettings.php:114
 msgid "Enable bulk optimization of images."
 msgstr "Abilita l'ottimizzazione in massa delle immagini."
 
-#: includes/Images/ImageSettings.php:140
+#: includes/Images/ImageSettings.php:119
 msgid "Indicates if the site is banned from image optimization."
 msgstr "Indica se il sito è bandito dall'ottimizzazione delle immagini."
 
-#: includes/Images/ImageSettings.php:145
+#: includes/Images/ImageSettings.php:124
 msgid "Monthly usage statistics for image optimization."
 msgstr "Statistiche mensili di utilizzo per l'ottimizzazione delle immagini."
 
-#: includes/Images/ImageSettings.php:149
+#: includes/Images/ImageSettings.php:128
 msgid "Number of requests made this month."
 msgstr "Numero di richieste fatte questo mese."
 
-#: includes/Images/ImageSettings.php:154
+#: includes/Images/ImageSettings.php:133
 msgid "Maximum allowed requests per month."
 msgstr "Richieste massime consentite al mese."
-
-#: includes/Images/ImageSettings.php:161
-msgid "Cloudflare-related image optimization options."
-msgstr "Opzioni di ottimizzazione delle immagini legate a Cloudflare."
-
-#: includes/Images/ImageSettings.php:165
-msgid "Enable Cloudflare Polish optimization."
-msgstr "Abilita l'ottimizzazione Cloudflare Polish."
-
-#: includes/Images/ImageSettings.php:180
-msgid "Enable Cloudflare Mirage optimization."
-msgstr "Abilita l'ottimizzazione di Cloudflare Mirage."
 
 #: includes/Images/RestApi/ImagesController.php:60
 msgid "The ID of the media item to optimize."
@@ -668,25 +833,25 @@ msgstr "CLI Newfold: percentuali invalidi forniti a NFD_WPCLI::add_command()."
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "CLI-Fi Newfold: La classe handler %s non esiste."
 
-#: includes/Performance.php:232
+#: includes/Performance.php:230
 msgid "Caching"
 msgstr "Cache"
 
-#: includes/Performance.php:241
+#: includes/Performance.php:239
 msgid "Purge All"
 msgstr "Purifica Tutto"
 
-#: includes/Performance.php:251
+#: includes/Performance.php:249
 msgid "Purge This Page"
 msgstr "Elimina questa pagina"
 
-#: includes/Performance.php:262
+#: includes/Performance.php:260
 msgid "Cache Settings"
 msgstr "Impostazioni della cache"
 
-#: includes/Performance.php:278
-#: includes/Performance.php:279
-#: includes/Performance.php:305
+#: includes/Performance.php:276
+#: includes/Performance.php:277
+#: includes/Performance.php:303
 #: build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Prestazioni"
@@ -877,46 +1042,6 @@ msgid "Cache cleared"
 msgstr "Cache svuotata"
 
 #: build/performance/performance.min.js:2
-msgid "Font Optimization"
-msgstr "Ottimizzazione dei font"
-
-#: build/performance/performance.min.js:2
-msgid "Improve load times by replacing Google Fonts with optimized local versions."
-msgstr "Migliora i tempi di caricamento sostituendo Google Fonts con versioni locali ottimizzate."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Fonts via Cloudflare"
-msgstr "Ottimizza i font via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Replaces Google Fonts with faster, privacy-friendly versions served locally."
-msgstr "Sostituisce Google Fonts con versioni locali più veloci e rispettose della privacy."
-
-#: build/performance/performance.min.js:2
-msgid "Loading font optimization settings…"
-msgstr "Caricamento impostazioni ottimizzazione font…"
-
-#: build/performance/performance.min.js:2
-msgid "Error loading settings."
-msgstr "Errore nel caricamento delle impostazioni."
-
-#: build/performance/performance.min.js:2
-msgid "Fonts optimization updated"
-msgstr "Ottimizzazione dei font aggiornata"
-
-#: build/performance/performance.min.js:2
-msgid "Font optimization setting saved successfully."
-msgstr "Impostazione di ottimizzazione dei font salvata con successo."
-
-#: build/performance/performance.min.js:2
-msgid "Update failed"
-msgstr "Aggiornamento fallito"
-
-#: build/performance/performance.min.js:2
-msgid "Could not save font optimization setting."
-msgstr "Impossibile salvare l’impostazione di ottimizzazione dei font."
-
-#: build/performance/performance.min.js:2
 msgid "Image Optimization"
 msgstr "Ottimizzazione delle immagini"
 
@@ -1015,22 +1140,6 @@ msgstr "Errore durante l'aggiornamento delle impostazioni"
 #: build/performance/performance.min.js:2
 msgid "Something went wrong while updating the settings. Please try again."
 msgstr "Qualcosa è andato storto durante l'aggiornamento delle impostazioni. Per favore riprova."
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Images via Cloudflare"
-msgstr "Ottimizza le immagini via Cloudflare"
-
-#: build/performance/performance.min.js:2
-msgid "Enables Cloudflare's image compression to reduce load times and bandwidth usage."
-msgstr "Attiva la compressione delle immagini di Cloudflare per ridurre tempi di caricamento e banda."
-
-#: build/performance/performance.min.js:2
-msgid "Improve Image Loading on Slow Connections"
-msgstr "Migliora il caricamento delle immagini su connessioni lente"
-
-#: build/performance/performance.min.js:2
-msgid "Cloudflare Mirage accelerates image loading for mobile and slow networks."
-msgstr "Cloudflare Mirage accelera il caricamento delle immagini su reti mobili e lente."
 
 #: build/performance/performance.min.js:2
 msgid "Advanced settings"

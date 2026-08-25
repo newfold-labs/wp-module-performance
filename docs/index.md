@@ -17,6 +17,7 @@ Documentation for wp-module-performance, for **humans** and **AI agents**. Start
 | [getting-started.md](getting-started.md) | Prerequisites, install, and tests. |
 | [integration.md](integration.md) | How the module registers and integrates with htaccess/installer. |
 | [development.md](development.md) | Lint, test, and workflow. |
+| [wp-cli.md](wp-cli.md) | The `wp nfd performance` WP-CLI commands. |
 | [dependencies.md](dependencies.md) | Composer dependencies. |
 | [release.md](release.md) | Release process: use the Newfold Prepare Release workflow. |
 

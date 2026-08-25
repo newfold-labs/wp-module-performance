@@ -36,13 +36,6 @@ const { fancyLog } = utils;
 /** Plugin ID from environment */
 export const pluginId = process.env.PLUGIN_ID || 'bluehost';
 
-/** Cloudflare feature hashes for .htaccess rule identification */
-export const CLOUDFLARE_HASHES = {
-  fonts: '04d3b602',
-  mirage: '63a6825d',
-  polish: '27cab0f2',
-};
-
 /** Common selectors used across performance tests */
 export const SELECTORS = {
   // Page container
@@ -60,11 +53,6 @@ export const SELECTORS = {
   linkPrefetchBehaviorDropdown: '[data-cy="link-prefetch-behavior-desktop"] .nfd-select__button-label',
   linkPrefetchDropdownOptions: '[data-cy="link-prefetch-behavior-desktop"] .nfd-select__options > .nfd-select__option',
   linkPrefetchDesktopToggle: '[data-cy="link-prefetch-active-desktop-toggle"]',
-
-  // Cloudflare toggles
-  cloudflareFontsToggle: '[data-id="cloudflare-fonts"]',
-  cloudflareMirageToggle: '[data-id="cloudflare-mirage"]',
-  cloudflarePolishToggle: '[data-id="cloudflare-polish"]',
 
   // Notifications
   notifications: '.nfd-notifications',
@@ -234,15 +222,6 @@ async function runWpCli(command) {
   };
 }
 
-function toPhpArray(capabilities) {
-  return Object.entries(capabilities)
-    .map(([key, value]) => {
-      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
-      return `'${key}' => ${phpValue}`;
-    })
-    .join(', ');
-}
-
 async function verifySiteCapabilities(expectedCapabilities) {
   const result = await runWpCli('option get _transient_nfd_site_capabilities --format=json');
   if (!result.ok) {
@@ -279,9 +258,9 @@ async function verifySiteCapabilities(expectedCapabilities) {
 // ============================================================================
 
 /**
- * Set site capabilities transient using PHP eval
+ * Set site capabilities transient using the plugin's shared setCapability helper
  * @param {Object} capabilities - Object with capability key-value pairs
- * @example setSiteCapabilities({ hasCloudflareFonts: true, hasLinkPrefetchClick: true })
+ * @example setSiteCapabilities({ hasLinkPrefetchClick: true, hasLinkPrefetchHover: false })
  */
 export async function setSiteCapabilities(capabilities) {
   return setSiteCapabilitiesWithRetry(capabilities);
@@ -291,21 +270,22 @@ export async function setSiteCapabilitiesWithRetry(
   capabilities,
   retries = DEFAULT_CAPABILITY_RETRIES,
 ) {
-  const phpArray = toPhpArray(capabilities);
   let lastReason = '';
 
   for (let attempt = 1; attempt <= retries; attempt += 1) {
-    const setResult = await runWpCli(
-      `eval "set_transient('nfd_site_capabilities', array(${phpArray}), 4 * HOUR_IN_SECONDS);"`,
-    );
-    if (!setResult.ok) {
-      lastReason = setResult.output;
-    } else {
+    try {
+      // Delegate to the plugin's shared helper so the canAccessAI marker
+      // requirement (wp-module-data SiteCapabilities::is_valid_capabilities(),
+      // see newfold-labs/wp-module-data#285) is handled in one place instead
+      // of being duplicated in every module's own test helper.
+      await newfold.setCapability(capabilities);
       const verify = await verifySiteCapabilities(capabilities);
       if (verify.ok) {
         return { ok: true, reason: '' };
       }
       lastReason = verify.reason;
+    } catch (error) {
+      lastReason = error?.message || String(error);
     }
 
     fancyLog(
@@ -346,14 +326,7 @@ export async function clearSiteCapabilities() {
 }
 
 /**
- * Clear font optimization option
- */
-export async function clearFontOptimizationOption() {
-  await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
-}
-
-/**
- * Clear image optimization option (used by Mirage and Polish)
+ * Clear image optimization option
  */
 export async function clearImageOptimizationOption() {
   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
@@ -391,52 +364,22 @@ export async function readHtaccess() {
 // ============================================================================
 
 /**
- * Assert that .htaccess contains the expected Cloudflare optimization rule
- * Includes retry logic since .htaccess may be written asynchronously
- * @param {string} hash - The hash identifier for the rule (use CLOUDFLARE_HASHES)
- * @param {number} retries - Number of retry attempts (default: 3)
+ * Fetch the site front page as a raw HTTP response (no JS execution).
+ *
+ * Uses Playwright's request context so it runs host-side against the configured
+ * baseURL and follows WordPress's canonical redirect to the real home URL.
+ *
+ * @param {import('@playwright/test').Page} page
+ * @returns {Promise<{ status: number, body: string, setCookies: string[] }>}
  */
-export async function assertHtaccessHasRule(hash, retries = 8) {
-  let htaccess = '';
-
-  for (let i = 0; i < retries; i++) {
-    htaccess = await readHtaccess();
-    if (
-      htaccess.includes(hash) &&
-      htaccess.includes('# BEGIN Newfold CF Optimization Header')
-    ) {
-      expect(htaccess).toContain('# BEGIN Newfold CF Optimization Header');
-      expect(htaccess).toContain('# END Newfold CF Optimization Header');
-      expect(htaccess).toContain('nfd-enable-cf-opt');
-      expect(htaccess).toContain(hash);
-      expect(htaccess).toContain('Set-Cookie "nfd-enable-cf-opt=');
-      return;
-    }
-    if (i < retries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-
-  expect(htaccess).toContain(hash);
-}
-
-/**
- * Assert that .htaccess does NOT contain the expected rule (retries: rules are removed async).
- * @param {string} hash - The hash identifier for the rule (use CLOUDFLARE_HASHES)
- * @param {number} retries
- */
-export async function assertHtaccessHasNoRule(hash, retries = 8) {
-  for (let i = 0; i < retries; i++) {
-    const htaccess = await readHtaccess();
-    if (!htaccess.includes(hash)) {
-      return;
-    }
-    if (i < retries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-  const htaccess = await readHtaccess();
-  expect(htaccess).not.toContain(hash);
+export async function fetchHomepage(page) {
+  const response = await page.request.get('/');
+  const body = await response.text();
+  const setCookies = response
+    .headersArray()
+    .filter((h) => h.name.toLowerCase() === 'set-cookie')
+    .map((h) => h.value);
+  return { status: response.status(), body, setCookies };
 }
 
 /**
@@ -453,57 +396,6 @@ export async function expectNotification(page, text) {
 // ============================================================================
 // UI INTERACTION HELPERS
 // ============================================================================
-
-/**
- * Get Cloudflare toggle locator by type
- * @param {import('@playwright/test').Page} page
- * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
- * @returns {import('@playwright/test').Locator}
- */
-export function getCloudflareToggle(page, type) {
-  const selectors = {
-    fonts: SELECTORS.cloudflareFontsToggle,
-    mirage: SELECTORS.cloudflareMirageToggle,
-    polish: SELECTORS.cloudflarePolishToggle,
-  };
-  return page.locator(selectors[type]);
-}
-
-/**
- * Verify Cloudflare toggle exists and has expected state
- * @param {import('@playwright/test').Page} page
- * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
- * @param {'true' | 'false'} expectedState - Expected aria-checked value
- */
-export async function verifyCloudflareToggleState(page, type, expectedState) {
-  const toggle = getCloudflareToggle(page, type);
-  await expect(toggle).toBeVisible({ timeout: 20000 });
-  await expect(toggle).toHaveAttribute('aria-checked', expectedState, {
-    timeout: 20000,
-  });
-}
-
-/**
- * Toggle a Cloudflare feature on or off. Avoids `networkidle` (unreliable in wp-admin);
- * relies on attribute assertion and a short delay for async .htaccess writes.
- * @param {import('@playwright/test').Page} page
- * @param {'fonts' | 'mirage' | 'polish'} type - Toggle type
- * @param {boolean} enable - Whether to enable (true) or disable (false)
- */
-export async function setCloudflareToggle(page, type, enable) {
-  const toggle = getCloudflareToggle(page, type);
-  const currentState = await toggle.getAttribute('aria-checked');
-  const wantEnabled = enable ? 'true' : 'false';
-
-  if (currentState !== wantEnabled) {
-    await toggle.click();
-  }
-  await expect(toggle).toHaveAttribute('aria-checked', wantEnabled, {
-    timeout: 20000,
-  });
-  await page.waitForLoadState('load').catch(() => { });
-  await new Promise((resolve) => setTimeout(resolve, 400));
-}
 
 /**
  * Verify Link Prefetch section is displayed

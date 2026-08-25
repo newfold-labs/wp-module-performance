@@ -1,0 +1,45 @@
+name: 'Validate Built CSS Assets'
+
+on:
+  push:
+    paths:
+      - 'build/**/*.css'
+      - 'scripts/validate-build-css.mjs'
+      - '.github/workflows/validate-build-css.yml'
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - 'build/**/*.css'
+      - 'scripts/validate-build-css.mjs'
+      - '.github/workflows/validate-build-css.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate-css:
+    name: Parse and validate built CSS
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Validate built CSS assets
+        run: npm run lint:css-build

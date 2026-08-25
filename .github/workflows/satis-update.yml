@@ -13,7 +13,7 @@ jobs:
   webhook:
     name: Send Webhook
     runs-on: ubuntu-latest
-    permissions: {} # Steps use only secrets.WEBHOOK_TOKEN for repository-dispatch; the default GITHUB_TOKEN is not used against the GitHub API.
+    permissions: {} # No checkout; the dispatch uses secrets.WEBHOOK_TOKEN, not GITHUB_TOKEN.
     timeout-minutes: 10
     steps:
 

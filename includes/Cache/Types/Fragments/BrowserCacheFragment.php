@@ -33,7 +33,7 @@ final class BrowserCacheFragment implements Fragment {
 	private $marker_label;
 
 	/**
-	 * Current cache level (1–3). Level 0 is handled by unregistering the fragment.
+	 * Current cache level (0–3). Level 0 renders an explicit off switch.
 	 *
 	 * @var int
 	 */
@@ -48,18 +48,27 @@ final class BrowserCacheFragment implements Fragment {
 	private $exclusion_pattern;
 
 	/**
+	 * Site base path (parsed from home_url('/')).
+	 *
+	 * @var string
+	 */
+	private $base_path;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $id                Unique fragment ID.
 	 * @param string $marker_label      Marker label for readability in the file.
-	 * @param int    $cache_level       Cache level (1–3). Higher = longer TTLs.
+	 * @param int    $cache_level       Cache level (0–3). Higher = longer TTLs.
 	 * @param string $exclusion_pattern Pipe-separated pattern to exclude, or empty string.
+	 * @param string $base_path         Site base path from home_url('/'), e.g. "/".
 	 */
-	public function __construct( $id, $marker_label, $cache_level, $exclusion_pattern = '' ) {
+	public function __construct( $id, $marker_label, $cache_level, $exclusion_pattern = '', $base_path = '/' ) {
 		$this->id                = (string) $id;
 		$this->marker_label      = (string) $marker_label;
 		$this->cache_level       = (int) $cache_level;
 		$this->exclusion_pattern = (string) $exclusion_pattern;
+		$this->base_path         = (string) $base_path;
 	}
 
 	/**
@@ -92,7 +101,7 @@ final class BrowserCacheFragment implements Fragment {
 
 	/**
 	 * Whether this fragment is enabled for the given context.
-	 * Upper-layer logic (Browser::maybeAddRules) registers/unregisters this,
+	 * Upper-layer logic (Browser::maybeAddRules) decides what gets registered,
 	 * so this always returns true once instantiated.
 	 *
 	 * @param Context $context Context snapshot (unused).
@@ -109,6 +118,22 @@ final class BrowserCacheFragment implements Fragment {
 	 * @return string Rendered fragment text including BEGIN/END comments.
 	 */
 	public function render( $context ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+		// Level 0 still renders a block. Leaving the file empty of one would let a
+		// site in a subdirectory inherit the parent directory's mod_expires rules,
+		// so the off state is written out rather than implied by an absence.
+		if ( $this->cache_level < 1 ) {
+			return implode(
+				"\n",
+				array(
+					'# BEGIN ' . $this->marker_label,
+					'<IfModule mod_expires.c>',
+					"\tExpiresActive Off",
+					'</IfModule>',
+					'# END ' . $this->marker_label,
+				)
+			);
+		}
+
 		$expirations = Browser::getFileTypeExpirations( $this->cache_level );
 
 		$lines   = array();
@@ -127,21 +152,63 @@ final class BrowserCacheFragment implements Fragment {
 		$lines[] = '</IfModule>';
 
 		// Optional cache-exclusion rules.
+
+		/*
+		* Clear both Apache response-header tables. "always" is not a
+		* superset of "onsuccess" for existing headers, so both are
+		* cleared to prevent conflicting cache headers from surviving.
+		*/
 		if ( '' !== $this->exclusion_pattern ) {
-			$lines[] = '<IfModule mod_rewrite.c>';
-			$lines[] = 'RewriteEngine On';
-			$lines[] = "RewriteCond %{REQUEST_URI} ^/({$this->exclusion_pattern}) [NC]";
+			$condition = $this->get_exclusion_condition();
+
 			$lines[] = '<IfModule mod_headers.c>';
-			$lines[] = 'Header set Cache-Control "no-cache, no-store, must-revalidate"';
-			$lines[] = 'Header set Pragma "no-cache"';
-			$lines[] = 'Header set Expires 0';
-			$lines[] = '</IfModule>';
+
+			$lines[] = 'Header onsuccess unset Cache-Control ' . $condition;
+			$lines[] = 'Header always unset Cache-Control ' . $condition;
+
+			$lines[] = 'Header onsuccess unset Expires ' . $condition;
+			$lines[] = 'Header always unset Expires ' . $condition;
+
+			$lines[] = 'Header onsuccess unset Pragma ' . $condition;
+			$lines[] = 'Header always unset Pragma ' . $condition;
+
+			$lines[] = 'Header always set Cache-Control "no-cache, no-store, must-revalidate" ' . $condition;
+			$lines[] = 'Header always set Pragma "no-cache" ' . $condition;
+
 			$lines[] = '</IfModule>';
 		}
 
 		$lines[] = '# END ' . $this->marker_label;
 
 		return implode( "\n", $lines );
+	}
+
+	/**
+	 * Build the Apache expression used for browser-cache exclusions.
+	 *
+	 * THE_REQUEST covers raw request lines, while REQUEST_URI covers URL-decoded
+	 * paths. Using both ensures exclusions apply to encoded request paths.
+	 *
+	 * The site base path supports WordPress installations in a subdirectory.
+	 * Trailing boundaries prevent "team" from matching paths such as
+	 * "team-available".
+	 *
+	 * @return string
+	 */
+	private function get_exclusion_condition() {
+		$base_path   = trim( $this->base_path, '/' );
+		$path_prefix = '' !== $base_path ? preg_quote( $base_path, '#' ) . '/' : '';
+
+		$the_request_pattern = '^[A-Z]+[[:space:]]+/' . $path_prefix . '('
+			. $this->exclusion_pattern
+			. ')(/|\?|[[:space:]])';
+		$request_uri_pattern = '^/' . $path_prefix . '('
+			. $this->exclusion_pattern
+			. ')(/|\?|$)';
+
+		return '"expr=( %{THE_REQUEST} =~ m#' . $the_request_pattern
+			. '#i || %{REQUEST_URI} =~ m#' . $request_uri_pattern
+			. '#i )"';
 	}
 
 	/**

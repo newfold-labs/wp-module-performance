@@ -62,6 +62,65 @@ class File extends CacheBase implements Purgeable {
 
 		add_action( 'init', array( $this, 'maybeGeneratePageCache' ) );
 		add_action( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
+
+		// Re-render on boot so the persisted block keeps up with the current code.
+		//
+		// admin_init only, with no cron counterpart to the browser cache one.
+		// addRules() calls get_home_path() directly, which is undefined until
+		// wp-admin/includes/file.php loads and reads SCRIPT_FILENAME, so it only
+		// gives the right answer on an actual admin request.
+		add_action( 'admin_init', array( __CLASS__, 'maybe_bootstrap_register' ), 20 );
+	}
+
+	/**
+	 * Decide whether this request should re-render the fragment.
+	 *
+	 * Skips admin-ajax, where heartbeat would otherwise run this every few
+	 * seconds for no reason. An ordinary admin page load picks up any change.
+	 *
+	 * @return void
+	 */
+	public static function maybe_bootstrap_register() {
+		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+			return;
+		}
+
+		// A network shares one .htaccess, but the cache level and the base path
+		// baked into the rules are per site. Re-rendering here would make each
+		// site rewrite the file with its own values and undo the last one, so
+		// multisite keeps to the existing setting-change path.
+		if ( is_multisite() ) {
+			return;
+		}
+
+		self::bootstrap_register();
+	}
+
+	/**
+	 * Re-render the fragment so the saved state matches what this version renders.
+	 *
+	 * Without this the block is only rebuilt when a setting changes or the plugin
+	 * is activated, so a rule change shipped in an update never reaches sites that
+	 * are already running. The same applies to the base path in the rules, which
+	 * goes stale when home_url changes.
+	 *
+	 * Api::register only queues a write when the rendered body actually differs,
+	 * so this costs nothing once a site is in sync.
+	 *
+	 * @return void
+	 */
+	public static function bootstrap_register() {
+		$brand       = getContainer()->plugin()->brand;
+		$cache_level = get_cache_level();
+
+		// Same conditions as maybeAddRules(). Only registration happens here:
+		// unregistering queues a write whether or not anything changed, so
+		// removal stays with the option listeners.
+		if ( absint( $cache_level ) <= 1 || 'bluehost' === $brand || 'hostgator' === $brand ) {
+			return;
+		}
+
+		self::addRules();
 	}
 
 	/**

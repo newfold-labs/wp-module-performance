@@ -61,6 +61,78 @@ class Browser extends CacheBase {
 		new OptionListener( CacheExclusion::OPTION_CACHE_EXCLUSION, array( __CLASS__, 'exclusionChange' ) );
 
 		add_filter( 'newfold_update_htaccess', array( $this, 'on_rewrite' ) );
+
+		// Re-render on boot so the persisted block keeps up with the current code.
+		//
+		// admin_init rather than init: registering ends up requiring
+		// wp-admin/includes/file.php, and on an admin request that file is only
+		// loaded at global scope after init has run. Pulling it in earlier would
+		// scope the globals it defines to the function that required it.
+		add_action( 'admin_init', array( __CLASS__, 'maybe_bootstrap_register' ), 20 );
+
+		// Cron never reaches admin_init, so it needs its own entry point.
+		add_action( 'init', array( __CLASS__, 'maybe_bootstrap_register_on_cron' ), 5 );
+	}
+
+	/**
+	 * Re-render on cron, where admin_init never fires.
+	 *
+	 * Sites nobody signs into still need to pick up a rule change, and the cron
+	 * request is the only other context that can write safely. WP-CLI is left
+	 * out on purpose: the writer resolves the .htaccess path from
+	 * SCRIPT_FILENAME, which points at the wp binary there.
+	 *
+	 * @return void
+	 */
+	public static function maybe_bootstrap_register_on_cron() {
+		if ( ! function_exists( 'wp_doing_cron' ) || ! wp_doing_cron() ) {
+			return;
+		}
+
+		self::maybe_bootstrap_register();
+	}
+
+	/**
+	 * Decide whether this request should re-render the fragment.
+	 *
+	 * Re-rendering costs a couple of option reads and a string compare, so it is
+	 * kept off the hot paths. Front-end and REST requests never get here, and
+	 * admin-ajax is skipped because heartbeat would otherwise run this every few
+	 * seconds for no reason. An ordinary admin page load picks up any change.
+	 *
+	 * @return void
+	 */
+	public static function maybe_bootstrap_register() {
+		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+			return;
+		}
+
+		// A network shares one .htaccess, but the cache level and the base path
+		// baked into the rules are per site. Re-rendering here would make each
+		// site rewrite the file with its own values and undo the last one, so
+		// multisite keeps to the existing setting-change path.
+		if ( is_multisite() ) {
+			return;
+		}
+
+		self::bootstrap_register();
+	}
+
+	/**
+	 * Re-render the fragment so the saved state matches what this version renders.
+	 *
+	 * Without this the block is only rebuilt when a setting changes or the plugin
+	 * is activated, so a rule change shipped in an update never reaches sites that
+	 * are already running. The same applies to the base path in the rules, which
+	 * goes stale when home_url changes.
+	 *
+	 * Api::register only queues a write when the rendered body actually differs,
+	 * so this costs nothing once a site is in sync.
+	 *
+	 * @return void
+	 */
+	public static function bootstrap_register() {
+		self::addRules( get_cache_level() );
 	}
 
 	/**
@@ -82,17 +154,40 @@ class Browser extends CacheBase {
 	}
 
 	/**
-	 * Determine whether to add or remove rules based on caching level.
+	 * Register the fragment for the given caching level.
+	 *
+	 * Level 0 registers as well. Dropping the block instead would leave a site in
+	 * a subdirectory inheriting the parent directory's mod_expires rules, so the
+	 * off state gets written out rather than implied by an absence.
 	 *
 	 * @param int|null $cache_level The caching level.
 	 * @return void
 	 */
 	public static function maybeAddRules( $cache_level ) {
-		absint( $cache_level ) > 0 ? self::addRules( $cache_level ) : self::removeRules();
+		// A deleted option reaches the listener as null. The rest of the module
+		// reads that case through get_cache_level(), which has a default, so the
+		// absence is resolved the same way here instead of counting as a zero.
+		if ( null === $cache_level ) {
+			$cache_level = get_cache_level();
+		}
+
+		// One .htaccess serves the whole network, so an off switch written for
+		// one site turns mod_expires off for all of them, and the boot re-render
+		// skips multisite so nothing would put it back. Removal is what a network
+		// has always done at level 0, so it keeps doing that.
+		if ( absint( $cache_level ) < 1 && is_multisite() ) {
+			self::removeRules();
+			return;
+		}
+
+		self::addRules( $cache_level );
 	}
 
 	/**
-	 * Remove our rules by unregistering the fragment.
+	 * Take our rules out of the file entirely by unregistering the fragment.
+	 *
+	 * Used on deactivation, where leaving anything behind would be wrong. Turning
+	 * caching off is a setting rather than a removal and goes through addRules().
 	 *
 	 * @return void
 	 */
@@ -103,12 +198,13 @@ class Browser extends CacheBase {
 	/**
 	 * Add (or replace) our rules by registering a fragment.
 	 *
-	 * @param int $cache_level The caching level (1–3).
+	 * @param int|null $cache_level The caching level (0–3).
 	 * @return void
 	 */
 	public static function addRules( $cache_level ) {
 
-		// Build exclusion pattern (same logic as before).
+		// Build the site base path and exclusion pattern.
+		$base_path         = (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH );
 		$exclusion_pattern = '';
 		$cache_exclusion   = get_cache_exclusion();
 
@@ -123,7 +219,8 @@ class Browser extends CacheBase {
 				self::FRAGMENT_ID,
 				self::MARKER,
 				absint( $cache_level ),
-				$exclusion_pattern
+				$exclusion_pattern,
+				$base_path
 			),
 			true // queue apply
 		);

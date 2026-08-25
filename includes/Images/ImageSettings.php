@@ -19,11 +19,11 @@ class ImageSettings {
 	private $default_settings = array();
 
 	/**
-	 * Constructor to initialize the settings and the listener.
+	 * Returns the default image optimization settings.
 	 *
-	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
+	 * @return array
 	 */
-	private static function get_default_settings( $container = null ) {
+	private static function get_default_settings() {
 		$default = array(
 			'enabled'                            => true,
 			'bulk_optimization'                  => true,
@@ -40,28 +40,7 @@ class ImageSettings {
 				'monthlyRequestCount' => 0,
 				'maxRequestsPerMonth' => 100000,
 			),
-			'cloudflare'                         => array(
-				'polish' => array(
-					'value'    => false,
-					'user_set' => false,
-				),
-				'mirage' => array(
-					'value'    => false,
-					'user_set' => false,
-				),
-			),
 		);
-
-		// Override with capability-aware defaults
-		if (
-		null !== $container &&
-		$container->has( 'capabilities' )
-		) {
-			$capabilities = $container->get( 'capabilities' );
-
-			$default['cloudflare']['polish']['value'] = (bool) $capabilities->get( 'hasCloudflarePolish' );
-			$default['cloudflare']['mirage']['value'] = (bool) $capabilities->get( 'hasCloudflareMirage' );
-		}
 
 		return $default;
 	}
@@ -72,7 +51,7 @@ class ImageSettings {
 	 * @param \NewfoldLabs\WP\Container\Container $container Dependency injection container.
 	 */
 	public function __construct( $container ) {
-		$this->default_settings = self::get_default_settings( $container );
+		$this->default_settings = self::get_default_settings();
 		$this->register_settings( $container );
 		$this->initialize_settings();
 	}
@@ -156,42 +135,6 @@ class ImageSettings {
 									),
 								),
 							),
-							'cloudflare'        => array(
-								'type'        => 'object',
-								'description' => __( 'Cloudflare-related image optimization options.', 'wp-module-performance' ),
-								'properties'  => array(
-									'polish' => array(
-										'type'        => 'object',
-										'description' => __( 'Enable Cloudflare Polish optimization.', 'wp-module-performance' ),
-										'properties'  => array(
-											'value'    => array(
-												'type'    => 'boolean',
-												'default' => $this->default_settings['cloudflare']['polish']['value'],
-											),
-											'user_set' => array(
-												'type'    => 'boolean',
-												'default' => false,
-												'description' => 'Whether the value was explicitly set by the user.',
-											),
-										),
-									),
-									'mirage' => array(
-										'type'        => 'object',
-										'description' => __( 'Enable Cloudflare Mirage optimization.', 'wp-module-performance' ),
-										'properties'  => array(
-											'value'    => array(
-												'type'    => 'boolean',
-												'default' => $this->default_settings['cloudflare']['mirage']['value'],
-											),
-											'user_set' => array(
-												'type'    => 'boolean',
-												'default' => false,
-												'description' => 'Whether the value was explicitly set by the user.',
-											),
-										),
-									),
-								),
-							),
 						),
 						'additionalProperties' => false,
 					),
@@ -240,82 +183,8 @@ class ImageSettings {
 				'monthlyRequestCount' => isset( $settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $settings['monthly_usage']['monthlyRequestCount'] : ( isset( $existing_settings['monthly_usage']['monthlyRequestCount'] ) ? (int) $existing_settings['monthly_usage']['monthlyRequestCount'] : 0 ),
 				'maxRequestsPerMonth' => isset( $settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $settings['monthly_usage']['maxRequestsPerMonth'] : ( isset( $existing_settings['monthly_usage']['maxRequestsPerMonth'] ) ? (int) $existing_settings['monthly_usage']['maxRequestsPerMonth'] : 100000 ),
 			),
-			'cloudflare'                         => array(
-				'polish' => array(
-					'value'    => isset( $settings['cloudflare']['polish']['value'] )
-						? (bool) $settings['cloudflare']['polish']['value']
-						: (bool) ( $existing_settings['cloudflare']['polish']['value'] ?? false ),
-					'user_set' => isset( $settings['cloudflare']['mirage']['user_set'] )
-					? (bool) $settings['cloudflare']['mirage']['user_set']
-					: (bool) ( $existing_settings['cloudflare']['mirage']['user_set'] ?? false ),
-				),
-				'mirage' => array(
-					'value'    => isset( $settings['cloudflare']['mirage']['value'] )
-					? (bool) $settings['cloudflare']['mirage']['value']
-					: (bool) ( $existing_settings['cloudflare']['mirage']['value'] ?? false ),
-					'user_set' => isset( $settings['cloudflare']['mirage']['user_set'] )
-					? (bool) $settings['cloudflare']['mirage']['user_set']
-					: (bool) ( $existing_settings['cloudflare']['mirage']['user_set'] ?? false ),
-				),
-			),
 		);
 	}
-
-	/**
-	 * Refreshes legacy settings with Cloudflare feature flags based on capabilities.
-	 *
-	 * @param object|null $capabilities Capabilities object (optional).
-	 */
-	public static function maybe_refresh_with_capabilities( $capabilities ) {
-		$settings = get_option( self::SETTING_KEY, array() );
-
-		// If the option doesn't exist or is empty, use default settings
-		if ( empty( $settings ) || ! is_array( $settings ) ) {
-			$settings = self::get_default_settings();
-		}
-
-		if ( ! isset( $settings['cloudflare']['polish'] ) || ! is_array( $settings['cloudflare']['polish'] ) ) {
-			$settings['cloudflare']['polish'] = array(
-				'value'    => false,
-				'user_set' => false,
-			);
-		}
-		if ( ! isset( $settings['cloudflare']['mirage'] ) || ! is_array( $settings['cloudflare']['mirage'] ) ) {
-			$settings['cloudflare']['mirage'] = array(
-				'value'    => false,
-				'user_set' => false,
-			);
-		}
-
-		if ( is_array( $capabilities ) ) {
-			$has_polish = isset( $capabilities['hasCloudflarePolish'] ) ? (bool) $capabilities['hasCloudflarePolish'] : false;
-			$has_mirage = isset( $capabilities['hasCloudflareMirage'] ) ? (bool) $capabilities['hasCloudflareMirage'] : false;
-
-			// Polish
-			if ( $settings['cloudflare']['polish']['user_set'] ) {
-				if ( $settings['cloudflare']['polish']['value'] && ! $has_polish ) {
-					// User enabled but capability is gone — disable it
-					$settings['cloudflare']['polish']['value'] = false;
-				}
-			} elseif ( ! $settings['cloudflare']['polish']['value'] && $has_polish ) {
-					// Not user set — follow capability
-				$settings['cloudflare']['polish']['value'] = true;
-
-			}
-
-			// Mirage
-			if ( $settings['cloudflare']['mirage']['user_set'] ) {
-				if ( $settings['cloudflare']['mirage']['value'] && ! $has_mirage ) {
-					$settings['cloudflare']['mirage']['value'] = false;
-				}
-			} elseif ( ! $settings['cloudflare']['mirage']['value'] && $has_mirage ) {
-					$settings['cloudflare']['mirage']['value'] = true;
-			}
-		}
-
-		update_option( self::SETTING_KEY, $settings );
-	}
-
 
 	/**
 	 * Checks if image optimization is enabled.
@@ -451,27 +320,5 @@ class ImageSettings {
 		$instance           = new self( $container );
 		$sanitized_settings = $instance->sanitize_settings( $settings );
 		return update_option( self::SETTING_KEY, $sanitized_settings );
-	}
-
-	/**
-	 * Checks if Cloudflare Polish is enabled.
-	 *
-	 * @return bool True if Polish is enabled, false otherwise.
-	 */
-	public static function is_cloudflare_polish_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
-
-		return ! empty( $settings['cloudflare']['polish'] );
-	}
-
-	/**
-	 * Checks if Cloudflare Mirage is enabled.
-	 *
-	 * @return bool True if Mirage is enabled, false otherwise.
-	 */
-	public static function is_cloudflare_mirage_enabled() {
-		$settings = get_option( self::SETTING_KEY, self::get_default_settings() );
-
-		return ! empty( $settings['cloudflare']['mirage'] );
 	}
 }

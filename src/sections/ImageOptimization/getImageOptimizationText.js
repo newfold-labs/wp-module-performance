@@ -107,22 +107,6 @@ const getImageOptimizationText = () => ( {
 		'Something went wrong while updating the settings. Please try again.',
 		'wp-module-performance'
 	),
-	imageOptimizationPolishLabel: __(
-		'Optimize Images via Cloudflare',
-		'wp-module-performance'
-	),
-	imageOptimizationPolishDescription: __(
-		"Enables Cloudflare's image compression to reduce load times and bandwidth usage.",
-		'wp-module-performance'
-	),
-	imageOptimizationMirageLabel: __(
-		'Improve Image Loading on Slow Connections',
-		'wp-module-performance'
-	),
-	imageOptimizationMirageDescription: __(
-		'Cloudflare Mirage accelerates image loading for mobile and slow networks.',
-		'wp-module-performance'
-	),
 } );
 
 export default getImageOptimizationText;

@@ -1,7 +1,7 @@
 {
   "name": "@newfold-labs/wp-module-performance",
   "description": "Module to manage performance settings in newfold plugins",
-  "version": "3.7.12",
+  "version": "3.9.1",
   "license": "GPL-2.0-or-later",
   "private": true,
   "engines": {
@@ -21,20 +21,28 @@
   "dependencies": {
     "@newfold/ui-component-library": "^2.1.1",
     "@newfold/wp-module-runtime": "^1.2.2",
-    "html-react-parser": "^6.1.0"
+    "html-react-parser": "^6.1.7"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.11",
-    "@wordpress/env": "^11.5.0",
-    "@wordpress/i18n": "^6.18.0",
-    "@wordpress/scripts": "^32.1.0",
-    "autoprefixer": "^10.5.0",
-    "chalk": "^5.6.2",
+    "@wordpress/env": "^11.13.0",
+    "@wordpress/i18n": "^6.25.0",
+    "@wordpress/scripts": "^34.1.0",
+    "autoprefixer": "^10.5.4",
+    "chalk": "^6.0.0",
     "css-minimizer-webpack-plugin": "^8.0.0",
     "glob": "^13.0.6",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.26",
     "postcss-loader": "^8.2.1",
     "tailwindcss": "^3.4.19"
+  },
+  "overrides": {
+    "adm-zip": "^0.6.0",
+    "markdown-it": "^14.2.0",
+    "linkify-it": "^5.0.2",
+    "serialize-javascript": "^7.0.5",
+    "uuid": "^11.1.1",
+    "minimatch@<4": "^3.1.5"
   },
   "scripts": {
     "build": "npm run build:assets && npm run build:react",
@@ -48,6 +56,7 @@
     "i18n": "npm run -s i18n-build && npm run i18n-rename-json",
     "i18n-ci-pre": "composer run-script i18n-ci-pre",
     "i18n-ci-post": "composer run-script i18n-ci-post && npm run i18n-rename-json",
-    "lint-js": "wp-scripts lint-js"
+    "lint-js": "wp-scripts lint-js",
+    "lint:css-build": "node scripts/validate-build-css.mjs"
   }
 }
