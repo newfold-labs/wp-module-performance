@@ -49,6 +49,17 @@ class Cache {
 	 */
 	public function hooks() {
 		add_action( 'after_mod_rewrite_rules', array( $this, 'on_rewrite' ) );
+
+		// The clamp otherwise only runs on activation and on a cache level
+		// change. EPC is a must-use plugin the host owns, so it can arrive on a
+		// site that is already running and already clamped, and then nothing
+		// puts it back off: it reads its level as 2 and writes a second expires
+		// block next to ours. An admin request re-asserts it. Once the option is
+		// already zero the helper is a file check and a comparison.
+		//
+		// Priority 5 so this lands before EPC's own admin_init reconcile at 10,
+		// which then sees the level it is going to keep.
+		add_action( 'admin_init', array( $this, 'on_cache_level_change' ), 5 );
 	}
 
 	/**
