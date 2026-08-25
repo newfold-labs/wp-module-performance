@@ -22,6 +22,7 @@ use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache;
 use NewfoldLabs\WP\Module\Performance\Images\ImageRewriteHandler;
 use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
 
+use function NewfoldLabs\WP\Module\Performance\disable_epc_cache_level;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
@@ -209,17 +210,12 @@ class PerformanceLifecycleHooks {
 	}
 
 	/**
-	 * On cache level change, update the response header and clean up legacy EPC option.
+	 * On cache level change, keep EPC switched off.
 	 *
 	 * @return void
 	 */
 	public function on_cache_level_change() {
-
-		// Remove the old option from EPC, if it exists.
-		if ( $this->container && $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
-			update_option( 'endurance_cache_level', 0 );
-			delete_option( 'endurance_cache_level' );
-		}
+		disable_epc_cache_level();
 	}
 
 	/**
@@ -233,32 +229,26 @@ class PerformanceLifecycleHooks {
 
 	/**
 	 * Force Endurance Page Cache off by clamping its options to 0.
-	 * Triggers EPC to remove its own rules, then tidies the options.
+	 * Triggers EPC to remove its own rules.
 	 */
 	private function nfd_force_disable_epc_options(): void {
-		$changed = false;
+		// Clamp EPC options to 0 so its own code tears down rules. The values
+		// stay in the database: EPC defaults endurance_cache_level to 2, so
+		// deleting it is what puts EPC back at level 2.
+		$changed = disable_epc_cache_level();
 
-		// Clamp EPC options to 0 so its own code tears down rules.
-		if ( (int) get_option( 'endurance_cache_level', 0 ) !== 0 ) {
-			update_option( 'endurance_cache_level', 0 );
-			$changed = true;
-		}
 		if ( (int) get_option( 'epc_skip_404_handling', 0 ) !== 0 ) {
 			update_option( 'epc_skip_404_handling', 0 );
 			$changed = true;
 		}
 
-		// If anything changed, write .htaccess once and tidy options.
+		// If anything changed, write .htaccess once.
 		if ( $changed ) {
 			if ( ! function_exists( 'save_mod_rewrite_rules' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/misc.php';
 			}
 			// Causes WP to regenerate rules; EPC listeners (if loaded) have just been triggered by the updates above.
 			save_mod_rewrite_rules();
-
-			// Optional cleanup so these don't linger in the DB.
-			delete_option( 'endurance_cache_level' );
-			delete_option( 'epc_skip_404_handling' );
 		}
 	}
 

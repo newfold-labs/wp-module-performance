@@ -6,6 +6,7 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 
 use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCache;
 
+use function NewfoldLabs\WP\Module\Performance\disable_epc_cache_level;
 use function NewfoldLabs\WP\Module\Performance\get_cache_exclusion;
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 
@@ -58,14 +59,10 @@ class Cache {
 	}
 
 	/**
-	 * On cache level change, update the response headers.
+	 * On cache level change, keep EPC switched off.
 	 */
 	public function on_cache_level_change() {
-		// Remove the old option from EPC, if it exists.
-		if ( $this->container->get( 'hasMustUsePlugin' ) && absint( get_option( 'endurance_cache_level', 0 ) ) ) {
-			update_option( 'endurance_cache_level', 0 );
-			delete_option( 'endurance_cache_level' );
-		}
+		disable_epc_cache_level();
 	}
 
 	/**
