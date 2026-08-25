@@ -132,16 +132,7 @@ class Browser extends CacheBase {
 	 * @return void
 	 */
 	public static function bootstrap_register() {
-		$cache_level = get_cache_level();
-
-		// Nothing to register when browser caching is off. Only registration
-		// happens here: unregistering queues a write whether or not anything
-		// changed, so removal stays with the option listeners.
-		if ( absint( $cache_level ) < 1 ) {
-			return;
-		}
-
-		self::addRules( $cache_level );
+		self::addRules( get_cache_level() );
 	}
 
 	/**
@@ -163,17 +154,27 @@ class Browser extends CacheBase {
 	}
 
 	/**
-	 * Determine whether to add or remove rules based on caching level.
+	 * Register the fragment for the given caching level.
+	 *
+	 * Level 0 registers as well. Dropping the block instead would leave a site in
+	 * a subdirectory inheriting the parent directory's mod_expires rules, so the
+	 * off state gets written out rather than implied by an absence.
 	 *
 	 * @param int|null $cache_level The caching level.
 	 * @return void
 	 */
 	public static function maybeAddRules( $cache_level ) {
-		absint( $cache_level ) > 0 ? self::addRules( $cache_level ) : self::removeRules();
+		// A deleted option reaches the listener as null. The rest of the module
+		// reads that case through get_cache_level(), which has a default, so the
+		// absence is resolved the same way here instead of counting as a zero.
+		self::addRules( null === $cache_level ? get_cache_level() : $cache_level );
 	}
 
 	/**
-	 * Remove our rules by unregistering the fragment.
+	 * Take our rules out of the file entirely by unregistering the fragment.
+	 *
+	 * Used on deactivation, where leaving anything behind would be wrong. Turning
+	 * caching off is a setting rather than a removal and goes through addRules().
 	 *
 	 * @return void
 	 */
@@ -184,7 +185,7 @@ class Browser extends CacheBase {
 	/**
 	 * Add (or replace) our rules by registering a fragment.
 	 *
-	 * @param int $cache_level The caching level (1–3).
+	 * @param int|null $cache_level The caching level (0–3).
 	 * @return void
 	 */
 	public static function addRules( $cache_level ) {
