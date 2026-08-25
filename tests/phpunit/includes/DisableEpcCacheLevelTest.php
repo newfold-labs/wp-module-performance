@@ -71,6 +71,30 @@ namespace NewfoldLabs\WP\Module\Performance {
 		}
 
 		/**
+		 * Activation and a cache level change are not enough on their own: EPC
+		 * can arrive on a site that is already clamped. An admin request has to
+		 * put it back off.
+		 */
+		public function test_an_admin_request_re_asserts_the_clamp() {
+			$cache = ( new \ReflectionClass( \NewfoldLabs\WP\Module\Performance\Cache\Cache::class ) )
+				->newInstanceWithoutConstructor();
+
+			WP_Mock::expectActionAdded(
+				'admin_init',
+				array( $cache, 'on_cache_level_change' ),
+				5
+			);
+			WP_Mock::expectActionAdded(
+				'after_mod_rewrite_rules',
+				array( $cache, 'on_rewrite' )
+			);
+
+			$cache->hooks();
+
+			$this->assertConditionsMet();
+		}
+
+		/**
 		 * Sites without EPC have nothing to clamp, and writing the option anyway
 		 * would leave a stray row behind on every one of them.
 		 */
