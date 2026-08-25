@@ -33,7 +33,7 @@ final class BrowserCacheFragment implements Fragment {
 	private $marker_label;
 
 	/**
-	 * Current cache level (1–3). Level 0 is handled by unregistering the fragment.
+	 * Current cache level (0–3). Level 0 renders an explicit off switch.
 	 *
 	 * @var int
 	 */
@@ -59,7 +59,7 @@ final class BrowserCacheFragment implements Fragment {
 	 *
 	 * @param string $id                Unique fragment ID.
 	 * @param string $marker_label      Marker label for readability in the file.
-	 * @param int    $cache_level       Cache level (1–3). Higher = longer TTLs.
+	 * @param int    $cache_level       Cache level (0–3). Higher = longer TTLs.
 	 * @param string $exclusion_pattern Pipe-separated pattern to exclude, or empty string.
 	 * @param string $base_path         Site base path from home_url('/'), e.g. "/".
 	 */
@@ -101,7 +101,7 @@ final class BrowserCacheFragment implements Fragment {
 
 	/**
 	 * Whether this fragment is enabled for the given context.
-	 * Upper-layer logic (Browser::maybeAddRules) registers/unregisters this,
+	 * Upper-layer logic (Browser::maybeAddRules) decides what gets registered,
 	 * so this always returns true once instantiated.
 	 *
 	 * @param Context $context Context snapshot (unused).
@@ -118,6 +118,22 @@ final class BrowserCacheFragment implements Fragment {
 	 * @return string Rendered fragment text including BEGIN/END comments.
 	 */
 	public function render( $context ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+		// Level 0 still renders a block. Leaving the file empty of one would let a
+		// site in a subdirectory inherit the parent directory's mod_expires rules,
+		// so the off state is written out rather than implied by an absence.
+		if ( $this->cache_level < 1 ) {
+			return implode(
+				"\n",
+				array(
+					'# BEGIN ' . $this->marker_label,
+					'<IfModule mod_expires.c>',
+					"\tExpiresActive Off",
+					'</IfModule>',
+					'# END ' . $this->marker_label,
+				)
+			);
+		}
+
 		$expirations = Browser::getFileTypeExpirations( $this->cache_level );
 
 		$lines   = array();
