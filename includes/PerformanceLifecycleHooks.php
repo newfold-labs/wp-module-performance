@@ -247,7 +247,10 @@ class PerformanceLifecycleHooks {
 			if ( ! function_exists( 'save_mod_rewrite_rules' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/misc.php';
 			}
-			// Causes WP to regenerate rules; EPC listeners (if loaded) have just been triggered by the updates above.
+			// Causes WP to regenerate rules. Writing an option that was absent
+			// goes through add_option, which fires add_option_* rather than the
+			// update_option_* that EPC listens on, so its own reconcile on
+			// shutdown is what removes the block in that case.
 			save_mod_rewrite_rules();
 		}
 	}
