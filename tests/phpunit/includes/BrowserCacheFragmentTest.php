@@ -175,6 +175,33 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types\Fragments {
 		}
 
 		/**
+		 * Test level 0 renders an explicit off switch rather than nothing.
+		 */
+		public function test_render_at_level_zero_turns_expires_off() {
+			$output = $this->make_fragment( 0, '' )->render( null );
+
+			$this->assertStringContainsString( '# BEGIN Newfold Browser Cache', $output );
+			$this->assertStringContainsString( '<IfModule mod_expires.c>', $output );
+			$this->assertStringContainsString( 'ExpiresActive Off', $output );
+			$this->assertStringContainsString( '# END Newfold Browser Cache', $output );
+			$this->assertStringNotContainsString( 'ExpiresActive On', $output );
+			$this->assertStringNotContainsString( 'ExpiresDefault', $output );
+			$this->assertStringNotContainsString( 'ExpiresByType', $output );
+		}
+
+		/**
+		 * Exclusions carve exceptions out of caching we applied. At level 0 there
+		 * is none to carve out of, so the header rules stay out of the block.
+		 */
+		public function test_render_at_level_zero_omits_exclusion_headers() {
+			$output = $this->make_fragment( 0, 'cart|checkout|wp-admin' )->render( null );
+
+			$this->assertStringNotContainsString( 'mod_headers.c', $output );
+			$this->assertStringNotContainsString( 'Cache-Control', $output );
+			$this->assertStringNotContainsString( '%{THE_REQUEST}', $output );
+		}
+
+		/**
 		 * Test exclusion regex matches intended request lines.
 		 *
 		 * @dataProvider matching_the_request_provider
