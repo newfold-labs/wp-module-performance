@@ -3,9 +3,12 @@
 
 namespace {
 	// The helper asks the filesystem whether EPC is installed, so point the
-	// constant at a directory this test owns.
+	// constant at a directory this test owns. Per process and per run: a fixed
+	// path is shared with every other process on the host, so a concurrent run
+	// or one that died before its tearDown would leave a stand-in EPC behind and
+	// fail the test that asserts EPC is absent.
 	if ( ! defined( 'WPMU_PLUGIN_DIR' ) ) {
-		define( 'WPMU_PLUGIN_DIR', sys_get_temp_dir() . '/nfd-perf-mu-plugins' );
+		define( 'WPMU_PLUGIN_DIR', sys_get_temp_dir() . '/nfd-perf-mu-plugins-' . getmypid() . '-' . uniqid() );
 	}
 }
 
@@ -52,6 +55,9 @@ namespace NewfoldLabs\WP\Module\Performance {
 		public function tearDown(): void {
 			if ( file_exists( $this->epc_file ) ) {
 				unlink( $this->epc_file );
+			}
+			if ( is_dir( WPMU_PLUGIN_DIR ) ) {
+				rmdir( WPMU_PLUGIN_DIR );
 			}
 
 			WP_Mock::tearDown();
