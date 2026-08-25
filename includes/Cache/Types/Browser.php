@@ -167,7 +167,20 @@ class Browser extends CacheBase {
 		// A deleted option reaches the listener as null. The rest of the module
 		// reads that case through get_cache_level(), which has a default, so the
 		// absence is resolved the same way here instead of counting as a zero.
-		self::addRules( null === $cache_level ? get_cache_level() : $cache_level );
+		if ( null === $cache_level ) {
+			$cache_level = get_cache_level();
+		}
+
+		// One .htaccess serves the whole network, so an off switch written for
+		// one site turns mod_expires off for all of them, and the boot re-render
+		// skips multisite so nothing would put it back. Removal is what a network
+		// has always done at level 0, so it keeps doing that.
+		if ( absint( $cache_level ) < 1 && is_multisite() ) {
+			self::removeRules();
+			return;
+		}
+
+		self::addRules( $cache_level );
 	}
 
 	/**
