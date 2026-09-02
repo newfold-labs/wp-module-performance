@@ -49,6 +49,36 @@ function get_cache_exclusion() {
 }
 
 /**
+ * Clamp Endurance Page Cache's cache level option to zero.
+ *
+ * While this plugin is active it owns the browser and page cache rules, so EPC
+ * has to stay switched off. EPC reads endurance_cache_level with a default of
+ * 2, which means removing the option is what hands EPC back level 2 and gets a
+ * second set of expires rules written next to ours. The option is set to zero
+ * and left in place instead.
+ *
+ * An absent option counts as needing the write for the same reason: that is the
+ * state EPC reads as level 2.
+ *
+ * @return bool True when the option was written.
+ */
+function disable_epc_cache_level() {
+	// Nothing to clamp without EPC, and writing the option anyway would leave a
+	// stray autoloaded row on every site that never had it.
+	if ( ! file_exists( WPMU_PLUGIN_DIR . '/endurance-page-cache.php' ) ) {
+		return false;
+	}
+
+	$stored = get_option( 'endurance_cache_level', false );
+
+	if ( false !== $stored && 0 === absint( $stored ) ) {
+		return false;
+	}
+
+	return (bool) update_option( 'endurance_cache_level', 0 );
+}
+
+/**
  * Get the "Skip WordPress 404 Handling for Static Files" option.
  *
  * @return bool Whether to skip 404 handling for static files.
