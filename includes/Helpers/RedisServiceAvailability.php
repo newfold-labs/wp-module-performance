@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Helpers;
 
+use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCacheErrorCodes;
+
 /**
  * Authoritative, cached check for whether the Redis service (daemon) is available on this
  * site's server, per the hosting API (HUAPI GET /performance/redis -> HAL `daemon_active`).
@@ -111,12 +113,33 @@ final class RedisServiceAvailability {
 	private static function probe() {
 		$context = RedisCredentialsProvisioner::get_hosting_context();
 		if ( is_wp_error( $context ) ) {
-			return null;
+			if ( self::maybe_refresh_hal_after_context_error( $context ) ) {
+				$context = RedisCredentialsProvisioner::get_hosting_context();
+			}
+			if ( is_wp_error( $context ) ) {
+				return null;
+			}
 		}
 
-		$status = HostingUapiClient::get_site_performance_redis( $context['token'], $context['site_id'] );
+		$status = self::probe_huapi_redis( $context );
+
+		if ( is_wp_error( $status ) && self::is_huapi_auth_failure( $status ) ) {
+			if ( self::maybe_refresh_hal_and_retry() ) {
+				$context = RedisCredentialsProvisioner::get_hosting_context();
+				if ( ! is_wp_error( $context ) ) {
+					$status = self::probe_huapi_redis( $context );
+				}
+			}
+		}
 
 		if ( is_wp_error( $status ) ) {
+			if ( self::is_huapi_auth_failure( $status ) ) {
+				HiiveHalDataClient::flag_investigation(
+					'HUAPI redis probe forbidden after HAL refresh',
+					'wp-module-performance'
+				);
+			}
+
 			$data           = $status->get_error_data();
 			$customer_error = ( is_array( $data ) && isset( $data['customer_error'] ) ) ? (string) $data['customer_error'] : '';
 
@@ -133,5 +156,62 @@ final class RedisServiceAvailability {
 		}
 
 		return ! empty( $status['redis_service_active'] );
+	}
+
+	/**
+	 * Probe HUAPI for Redis daemon status using the resolved hosting context.
+	 *
+	 * @param array{token:string, site_id:string} $context Hosting API context.
+	 * @return array<string, mixed>|\WP_Error
+	 */
+	private static function probe_huapi_redis( array $context ) {
+		return HostingUapiClient::get_site_performance_redis( $context['token'], $context['site_id'] );
+	}
+
+	/**
+	 * Ask Hiive to refresh HAL customer data and return whether a refresh was performed.
+	 *
+	 * @return bool
+	 */
+	private static function maybe_refresh_hal_and_retry(): bool {
+		$refresh = HiiveHalDataClient::refresh_customer_data();
+		if ( is_wp_error( $refresh ) ) {
+			return false;
+		}
+
+		return ! empty( $refresh['refreshed'] );
+	}
+
+	/**
+	 * Refresh HAL data when the hosting context is missing due to stale Hiive customer payload.
+	 *
+	 * @param \WP_Error $error Context resolution error.
+	 * @return bool
+	 */
+	private static function maybe_refresh_hal_after_context_error( $error ): bool {
+		$code = $error->get_error_code();
+		if ( ! in_array( $code, array( ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE, ObjectCacheErrorCodes::HAL_SITE_ID_MISSING ), true ) ) {
+			return false;
+		}
+
+		return self::maybe_refresh_hal_and_retry();
+	}
+
+	/**
+	 * Whether a HUAPI error indicates an auth/authorization failure (typically stale tenant/site id).
+	 *
+	 * @param \WP_Error $error HUAPI error.
+	 * @return bool
+	 */
+	private static function is_huapi_auth_failure( $error ): bool {
+		$data   = $error->get_error_data();
+		$status = is_array( $data ) && isset( $data['status'] ) ? (int) $data['status'] : 0;
+		if ( 403 === $status ) {
+			return true;
+		}
+
+		$customer_error = is_array( $data ) && isset( $data['customer_error'] ) ? (string) $data['customer_error'] : '';
+
+		return 'forbidden' === $customer_error;
 	}
 }
