@@ -5,21 +5,14 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 	const bulkOptimizeButtonId = 'nfd-bulk-optimize-btn';
 	let cancelRequested = false;
-
-	const bulkSelectButtonClasses = [
-		'button',
-		'media-button',
-		'select-mode-toggle-button',
-	];
-	const deletePermanentlyButtonClasses = [
-		'button',
-		'media-button',
-		'button-primary',
-		'button-large',
-		'delete-selected-button',
-	];
+	let selectionObserver = null;
 
 	const removeBulkOptimizeButton = () => {
+		if ( selectionObserver ) {
+			selectionObserver.disconnect();
+			selectionObserver = null;
+		}
+
 		const bulkOptimizeButton =
 			document.getElementById( bulkOptimizeButtonId );
 		if ( bulkOptimizeButton ) bulkOptimizeButton.remove();
@@ -217,20 +210,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		return bulkOptimizeButton;
 	};
 
-	const addBulkOptimizeButton = () => {
+	const addBulkOptimizeButton = ( deletePermanentlyButton ) => {
 		if ( document.getElementById( bulkOptimizeButtonId ) ) return;
-
-		const deletePermanentlyButton = document.querySelector(
-			'.button.media-button.button-primary.button-large.delete-selected-button'
-		);
-
-		if (
-			! hasExactClassList(
-				deletePermanentlyButton,
-				deletePermanentlyButtonClasses
-			)
-		)
-			return;
 
 		const bulkOptimizeButton = createBulkOptimizeButton();
 		deletePermanentlyButton.parentElement.insertBefore(
@@ -252,27 +233,44 @@ document.addEventListener( 'DOMContentLoaded', () => {
 			'.media-frame-content'
 		);
 		if ( mediaFrameContent ) {
-			const observer = new MutationObserver( updateButtonState );
-			observer.observe( mediaFrameContent, {
+			selectionObserver = new MutationObserver( updateButtonState );
+			// Selecting an attachment only toggles its `selected` class,
+			// so attribute mutations have to be observed as well.
+			selectionObserver.observe( mediaFrameContent, {
 				childList: true,
 				subtree: true,
+				attributes: true,
+				attributeFilter: [ 'class' ],
 			} );
 			updateButtonState();
 		}
 	};
 
-	const hasExactClassList = ( element, classList ) =>
-		element?.classList.length === classList.length &&
-		classList.every( ( cls ) => element.classList.contains( cls ) );
+	// The Delete permanently button is only visible while bulk select mode is
+	// active, which is when the Optimize button belongs next to it.
+	const getVisibleDeletePermanentlyButton = () => {
+		const deletePermanentlyButton = document.querySelector(
+			'.delete-selected-button'
+		);
+
+		if (
+			! deletePermanentlyButton ||
+			deletePermanentlyButton.classList.contains( 'hidden' ) ||
+			! deletePermanentlyButton.parentElement
+		) {
+			return null;
+		}
+
+		return deletePermanentlyButton;
+	};
 
 	// Automatically select the Bulk Select button if the URL parameter is set
-	const urlParams = new URLSearchParams( window.location.search );
-	const autoSelect = window.location.search.indexOf('autoSelectBulk') >= 0;
+	const autoSelect = window.location.search.indexOf( 'autoSelectBulk' ) >= 0;
 
 	if ( autoSelect ) {
 		const observer = new MutationObserver( () => {
 			const bulkSelectButton = document.querySelector(
-				'.button.media-button.select-mode-toggle-button'
+				'.select-mode-toggle-button'
 			);
 
 			if ( bulkSelectButton ) {
@@ -284,21 +282,26 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		observer.observe( document.body, { childList: true, subtree: true } );
 	}
 
-	const observer = new MutationObserver( () => {
-		const bulkSelectButton = document.querySelector(
-			'.button.media-button.select-mode-toggle-button'
-		);
+	const syncBulkOptimizeButton = () => {
+		const deletePermanentlyButton = getVisibleDeletePermanentlyButton();
 
-		const isBulkSelectButtonVisible = hasExactClassList(
-			bulkSelectButton,
-			bulkSelectButtonClasses
-		);
-		if ( isBulkSelectButtonVisible ) {
-			removeBulkOptimizeButton();
+		if ( deletePermanentlyButton ) {
+			addBulkOptimizeButton( deletePermanentlyButton );
 		} else {
-			addBulkOptimizeButton();
+			removeBulkOptimizeButton();
 		}
+	};
+
+	const observer = new MutationObserver( syncBulkOptimizeButton );
+
+	// Entering and leaving bulk select mode only toggles the `hidden` class on
+	// the Delete permanently button, so attribute mutations matter here too.
+	observer.observe( document.body, {
+		childList: true,
+		subtree: true,
+		attributes: true,
+		attributeFilter: [ 'class' ],
 	} );
 
-	observer.observe( document.body, { childList: true, subtree: true } );
+	syncBulkOptimizeButton();
 } );
