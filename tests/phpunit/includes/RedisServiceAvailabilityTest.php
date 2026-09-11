@@ -286,7 +286,32 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			);
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
-			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * An indeterminate probe keeps the last answer the server gave us, so a Hiive blip does not
+		 * make the object cache toggle disappear.
+		 */
+		public function test_indeterminate_probe_keeps_the_last_known_answer() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error( 'nfd_hosting_uapi_error', 'boom', array( 'status' => 500 ) );
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 
 		/**
@@ -388,7 +413,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertFalse( $uapi_called, 'HUAPI must not be probed without a hosting context.' );
-			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 	}
 }

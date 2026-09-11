@@ -103,8 +103,9 @@ final class RedisServiceAvailability {
 	/**
 	 * Whether the Redis service (daemon) is available on this site's server.
 	 *
-	 * Cached; fails safe to false when the answer cannot be determined, so the UI is not offered on
-	 * a box that would error on enable.
+	 * Cached. When a probe cannot determine the answer we keep serving the last one the server gave
+	 * us, and fail safe to false only when it has never answered, so the UI is not offered on a box
+	 * that would error on enable.
 	 *
 	 * @return bool
 	 */
@@ -118,10 +119,12 @@ final class RedisServiceAvailability {
 		$result = self::probe();
 
 		if ( null === $result ) {
-			// Indeterminate: fail safe to unavailable, and wait longer before each retry.
+			// Indeterminate: hold on to the last answer the server gave us and retry later. Writing
+			// '0' here would hide the object cache toggle for the whole backoff window every time
+			// Hiive had a bad few minutes, which is what made a long backoff unaffordable before.
 			$failures = min( $state['failures'] + 1, self::MAX_FAILURES );
-			self::write_state( '0', self::indeterminate_delay( $failures ), $failures );
-			return false;
+			self::write_state( $state['answer'], self::indeterminate_delay( $failures ), $failures );
+			return '1' === $state['answer'];
 		}
 
 		self::write_state(
@@ -167,7 +170,7 @@ final class RedisServiceAvailability {
 	/**
 	 * Store an answer and hold off probing again for the given number of seconds.
 	 *
-	 * @param string $answer   '1' or '0'.
+	 * @param string $answer   '1', '0', or '' when the server has never answered.
 	 * @param int    $ttl      Seconds until the next probe is allowed.
 	 * @param int    $failures Consecutive indeterminate probes. Zero once the server answers.
 	 * @return void
