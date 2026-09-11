@@ -32,6 +32,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 	use WP_Mock;
 	use WP_Mock\Tools\TestCase;
 	use Patchwork;
+	use NewfoldLabs\WP\Module\Data\HiiveConnection;
 
 	/**
 	 * Tests for the cached server-side Redis availability probe.
@@ -55,6 +56,23 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			// The probe reads its own short timeout before either call.
 			WP_Mock::onFilter( 'newfold_performance_redis_probe_timeout_seconds' )->with( 5 )->reply( 5 );
 			WP_Mock::onFilter( 'newfold_performance_disable_redis_availability_probe' )->with( false )->reply( false );
+
+			// Connected unless a test says otherwise; an unconnected blog never reaches the probe.
+			$this->given_hiive_connected( true );
+		}
+
+		/**
+		 * Stand in for the local Hiive connection check.
+		 *
+		 * @param bool $connected Whether this blog is connected.
+		 */
+		private function given_hiive_connected( bool $connected ) {
+			Patchwork\redefine(
+				array( HiiveConnection::class, 'is_connected' ),
+				function () use ( $connected ) {
+					return $connected;
+				}
+			);
 		}
 
 		public function tearDown(): void {
@@ -301,6 +319,55 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
 			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * A blog that is not connected makes no call, so it must not disturb the shared schedule.
+		 */
+		public function test_unconnected_blog_does_not_touch_the_schedule() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				)
+			);
+			$this->given_hiive_connected( false );
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called );
+			$this->assertNull( $this->saved, 'An unconnected blog must not count as a failure.' );
+		}
+
+		/**
+		 * An answer the server has not confirmed in a week stops being trusted.
+		 */
+		public function test_answer_is_not_trusted_forever() {
+			$this->given_stored_state(
+				array(
+					'answer'      => '1',
+					'next'        => time() + 600,
+					'failures'    => 4,
+					'answered_at' => time() - RedisServiceAvailability::MAX_ANSWER_AGE - 1,
+				)
+			);
+
+			$this->assertFalse(
+				RedisServiceAvailability::is_daemon_available(),
+				'A week-old answer should fall back to hidden rather than stand indefinitely.'
+			);
 		}
 
 		/**

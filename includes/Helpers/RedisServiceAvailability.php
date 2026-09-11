@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Performance\Helpers;
 
+use NewfoldLabs\WP\Module\Data\HiiveConnection;
+
 /**
  * Authoritative, cached check for whether the Redis service (daemon) is available on this
  * site's server, per the hosting API (HUAPI GET /performance/redis -> HAL `daemon_active`).
@@ -101,6 +103,13 @@ final class RedisServiceAvailability {
 	const LOCK_TTL = 60; // 1 minute.
 
 	/**
+	 * How long an answer is worth serving without the server confirming it again.
+	 *
+	 * @var int
+	 */
+	const MAX_ANSWER_AGE = 604800; // 7 days.
+
+	/**
 	 * Constant that stops the probe from making any network call. Define it in wp-config.php:
 	 * `define( 'NFD_DISABLE_REDIS_AVAILABILITY_PROBE', true );`
 	 *
@@ -158,21 +167,53 @@ final class RedisServiceAvailability {
 		$state = self::read_state();
 
 		if ( self::probe_disabled() || time() < $state['next'] ) {
-			return '1' === $state['answer'];
+			return self::answer_from( $state );
+		}
+
+		// A blog that is not connected makes no call, so it must not count as a failure. On multisite
+		// an unconnected subsite would otherwise keep pushing the whole network's next probe out.
+		if ( ! HiiveConnection::is_connected() ) {
+			return self::answer_from( $state );
 		}
 
 		// One request at a time goes to the network. The rest serve what we already have rather than
 		// queueing up behind it: several admin requests landing together on an answer that has just
 		// fallen due would otherwise all probe, and against a slow upstream all block.
-		if ( ! self::claim_probe() ) {
-			return '1' === $state['answer'];
+		$claim = self::claim_probe();
+		if ( 0 === $claim ) {
+			return self::answer_from( $state );
 		}
 
-		$available = self::probe_and_store( $state );
+		try {
+			return self::probe_and_store( $state );
+		} finally {
+			// Released even if the probe throws, so a fatal does not hold the lock for its full term.
+			self::release_probe( $claim );
+		}
+	}
 
-		self::release_probe();
+	/**
+	 * The answer to serve from stored state.
+	 *
+	 * Serving the last answer the server gave is what keeps the toggle steady through a blip, but it
+	 * should not stand forever. A box really can lose Redis while Hiive is unreachable, and offering
+	 * the toggle there produces the enable error this whole check exists to avoid. An answer the
+	 * server has not confirmed in a week falls back to hidden. A stale 'no' needs no such guard,
+	 * since hiding is already the safe side.
+	 *
+	 * @param array{answer:string, next:int, failures:int, answered_at:int} $state Stored state.
+	 * @return bool
+	 */
+	private static function answer_from( array $state ): bool {
+		if ( '1' !== $state['answer'] ) {
+			return false;
+		}
 
-		return $available;
+		if ( $state['answered_at'] > 0 && ( time() - $state['answered_at'] ) > self::MAX_ANSWER_AGE ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -189,13 +230,15 @@ final class RedisServiceAvailability {
 			// '0' here would hide the object cache toggle for the whole backoff window every time
 			// Hiive had a bad few minutes, which is what made a long backoff unaffordable before.
 			$failures = min( $state['failures'] + 1, self::MAX_FAILURES );
-			self::write_state( $state['answer'], self::indeterminate_delay( $failures ), $failures );
-			return '1' === $state['answer'];
+			self::write_state( $state['answer'], self::indeterminate_delay( $failures ), $failures, $state['answered_at'] );
+			return self::answer_from( $state );
 		}
 
 		self::write_state(
 			$result ? '1' : '0',
-			$result ? self::TTL_AVAILABLE : self::TTL_UNAVAILABLE
+			$result ? self::TTL_AVAILABLE : self::TTL_UNAVAILABLE,
+			0,
+			time()
 		);
 
 		return $result;
@@ -231,25 +274,43 @@ final class RedisServiceAvailability {
 	 *
 	 * @return bool
 	 */
-	private static function claim_probe(): bool {
+	private static function claim_probe(): int {
 		$held_until = (int) get_site_option( self::LOCK_OPTION, 0 );
 
 		if ( $held_until > time() ) {
-			return false;
+			return 0;
 		}
 
-		update_site_option( self::LOCK_OPTION, time() + self::LOCK_TTL );
+		$claim = time() + self::lock_ttl();
+		update_site_option( self::LOCK_OPTION, $claim );
 
-		return true;
+		return $claim;
 	}
 
 	/**
-	 * Give up the probe lock.
+	 * Give up the probe lock, unless our claim already lapsed and someone else took it.
 	 *
+	 * @param int $claim The claim this request wrote.
 	 * @return void
 	 */
-	private static function release_probe() {
-		update_site_option( self::LOCK_OPTION, 0 );
+	private static function release_probe( int $claim ) {
+		if ( (int) get_site_option( self::LOCK_OPTION, 0 ) !== $claim ) {
+			return;
+		}
+
+		delete_site_option( self::LOCK_OPTION );
+	}
+
+	/**
+	 * How long a claim on the probe lasts.
+	 *
+	 * Derived from the probe's own budget so a host that filters the timeout upwards cannot end up
+	 * with a probe that outlives the lock meant to be protecting it.
+	 *
+	 * @return int
+	 */
+	private static function lock_ttl(): int {
+		return (int) max( self::LOCK_TTL, 4 * SiteApisConfig::redis_probe_timeout_seconds() );
 	}
 
 	/**
@@ -293,9 +354,10 @@ final class RedisServiceAvailability {
 		$answer = isset( $stored['answer'] ) ? (string) $stored['answer'] : '';
 
 		return array(
-			'answer'   => in_array( $answer, array( '1', '0' ), true ) ? $answer : '',
-			'next'     => isset( $stored['next'] ) ? (int) $stored['next'] : 0,
-			'failures' => isset( $stored['failures'] ) ? max( 0, (int) $stored['failures'] ) : 0,
+			'answer'      => in_array( $answer, array( '1', '0' ), true ) ? $answer : '',
+			'next'        => isset( $stored['next'] ) ? (int) $stored['next'] : 0,
+			'failures'    => isset( $stored['failures'] ) ? max( 0, (int) $stored['failures'] ) : 0,
+			'answered_at' => isset( $stored['answered_at'] ) ? max( 0, (int) $stored['answered_at'] ) : 0,
 		);
 	}
 
@@ -317,37 +379,42 @@ final class RedisServiceAvailability {
 
 		if ( '' === $answer ) {
 			return array(
-				'answer'   => '',
-				'next'     => 0,
-				'failures' => 0,
+				'answer'      => '',
+				'next'        => 0,
+				'failures'    => 0,
+				'answered_at' => 0,
 			);
 		}
 
-		self::write_state( $answer, self::TTL_UNAVAILABLE );
+		self::write_state( $answer, self::TTL_UNAVAILABLE, 0, time() );
 		delete_transient( self::TRANSIENT_KEY );
 
 		return array(
-			'answer'   => $answer,
-			'next'     => time() + self::TTL_UNAVAILABLE,
-			'failures' => 0,
+			'answer'      => $answer,
+			'next'        => time() + self::TTL_UNAVAILABLE,
+			'failures'    => 0,
+			'answered_at' => time(),
 		);
 	}
 
 	/**
 	 * Store an answer and hold off probing again for the given number of seconds.
 	 *
-	 * @param string $answer   '1', '0', or '' when the server has never answered.
-	 * @param int    $ttl      Seconds until the next probe is allowed.
-	 * @param int    $failures Consecutive indeterminate probes. Zero once the server answers.
+	 * @param string $answer      '1', '0', or '' when the server has never answered.
+	 * @param int    $ttl         Seconds until the next probe is allowed.
+	 * @param int    $failures    Consecutive indeterminate probes. Zero once the server answers.
+	 * @param int    $answered_at When the server last gave this answer. Carried forward untouched by
+	 *                            an indeterminate probe, so age is measured from the real answer.
 	 * @return void
 	 */
-	private static function write_state( string $answer, int $ttl, int $failures = 0 ) {
+	private static function write_state( string $answer, int $ttl, int $failures = 0, int $answered_at = 0 ) {
 		update_site_option(
 			self::STATE_OPTION,
 			array(
-				'answer'   => $answer,
-				'next'     => time() + $ttl,
-				'failures' => $failures,
+				'answer'      => $answer,
+				'next'        => time() + $ttl,
+				'failures'    => $failures,
+				'answered_at' => $answered_at,
 			)
 		);
 	}
