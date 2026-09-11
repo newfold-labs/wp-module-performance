@@ -63,12 +63,28 @@ final class RedisServiceAvailability {
 	const TTL_UNAVAILABLE = 3600; // 1 hour.
 
 	/**
-	 * Cache TTL (seconds) when the probe was indeterminate (Hiive/HUAPI unreachable). Short, so we
-	 * re-probe soon rather than hiding the UI for a long time after a transient blip.
+	 * Delay (seconds) before the first retry after an indeterminate probe (Hiive/HUAPI unreachable).
+	 * Short, so we re-probe soon rather than hiding the UI for a long time after a transient blip.
+	 * Each further consecutive failure doubles it, up to self::TTL_INDETERMINATE_MAX.
 	 *
 	 * @var int
 	 */
 	const TTL_INDETERMINATE = 300; // 5 minutes.
+
+	/**
+	 * Ceiling for the indeterminate retry delay.
+	 *
+	 * @var int
+	 */
+	const TTL_INDETERMINATE_MAX = 43200; // 12 hours.
+
+	/**
+	 * Cap on the stored failure count, so the number cannot grow without bound once the delay has
+	 * reached its ceiling anyway.
+	 *
+	 * @var int
+	 */
+	const MAX_FAILURES = 16;
 
 	/**
 	 * HUAPI customer-error string returned when the Redis daemon is not running on the server.
@@ -102,8 +118,9 @@ final class RedisServiceAvailability {
 		$result = self::probe();
 
 		if ( null === $result ) {
-			// Indeterminate: fail safe to unavailable, but re-probe soon.
-			self::write_state( '0', self::TTL_INDETERMINATE );
+			// Indeterminate: fail safe to unavailable, and wait longer before each retry.
+			$failures = min( $state['failures'] + 1, self::MAX_FAILURES );
+			self::write_state( '0', self::indeterminate_delay( $failures ), $failures );
 			return false;
 		}
 
@@ -129,7 +146,8 @@ final class RedisServiceAvailability {
 	/**
 	 * Read the stored probe state, normalised.
 	 *
-	 * @return array{answer:string, next:int} `answer` is '1', '0', or '' when nothing is stored yet.
+	 * @return array{answer:string, next:int, failures:int} `answer` is '1', '0', or '' when nothing
+	 *                                                       is stored yet.
 	 */
 	private static function read_state(): array {
 		$stored = get_site_option( self::STATE_OPTION, array() );
@@ -140,26 +158,46 @@ final class RedisServiceAvailability {
 		$answer = isset( $stored['answer'] ) ? (string) $stored['answer'] : '';
 
 		return array(
-			'answer' => in_array( $answer, array( '1', '0' ), true ) ? $answer : '',
-			'next'   => isset( $stored['next'] ) ? (int) $stored['next'] : 0,
+			'answer'   => in_array( $answer, array( '1', '0' ), true ) ? $answer : '',
+			'next'     => isset( $stored['next'] ) ? (int) $stored['next'] : 0,
+			'failures' => isset( $stored['failures'] ) ? max( 0, (int) $stored['failures'] ) : 0,
 		);
 	}
 
 	/**
 	 * Store an answer and hold off probing again for the given number of seconds.
 	 *
-	 * @param string $answer '1' or '0'.
-	 * @param int    $ttl    Seconds until the next probe is allowed.
+	 * @param string $answer   '1' or '0'.
+	 * @param int    $ttl      Seconds until the next probe is allowed.
+	 * @param int    $failures Consecutive indeterminate probes. Zero once the server answers.
 	 * @return void
 	 */
-	private static function write_state( string $answer, int $ttl ) {
+	private static function write_state( string $answer, int $ttl, int $failures = 0 ) {
 		update_site_option(
 			self::STATE_OPTION,
 			array(
-				'answer' => $answer,
-				'next'   => time() + $ttl,
+				'answer'   => $answer,
+				'next'     => time() + $ttl,
+				'failures' => $failures,
 			)
 		);
+	}
+
+	/**
+	 * How long to wait before retrying after consecutive indeterminate probes.
+	 *
+	 * Doubles each time, up to the ceiling. The delay used to be a flat five minutes, which had it
+	 * backwards: a probe is indeterminate precisely when Hiive or the hosting API is unhealthy, so
+	 * every site answered a struggling upstream by asking it far more often than when it was
+	 * healthy, and kept doing so for as long as the trouble lasted.
+	 *
+	 * @param int $failures Consecutive indeterminate probes, including this one.
+	 * @return int Seconds.
+	 */
+	private static function indeterminate_delay( int $failures ): int {
+		$delay = self::TTL_INDETERMINATE * pow( 2, max( 0, $failures - 1 ) );
+
+		return (int) min( $delay, self::TTL_INDETERMINATE_MAX );
 	}
 
 	/**

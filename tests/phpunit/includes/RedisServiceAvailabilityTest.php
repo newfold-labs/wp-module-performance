@@ -96,13 +96,15 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		/**
 		 * Assert the answer written back, and roughly when the next probe is due.
 		 *
-		 * @param string $answer Expected answer.
-		 * @param int    $ttl    Expected seconds until the next probe.
+		 * @param string $answer   Expected answer.
+		 * @param int    $ttl      Expected seconds until the next probe.
+		 * @param int    $failures Expected consecutive indeterminate count.
 		 */
-		private function assert_saved( string $answer, int $ttl ) {
+		private function assert_saved( string $answer, int $ttl, int $failures = 0 ) {
 			$this->assertIsArray( $this->saved, 'Expected the probe result to be stored.' );
 			$this->assertSame( $answer, $this->saved['answer'] );
 			$this->assertEqualsWithDelta( time() + $ttl, $this->saved['next'], 5 );
+			$this->assertSame( $failures, $this->saved['failures'] );
 		}
 
 		/**
@@ -284,7 +286,81 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			);
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
-			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE );
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * Each consecutive indeterminate probe waits twice as long as the one before it.
+		 */
+		public function test_repeated_indeterminate_probes_back_off() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '0',
+					'next'     => time() - 1,
+					'failures' => 3,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error( 'nfd_hosting_uapi_error', 'boom', array( 'status' => 500 ) );
+				}
+			);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			// Fourth consecutive failure: 300 * 2^3.
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE * 8, 4 );
+		}
+
+		/**
+		 * The backoff stops growing at the ceiling, and so does the stored count.
+		 */
+		public function test_indeterminate_backoff_stops_at_the_ceiling() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '0',
+					'next'     => time() - 1,
+					'failures' => RedisServiceAvailability::MAX_FAILURES,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error( 'nfd_hosting_uapi_error', 'boom', array( 'status' => 500 ) );
+				}
+			);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved(
+				'0',
+				RedisServiceAvailability::TTL_INDETERMINATE_MAX,
+				RedisServiceAvailability::MAX_FAILURES
+			);
+		}
+
+		/**
+		 * A server that answers again clears the backoff, so the next blip starts from the short delay.
+		 */
+		public function test_definitive_answer_clears_the_failure_count() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '0',
+					'next'     => time() - 1,
+					'failures' => 5,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return array( 'redis_service_active' => true );
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_AVAILABLE, 0 );
 		}
 
 		/**
@@ -312,7 +388,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertFalse( $uapi_called, 'HUAPI must not be probed without a hosting context.' );
-			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE );
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 	}
 }
