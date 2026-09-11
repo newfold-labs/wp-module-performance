@@ -322,6 +322,38 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		}
 
 		/**
+		 * Both probe calls are given the short budget, not the 30 second default.
+		 */
+		public function test_probe_passes_its_short_timeout_to_both_calls() {
+			$this->given_stored_state( false );
+
+			$context_timeout = null;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function ( $timeout = null ) use ( &$context_timeout ) {
+					$context_timeout = $timeout;
+					return array(
+						'token'   => 'jwt',
+						'site_id' => '12345',
+					);
+				}
+			);
+
+			$status_timeout = null;
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id, $timeout = null ) use ( &$status_timeout ) {
+					$status_timeout = $timeout;
+					return array( 'redis_service_active' => true );
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertSame( 5, $context_timeout, 'The Hiive call must use the probe budget.' );
+			$this->assertSame( 5, $status_timeout, 'The Hosting UAPI call must use the probe budget.' );
+		}
+
+		/**
 		 * A blog that is not connected makes no call, so it must not disturb the shared schedule.
 		 */
 		public function test_unconnected_blog_does_not_touch_the_schedule() {
