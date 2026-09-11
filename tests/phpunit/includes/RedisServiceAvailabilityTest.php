@@ -50,6 +50,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			Patchwork\restoreAll();
 			WP_Mock::passthruFunction( '__' );
 			$this->saved = null;
+			RedisServiceAvailability::reset_request_cache();
 
 			// The probe reads its own short timeout before either call.
 			WP_Mock::onFilter( 'newfold_performance_redis_probe_timeout_seconds' )->with( 5 )->reply( 5 );
@@ -67,6 +68,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		 */
 		private function given_stored_state( $stored, int $lock_held_until = 0 ) {
 			WP_Mock::userFunction( 'get_site_option' )
+				->once()
 				->with( RedisServiceAvailability::STATE_OPTION, array() )
 				->andReturn( $stored );
 
@@ -293,6 +295,17 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
 			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * Asking twice in one request reads the stored state once. The runtime filter and the REST
+		 * settings endpoint can both ask during the same page load.
+		 */
+		public function test_answer_is_reused_for_the_rest_of_the_request() {
+			$this->given_stored_state( $this->fresh_state( '1' ) );
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
 		}
 
 		/**

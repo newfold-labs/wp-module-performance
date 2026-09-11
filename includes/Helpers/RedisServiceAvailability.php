@@ -101,6 +101,13 @@ final class RedisServiceAvailability {
 	const LOCK_TTL = 60; // 1 minute.
 
 	/**
+	 * Answer already worked out during this request, or null before the first lookup.
+	 *
+	 * @var bool|null
+	 */
+	private static $answer_this_request = null;
+
+	/**
 	 * HUAPI customer-error string returned when the Redis daemon is not running on the server.
 	 *
 	 * @var string
@@ -124,6 +131,19 @@ final class RedisServiceAvailability {
 	 * @return bool
 	 */
 	public static function is_daemon_available(): bool {
+		if ( null === self::$answer_this_request ) {
+			self::$answer_this_request = self::resolve();
+		}
+
+		return self::$answer_this_request;
+	}
+
+	/**
+	 * Work out the answer for this request.
+	 *
+	 * @return bool
+	 */
+	private static function resolve(): bool {
 		$state = self::read_state();
 
 		if ( time() < $state['next'] ) {
@@ -206,10 +226,23 @@ final class RedisServiceAvailability {
 	 * @return void
 	 */
 	public static function flush() {
+		self::reset_request_cache();
 		delete_site_option( self::STATE_OPTION );
 		delete_site_option( self::LOCK_OPTION );
 		// Sites that cached an answer before this moved to an option still have the transient.
 		delete_transient( self::TRANSIENT_KEY );
+	}
+
+	/**
+	 * Forget the answer worked out earlier in this request.
+	 *
+	 * Only matters where one PHP process serves more than one logical request, such as WP-CLI or a
+	 * test run.
+	 *
+	 * @return void
+	 */
+	public static function reset_request_cache() {
+		self::$answer_this_request = null;
 	}
 
 	/**
