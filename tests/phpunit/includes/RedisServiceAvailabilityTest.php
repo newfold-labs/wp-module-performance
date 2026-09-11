@@ -73,6 +73,11 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				->with( RedisServiceAvailability::STATE_OPTION, array() )
 				->andReturn( $stored );
 
+			// Nothing stored means we look for an answer left by 3.9.x. Absent unless a test says so.
+			WP_Mock::userFunction( 'get_transient' )
+				->with( RedisServiceAvailability::TRANSIENT_KEY )
+				->andReturn( false );
+
 			WP_Mock::userFunction( 'get_site_option' )
 				->with( RedisServiceAvailability::LOCK_OPTION, 0 )
 				->andReturn( $lock_held_until );
@@ -296,6 +301,49 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
 			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * A site updating from 3.9.x keeps the answer its transient held, rather than probing with
+		 * nothing stored and possibly hiding a toggle it was already showing.
+		 */
+		public function test_answer_is_carried_over_from_the_old_transient() {
+			WP_Mock::userFunction( 'get_site_option' )
+				->once()
+				->with( RedisServiceAvailability::STATE_OPTION, array() )
+				->andReturn( array() );
+			WP_Mock::userFunction( 'get_transient' )
+				->once()
+				->with( RedisServiceAvailability::TRANSIENT_KEY )
+				->andReturn( '1' );
+			WP_Mock::userFunction( 'delete_transient' )
+				->once()
+				->with( RedisServiceAvailability::TRANSIENT_KEY );
+			WP_Mock::userFunction( 'update_site_option' )
+				->andReturnUsing(
+					function ( $key, $value ) {
+						if ( RedisServiceAvailability::STATE_OPTION === $key ) {
+							$this->saved = $value;
+						}
+						return true;
+					}
+				);
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called, 'The carried-over answer should stand in for a probe.' );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_UNAVAILABLE );
 		}
 
 		/**

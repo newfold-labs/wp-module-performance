@@ -17,8 +17,8 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers;
 final class RedisServiceAvailability {
 
 	/**
-	 * Transient key this state used to live in. Kept only so flush() can clear it on sites that
-	 * cached an answer before the move to an option.
+	 * Transient key this state used to live in. Still read once on a site updating from 3.9.x, so
+	 * the answer it holds is carried over rather than thrown away.
 	 *
 	 * @var string
 	 */
@@ -285,8 +285,9 @@ final class RedisServiceAvailability {
 	 */
 	private static function read_state(): array {
 		$stored = get_site_option( self::STATE_OPTION, array() );
-		if ( ! is_array( $stored ) ) {
-			$stored = array();
+
+		if ( ! is_array( $stored ) || empty( $stored ) ) {
+			return self::adopt_legacy_state();
 		}
 
 		$answer = isset( $stored['answer'] ) ? (string) $stored['answer'] : '';
@@ -295,6 +296,40 @@ final class RedisServiceAvailability {
 			'answer'   => in_array( $answer, array( '1', '0' ), true ) ? $answer : '',
 			'next'     => isset( $stored['next'] ) ? (int) $stored['next'] : 0,
 			'failures' => isset( $stored['failures'] ) ? max( 0, (int) $stored['failures'] ) : 0,
+		);
+	}
+
+	/**
+	 * Take over the answer from the transient this state used to live in.
+	 *
+	 * Without this, the first admin page load after updating probes with nothing stored, and an
+	 * indeterminate result there writes an empty answer. A site whose old transient said the daemon
+	 * was available would lose the object cache toggle, which is the opposite of the point.
+	 *
+	 * The carried-over answer is only held for the short TTL rather than the full one, so every site
+	 * still checks with the server within the hour instead of all at once on the first page load.
+	 *
+	 * @return array{answer:string, next:int, failures:int}
+	 */
+	private static function adopt_legacy_state(): array {
+		$legacy = get_transient( self::TRANSIENT_KEY );
+		$answer = ( '1' === $legacy || '0' === $legacy ) ? (string) $legacy : '';
+
+		if ( '' === $answer ) {
+			return array(
+				'answer'   => '',
+				'next'     => 0,
+				'failures' => 0,
+			);
+		}
+
+		self::write_state( $answer, self::TTL_UNAVAILABLE );
+		delete_transient( self::TRANSIENT_KEY );
+
+		return array(
+			'answer'   => $answer,
+			'next'     => time() + self::TTL_UNAVAILABLE,
+			'failures' => 0,
 		);
 	}
 
