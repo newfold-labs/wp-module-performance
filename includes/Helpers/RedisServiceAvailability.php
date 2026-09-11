@@ -11,17 +11,36 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers;
  * Redis daemon was never deployed, so offering the object-cache UI there produces "Could not
  * enable object cache" errors. Only the server-side daemon status can tell those boxes apart.
  *
- * The result is cached in a transient so the settings page / runtime SDK does not make a network
- * call on every render.
+ * The result is cached so the settings page / runtime SDK does not make a network call on every
+ * render.
  */
 final class RedisServiceAvailability {
 
 	/**
-	 * Transient key for the cached availability result.
+	 * Transient key this state used to live in. Kept only so flush() can clear it on sites that
+	 * cached an answer before the move to an option.
 	 *
 	 * @var string
 	 */
 	const TRANSIENT_KEY = 'nfd_performance_redis_service_available';
+
+	/**
+	 * Option holding the probe state: the last answer and the earliest time we may probe again.
+	 *
+	 * An option rather than a transient, for two reasons.
+	 *
+	 * A transient on a site running another plugin's object-cache drop-in lives only in that cache
+	 * and never falls back to the database. When that cache is broken or non-persistent every read
+	 * misses, so the probe runs on every admin page load with no floor at all. Options do fall back
+	 * to the database, so the floor holds no matter what the object cache is doing.
+	 *
+	 * And it is network-wide: the Redis daemon belongs to the server, not to a blog, so a multisite
+	 * network should answer this once rather than once per blog. On single sites get_site_option()
+	 * is get_option().
+	 *
+	 * @var string
+	 */
+	const STATE_OPTION = 'nfd_performance_redis_service_state';
 
 	/**
 	 * Cache TTL (seconds) when the daemon is confirmed available. Longer, because a box that has
@@ -70,21 +89,21 @@ final class RedisServiceAvailability {
 	 * @return bool
 	 */
 	public static function is_daemon_available(): bool {
-		$cached = get_transient( self::TRANSIENT_KEY );
-		if ( '1' === $cached || '0' === $cached ) {
-			return '1' === $cached;
+		$state = self::read_state();
+
+		if ( time() < $state['next'] ) {
+			return '1' === $state['answer'];
 		}
 
 		$result = self::probe();
 
 		if ( null === $result ) {
 			// Indeterminate: fail safe to unavailable, but re-probe soon.
-			set_transient( self::TRANSIENT_KEY, '0', self::TTL_INDETERMINATE );
+			self::write_state( '0', self::TTL_INDETERMINATE );
 			return false;
 		}
 
-		set_transient(
-			self::TRANSIENT_KEY,
+		self::write_state(
 			$result ? '1' : '0',
 			$result ? self::TTL_AVAILABLE : self::TTL_UNAVAILABLE
 		);
@@ -98,7 +117,45 @@ final class RedisServiceAvailability {
 	 * @return void
 	 */
 	public static function flush() {
+		delete_site_option( self::STATE_OPTION );
+		// Sites that cached an answer before this moved to an option still have the transient.
 		delete_transient( self::TRANSIENT_KEY );
+	}
+
+	/**
+	 * Read the stored probe state, normalised.
+	 *
+	 * @return array{answer:string, next:int} `answer` is '1', '0', or '' when nothing is stored yet.
+	 */
+	private static function read_state(): array {
+		$stored = get_site_option( self::STATE_OPTION, array() );
+		if ( ! is_array( $stored ) ) {
+			$stored = array();
+		}
+
+		$answer = isset( $stored['answer'] ) ? (string) $stored['answer'] : '';
+
+		return array(
+			'answer' => in_array( $answer, array( '1', '0' ), true ) ? $answer : '',
+			'next'   => isset( $stored['next'] ) ? (int) $stored['next'] : 0,
+		);
+	}
+
+	/**
+	 * Store an answer and hold off probing again for the given number of seconds.
+	 *
+	 * @param string $answer '1' or '0'.
+	 * @param int    $ttl    Seconds until the next probe is allowed.
+	 * @return void
+	 */
+	private static function write_state( string $answer, int $ttl ) {
+		update_site_option(
+			self::STATE_OPTION,
+			array(
+				'answer' => $answer,
+				'next'   => time() + $ttl,
+			)
+		);
 	}
 
 	/**
