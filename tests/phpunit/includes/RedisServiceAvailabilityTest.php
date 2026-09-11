@@ -65,16 +65,21 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		 *
 		 * @param array|false $stored What the option returns.
 		 */
-		private function given_stored_state( $stored ) {
+		private function given_stored_state( $stored, int $lock_held_until = 0 ) {
 			WP_Mock::userFunction( 'get_site_option' )
-				->once()
 				->with( RedisServiceAvailability::STATE_OPTION, array() )
 				->andReturn( $stored );
+
+			WP_Mock::userFunction( 'get_site_option' )
+				->with( RedisServiceAvailability::LOCK_OPTION, 0 )
+				->andReturn( $lock_held_until );
 
 			WP_Mock::userFunction( 'update_site_option' )
 				->andReturnUsing(
 					function ( $key, $value ) {
-						$this->saved = $value;
+						if ( RedisServiceAvailability::STATE_OPTION === $key ) {
+							$this->saved = $value;
+						}
 						return true;
 					}
 				);
@@ -288,6 +293,36 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
 			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * While another request is already probing, serve what we have rather than probing too.
+		 */
+		public function test_probe_in_flight_elsewhere_is_not_repeated() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				),
+				time() + 30
+			);
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called, 'Only the request holding the lock should probe.' );
+			$this->assertNull( $this->saved, 'A request that did not probe should not write state.' );
 		}
 
 		/**

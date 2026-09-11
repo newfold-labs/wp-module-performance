@@ -87,6 +87,20 @@ final class RedisServiceAvailability {
 	const MAX_FAILURES = 16;
 
 	/**
+	 * Option holding the probe lock: the time the in-flight probe's claim runs out.
+	 *
+	 * @var string
+	 */
+	const LOCK_OPTION = 'nfd_performance_redis_service_probe_lock';
+
+	/**
+	 * How long one request may hold the probe lock before another may try.
+	 *
+	 * @var int
+	 */
+	const LOCK_TTL = 60; // 1 minute.
+
+	/**
 	 * HUAPI customer-error string returned when the Redis daemon is not running on the server.
 	 *
 	 * @var string
@@ -116,6 +130,27 @@ final class RedisServiceAvailability {
 			return '1' === $state['answer'];
 		}
 
+		// One request at a time goes to the network. The rest serve what we already have rather than
+		// queueing up behind it: several admin requests landing together on an answer that has just
+		// fallen due would otherwise all probe, and against a slow upstream all block.
+		if ( ! self::claim_probe() ) {
+			return '1' === $state['answer'];
+		}
+
+		$available = self::probe_and_store( $state );
+
+		self::release_probe();
+
+		return $available;
+	}
+
+	/**
+	 * Probe and store whatever the server tells us.
+	 *
+	 * @param array{answer:string, next:int, failures:int} $state State as it stood before the probe.
+	 * @return bool
+	 */
+	private static function probe_and_store( array $state ): bool {
 		$result = self::probe();
 
 		if ( null === $result ) {
@@ -136,12 +171,43 @@ final class RedisServiceAvailability {
 	}
 
 	/**
+	 * Try to become the request that probes.
+	 *
+	 * Best effort. WordPress has no atomic option primitive, so two requests arriving in the same
+	 * instant can both win. It still collapses the ordinary stampede, which is a handful of admin
+	 * requests landing on a due answer at once.
+	 *
+	 * @return bool
+	 */
+	private static function claim_probe(): bool {
+		$held_until = (int) get_site_option( self::LOCK_OPTION, 0 );
+
+		if ( $held_until > time() ) {
+			return false;
+		}
+
+		update_site_option( self::LOCK_OPTION, time() + self::LOCK_TTL );
+
+		return true;
+	}
+
+	/**
+	 * Give up the probe lock.
+	 *
+	 * @return void
+	 */
+	private static function release_probe() {
+		update_site_option( self::LOCK_OPTION, 0 );
+	}
+
+	/**
 	 * Clear the cached availability result so the next read re-probes.
 	 *
 	 * @return void
 	 */
 	public static function flush() {
 		delete_site_option( self::STATE_OPTION );
+		delete_site_option( self::LOCK_OPTION );
 		// Sites that cached an answer before this moved to an option still have the transient.
 		delete_transient( self::TRANSIENT_KEY );
 	}
