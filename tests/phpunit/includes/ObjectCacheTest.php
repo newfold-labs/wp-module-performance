@@ -247,4 +247,106 @@ class ObjectCacheTest extends TestCase {
 
 		$this->assertFileExists( $path );
 	}
+
+	/**
+	 * A restore that was tried moments ago is not tried again on the next page load.
+	 */
+	public function test_maybe_restore_dropin_waits_between_attempts() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->andReturn( time() - 60 );
+		WP_Mock::userFunction( 'update_option' )->never();
+
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_dropin();
+
+		$this->assertFalse( $enable_called, 'A restore tried moments ago should not run again.' );
+	}
+
+	/**
+	 * Once the interval has passed the restore is tried again, and a success clears the marker.
+	 */
+	public function test_maybe_restore_dropin_retries_once_the_interval_has_passed() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->andReturn( time() - ObjectCache::RESTORE_RETRY_INTERVAL - 1 );
+		WP_Mock::userFunction( 'update_option' )->once()->andReturn( true );
+		WP_Mock::userFunction( 'delete_option' )
+			->once()
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED );
+
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_dropin();
+
+		$this->assertTrue( $enable_called, 'The restore should run again once the interval has passed.' );
+	}
+
+	/**
+	 * Activation restores straight away: the user is waiting on it.
+	 */
+	public function test_activation_restore_ignores_the_interval() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->never();
+		WP_Mock::userFunction( 'delete_option' )->andReturn( true );
+
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_on_activation();
+
+		$this->assertTrue( $enable_called, 'Activation should not be held back by the retry interval.' );
+	}
 }
