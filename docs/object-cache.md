@@ -17,10 +17,12 @@ The Object Cache toggle is only offered where Redis can actually run. The phpred
 loaded is not enough to tell: on some server generations the extension is present but the daemon
 was never deployed, and enabling there fails.
 
-`RedisServiceAvailability` answers that question. When wp-config already has Redis connection
-constants the answer is yes without any network call. Otherwise it asks the server, which takes two
-calls: Hiive `GET /sites/v1/customer` for a hosting API token and site id, then Hosting UAPI
-`GET /v1/sites/{id}/performance/redis` for the daemon status.
+`RedisServiceAvailability` answers that question. When the Redis connection constants are already
+defined for this request, from wp-config, the environment, or another plugin's drop-in, the answer is
+yes without any network call. Otherwise it asks the server, which takes two calls: Hiive
+`GET /sites/v1/customer` for a hosting API token and site id, then Hosting UAPI
+`GET /v1/sites/{id}/performance/redis` for the daemon status. A blog that is not connected to Hiive
+makes neither call and leaves the stored schedule alone.
 
 The answer is held in the `nfd_performance_redis_service_state` site option:
 
@@ -41,10 +43,19 @@ than falling back to "unavailable". Otherwise a few bad minutes upstream would t
 from every site that had one, for the whole backoff window. Where the server has never answered, it
 does fail safe to unavailable, so the toggle is not offered on a box that would error on enable.
 
-One request at a time probes. The rest serve what is already stored instead of queueing behind it.
-Within a request the answer is worked out once. Both calls use a 5 second timeout, not the 30 second
-default used for provisioning, because this runs while an admin page renders and a probe that times
-out is simply retried later.
+That trust has a limit. A box really can lose Redis while Hiive is unreachable, and offering the
+toggle there produces the "Could not enable object cache" error this check exists to prevent, so an
+answer the server has not confirmed for a week falls back to hidden. A stale "no" needs no such
+guard, since hiding is already the safe side.
+
+One request at a time probes, claiming `nfd_performance_redis_service_probe_lock`. The rest serve
+what is already stored instead of queueing behind it. Within a request the answer is worked out
+once. Both calls use a 5 second timeout, not the 30 second default used for provisioning, because
+this runs while an admin page renders and a probe that times out is simply retried later.
+
+A site updating from 3.9.x has its answer in the `nfd_performance_redis_service_available` transient
+this state replaced. That is read once and carried over, held for an hour, so the toggle does not
+disappear on the first page load after the update and the fleet does not all probe at once.
 
 ## Switching the probe off
 
@@ -61,9 +72,17 @@ regardless, hook `newfold_performance_object_cache_ui_available`.
 
 When the stored preference is on but the drop-in is missing or belongs to another plugin, the module
 restores its own, provisioning credentials first if wp-config has none. Attempts are recorded in the
-`newfold_object_cache_restore_attempted` option and left 15 minutes apart, so a site where the
-restore cannot succeed does not try again on every admin page load. Activation is not held back by
-that interval.
+`newfold_object_cache_restore_attempted` site option and left 15 minutes apart, so a site where the
+restore cannot succeed does not try again on every admin page load. The same interval covers the
+reconcile that runs on `plugins_loaded` for every request. Activation is not held back by it, and
+neither is a user turning the toggle on, which calls `enable()` directly.
+
+The interval is always checked before anything is deleted. A call that removed another plugin's
+drop-in and only then found itself throttled would leave the site with no drop-in at all.
+
+Note that provisioning still uses the 30 second Hiive timeout rather than the probe's 5 seconds. It
+writes wp-config constants through the hosting API, so cutting it short risks leaving that half
+done; the interval above is what keeps it off the hot path.
 
 To turn off drop-in install, removal and reconciliation entirely:
 
