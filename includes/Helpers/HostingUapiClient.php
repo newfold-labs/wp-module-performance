@@ -91,11 +91,12 @@ final class HostingUapiClient {
 	 * loaded is NOT sufficient, because the Redis daemon can be down/absent while the extension is
 	 * present (e.g. legacy CentOS 7 / hostmonster boxes where Redis was never deployed).
 	 *
-	 * @param string $huapi_jwt HUAPI JWT (from Hiive customer payload).
-	 * @param string $site_id   HAL site id (digits).
+	 * @param string   $huapi_jwt HUAPI JWT (from Hiive customer payload).
+	 * @param string   $site_id   HAL site id (digits).
+	 * @param int|null $timeout   Request timeout in seconds. Null uses the shared Hosting UAPI default.
 	 * @return array{obj_cache_installed?:bool, obj_cache_enabled?:bool, redis_service_active?:bool}|\WP_Error
 	 */
-	public static function get_site_performance_redis( $huapi_jwt, $site_id ) {
+	public static function get_site_performance_redis( $huapi_jwt, $site_id, $timeout = null ) {
 		$huapi_jwt = (string) $huapi_jwt;
 		$site_id   = (string) $site_id;
 
@@ -108,7 +109,7 @@ final class HostingUapiClient {
 
 		$args = array(
 			'method'  => 'GET',
-			'timeout' => SiteApisConfig::hosting_uapi_request_timeout_seconds(),
+			'timeout' => ( null === $timeout ) ? SiteApisConfig::hosting_uapi_request_timeout_seconds() : (int) $timeout,
 			'headers' => array(
 				'Accept'        => 'application/json',
 				'Authorization' => 'Bearer ' . $huapi_jwt,

@@ -43,4 +43,19 @@ final class SiteApisConfig {
 		$timeout = 30;
 		return (int) apply_filters( 'newfold_performance_hosting_uapi_request_timeout_seconds', $timeout );
 	}
+
+	/**
+	 * Request timeout in seconds for the background Redis availability probe.
+	 *
+	 * The probe runs while an admin page renders and makes two sequential calls (Hiive, then Hosting
+	 * UAPI), so the 30 second default lets a slow upstream hold the request for a full minute. A
+	 * probe that times out is simply indeterminate and is retried later, so a short budget costs the
+	 * site nothing and keeps a struggling upstream from holding connections open.
+	 *
+	 * @return int
+	 */
+	public static function redis_probe_timeout_seconds(): int {
+		$timeout = 5;
+		return (int) apply_filters( 'newfold_performance_redis_probe_timeout_seconds', $timeout );
+	}
 }

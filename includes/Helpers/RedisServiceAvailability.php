@@ -104,17 +104,22 @@ final class RedisServiceAvailability {
 	/**
 	 * Ask the hosting API whether the Redis daemon is active on this site's server.
 	 *
+	 * Both calls use the short probe timeout: this runs while an admin page renders, and a probe that
+	 * times out is indeterminate and retried later rather than fatal.
+	 *
 	 * @return bool|null True/false when the server answered definitively; null when the answer could
 	 *                   not be determined (Hiive not connected, token/site missing, or a transient
 	 *                   HTTP error) and the caller should not cache the result for long.
 	 */
 	private static function probe() {
-		$context = RedisCredentialsProvisioner::get_hosting_context();
+		$timeout = SiteApisConfig::redis_probe_timeout_seconds();
+
+		$context = RedisCredentialsProvisioner::get_hosting_context( $timeout );
 		if ( is_wp_error( $context ) ) {
 			return null;
 		}
 
-		$status = HostingUapiClient::get_site_performance_redis( $context['token'], $context['site_id'] );
+		$status = HostingUapiClient::get_site_performance_redis( $context['token'], $context['site_id'], $timeout );
 
 		if ( is_wp_error( $status ) ) {
 			$data           = $status->get_error_data();

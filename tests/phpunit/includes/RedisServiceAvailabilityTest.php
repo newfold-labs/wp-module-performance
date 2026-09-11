@@ -42,6 +42,9 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			WP_Mock::setUp();
 			Patchwork\restoreAll();
 			WP_Mock::passthruFunction( '__' );
+
+			// The probe reads its own short timeout before either call.
+			WP_Mock::onFilter( 'newfold_performance_redis_probe_timeout_seconds' )->with( 5 )->reply( 5 );
 		}
 
 		public function tearDown(): void {
@@ -197,9 +200,6 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			WP_Mock::onFilter( 'newfold_performance_hosting_uapi_base_url' )
 				->with( 'https://hosting.uapi.newfold.com/' )
 				->reply( 'https://hosting.uapi.newfold.com/' );
-			WP_Mock::onFilter( 'newfold_performance_hosting_uapi_request_timeout_seconds' )
-				->with( 30 )
-				->reply( 30 );
 			WP_Mock::userFunction( 'trailingslashit' )->andReturnUsing(
 				function ( $s ) {
 					return rtrim( (string) $s, '/' ) . '/';
