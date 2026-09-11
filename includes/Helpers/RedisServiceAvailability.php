@@ -101,6 +101,17 @@ final class RedisServiceAvailability {
 	const LOCK_TTL = 60; // 1 minute.
 
 	/**
+	 * Constant that stops the probe from making any network call. Define it in wp-config.php:
+	 * `define( 'NFD_DISABLE_REDIS_AVAILABILITY_PROBE', true );`
+	 *
+	 * A constant rather than only a filter, so a host can switch this off across a fleet without
+	 * shipping a plugin release.
+	 *
+	 * @var string
+	 */
+	const DISABLE_PROBE_CONSTANT = 'NFD_DISABLE_REDIS_AVAILABILITY_PROBE';
+
+	/**
 	 * Answer already worked out during this request, or null before the first lookup.
 	 *
 	 * @var bool|null
@@ -146,7 +157,7 @@ final class RedisServiceAvailability {
 	private static function resolve(): bool {
 		$state = self::read_state();
 
-		if ( time() < $state['next'] ) {
+		if ( self::probe_disabled() || time() < $state['next'] ) {
 			return '1' === $state['answer'];
 		}
 
@@ -188,6 +199,27 @@ final class RedisServiceAvailability {
 		);
 
 		return $result;
+	}
+
+	/**
+	 * Whether the probe may make a network call at all.
+	 *
+	 * Switching it off leaves the last answer the server gave us in place: a site that has probed
+	 * before keeps the UI it had, and one that never has stays fail-safe hidden. A brand that wants
+	 * the toggle shown regardless can still say so through
+	 * `newfold_performance_object_cache_ui_available`.
+	 *
+	 * @return bool
+	 */
+	private static function probe_disabled(): bool {
+		$disabled = defined( self::DISABLE_PROBE_CONSTANT ) && constant( self::DISABLE_PROBE_CONSTANT );
+
+		/**
+		 * Filters whether the server-side Redis availability probe is switched off.
+		 *
+		 * @param bool $disabled Default: whether NFD_DISABLE_REDIS_AVAILABILITY_PROBE is set.
+		 */
+		return (bool) apply_filters( 'newfold_performance_disable_redis_availability_probe', $disabled );
 	}
 
 	/**

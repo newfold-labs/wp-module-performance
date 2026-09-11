@@ -54,6 +54,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
 			// The probe reads its own short timeout before either call.
 			WP_Mock::onFilter( 'newfold_performance_redis_probe_timeout_seconds' )->with( 5 )->reply( 5 );
+			WP_Mock::onFilter( 'newfold_performance_disable_redis_availability_probe' )->with( false )->reply( false );
 		}
 
 		public function tearDown(): void {
@@ -295,6 +296,53 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
 			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * The wp-config constant stops the probe dead, and the last stored answer is still served.
+		 */
+		public function test_disabling_constant_stops_the_probe() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				)
+			);
+			WP_Mock::onFilter( 'newfold_performance_disable_redis_availability_probe' )->with( true )->reply( true );
+
+			Patchwork\redefine(
+				'defined',
+				function ( $name ) {
+					return RedisServiceAvailability::DISABLE_PROBE_CONSTANT === $name
+						? true
+						: Patchwork\relay( func_get_args() );
+				}
+			);
+			Patchwork\redefine(
+				'constant',
+				function ( $name ) {
+					return RedisServiceAvailability::DISABLE_PROBE_CONSTANT === $name
+						? true
+						: Patchwork\relay( func_get_args() );
+				}
+			);
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called, 'The probe must not reach the network when switched off.' );
+			$this->assertNull( $this->saved );
 		}
 
 		/**
