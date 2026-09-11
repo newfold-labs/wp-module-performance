@@ -112,13 +112,6 @@ final class RedisServiceAvailability {
 	const DISABLE_PROBE_CONSTANT = 'NFD_DISABLE_REDIS_AVAILABILITY_PROBE';
 
 	/**
-	 * Answer already worked out during this request, or null before the first lookup.
-	 *
-	 * @var bool|null
-	 */
-	private static $answer_this_request = null;
-
-	/**
 	 * HUAPI customer-error string returned when the Redis daemon is not running on the server.
 	 *
 	 * @var string
@@ -131,6 +124,13 @@ final class RedisServiceAvailability {
 	 * @var string
 	 */
 	const CUSTOMER_ERROR_PHP_UNSUPPORTED = 'phpVersionUnsupported';
+
+	/**
+	 * Answer already worked out during this request, or null before the first lookup.
+	 *
+	 * @var bool|null
+	 */
+	private static $answer_this_request = null;
 
 	/**
 	 * Whether the Redis service (daemon) is available on this site's server.
