@@ -38,6 +38,10 @@ final class RedisServiceAvailability {
 	 * network should answer this once rather than once per blog. On single sites get_site_option()
 	 * is get_option().
 	 *
+	 * Not \NewfoldLabs\WP\Module\Data\Helpers\Transient, which solves the drop-in half of this: it
+	 * is a TTL cache, and the answer here has to outlive the retry schedule so the toggle keeps its
+	 * last known state while we are backing off. It is also per-blog.
+	 *
 	 * @var string
 	 */
 	const STATE_OPTION = 'nfd_performance_redis_service_state';
