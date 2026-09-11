@@ -67,6 +67,8 @@ class ObjectCache {
 	/**
 	 * Option recording when the drop-in was last restored automatically.
 	 *
+	 * Network-wide: the drop-in file is shared by every blog in an installation.
+	 *
 	 * @var string
 	 */
 	const OPTION_RESTORE_ATTEMPTED = 'newfold_object_cache_restore_attempted';
@@ -489,18 +491,41 @@ class ObjectCache {
 			return;
 		}
 
-		if ( $exists && ! self::delete_dropin_file( $path ) ) {
-			return;
-		}
-
 		if ( ! $force && ! self::may_attempt_restore() ) {
 			return;
 		}
 
-		$result = self::enable();
+		if ( $exists && ! self::delete_dropin_file( $path ) ) {
+			return;
+		}
 
+		self::record_restore_result( self::enable() );
+	}
+
+	/**
+	 * Replace a drop-in that is not ours with our own, subject to the retry interval.
+	 *
+	 * @param string $path Full path to object-cache.php.
+	 * @return void
+	 */
+	private static function replace_foreign_dropin( $path ) {
+		if ( ! self::may_attempt_restore() ) {
+			return;
+		}
+
+		self::delete_dropin_file( $path );
+		self::record_restore_result( self::enable() );
+	}
+
+	/**
+	 * Clear the attempt marker when a restore worked, so a later loss is acted on straight away.
+	 *
+	 * @param array $result Result from self::enable().
+	 * @return void
+	 */
+	private static function record_restore_result( array $result ) {
 		if ( ! empty( $result['success'] ) ) {
-			delete_option( self::OPTION_RESTORE_ATTEMPTED );
+			delete_site_option( self::OPTION_RESTORE_ATTEMPTED );
 		}
 	}
 
@@ -514,16 +539,22 @@ class ObjectCache {
 	 *
 	 * Records the attempt as it allows it, so a failure that never returns still counts.
 	 *
+	 * Always check this before deleting anything. A call that deleted a foreign drop-in first and
+	 * then found itself throttled would leave the site with no drop-in at all, and no attempt to
+	 * put one back, for the rest of the interval.
+	 *
+	 * Network-wide, because object-cache.php sits in WP_CONTENT_DIR and is shared by every blog.
+	 *
 	 * @return bool
 	 */
 	private static function may_attempt_restore() {
-		$last = (int) get_option( self::OPTION_RESTORE_ATTEMPTED, 0 );
+		$last = (int) get_site_option( self::OPTION_RESTORE_ATTEMPTED, 0 );
 
 		if ( $last > 0 && ( time() - $last ) < self::RESTORE_RETRY_INTERVAL ) {
 			return false;
 		}
 
-		update_option( self::OPTION_RESTORE_ATTEMPTED, time(), false );
+		update_site_option( self::OPTION_RESTORE_ATTEMPTED, time() );
 
 		return true;
 	}
@@ -940,8 +971,7 @@ class ObjectCache {
 		// Preference not set: option does not exist in DB.
 		if ( self::PREFERENCE_NOT_SET_SENTINEL === $preference ) {
 			if ( self::is_available() ) {
-				self::delete_dropin_file( $path );
-				self::enable();
+				self::replace_foreign_dropin( $path );
 			}
 			return;
 		}
@@ -949,8 +979,7 @@ class ObjectCache {
 		// Preference enabled: option exists and value is on (true, 1, '1').
 		if ( in_array( $preference, array( true, 1, '1' ), true ) ) {
 			if ( self::is_available() ) {
-				self::delete_dropin_file( $path );
-				self::enable();
+				self::replace_foreign_dropin( $path );
 			}
 			return;
 		}
