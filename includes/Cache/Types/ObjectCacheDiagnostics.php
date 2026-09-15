@@ -7,8 +7,9 @@ namespace NewfoldLabs\WP\Module\Performance\Cache\Types;
  *
  * Produces a structured report describing why object caching may not be working
  * (missing phpredis, unreachable Redis, socket permissions, foreign drop-in, etc.).
- * It only reads state and attempts a single Redis PING; it never writes files,
- * options, or logs, and it never exposes credentials. The Redis password and
+ * It never writes files or logs, and it never exposes credentials. It does reach the
+ * network: the drop-in section calls ObjectCache::get_state(), which can run the
+ * cached server-side availability probe. The Redis password and
  * username are reported as "set"/"not set" presence only — their values are never
  * included in the report, even partially.
  */
@@ -57,7 +58,9 @@ final class ObjectCacheDiagnostics {
 	 * The only side effect is bootstrapping the WP_REDIS_* connection constants from wp-config/env
 	 * (via ObjectCache, exactly as the Enable preflight does). This is done once, up front, so every
 	 * section — the constant listing, the socket checks, and the live ping — reports the same
-	 * connection state. It defines constants but writes no files, options, or logs.
+	 * connection state. It defines constants and writes no files or logs. Resolving the drop-in
+	 * state goes through ObjectCache::get_state(), which can run the availability probe and store
+	 * its answer.
 	 *
 	 * @return array{
 	 *     generated:string,

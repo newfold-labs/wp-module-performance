@@ -38,13 +38,21 @@ class HiiveHelper {
 	private $method;
 
 	/**
+	 * Request timeout in seconds, or null to use the shared Hiive default.
+	 *
+	 * @var int|null
+	 */
+	private $timeout;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param string $endpoint API endpoint (relative to NFD_HIIVE_URL).
-	 * @param array  $body     Request body / query args for GET/DELETE.
-	 * @param string $method   HTTP method.
+	 * @param string   $endpoint API endpoint (relative to NFD_HIIVE_URL).
+	 * @param array    $body     Request body / query args for GET/DELETE.
+	 * @param string   $method   HTTP method.
+	 * @param int|null $timeout  Request timeout in seconds. Null uses the shared Hiive default.
 	 */
-	public function __construct( $endpoint, $body = array(), $method = 'POST' ) {
+	public function __construct( $endpoint, $body = array(), $method = 'POST', $timeout = null ) {
 		if ( ! defined( 'NFD_HIIVE_URL' ) ) {
 			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Platform constant.
 			define( 'NFD_HIIVE_URL', 'https://hiive.cloud/api' );
@@ -54,6 +62,7 @@ class HiiveHelper {
 		$this->endpoint     = (string) $endpoint;
 		$this->body         = is_array( $body ) ? $body : array();
 		$this->method       = strtoupper( (string) $method );
+		$this->timeout      = ( null === $timeout ) ? null : (int) $timeout;
 	}
 
 	/**
@@ -77,7 +86,7 @@ class HiiveHelper {
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . HiiveConnection::get_auth_token(),
 			),
-			'timeout' => SiteApisConfig::hiive_request_timeout_seconds(),
+			'timeout' => ( null === $this->timeout ) ? SiteApisConfig::hiive_request_timeout_seconds() : $this->timeout,
 		);
 
 		if ( in_array( $this->method, array( 'POST', 'PUT', 'PATCH' ), true ) ) {

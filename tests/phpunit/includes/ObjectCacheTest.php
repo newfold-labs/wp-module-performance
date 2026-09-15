@@ -247,4 +247,195 @@ class ObjectCacheTest extends TestCase {
 
 		$this->assertFileExists( $path );
 	}
+
+	/**
+	 * A restore that was tried moments ago is not tried again on the next page load.
+	 */
+	public function test_maybe_restore_dropin_waits_between_attempts() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_site_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->andReturn( time() - 60 );
+		WP_Mock::userFunction( 'update_site_option' )->never();
+
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_dropin();
+
+		$this->assertFalse( $enable_called, 'A restore tried moments ago should not run again.' );
+	}
+
+	/**
+	 * Once the interval has passed the restore is tried again, and a success clears the marker.
+	 */
+	public function test_maybe_restore_dropin_retries_once_the_interval_has_passed() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_site_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->andReturn( time() - ObjectCache::RESTORE_RETRY_INTERVAL - 1 );
+		WP_Mock::userFunction( 'update_site_option' )
+			->once()
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, \Mockery::type( 'int' ) )
+			->andReturn( true );
+		WP_Mock::userFunction( 'delete_site_option' )
+			->once()
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED );
+
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_dropin();
+
+		$this->assertTrue( $enable_called, 'The restore should run again once the interval has passed.' );
+	}
+
+	/**
+	 * Activation restores straight away: the user is waiting on it.
+	 */
+	public function test_activation_restore_ignores_the_interval() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_site_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->never();
+		WP_Mock::userFunction( 'delete_site_option' )->andReturn( true );
+
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_on_activation();
+
+		$this->assertTrue( $enable_called, 'Activation should not be held back by the retry interval.' );
+	}
+
+	/**
+	 * A throttled restore must not delete a foreign drop-in.
+	 *
+	 * Deleting first and then finding the interval had not elapsed would leave the site with no
+	 * drop-in at all, and no attempt to put one back, until the interval passed.
+	 */
+	public function test_throttled_restore_does_not_delete_a_foreign_dropin() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return true;
+			}
+		);
+		Patchwork\redefine(
+			'file_get_contents',
+			function ( $_path ) {
+				return '<?php /* Third-party object cache */';
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_site_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->andReturn( time() - 60 );
+		WP_Mock::userFunction( 'update_site_option' )->never();
+
+		$deleted = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'delete_dropin_file' ),
+			function ( $_path ) use ( &$deleted ) {
+				$deleted = true;
+				return true;
+			}
+		);
+		$enable_called = false;
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () use ( &$enable_called ) {
+				$enable_called = true;
+				return array( 'success' => true );
+			}
+		);
+
+		ObjectCache::maybe_restore_dropin();
+
+		$this->assertFalse( $deleted, 'A throttled restore must leave the existing drop-in alone.' );
+		$this->assertFalse( $enable_called );
+	}
+
+	/**
+	 * A restore that fails keeps the marker, so the next attempt waits out the interval.
+	 */
+	public function test_failed_restore_keeps_the_attempt_marker() {
+		Patchwork\redefine(
+			'file_exists',
+			function ( $_path ) {
+				return false;
+			}
+		);
+
+		WP_Mock::userFunction( 'get_option' )
+			->with( ObjectCache::OPTION_ENABLED_PREFERENCE, null )
+			->andReturn( true );
+		WP_Mock::userFunction( 'get_site_option' )
+			->with( ObjectCache::OPTION_RESTORE_ATTEMPTED, 0 )
+			->andReturn( 0 );
+		WP_Mock::userFunction( 'update_site_option' )->once()->andReturn( true );
+		WP_Mock::userFunction( 'delete_site_option' )->never();
+
+		Patchwork\redefine(
+			array( ObjectCache::class, 'enable' ),
+			function () {
+				return array(
+					'success' => false,
+					'code'    => 'hiive_not_connected',
+				);
+			}
+		);
+
+		ObjectCache::maybe_restore_dropin();
+
+		$this->assertTrue( true, 'A failed restore should not clear the marker.' );
+	}
 }

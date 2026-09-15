@@ -16,9 +16,10 @@ final class RedisCredentialsProvisioner {
 	 * Shared by the provisioning (PUT) path and the availability (GET) probe so both use the same
 	 * Hiive-connection and token/site-id resolution, with identical error codes.
 	 *
+	 * @param int|null $timeout Request timeout in seconds. Null uses the shared Hiive default.
 	 * @return array{token:string, site_id:string}|\WP_Error
 	 */
-	public static function get_hosting_context() {
+	public static function get_hosting_context( $timeout = null ) {
 		if ( ! HiiveConnection::is_connected() ) {
 			return new \WP_Error(
 				ObjectCacheErrorCodes::HIIVE_NOT_CONNECTED,
@@ -26,7 +27,7 @@ final class RedisCredentialsProvisioner {
 			);
 		}
 
-		$hiive = new HiiveHelper( '/sites/v1/customer', array(), 'GET' );
+		$hiive = new HiiveHelper( '/sites/v1/customer', array(), 'GET', $timeout );
 		$resp  = $hiive->send_request();
 
 		if ( is_wp_error( $resp ) ) {

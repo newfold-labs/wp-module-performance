@@ -21,7 +21,7 @@ controls; each public method on a handler is a subcommand.
 | `wp nfd performance cache exclude "<list>"` | Set the comma-separated cache exclusion list. |
 | `wp nfd performance link_prefetch ...` | Configure link prefetch settings. |
 | `wp nfd performance images ...` | Configure image optimization settings. |
-| `wp nfd performance object_cache diagnose` | Run read-only Redis / object cache diagnostics. |
+| `wp nfd performance object_cache diagnose` | Report Redis / object cache state. Writes nothing, but can reach the network. |
 
 ## Object cache diagnostics
 
@@ -37,9 +37,10 @@ object cache, so a failure here matches the REST error `redis_unreachable`), the
 drop-in status, and a diagnosis summary.
 
 The command replaces the standalone `redis-diagnostics.php` script that was previously uploaded to a
-site root for one-off debugging. It is **read-only**: it never writes files, options, or logs, and
-it never prints Redis credentials — `WP_REDIS_PASSWORD` and `WP_REDIS_USERNAME` are reported as
-presence only (`(set)` / `(not defined)`), never as values.
+site root for one-off debugging. It writes no files or logs and changes no site configuration,
+though resolving the drop-in state runs the availability probe, so it can reach the network and
+store that answer. It never prints Redis credentials: `WP_REDIS_PASSWORD` and `WP_REDIS_USERNAME`
+are reported as presence only (`(set)` / `(not defined)`), never as values.
 
 Pass `--strict` to make the command exit with a non-zero status when issues are found — useful in
 shell pipelines and CI. Without it, the command always exits 0 and reports findings as a warning.
