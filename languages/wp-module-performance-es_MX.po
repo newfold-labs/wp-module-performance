@@ -8,242 +8,242 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-25T07:35:09+00:00\n"
+"PO-Revision-Date: 2026-09-15T08:47:28+00:00\n"
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-performance\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: includes/Cache/Types/ObjectCache.php:253
+#: includes/Cache/Types/ObjectCache.php:269
 msgid "Another plugin's object cache is active. Disable it in that plugin first."
 msgstr "La caché de objetos de otro plugin está activa. Desactívala primero en ese plugin."
 
-#: includes/Cache/Types/ObjectCache.php:261
+#: includes/Cache/Types/ObjectCache.php:277
 #: includes/Cache/Types/ObjectCachePreflight.php:40
 msgid "Object caching is not supported on this server."
 msgstr "La caché de objetos no es compatible con este servidor."
 
-#: includes/Cache/Types/ObjectCache.php:294
+#: includes/Cache/Types/ObjectCache.php:310
 msgid "Setting up object cache. Please wait a few seconds and try again."
 msgstr "Configurando la caché de objetos. Espera unos segundos e inténtalo de nuevo."
 
-#: includes/Cache/Types/ObjectCache.php:318
-#: includes/Cache/Types/ObjectCache.php:327
+#: includes/Cache/Types/ObjectCache.php:334
+#: includes/Cache/Types/ObjectCache.php:343
 #: build/performance/performance.min.js:5
 msgid "Could not download object cache files. Please try again later."
 msgstr "No se pudieron descargar los archivos de caché de objetos. Inténtalo de nuevo más tarde."
 
-#: includes/Cache/Types/ObjectCache.php:336
-#: includes/Cache/Types/ObjectCache.php:733
-#: includes/Cache/Types/ObjectCache.php:734
-#: includes/Cache/Types/ObjectCache.php:736
-#: includes/Cache/Types/ObjectCache.php:737
-#: includes/Helpers/HiiveHelper.php:68
-#: includes/Helpers/HiiveHelper.php:101
+#: includes/Cache/Types/ObjectCache.php:352
+#: includes/Cache/Types/ObjectCache.php:811
+#: includes/Cache/Types/ObjectCache.php:812
+#: includes/Cache/Types/ObjectCache.php:814
+#: includes/Cache/Types/ObjectCache.php:815
+#: includes/Helpers/HiiveHelper.php:77
+#: includes/Helpers/HiiveHelper.php:110
 #: includes/Helpers/HostingUapiClient.php:23
 #: includes/Helpers/HostingUapiClient.php:64
-#: includes/Helpers/RedisCredentialsProvisioner.php:40
-#: includes/Helpers/RedisCredentialsProvisioner.php:50
-#: includes/Helpers/RedisCredentialsProvisioner.php:57
+#: includes/Helpers/RedisCredentialsProvisioner.php:41
+#: includes/Helpers/RedisCredentialsProvisioner.php:51
+#: includes/Helpers/RedisCredentialsProvisioner.php:58
 #: build/performance/performance.min.js:5
 msgid "Could not enable object cache right now. Please try again later."
 msgstr "No se pudo habilitar la caché de objetos en este momento. Inténtalo de nuevo más tarde."
 
-#: includes/Cache/Types/ObjectCache.php:360
+#: includes/Cache/Types/ObjectCache.php:376
 #: build/performance/performance.min.js:5
 msgid "Could not save object cache file. Check file permissions or contact support."
 msgstr "No se pudo guardar el archivo de caché de objetos. Comprueba los permisos de archivos o contacta al soporte."
 
-#: includes/Cache/Types/ObjectCache.php:425
+#: includes/Cache/Types/ObjectCache.php:441
 msgid "Could not disable object cache. Check file permissions or contact support."
 msgstr "No se pudo desactivar la caché de objetos. Comprueba los permisos de archivos o contacta al soporte."
 
-#: includes/Cache/Types/ObjectCache.php:520
+#: includes/Cache/Types/ObjectCache.php:598
 msgid "Object cache is not configured yet."
 msgstr "La caché de objetos aún no está configurada."
 
-#: includes/Cache/Types/ObjectCache.php:531
-#: includes/Cache/Types/ObjectCache.php:735
+#: includes/Cache/Types/ObjectCache.php:609
+#: includes/Cache/Types/ObjectCache.php:813
 #: build/performance/performance.min.js:5
 msgid "Could not connect to the object cache. Please try again later."
 msgstr "No se pudo conectar con la caché de objetos. Inténtalo de nuevo más tarde."
 
-#: includes/Cache/Types/ObjectCache.php:732
-#: includes/Helpers/RedisCredentialsProvisioner.php:25
+#: includes/Cache/Types/ObjectCache.php:810
+#: includes/Helpers/RedisCredentialsProvisioner.php:26
 #: build/performance/performance.min.js:5
 msgid "Object cache cannot be enabled automatically right now. Please contact support."
 msgstr "La caché de objetos no puede habilitarse automáticamente en este momento. Contacta al soporte."
 
 #. translators: %s is the phpredis extension version.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:169
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:172
 #, php-format
 msgid "phpredis loaded (version %s)."
 msgstr "phpredis cargado (versión %s)."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:174
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:177
 msgid "phpredis is NOT loaded — object cache cannot work."
 msgstr "phpredis NO está cargado: la caché de objetos no puede funcionar."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:178
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:181
 msgid "Environment"
 msgstr "Entorno"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:197
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:200
 msgid "Unix scheme requires WP_REDIS_PATH, which is not defined."
 msgstr "El esquema unix requiere WP_REDIS_PATH, que no está definido."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:200
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:203
 msgid "WP_REDIS_HOST not defined — connection will default to 127.0.0.1:6379."
 msgstr "WP_REDIS_HOST no está definido: la conexión usará 127.0.0.1:6379 de forma predeterminada."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:204
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:207
 msgid "Redis constants (this request)"
 msgstr "Constantes de Redis (esta solicitud)"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:247
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:250
 msgid "Redis connection constants are present in wp-config.php."
 msgstr "Las constantes de conexión de Redis están presentes en wp-config.php."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:251
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:254
 msgid "Redis connection constants are not all present in wp-config.php. They may be provisioned on enable, or supplied by the environment."
 msgstr "No todas las constantes de conexión de Redis están presentes en wp-config.php. Pueden aprovisionarse al activar o ser proporcionadas por el entorno."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:256
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:259
 msgid "wp-config.php constants"
 msgstr "Constantes de wp-config.php"
 
 #. translators: %s is the configured Redis scheme (e.g. tcp).
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:285
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:288
 #, php-format
 msgid "WP_REDIS_PATH is set but WP_REDIS_SCHEME is \"%s\", so the socket path is ignored. Set the scheme to \"unix\" to connect via the socket."
 msgstr "WP_REDIS_PATH está definido, pero WP_REDIS_SCHEME es \"%s\", por lo que la ruta del socket se ignora. Establezca el esquema en \"unix\" para conectar a través del socket."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:290
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:298
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:323
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:293
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:301
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:326
 msgid "Socket / path checks"
 msgstr "Comprobaciones de socket/ruta"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:296
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:299
 msgid "Scheme is unix but the socket path is empty."
 msgstr "El esquema es unix, pero la ruta del socket está vacía."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:307
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:310
 msgid "Parent directory exists."
 msgstr "El directorio superior existe."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:308
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:311
 msgid "Parent directory does not exist."
 msgstr "El directorio superior no existe."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:311
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:314
 msgid "Parent directory is searchable by PHP."
 msgstr "PHP puede explorar el directorio superior."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:312
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:315
 msgid "Parent directory is NOT searchable by PHP (a common cause of \"file exists: no\")."
 msgstr "PHP NO puede explorar el directorio superior (una causa común de \"file exists: no\")."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:315
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:318
 msgid "Socket file exists."
 msgstr "El archivo de socket existe."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:316
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:319
 msgid "Socket file does NOT exist, or PHP cannot see it."
 msgstr "El archivo de socket NO existe, o PHP no puede verlo."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:319
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:322
 msgid "Socket file is readable by PHP."
 msgstr "PHP puede leer el archivo de socket."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:320
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:323
 msgid "Socket file is NOT readable by PHP."
 msgstr "PHP NO puede leer el archivo de socket."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:340
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:343
 msgid "Redis responded to PING (this is the same check used when enabling object cache)."
 msgstr "Redis respondió a PING (es la misma comprobación que se usa al activar la caché de objetos)."
 
 #. translators: %s is the failure reason reported by Redis.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:347
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:350
 #, php-format
 msgid "Redis PING failed: %s"
 msgstr "El PING de Redis falló: %s"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:348
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:439
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:351
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:442
 msgid "unknown error"
 msgstr "error desconocido"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:351
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:354
 msgid "This is the failure that produces the REST error code \"redis_unreachable\"."
 msgstr "Este es el fallo que produce el código de error REST \"redis_unreachable\"."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:359
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:362
 msgid "Live Redis connection test"
 msgstr "Prueba de conexión con Redis en tiempo real"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:376
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:379
 msgid "object-cache.php is missing (expected until object cache is enabled)."
 msgstr "Falta object-cache.php (es lo esperado hasta que se active la caché de objetos)."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:378
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:381
 msgid "object-cache.php is the Newfold Redis drop-in."
 msgstr "object-cache.php es el drop-in de Redis de Newfold."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:380
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:383
 msgid "object-cache.php exists but is NOT the Newfold drop-in (another plugin may own it)."
 msgstr "object-cache.php existe, pero NO es el drop-in de Newfold (puede pertenecer a otro plugin)."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:384
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:387
 msgid "Object cache is enabled and active."
 msgstr "La caché de objetos está activada y activa."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:385
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:388
 msgid "Object cache is not currently active for this request."
 msgstr "La caché de objetos no está activa actualmente para esta solicitud."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:394
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:397
 msgid "Object cache drop-in"
 msgstr "Drop-in de la caché de objetos"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:411
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:414
 msgid "Install or enable the phpredis PHP extension."
 msgstr "Instale o active la extensión de PHP phpredis."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:418
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:421
 msgid "WP_REDIS_SCHEME is \"unix\" but WP_REDIS_PATH is empty or undefined. Set the socket path, or use a TCP host/port."
 msgstr "WP_REDIS_SCHEME es \"unix\", pero WP_REDIS_PATH está vacío o sin definir. Establezca la ruta del socket o use un host/puerto TCP."
 
 #. translators: %s is the Redis unix socket path.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:422
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:425
 #, php-format
 msgid "PHP cannot access the Redis unix socket at %s. Hosting must fix socket permissions or provide a TCP host/port."
 msgstr "PHP no puede acceder al socket unix de Redis en %s. El alojamiento debe corregir los permisos del socket o proporcionar un host/puerto TCP."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:432
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:435
 msgid "Another plugin's object-cache.php drop-in is active and is blocking object cache. Remove it (or disable that plugin) so the Newfold drop-in can be installed."
 msgstr "El drop-in object-cache.php de otro plugin está activo y bloquea la caché de objetos. Elimínelo (o desactive ese plugin) para que se pueda instalar el drop-in de Newfold."
 
 #. translators: %s is the failure reason reported by Redis.
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:438
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:441
 #, php-format
 msgid "Direct Redis connection failed: %s"
 msgstr "La conexión directa con Redis falló: %s"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:444
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:447
 msgid "WP_REDIS_DISABLED is true — object cache may be intentionally turned off."
 msgstr "WP_REDIS_DISABLED es true: es posible que la caché de objetos se haya desactivado intencionalmente."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:448
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:451
 msgid "All checks passed. Object cache should be able to connect to Redis."
 msgstr "Todas las comprobaciones se superaron. La caché de objetos debería poder conectarse a Redis."
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:450
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:453
 msgid "Issues found:"
 msgstr "Problemas encontrados:"
 
-#: includes/Cache/Types/ObjectCacheDiagnostics.php:460
+#: includes/Cache/Types/ObjectCacheDiagnostics.php:463
 msgid "Diagnosis summary"
 msgstr "Resumen del diagnóstico"
 
@@ -314,16 +314,16 @@ msgid "Setting 'newfold_cache_exclusion' has been updated to: '%s'."
 msgstr "La configuración 'newfold_cache_exclusion' se ha actualizado a: '%s'."
 
 #. translators: %s is the comma-separated list of valid --format values.
-#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:74
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:76
 #, php-format
 msgid "Invalid value for --format. Use one of: %s."
 msgstr "Valor no válido para --format. Use uno de los siguientes: %s."
 
-#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:131
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:133
 msgid "Object cache diagnostics passed."
 msgstr "El diagnóstico de la caché de objetos se superó correctamente."
 
-#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:135
+#: includes/Cache/Types/WPCLI/ObjectCacheCommandHandler.php:137
 msgid "Object cache diagnostics found issues. See the \"Diagnosis summary\" section above."
 msgstr "El diagnóstico de la caché de objetos encontró problemas. Consulte la sección \"Resumen del diagnóstico\" más arriba."
 
@@ -570,9 +570,9 @@ msgstr "El CSS crítico no tiene prioridad"
 msgid "Prioritizing critical CSS can improve performance by loading the most important CSS first."
 msgstr "Priorizar CSS crítico puede mejorar el rendimiento cargando primero el CSS más importante."
 
-#: includes/Helpers/HostingUapiClient.php:103
-#: includes/Helpers/HostingUapiClient.php:133
-#: includes/Helpers/HostingUapiClient.php:149
+#: includes/Helpers/HostingUapiClient.php:104
+#: includes/Helpers/HostingUapiClient.php:134
+#: includes/Helpers/HostingUapiClient.php:150
 msgid "Could not read object cache status right now."
 msgstr ""
 
