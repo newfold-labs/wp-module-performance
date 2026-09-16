@@ -23,13 +23,15 @@ class ObjectCacheCommandHandler {
 	);
 
 	/**
-	 * Runs read-only Redis / object cache diagnostics.
+	 * Reports Redis / object cache state.
 	 *
 	 * Reports phpredis availability, Redis connection constants, wp-config state,
 	 * unix socket reachability, a live Redis PING, and the object-cache drop-in
-	 * status, followed by a diagnosis summary. The report is read-only: it never
-	 * writes files or options, and it never prints Redis credentials (the password
-	 * and username are shown as presence only).
+	 * status, followed by a diagnosis summary. It writes no files and changes no
+	 * site configuration, though resolving the drop-in status runs the server-side
+	 * availability check, so it can reach the network and store that answer. It
+	 * never prints Redis credentials (the password and username are shown as
+	 * presence only).
 	 *
 	 * ## OPTIONS
 	 *

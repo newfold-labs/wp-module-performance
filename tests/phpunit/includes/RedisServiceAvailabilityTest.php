@@ -29,20 +29,79 @@ namespace {
 
 namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
+	use NewfoldLabs\WP\Module\Data\HiiveConnection;
 	use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCacheErrorCodes;
+	use Patchwork;
 	use WP_Mock;
 	use WP_Mock\Tools\TestCase;
-	use Patchwork;
 
 	/**
 	 * Tests for the cached server-side Redis availability probe.
 	 */
 	class RedisServiceAvailabilityTest extends TestCase {
 
+		/**
+		 * State written back by the code under test, or null when nothing was written.
+		 *
+		 * @var array|null
+		 */
+		private $saved;
+
+		/**
+		 * @var bool
+		 */
+		private $hal_refresh_queued = false;
+
+		/**
+		 * @var bool
+		 */
+		private $investigation_flagged = false;
+
 		public function setUp(): void {
 			WP_Mock::setUp();
 			Patchwork\restoreAll();
 			WP_Mock::passthruFunction( '__' );
+			$this->saved = null;
+			$this->hal_refresh_queued = false;
+			$this->investigation_flagged = false;
+			RedisServiceAvailability::reset_request_cache();
+
+			// The probe reads its own short timeout before either call.
+			WP_Mock::onFilter( 'newfold_performance_redis_probe_timeout_seconds' )->with( 5 )->reply( 5 );
+			WP_Mock::onFilter( 'newfold_performance_disable_redis_availability_probe' )->with( false )->reply( false );
+
+			// Connected unless a test says otherwise; an unconnected blog never reaches the probe.
+			$this->given_hiive_connected( true );
+
+			WP_Mock::userFunction( 'get_transient' )
+				->with( RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY )
+				->andReturnUsing(
+					function () {
+						return $this->hal_refresh_queued ? '1' : false;
+					}
+				);
+
+			WP_Mock::userFunction( 'get_transient' )
+				->with( RedisServiceAvailability::INVESTIGATION_FLAGGED_TRANSIENT_KEY )
+				->andReturnUsing(
+					function () {
+						return $this->investigation_flagged ? '1' : false;
+					}
+				);
+		}
+
+		/**
+		 * Stand in for the local Hiive connection check.
+		 *
+		 * @param bool $connected Whether this blog is connected.
+		 */
+		private function given_hiive_connected( bool $connected ) {
+			Patchwork\redefine(
+				array( HiiveConnection::class, 'is_connected' ),
+				function () use ( $connected ) {
+					return $connected;
+				}
+			);
 		}
 
 		public function tearDown(): void {
@@ -51,15 +110,96 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		}
 
 		/**
-		 * A cached "available" result is returned without any probe (no context/HTTP call).
+		 * Stand in for the stored probe state and capture anything written back.
+		 *
+		 * @param array|false $stored What the option returns.
 		 */
-		public function test_cached_available_short_circuits_probe() {
-			WP_Mock::userFunction( 'get_transient' )
+		private function given_stored_state( $stored, int $lock_held_until = 0 ) {
+			WP_Mock::userFunction( 'get_site_option' )
 				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY )
-				->andReturn( '1' );
+				->with( RedisServiceAvailability::STATE_OPTION, array() )
+				->andReturn( $stored );
 
-			// Probe collaborators must not be touched, and nothing is re-cached.
+			// Nothing stored means we look for an answer left by 3.9.x. Absent unless a test says so.
+			WP_Mock::userFunction( 'get_transient' )
+				->with( RedisServiceAvailability::TRANSIENT_KEY )
+				->andReturn( false );
+
+			WP_Mock::userFunction( 'get_site_option' )
+				->with( RedisServiceAvailability::LOCK_OPTION, 0 )
+				->andReturn( $lock_held_until );
+
+			WP_Mock::userFunction( 'update_site_option' )
+				->andReturnUsing(
+					function ( $key, $value ) {
+						if ( RedisServiceAvailability::STATE_OPTION === $key ) {
+							$this->saved = $value;
+						}
+						return true;
+					}
+				);
+		}
+
+		/**
+		 * A stored answer that has not expired yet.
+		 *
+		 * @param string $answer '1' or '0'.
+		 * @return array
+		 */
+		private function fresh_state( string $answer ): array {
+			return array(
+				'answer' => $answer,
+				'next'   => time() + 600,
+			);
+		}
+
+		/**
+		 * Assert the answer written back, and roughly when the next probe is due.
+		 *
+		 * @param string $answer   Expected answer.
+		 * @param int    $ttl      Expected seconds until the next probe.
+		 * @param int    $failures Expected consecutive indeterminate count.
+		 */
+		private function assert_saved( string $answer, int $ttl, int $failures = 0 ) {
+			$this->assertIsArray( $this->saved, 'Expected the probe result to be stored.' );
+			$this->assertSame( $answer, $this->saved['answer'] );
+			$this->assertEqualsWithDelta( time() + $ttl, $this->saved['next'], 5 );
+			$this->assertSame( $failures, $this->saved['failures'] );
+		}
+
+		/**
+		 * Stand in for HAL refresh / investigation guard transients.
+		 *
+		 * @param bool $refresh_queued       Whether a HAL refresh was recently queued.
+		 * @param bool $investigation_flagged Whether investigation was recently flagged.
+		 */
+		private function given_hal_guard_transients( bool $refresh_queued = false, bool $investigation_flagged = false ) {
+			$this->hal_refresh_queued = $refresh_queued;
+			$this->investigation_flagged = $investigation_flagged;
+		}
+
+		/**
+		 * Give the probe a usable hosting context.
+		 */
+		private function given_hosting_context() {
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () {
+					return array(
+						'token'   => 'jwt',
+						'site_id' => '12345',
+					);
+				}
+			);
+		}
+
+		/**
+		 * A stored "available" answer is returned without any probe (no context/HTTP call).
+		 */
+		public function test_stored_available_short_circuits_probe() {
+			$this->given_stored_state( $this->fresh_state( '1' ) );
+
+			// Probe collaborators must not be touched.
 			$context_called = false;
 			Patchwork\redefine(
 				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
@@ -73,68 +213,69 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			);
 
 			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
-			$this->assertFalse( $context_called, 'Probe should not run when a cached result exists.' );
+			$this->assertFalse( $context_called, 'Probe should not run while a stored answer is still current.' );
+			$this->assertNull( $this->saved, 'A current answer should not be rewritten.' );
 		}
 
 		/**
-		 * A cached "unavailable" result returns false without probing.
+		 * A stored "unavailable" answer returns false without probing.
 		 */
-		public function test_cached_unavailable_short_circuits_probe() {
-			WP_Mock::userFunction( 'get_transient' )
-				->once()
-				->andReturn( '0' );
+		public function test_stored_unavailable_short_circuits_probe() {
+			$this->given_stored_state( $this->fresh_state( '0' ) );
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assertNull( $this->saved );
 		}
 
 		/**
-		 * Uncached + daemon active -> true, cached for the long (available) TTL.
+		 * Nothing stored + daemon active -> true, held for the long (available) TTL.
 		 */
-		public function test_probe_daemon_active_caches_available() {
-			WP_Mock::userFunction( 'get_transient' )->andReturn( false );
-
-			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
-				}
-			);
+		public function test_probe_daemon_active_stores_available() {
+			$this->given_stored_state( false );
+			$this->given_hosting_context();
 			Patchwork\redefine(
 				array( HostingUapiClient::class, 'get_site_performance_redis' ),
 				function ( $token, $site_id ) {
 					return array(
-						'obj_cache_installed' => false,
-						'obj_cache_enabled'   => false,
+						'obj_cache_installed'  => false,
+						'obj_cache_enabled'    => false,
 						'redis_service_active' => true,
 					);
 				}
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
-				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY, '1', RedisServiceAvailability::TTL_AVAILABLE );
-
 			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_AVAILABLE );
 		}
 
 		/**
-		 * Uncached + daemon inactive (2xx body says false) -> false, cached for the shorter unavailable TTL.
+		 * An answer whose hold has elapsed is re-probed rather than reused.
 		 */
-		public function test_probe_daemon_inactive_caches_unavailable() {
-			WP_Mock::userFunction( 'get_transient' )->andReturn( false );
-
+		public function test_elapsed_state_reprobes() {
+			$this->given_stored_state(
+				array(
+					'answer' => '0',
+					'next'   => time() - 1,
+				)
+			);
+			$this->given_hosting_context();
 			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return array( 'redis_service_active' => true );
 				}
 			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_AVAILABLE );
+		}
+
+		/**
+		 * Nothing stored + daemon inactive (2xx body says false) -> false, held for the shorter TTL.
+		 */
+		public function test_probe_daemon_inactive_stores_unavailable() {
+			$this->given_stored_state( false );
+			$this->given_hosting_context();
 			Patchwork\redefine(
 				array( HostingUapiClient::class, 'get_site_performance_redis' ),
 				function ( $token, $site_id ) {
@@ -142,28 +283,16 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				}
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
-				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY, '0', RedisServiceAvailability::TTL_UNAVAILABLE );
-
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_UNAVAILABLE );
 		}
 
 		/**
-		 * A `redisServiceInactive` HUAPI error is definitive: unavailable, cached for the unavailable TTL.
+		 * A `redisServiceInactive` HUAPI error is definitive: unavailable, held for the unavailable TTL.
 		 */
 		public function test_probe_service_inactive_error_is_definitive_unavailable() {
-			WP_Mock::userFunction( 'get_transient' )->andReturn( false );
-
-			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
-				}
-			);
+			$this->given_stored_state( false );
+			$this->given_hosting_context();
 			Patchwork\redefine(
 				array( HostingUapiClient::class, 'get_site_performance_redis' ),
 				function ( $token, $site_id ) {
@@ -175,11 +304,8 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				}
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
-				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY, '0', RedisServiceAvailability::TTL_UNAVAILABLE );
-
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_UNAVAILABLE );
 		}
 
 		/**
@@ -190,7 +316,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		 * covers the wire format, where a mismatch shows up as the wrong TTL instead of passing quietly.
 		 */
 		public function test_huapi_wire_error_shape_classifies_as_definitive_unavailable() {
-			WP_Mock::userFunction( 'get_transient' )->andReturn( false );
+			$this->given_stored_state( false );
 
 			if ( ! defined( 'NFD_SITES_API' ) ) {
 				define( 'NFD_SITES_API', 'https://hosting.uapi.newfold.com/' );
@@ -198,24 +324,13 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			WP_Mock::onFilter( 'newfold_performance_hosting_uapi_base_url' )
 				->with( 'https://hosting.uapi.newfold.com/' )
 				->reply( 'https://hosting.uapi.newfold.com/' );
-			WP_Mock::onFilter( 'newfold_performance_hosting_uapi_request_timeout_seconds' )
-				->with( 30 )
-				->reply( 30 );
 			WP_Mock::userFunction( 'trailingslashit' )->andReturnUsing(
 				function ( $s ) {
 					return rtrim( (string) $s, '/' ) . '/';
 				}
 			);
 
-			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
-				}
-			);
+			$this->given_hosting_context();
 
 			WP_Mock::userFunction( 'wp_remote_request' )->once()->andReturn( array( 'stub' => true ) );
 			WP_Mock::userFunction( 'wp_remote_retrieve_response_code' )->andReturn( 512 );
@@ -224,28 +339,16 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				json_encode( array( 'error' => RedisServiceAvailability::CUSTOMER_ERROR_SERVICE_INACTIVE ) )
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
-				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY, '0', RedisServiceAvailability::TTL_UNAVAILABLE );
-
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_UNAVAILABLE );
 		}
 
 		/**
-		 * An unknown HUAPI error is indeterminate: fails safe to false, cached only for the short TTL so it re-probes soon.
+		 * An unknown HUAPI error is indeterminate: fails safe to false, held only briefly so it re-probes soon.
 		 */
 		public function test_probe_unknown_error_is_indeterminate() {
-			WP_Mock::userFunction( 'get_transient' )->andReturn( false );
-
-			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
-				}
-			);
+			$this->given_stored_state( false );
+			$this->given_hosting_context();
 			Patchwork\redefine(
 				array( HostingUapiClient::class, 'get_site_performance_redis' ),
 				function ( $token, $site_id ) {
@@ -253,20 +356,327 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				}
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			// Nothing was ever stored, so there is no answer to keep and we fail safe to hidden.
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * Both probe calls are given the short budget, not the 30 second default.
+		 */
+		public function test_probe_passes_its_short_timeout_to_both_calls() {
+			$this->given_stored_state( false );
+
+			$context_timeout = null;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function ( $timeout = null ) use ( &$context_timeout ) {
+					$context_timeout = $timeout;
+					return array(
+						'token'   => 'jwt',
+						'site_id' => '12345',
+					);
+				}
+			);
+
+			$status_timeout = null;
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id, $timeout = null ) use ( &$status_timeout ) {
+					$status_timeout = $timeout;
+					return array( 'redis_service_active' => true );
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertSame( 5, $context_timeout, 'The Hiive call must use the probe budget.' );
+			$this->assertSame( 5, $status_timeout, 'The Hosting UAPI call must use the probe budget.' );
+		}
+
+		/**
+		 * A blog that is not connected makes no call, so it must not disturb the shared schedule.
+		 */
+		public function test_unconnected_blog_does_not_touch_the_schedule() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				)
+			);
+			$this->given_hiive_connected( false );
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called );
+			$this->assertNull( $this->saved, 'An unconnected blog must not count as a failure.' );
+		}
+
+		/**
+		 * An answer the server has not confirmed in a week stops being trusted.
+		 */
+		public function test_answer_is_not_trusted_forever() {
+			$this->given_stored_state(
+				array(
+					'answer'      => '1',
+					'next'        => time() + 600,
+					'failures'    => 4,
+					'answered_at' => time() - RedisServiceAvailability::MAX_ANSWER_AGE - 1,
+				)
+			);
+
+			$this->assertFalse(
+				RedisServiceAvailability::is_daemon_available(),
+				'A week-old answer should fall back to hidden rather than stand indefinitely.'
+			);
+		}
+
+		/**
+		 * A site updating from 3.9.x keeps the answer its transient held, rather than probing with
+		 * nothing stored and possibly hiding a toggle it was already showing.
+		 */
+		public function test_answer_is_carried_over_from_the_old_transient() {
+			WP_Mock::userFunction( 'get_site_option' )
 				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY, '0', RedisServiceAvailability::TTL_INDETERMINATE );
+				->with( RedisServiceAvailability::STATE_OPTION, array() )
+				->andReturn( array() );
+			WP_Mock::userFunction( 'get_transient' )
+				->once()
+				->with( RedisServiceAvailability::TRANSIENT_KEY )
+				->andReturn( '1' );
+			WP_Mock::userFunction( 'delete_transient' )
+				->once()
+				->with( RedisServiceAvailability::TRANSIENT_KEY );
+			WP_Mock::userFunction( 'update_site_option' )
+				->andReturnUsing(
+					function ( $key, $value ) {
+						if ( RedisServiceAvailability::STATE_OPTION === $key ) {
+							$this->saved = $value;
+						}
+						return true;
+					}
+				);
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called, 'The carried-over answer should stand in for a probe.' );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_UNAVAILABLE );
+		}
+
+		/**
+		 * The wp-config constant stops the probe dead, and the last stored answer is still served.
+		 */
+		public function test_disabling_constant_stops_the_probe() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				)
+			);
+			WP_Mock::onFilter( 'newfold_performance_disable_redis_availability_probe' )->with( true )->reply( true );
+
+			Patchwork\redefine(
+				'defined',
+				function ( $name ) {
+					return RedisServiceAvailability::DISABLE_PROBE_CONSTANT === $name
+						? true
+						: Patchwork\relay( func_get_args() );
+				}
+			);
+			Patchwork\redefine(
+				'constant',
+				function ( $name ) {
+					return RedisServiceAvailability::DISABLE_PROBE_CONSTANT === $name
+						? true
+						: Patchwork\relay( func_get_args() );
+				}
+			);
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called, 'The probe must not reach the network when switched off.' );
+			$this->assertNull( $this->saved );
+		}
+
+		/**
+		 * Asking twice in one request reads the stored state once. The runtime filter and the REST
+		 * settings endpoint can both ask during the same page load.
+		 */
+		public function test_answer_is_reused_for_the_rest_of_the_request() {
+			$this->given_stored_state( $this->fresh_state( '1' ) );
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+		}
+
+		/**
+		 * While another request is already probing, serve what we have rather than probing too.
+		 */
+		public function test_probe_in_flight_elsewhere_is_not_repeated() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				),
+				time() + 30
+			);
+
+			$context_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$context_called ) {
+					$context_called = true;
+					return array(
+						'token'   => 't',
+						'site_id' => '1',
+					);
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $context_called, 'Only the request holding the lock should probe.' );
+			$this->assertNull( $this->saved, 'A request that did not probe should not write state.' );
+		}
+
+		/**
+		 * An indeterminate probe keeps the last answer the server gave us, so a Hiive blip does not
+		 * make the object cache toggle disappear.
+		 */
+		public function test_indeterminate_probe_keeps_the_last_known_answer() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '1',
+					'next'     => time() - 1,
+					'failures' => 0,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error( 'nfd_hosting_uapi_error', 'boom', array( 'status' => 500 ) );
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * Each consecutive indeterminate probe waits twice as long as the one before it.
+		 */
+		public function test_repeated_indeterminate_probes_back_off() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '0',
+					'next'     => time() - 1,
+					'failures' => 3,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error( 'nfd_hosting_uapi_error', 'boom', array( 'status' => 500 ) );
+				}
+			);
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			// Fourth consecutive failure: 300 * 2^3.
+			$this->assert_saved( '0', RedisServiceAvailability::TTL_INDETERMINATE * 8, 4 );
+		}
+
+		/**
+		 * The backoff stops growing at the ceiling, and so does the stored count.
+		 */
+		public function test_indeterminate_backoff_stops_at_the_ceiling() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '0',
+					'next'     => time() - 1,
+					'failures' => RedisServiceAvailability::MAX_FAILURES,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error( 'nfd_hosting_uapi_error', 'boom', array( 'status' => 500 ) );
+				}
+			);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved(
+				'0',
+				RedisServiceAvailability::TTL_INDETERMINATE_MAX,
+				RedisServiceAvailability::MAX_FAILURES
+			);
+		}
+
+		/**
+		 * A server that answers again clears the backoff, so the next blip starts from the short delay.
+		 */
+		public function test_definitive_answer_clears_the_failure_count() {
+			$this->given_stored_state(
+				array(
+					'answer'   => '0',
+					'next'     => time() - 1,
+					'failures' => 5,
+				)
+			);
+			$this->given_hosting_context();
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return array( 'redis_service_active' => true );
+				}
+			);
+
+			$this->assertTrue( RedisServiceAvailability::is_daemon_available() );
+			$this->assert_saved( '1', RedisServiceAvailability::TTL_AVAILABLE, 0 );
 		}
 
 		/**
 		 * When the hosting context cannot be fetched (e.g. Hiive not connected), the probe is indeterminate:
-		 * false, cached only for the short TTL.
+		 * false, held only briefly.
 		 */
 		public function test_probe_no_context_is_indeterminate() {
-			WP_Mock::userFunction( 'get_transient' )->andReturn( false );
-
+			$this->given_stored_state( false );
 			Patchwork\redefine(
 				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
 				function () {
@@ -284,38 +694,18 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				}
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
-				->once()
-				->with( RedisServiceAvailability::TRANSIENT_KEY, '0', RedisServiceAvailability::TTL_INDETERMINATE );
-
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertFalse( $uapi_called, 'HUAPI must not be probed without a hosting context.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 
 		/**
-		 * A HUAPI 403 should queue a HAL refresh and back off further HUAPI probes.
+		 * A HUAPI 403 should queue a HAL refresh and treat the probe as indeterminate.
 		 */
 		public function test_probe_403_queues_hal_refresh_and_backs_off() {
-			WP_Mock::userFunction( 'get_transient' )
-				->andReturnUsing(
-					function ( $key ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							return false;
-						}
-
-						return false;
-					}
-				);
-
-			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
-				}
-			);
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients();
+			$this->given_hosting_context();
 
 			$uapi_calls = 0;
 			Patchwork\redefine(
@@ -350,53 +740,26 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			);
 
 			WP_Mock::userFunction( 'set_transient' )
-				->andReturnUsing(
-					function ( $key, $value, $ttl ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							$this->assertSame( '0', $value );
-							$this->assertSame( RedisServiceAvailability::TTL_HUAPI_AUTH_BACKOFF, $ttl );
-						}
-
-						if ( RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY === $key ) {
-							$this->assertSame( '1', $value );
-							$this->assertSame( RedisServiceAvailability::TTL_HAL_REFRESH_QUEUED, $ttl );
-						}
-					}
+				->once()
+				->with(
+					RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY,
+					'1',
+					RedisServiceAvailability::TTL_HAL_REFRESH_QUEUED
 				);
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertTrue( $queue_called, 'HAL refresh should be queued after a HUAPI 403.' );
 			$this->assertSame( 1, $uapi_calls, 'HUAPI should be probed only once per uncached check.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 
 		/**
 		 * A persistent HUAPI 403 after a queued HAL refresh should flag the site for investigation.
 		 */
 		public function test_probe_403_after_refresh_queued_still_forbidden_flags_investigation() {
-			WP_Mock::userFunction( 'get_transient' )
-				->andReturnUsing(
-					function ( $key ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							return false;
-						}
-
-						if ( RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY === $key ) {
-							return '1';
-						}
-
-						return false;
-					}
-				);
-
-			Patchwork\redefine(
-				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
-				function () {
-					return array(
-						'token'   => 'jwt',
-						'site_id' => '12345',
-					);
-				}
-			);
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients( true );
+			$this->given_hosting_context();
 
 			Patchwork\redefine(
 				array( HostingUapiClient::class, 'get_site_performance_redis' ),
@@ -431,44 +794,36 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			);
 
 			WP_Mock::userFunction( 'set_transient' )
-				->andReturnUsing(
-					function ( $key, $value, $ttl ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							$this->assertSame( '0', $value );
-							$this->assertSame( RedisServiceAvailability::TTL_INVESTIGATION_FLAGGED, $ttl );
-						}
-
-						if ( RedisServiceAvailability::INVESTIGATION_FLAGGED_TRANSIENT_KEY === $key ) {
-							$this->assertSame( '1', $value );
-							$this->assertSame( RedisServiceAvailability::TTL_INVESTIGATION_FLAGGED, $ttl );
-						}
-					}
+				->once()
+				->with(
+					RedisServiceAvailability::INVESTIGATION_FLAGGED_TRANSIENT_KEY,
+					'1',
+					RedisServiceAvailability::TTL_INVESTIGATION_FLAGGED
 				);
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertTrue( $flagged, 'Site should be flagged when HUAPI auth still fails after a queued HAL refresh.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 
 		/**
 		 * After investigation is flagged, further probes should back off without calling HUAPI.
 		 */
 		public function test_investigation_flagged_skips_huapi_probe() {
-			WP_Mock::userFunction( 'get_transient' )
-				->andReturnUsing(
-					function ( $key ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							return false;
-						}
-
-						if ( RedisServiceAvailability::INVESTIGATION_FLAGGED_TRANSIENT_KEY === $key ) {
-							return '1';
-						}
-
-						return false;
-					}
-				);
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients( false, true );
 
 			$uapi_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$uapi_called ) {
+					$uapi_called = true;
+					return array(
+						'token'   => 'jwt',
+						'site_id' => '12345',
+					);
+				}
+			);
 			Patchwork\redefine(
 				array( HostingUapiClient::class, 'get_site_performance_redis' ),
 				function ( $token, $site_id ) use ( &$uapi_called ) {
@@ -477,32 +832,17 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				}
 			);
 
-			WP_Mock::userFunction( 'set_transient' )
-				->once()
-				->with(
-					RedisServiceAvailability::TRANSIENT_KEY,
-					'0',
-					RedisServiceAvailability::TTL_INVESTIGATION_FLAGGED
-				);
-
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertFalse( $uapi_called, 'HUAPI must not be probed while investigation backoff is active.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 
 		/**
 		 * Missing HAL site id in the Hiive customer payload should queue a HAL refresh and back off.
 		 */
 		public function test_probe_context_hal_site_id_missing_queues_hal_refresh() {
-			WP_Mock::userFunction( 'get_transient' )
-				->andReturnUsing(
-					function ( $key ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							return false;
-						}
-
-						return false;
-					}
-				);
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients();
 
 			Patchwork\redefine(
 				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
@@ -533,18 +873,17 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			);
 
 			WP_Mock::userFunction( 'set_transient' )
-				->andReturnUsing(
-					function ( $key, $value, $ttl ) {
-						if ( RedisServiceAvailability::TRANSIENT_KEY === $key ) {
-							$this->assertSame( '0', $value );
-							$this->assertSame( RedisServiceAvailability::TTL_INDETERMINATE, $ttl );
-						}
-					}
+				->once()
+				->with(
+					RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY,
+					'1',
+					RedisServiceAvailability::TTL_HAL_REFRESH_QUEUED
 				);
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertTrue( $queue_called, 'HAL refresh should be queued when the hosting context is missing site id.' );
 			$this->assertFalse( $uapi_called, 'HUAPI must not be probed without a valid hosting context.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 	}
 }
