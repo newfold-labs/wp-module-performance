@@ -5,23 +5,23 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers;
 use NewfoldLabs\WP\Module\Data\HiiveConnection;
 
 /**
- * Hiive HAL customer-data refresh and investigation flag endpoints.
+ * Hiive HAL refresh queue and investigation flag endpoints.
  */
 final class HiiveHalDataClient {
 
 	/**
-	 * Ask Hiive to refresh HAL customer data (tenant_id, site_id) for this site.
+	 * Ask Hiive to queue a HAL customer-data refresh (tenant_id, site_id) for this site.
 	 *
 	 * @return array<string, mixed>|\WP_Error
 	 */
-	public static function refresh_customer_data() {
+	public static function queue_hal_refresh() {
 		if ( ! HiiveConnection::is_connected() ) {
 			return new \WP_Error( 'hiive_not_connected', 'Hiive is not connected.' );
 		}
 
 		$hiive = new HiiveHelper(
 			'/sites/v1/hal/refresh-customer-data',
-			array( 'force' => true ),
+			array(),
 			'POST'
 		);
 

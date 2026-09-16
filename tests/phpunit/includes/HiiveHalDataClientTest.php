@@ -63,7 +63,7 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			Patchwork\restoreAll();
 		}
 
-		public function test_refresh_customer_data_returns_error_when_hiive_not_connected() {
+		public function test_queue_hal_refresh_returns_error_when_hiive_not_connected() {
 			Patchwork\redefine(
 				array( HiiveConnection::class, 'is_connected' ),
 				function () {
@@ -71,12 +71,12 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				}
 			);
 
-			$result = HiiveHalDataClient::refresh_customer_data();
+			$result = HiiveHalDataClient::queue_hal_refresh();
 			$this->assertTrue( is_wp_error( $result ) );
 			$this->assertSame( 'hiive_not_connected', $result->get_error_code() );
 		}
 
-		public function test_refresh_customer_data_returns_decoded_payload() {
+		public function test_queue_hal_refresh_returns_decoded_payload() {
 			Patchwork\redefine(
 				array( HiiveConnection::class, 'is_connected' ),
 				function () {
@@ -105,16 +105,14 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Test fixture.
 				json_encode(
 					array(
-						'refreshed' => true,
-						'tenant_id' => '123',
+						'queued' => true,
 					)
 				)
 			);
 
-			$result = HiiveHalDataClient::refresh_customer_data();
+			$result = HiiveHalDataClient::queue_hal_refresh();
 			$this->assertIsArray( $result );
-			$this->assertTrue( $result['refreshed'] );
-			$this->assertSame( '123', $result['tenant_id'] );
+			$this->assertTrue( $result['queued'] );
 		}
 
 		public function test_flag_investigation_returns_true_on_success() {

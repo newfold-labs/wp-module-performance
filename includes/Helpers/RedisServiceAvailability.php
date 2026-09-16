@@ -26,6 +26,20 @@ final class RedisServiceAvailability {
 	const TRANSIENT_KEY = 'nfd_performance_redis_service_available';
 
 	/**
+	 * Transient key indicating a HAL refresh was recently queued on Hiive.
+	 *
+	 * @var string
+	 */
+	const HAL_REFRESH_QUEUED_TRANSIENT_KEY = 'nfd_hal_refresh_queued';
+
+	/**
+	 * Transient key indicating this site was recently flagged for HUAPI investigation.
+	 *
+	 * @var string
+	 */
+	const INVESTIGATION_FLAGGED_TRANSIENT_KEY = 'nfd_hal_investigation_flagged';
+
+	/**
 	 * Cache TTL (seconds) when the daemon is confirmed available. Longer, because a box that has
 	 * Redis today is very unlikely to lose it.
 	 *
@@ -48,6 +62,28 @@ final class RedisServiceAvailability {
 	 * @var int
 	 */
 	const TTL_INDETERMINATE = 300; // 5 minutes.
+
+	/**
+	 * Cache TTL (seconds) when HUAPI auth fails (403/forbidden). Longer backoff so we do not
+	 * hammer HUAPI while Hiive refreshes stale tenant/site metadata on the queue.
+	 *
+	 * @var int
+	 */
+	const TTL_HUAPI_AUTH_BACKOFF = 3600; // 1 hour.
+
+	/**
+	 * Cache TTL (seconds) for the HAL refresh queued guard transient.
+	 *
+	 * @var int
+	 */
+	const TTL_HAL_REFRESH_QUEUED = 3600; // 1 hour.
+
+	/**
+	 * Cache TTL (seconds) after flagging a site for investigation.
+	 *
+	 * @var int
+	 */
+	const TTL_INVESTIGATION_FLAGGED = 86400; // 24 hours.
 
 	/**
 	 * HUAPI customer-error string returned when the Redis daemon is not running on the server.
@@ -77,21 +113,21 @@ final class RedisServiceAvailability {
 			return '1' === $cached;
 		}
 
-		$result = self::probe();
+		$probe = self::probe();
 
-		if ( null === $result ) {
-			// Indeterminate: fail safe to unavailable, but re-probe soon.
-			set_transient( self::TRANSIENT_KEY, '0', self::TTL_INDETERMINATE );
+		if ( null === $probe['available'] ) {
+			set_transient( self::TRANSIENT_KEY, '0', $probe['cache_ttl'] );
+
 			return false;
 		}
 
 		set_transient(
 			self::TRANSIENT_KEY,
-			$result ? '1' : '0',
-			$result ? self::TTL_AVAILABLE : self::TTL_UNAVAILABLE
+			$probe['available'] ? '1' : '0',
+			$probe['available'] ? self::TTL_AVAILABLE : self::TTL_UNAVAILABLE
 		);
 
-		return $result;
+		return $probe['available'];
 	}
 
 	/**
@@ -106,56 +142,62 @@ final class RedisServiceAvailability {
 	/**
 	 * Ask the hosting API whether the Redis daemon is active on this site's server.
 	 *
-	 * @return bool|null True/false when the server answered definitively; null when the answer could
-	 *                   not be determined (Hiive not connected, token/site missing, or a transient
-	 *                   HTTP error) and the caller should not cache the result for long.
+	 * @return array{available: ?bool, cache_ttl: int} `available` null when indeterminate;
+	 *                                                 `cache_ttl` controls how long to back off.
 	 */
-	private static function probe() {
+	private static function probe(): array {
+		if ( get_transient( self::INVESTIGATION_FLAGGED_TRANSIENT_KEY ) ) {
+			return array(
+				'available'  => null,
+				'cache_ttl'  => self::TTL_INVESTIGATION_FLAGGED,
+			);
+		}
+
 		$context = RedisCredentialsProvisioner::get_hosting_context();
 		if ( is_wp_error( $context ) ) {
-			if ( self::maybe_refresh_hal_after_context_error( $context ) ) {
-				$context = RedisCredentialsProvisioner::get_hosting_context();
+			if ( self::maybe_queue_hal_refresh_after_context_error( $context ) ) {
+				return array(
+					'available' => null,
+					'cache_ttl' => self::TTL_INDETERMINATE,
+				);
 			}
-			if ( is_wp_error( $context ) ) {
-				return null;
-			}
+
+			return array(
+				'available' => null,
+				'cache_ttl' => self::TTL_INDETERMINATE,
+			);
 		}
 
 		$status = self::probe_huapi_redis( $context );
 
 		if ( is_wp_error( $status ) && self::is_huapi_auth_failure( $status ) ) {
-			if ( self::maybe_refresh_hal_and_retry() ) {
-				$context = RedisCredentialsProvisioner::get_hosting_context();
-				if ( ! is_wp_error( $context ) ) {
-					$status = self::probe_huapi_redis( $context );
-				}
-			}
+			return self::handle_huapi_auth_failure();
 		}
 
 		if ( is_wp_error( $status ) ) {
-			if ( self::is_huapi_auth_failure( $status ) ) {
-				HiiveHalDataClient::flag_investigation(
-					'HUAPI redis probe forbidden after HAL refresh',
-					'wp-module-performance'
-				);
-			}
-
 			$data           = $status->get_error_data();
 			$customer_error = ( is_array( $data ) && isset( $data['customer_error'] ) ) ? (string) $data['customer_error'] : '';
 
-			// These customer errors mean the box definitively cannot run object cache.
 			if (
 				self::CUSTOMER_ERROR_SERVICE_INACTIVE === $customer_error
 				|| self::CUSTOMER_ERROR_PHP_UNSUPPORTED === $customer_error
 			) {
-				return false;
+				return array(
+					'available' => false,
+					'cache_ttl' => self::TTL_UNAVAILABLE,
+				);
 			}
 
-			// Any other error (network, auth, unknown) is indeterminate.
-			return null;
+			return array(
+				'available' => null,
+				'cache_ttl' => self::TTL_INDETERMINATE,
+			);
 		}
 
-		return ! empty( $status['redis_service_active'] );
+		return array(
+			'available' => ! empty( $status['redis_service_active'] ),
+			'cache_ttl' => self::TTL_AVAILABLE,
+		);
 	}
 
 	/**
@@ -169,32 +211,84 @@ final class RedisServiceAvailability {
 	}
 
 	/**
-	 * Ask Hiive to refresh HAL customer data and return whether a refresh was performed.
+	 * Back off HUAPI probes after auth failures; queue HAL refresh once, then flag investigation.
 	 *
-	 * @return bool
+	 * @return array{available: ?bool, cache_ttl: int}
 	 */
-	private static function maybe_refresh_hal_and_retry(): bool {
-		$refresh = HiiveHalDataClient::refresh_customer_data();
-		if ( is_wp_error( $refresh ) ) {
-			return false;
+	private static function handle_huapi_auth_failure(): array {
+		if ( get_transient( self::HAL_REFRESH_QUEUED_TRANSIENT_KEY ) ) {
+			if ( ! get_transient( self::INVESTIGATION_FLAGGED_TRANSIENT_KEY ) ) {
+				HiiveHalDataClient::flag_investigation(
+					'HUAPI redis probe forbidden after queued HAL refresh',
+					'wp-module-performance'
+				);
+				set_transient(
+					self::INVESTIGATION_FLAGGED_TRANSIENT_KEY,
+					'1',
+					self::TTL_INVESTIGATION_FLAGGED
+				);
+			}
+
+			return array(
+				'available' => null,
+				'cache_ttl' => self::TTL_INVESTIGATION_FLAGGED,
+			);
 		}
 
-		return ! empty( $refresh['refreshed'] );
+		if ( self::maybe_queue_hal_refresh() ) {
+			return array(
+				'available' => null,
+				'cache_ttl' => self::TTL_HUAPI_AUTH_BACKOFF,
+			);
+		}
+
+		return array(
+			'available' => null,
+			'cache_ttl' => self::TTL_HUAPI_AUTH_BACKOFF,
+		);
 	}
 
 	/**
-	 * Refresh HAL data when the hosting context is missing due to stale Hiive customer payload.
+	 * Ask Hiive to queue a HAL refresh and return whether the request was accepted.
+	 *
+	 * @return bool
+	 */
+	private static function maybe_queue_hal_refresh(): bool {
+		if ( get_transient( self::HAL_REFRESH_QUEUED_TRANSIENT_KEY ) ) {
+			return false;
+		}
+
+		$queued = HiiveHalDataClient::queue_hal_refresh();
+		if ( is_wp_error( $queued ) ) {
+			return false;
+		}
+
+		if ( empty( $queued['queued'] ) ) {
+			return false;
+		}
+
+		set_transient(
+			self::HAL_REFRESH_QUEUED_TRANSIENT_KEY,
+			'1',
+			self::TTL_HAL_REFRESH_QUEUED
+		);
+
+		return true;
+	}
+
+	/**
+	 * Queue HAL refresh when the hosting context is missing due to stale Hiive customer payload.
 	 *
 	 * @param \WP_Error $error Context resolution error.
 	 * @return bool
 	 */
-	private static function maybe_refresh_hal_after_context_error( $error ): bool {
+	private static function maybe_queue_hal_refresh_after_context_error( $error ): bool {
 		$code = $error->get_error_code();
 		if ( ! in_array( $code, array( ObjectCacheErrorCodes::HUAPI_TOKEN_UNAVAILABLE, ObjectCacheErrorCodes::HAL_SITE_ID_MISSING ), true ) ) {
 			return false;
 		}
 
-		return self::maybe_refresh_hal_and_retry();
+		return self::maybe_queue_hal_refresh();
 	}
 
 	/**
