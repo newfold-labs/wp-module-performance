@@ -29,10 +29,11 @@ namespace {
 
 namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
+	use NewfoldLabs\WP\Module\Data\HiiveConnection;
+	use NewfoldLabs\WP\Module\Performance\Cache\Types\ObjectCacheErrorCodes;
+	use Patchwork;
 	use WP_Mock;
 	use WP_Mock\Tools\TestCase;
-	use Patchwork;
-	use NewfoldLabs\WP\Module\Data\HiiveConnection;
 
 	/**
 	 * Tests for the cached server-side Redis availability probe.
@@ -46,11 +47,23 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 		 */
 		private $saved;
 
+		/**
+		 * @var bool
+		 */
+		private $hal_refresh_queued = false;
+
+		/**
+		 * @var bool
+		 */
+		private $investigation_flagged = false;
+
 		public function setUp(): void {
 			WP_Mock::setUp();
 			Patchwork\restoreAll();
 			WP_Mock::passthruFunction( '__' );
 			$this->saved = null;
+			$this->hal_refresh_queued = false;
+			$this->investigation_flagged = false;
 			RedisServiceAvailability::reset_request_cache();
 
 			// The probe reads its own short timeout before either call.
@@ -59,6 +72,22 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
 			// Connected unless a test says otherwise; an unconnected blog never reaches the probe.
 			$this->given_hiive_connected( true );
+
+			WP_Mock::userFunction( 'get_transient' )
+				->with( RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY )
+				->andReturnUsing(
+					function () {
+						return $this->hal_refresh_queued ? '1' : false;
+					}
+				);
+
+			WP_Mock::userFunction( 'get_transient' )
+				->with( RedisServiceAvailability::INVESTIGATION_FLAGGED_TRANSIENT_KEY )
+				->andReturnUsing(
+					function () {
+						return $this->investigation_flagged ? '1' : false;
+					}
+				);
 		}
 
 		/**
@@ -136,6 +165,17 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 			$this->assertSame( $answer, $this->saved['answer'] );
 			$this->assertEqualsWithDelta( time() + $ttl, $this->saved['next'], 5 );
 			$this->assertSame( $failures, $this->saved['failures'] );
+		}
+
+		/**
+		 * Stand in for HAL refresh / investigation guard transients.
+		 *
+		 * @param bool $refresh_queued       Whether a HAL refresh was recently queued.
+		 * @param bool $investigation_flagged Whether investigation was recently flagged.
+		 */
+		private function given_hal_guard_transients( bool $refresh_queued = false, bool $investigation_flagged = false ) {
+			$this->hal_refresh_queued = $refresh_queued;
+			$this->investigation_flagged = $investigation_flagged;
 		}
 
 		/**
@@ -656,6 +696,193 @@ namespace NewfoldLabs\WP\Module\Performance\Helpers {
 
 			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
 			$this->assertFalse( $uapi_called, 'HUAPI must not be probed without a hosting context.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * A HUAPI 403 should queue a HAL refresh and treat the probe as indeterminate.
+		 */
+		public function test_probe_403_queues_hal_refresh_and_backs_off() {
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients();
+			$this->given_hosting_context();
+
+			$uapi_calls = 0;
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) use ( &$uapi_calls ) {
+					++$uapi_calls;
+					return new \WP_Error(
+						'nfd_hosting_uapi_error',
+						'forbidden',
+						array(
+							'status'         => 403,
+							'customer_error' => 'forbidden',
+						)
+					);
+				}
+			);
+
+			$queue_called = false;
+			Patchwork\redefine(
+				array( HiiveHalDataClient::class, 'queue_hal_refresh' ),
+				function () use ( &$queue_called ) {
+					$queue_called = true;
+					return array( 'queued' => true );
+				}
+			);
+
+			Patchwork\redefine(
+				array( HiiveHalDataClient::class, 'flag_investigation' ),
+				function () {
+					$this->fail( 'flag_investigation should not run on the first HUAPI 403.' );
+				}
+			);
+
+			WP_Mock::userFunction( 'set_transient' )
+				->once()
+				->with(
+					RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY,
+					'1',
+					RedisServiceAvailability::TTL_HAL_REFRESH_QUEUED
+				);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assertTrue( $queue_called, 'HAL refresh should be queued after a HUAPI 403.' );
+			$this->assertSame( 1, $uapi_calls, 'HUAPI should be probed only once per uncached check.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * A persistent HUAPI 403 after a queued HAL refresh should flag the site for investigation.
+		 */
+		public function test_probe_403_after_refresh_queued_still_forbidden_flags_investigation() {
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients( true );
+			$this->given_hosting_context();
+
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) {
+					return new \WP_Error(
+						'nfd_hosting_uapi_error',
+						'forbidden',
+						array(
+							'status'         => 403,
+							'customer_error' => 'forbidden',
+						)
+					);
+				}
+			);
+
+			Patchwork\redefine(
+				array( HiiveHalDataClient::class, 'queue_hal_refresh' ),
+				function () {
+					$this->fail( 'queue_hal_refresh should not run when a refresh is already queued.' );
+				}
+			);
+
+			$flagged = false;
+			Patchwork\redefine(
+				array( HiiveHalDataClient::class, 'flag_investigation' ),
+				function ( $reason, $source ) use ( &$flagged ) {
+					$flagged = true;
+					$this->assertSame( 'HUAPI redis probe forbidden after queued HAL refresh', $reason );
+					$this->assertSame( 'wp-module-performance', $source );
+					return true;
+				}
+			);
+
+			WP_Mock::userFunction( 'set_transient' )
+				->once()
+				->with(
+					RedisServiceAvailability::INVESTIGATION_FLAGGED_TRANSIENT_KEY,
+					'1',
+					RedisServiceAvailability::TTL_INVESTIGATION_FLAGGED
+				);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assertTrue( $flagged, 'Site should be flagged when HUAPI auth still fails after a queued HAL refresh.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * After investigation is flagged, further probes should back off without calling HUAPI.
+		 */
+		public function test_investigation_flagged_skips_huapi_probe() {
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients( false, true );
+
+			$uapi_called = false;
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () use ( &$uapi_called ) {
+					$uapi_called = true;
+					return array(
+						'token'   => 'jwt',
+						'site_id' => '12345',
+					);
+				}
+			);
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) use ( &$uapi_called ) {
+					$uapi_called = true;
+					return array( 'redis_service_active' => true );
+				}
+			);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assertFalse( $uapi_called, 'HUAPI must not be probed while investigation backoff is active.' );
+			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
+		}
+
+		/**
+		 * Missing HAL site id in the Hiive customer payload should queue a HAL refresh and back off.
+		 */
+		public function test_probe_context_hal_site_id_missing_queues_hal_refresh() {
+			$this->given_stored_state( false );
+			$this->given_hal_guard_transients();
+
+			Patchwork\redefine(
+				array( RedisCredentialsProvisioner::class, 'get_hosting_context' ),
+				function () {
+					return new \WP_Error(
+						ObjectCacheErrorCodes::HAL_SITE_ID_MISSING,
+						'missing site id'
+					);
+				}
+			);
+
+			$uapi_called = false;
+			Patchwork\redefine(
+				array( HostingUapiClient::class, 'get_site_performance_redis' ),
+				function ( $token, $site_id ) use ( &$uapi_called ) {
+					$uapi_called = true;
+					return array( 'redis_service_active' => true );
+				}
+			);
+
+			$queue_called = false;
+			Patchwork\redefine(
+				array( HiiveHalDataClient::class, 'queue_hal_refresh' ),
+				function () use ( &$queue_called ) {
+					$queue_called = true;
+					return array( 'queued' => true );
+				}
+			);
+
+			WP_Mock::userFunction( 'set_transient' )
+				->once()
+				->with(
+					RedisServiceAvailability::HAL_REFRESH_QUEUED_TRANSIENT_KEY,
+					'1',
+					RedisServiceAvailability::TTL_HAL_REFRESH_QUEUED
+				);
+
+			$this->assertFalse( RedisServiceAvailability::is_daemon_available() );
+			$this->assertTrue( $queue_called, 'HAL refresh should be queued when the hosting context is missing site id.' );
+			$this->assertFalse( $uapi_called, 'HUAPI must not be probed without a valid hosting context.' );
 			$this->assert_saved( '', RedisServiceAvailability::TTL_INDETERMINATE, 1 );
 		}
 	}
