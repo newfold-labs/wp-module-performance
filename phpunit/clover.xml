@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1789463019">
-  <project timestamp="1789463019">
+<coverage generated="1789574892">
+  <project timestamp="1789574892">
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/BurstSafetyMode/Browser.php">
       <class name="NewfoldLabs\WP\Module\Performance\BurstSafetyMode\Browser" namespace="global">
         <metrics complexity="3" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
@@ -2307,42 +2307,78 @@
       <line num="26" type="stmt" count="1"/>
       <metrics loc="29" ncloc="18" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="8" coveredelements="8"/>
     </file>
+    <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Helpers/HiiveHalDataClient.php">
+      <class name="NewfoldLabs\WP\Module\Performance\Helpers\HiiveHalDataClient" namespace="global">
+        <metrics complexity="7" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="24" elements="30" coveredelements="24"/>
+      </class>
+      <line num="17" type="method" name="queue_hal_refresh" visibility="public" complexity="4" crap="4.05" count="2"/>
+      <line num="18" type="stmt" count="2"/>
+      <line num="19" type="stmt" count="1"/>
+      <line num="22" type="stmt" count="1"/>
+      <line num="23" type="stmt" count="1"/>
+      <line num="24" type="stmt" count="1"/>
+      <line num="25" type="stmt" count="1"/>
+      <line num="26" type="stmt" count="1"/>
+      <line num="28" type="stmt" count="1"/>
+      <line num="29" type="stmt" count="1"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="0"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="48" type="method" name="flag_investigation" visibility="public" complexity="3" crap="3.03" count="1"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="50" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="1"/>
+      <line num="54" type="stmt" count="1"/>
+      <line num="55" type="stmt" count="1"/>
+      <line num="56" type="stmt" count="1"/>
+      <line num="57" type="stmt" count="1"/>
+      <line num="58" type="stmt" count="1"/>
+      <line num="59" type="stmt" count="1"/>
+      <line num="60" type="stmt" count="1"/>
+      <line num="62" type="stmt" count="1"/>
+      <line num="63" type="stmt" count="1"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="67" type="stmt" count="1"/>
+      <metrics loc="70" ncloc="55" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="24" elements="30" coveredelements="24"/>
+    </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Helpers/HiiveHelper.php">
       <class name="NewfoldLabs\WP\Module\Performance\Helpers\HiiveHelper" namespace="global">
-        <metrics complexity="13" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="24" elements="42" coveredelements="24"/>
+        <metrics complexity="13" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="25" elements="42" coveredelements="25"/>
       </class>
-      <line num="55" type="method" name="__construct" visibility="public" complexity="4" crap="4.03" count="3"/>
-      <line num="56" type="stmt" count="3"/>
+      <line num="55" type="method" name="__construct" visibility="public" complexity="4" crap="4.03" count="5"/>
+      <line num="56" type="stmt" count="5"/>
       <line num="58" type="stmt" count="0"/>
-      <line num="61" type="stmt" count="3"/>
-      <line num="62" type="stmt" count="3"/>
-      <line num="63" type="stmt" count="3"/>
-      <line num="64" type="stmt" count="3"/>
-      <line num="65" type="stmt" count="3"/>
-      <line num="73" type="method" name="send_request" visibility="public" complexity="9" crap="17.34" count="3"/>
-      <line num="74" type="stmt" count="3"/>
+      <line num="61" type="stmt" count="5"/>
+      <line num="62" type="stmt" count="5"/>
+      <line num="63" type="stmt" count="5"/>
+      <line num="64" type="stmt" count="5"/>
+      <line num="65" type="stmt" count="5"/>
+      <line num="73" type="method" name="send_request" visibility="public" complexity="9" crap="15.78" count="5"/>
+      <line num="74" type="stmt" count="5"/>
       <line num="75" type="stmt" count="0"/>
       <line num="76" type="stmt" count="0"/>
       <line num="77" type="stmt" count="0"/>
       <line num="78" type="stmt" count="0"/>
-      <line num="81" type="stmt" count="3"/>
-      <line num="83" type="stmt" count="3"/>
-      <line num="84" type="stmt" count="3"/>
-      <line num="85" type="stmt" count="3"/>
-      <line num="86" type="stmt" count="3"/>
-      <line num="87" type="stmt" count="3"/>
-      <line num="88" type="stmt" count="3"/>
-      <line num="89" type="stmt" count="3"/>
-      <line num="90" type="stmt" count="3"/>
-      <line num="92" type="stmt" count="3"/>
-      <line num="93" type="stmt" count="0"/>
-      <line num="96" type="stmt" count="3"/>
+      <line num="81" type="stmt" count="5"/>
+      <line num="83" type="stmt" count="5"/>
+      <line num="84" type="stmt" count="5"/>
+      <line num="85" type="stmt" count="5"/>
+      <line num="86" type="stmt" count="5"/>
+      <line num="87" type="stmt" count="5"/>
+      <line num="88" type="stmt" count="5"/>
+      <line num="89" type="stmt" count="5"/>
+      <line num="90" type="stmt" count="5"/>
+      <line num="92" type="stmt" count="5"/>
+      <line num="93" type="stmt" count="2"/>
+      <line num="96" type="stmt" count="5"/>
       <line num="97" type="stmt" count="0"/>
-      <line num="100" type="stmt" count="3"/>
-      <line num="102" type="stmt" count="3"/>
+      <line num="100" type="stmt" count="5"/>
+      <line num="102" type="stmt" count="5"/>
       <line num="103" type="stmt" count="0"/>
-      <line num="106" type="stmt" count="3"/>
-      <line num="107" type="stmt" count="3"/>
+      <line num="106" type="stmt" count="5"/>
+      <line num="107" type="stmt" count="5"/>
       <line num="108" type="stmt" count="0"/>
       <line num="109" type="stmt" count="0"/>
       <line num="110" type="stmt" count="0"/>
@@ -2351,8 +2387,8 @@
       <line num="113" type="stmt" count="0"/>
       <line num="114" type="stmt" count="0"/>
       <line num="115" type="stmt" count="0"/>
-      <line num="118" type="stmt" count="3"/>
-      <metrics loc="121" ncloc="79" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="24" elements="42" coveredelements="24"/>
+      <line num="118" type="stmt" count="5"/>
+      <metrics loc="121" ncloc="79" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="25" elements="42" coveredelements="25"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Helpers/HostingUapiClient.php">
       <class name="NewfoldLabs\WP\Module\Performance\Helpers\HostingUapiClient" namespace="global">
@@ -2523,122 +2559,170 @@
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Helpers/RedisServiceAvailability.php">
       <class name="NewfoldLabs\WP\Module\Performance\Helpers\RedisServiceAvailability" namespace="global">
-        <metrics complexity="45" methods="15" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="93" elements="113" coveredelements="106"/>
+        <metrics complexity="63" methods="19" coveredmethods="16" conditionals="0" coveredconditionals="0" statements="142" coveredstatements="132" elements="161" coveredelements="148"/>
       </class>
-      <line num="153" type="method" name="is_daemon_available" visibility="public" complexity="2" crap="2" count="20"/>
-      <line num="154" type="stmt" count="20"/>
-      <line num="155" type="stmt" count="20"/>
-      <line num="158" type="stmt" count="20"/>
-      <line num="166" type="method" name="resolve" visibility="private" complexity="5" crap="5" count="20"/>
-      <line num="167" type="stmt" count="20"/>
-      <line num="169" type="stmt" count="20"/>
-      <line num="170" type="stmt" count="6"/>
-      <line num="175" type="stmt" count="14"/>
-      <line num="176" type="stmt" count="1"/>
-      <line num="182" type="stmt" count="13"/>
-      <line num="183" type="stmt" count="13"/>
-      <line num="184" type="stmt" count="1"/>
-      <line num="188" type="stmt" count="12"/>
-      <line num="191" type="stmt" count="12"/>
-      <line num="207" type="method" name="answer_from" visibility="private" complexity="4" crap="4" count="13"/>
-      <line num="208" type="stmt" count="13"/>
-      <line num="209" type="stmt" count="5"/>
-      <line num="212" type="stmt" count="8"/>
+      <line num="182" type="method" name="is_daemon_available" visibility="public" complexity="2" crap="2" count="24"/>
+      <line num="183" type="stmt" count="24"/>
+      <line num="184" type="stmt" count="24"/>
+      <line num="187" type="stmt" count="24"/>
+      <line num="195" type="method" name="resolve" visibility="private" complexity="5" crap="5" count="24"/>
+      <line num="196" type="stmt" count="24"/>
+      <line num="198" type="stmt" count="24"/>
+      <line num="199" type="stmt" count="6"/>
+      <line num="204" type="stmt" count="18"/>
+      <line num="205" type="stmt" count="1"/>
+      <line num="211" type="stmt" count="17"/>
+      <line num="212" type="stmt" count="17"/>
       <line num="213" type="stmt" count="1"/>
-      <line num="216" type="stmt" count="7"/>
-      <line num="225" type="method" name="probe_and_store" visibility="private" complexity="4" crap="4" count="12"/>
-      <line num="226" type="stmt" count="12"/>
-      <line num="228" type="stmt" count="12"/>
-      <line num="232" type="stmt" count="5"/>
-      <line num="233" type="stmt" count="5"/>
-      <line num="234" type="stmt" count="5"/>
-      <line num="237" type="stmt" count="7"/>
-      <line num="238" type="stmt" count="7"/>
-      <line num="239" type="stmt" count="7"/>
-      <line num="240" type="stmt" count="7"/>
-      <line num="241" type="stmt" count="7"/>
-      <line num="242" type="stmt" count="7"/>
-      <line num="244" type="stmt" count="7"/>
-      <line num="257" type="method" name="probe_disabled" visibility="private" complexity="2" crap="2" count="20"/>
-      <line num="258" type="stmt" count="20"/>
-      <line num="265" type="stmt" count="20"/>
-      <line num="277" type="method" name="claim_probe" visibility="private" complexity="2" crap="2" count="13"/>
-      <line num="278" type="stmt" count="13"/>
-      <line num="280" type="stmt" count="13"/>
-      <line num="281" type="stmt" count="1"/>
-      <line num="284" type="stmt" count="12"/>
-      <line num="285" type="stmt" count="12"/>
-      <line num="287" type="stmt" count="12"/>
-      <line num="296" type="method" name="release_probe" visibility="private" complexity="2" crap="2.15" count="12"/>
-      <line num="297" type="stmt" count="12"/>
-      <line num="298" type="stmt" count="12"/>
-      <line num="301" type="stmt" count="0"/>
-      <line num="312" type="method" name="lock_ttl" visibility="private" complexity="1" crap="1" count="12"/>
-      <line num="313" type="stmt" count="12"/>
-      <line num="321" type="method" name="flush" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="322" type="stmt" count="0"/>
-      <line num="323" type="stmt" count="0"/>
-      <line num="324" type="stmt" count="0"/>
-      <line num="326" type="stmt" count="0"/>
-      <line num="337" type="method" name="reset_request_cache" visibility="public" complexity="1" crap="1" count="20"/>
-      <line num="338" type="stmt" count="20"/>
-      <line num="347" type="method" name="read_state" visibility="private" complexity="8" crap="8" count="20"/>
-      <line num="348" type="stmt" count="20"/>
-      <line num="350" type="stmt" count="20"/>
-      <line num="351" type="stmt" count="8"/>
-      <line num="354" type="stmt" count="12"/>
-      <line num="356" type="stmt" count="12"/>
-      <line num="357" type="stmt" count="12"/>
-      <line num="358" type="stmt" count="12"/>
-      <line num="359" type="stmt" count="12"/>
-      <line num="360" type="stmt" count="12"/>
-      <line num="361" type="stmt" count="12"/>
-      <line num="376" type="method" name="adopt_legacy_state" visibility="private" complexity="4" crap="4" count="8"/>
-      <line num="377" type="stmt" count="8"/>
-      <line num="378" type="stmt" count="8"/>
-      <line num="380" type="stmt" count="8"/>
-      <line num="381" type="stmt" count="7"/>
-      <line num="382" type="stmt" count="7"/>
-      <line num="383" type="stmt" count="7"/>
-      <line num="384" type="stmt" count="7"/>
-      <line num="385" type="stmt" count="7"/>
-      <line num="386" type="stmt" count="7"/>
-      <line num="389" type="stmt" count="1"/>
-      <line num="390" type="stmt" count="1"/>
-      <line num="392" type="stmt" count="1"/>
-      <line num="393" type="stmt" count="1"/>
-      <line num="394" type="stmt" count="1"/>
-      <line num="395" type="stmt" count="1"/>
-      <line num="396" type="stmt" count="1"/>
-      <line num="397" type="stmt" count="1"/>
-      <line num="410" type="method" name="write_state" visibility="private" complexity="1" crap="1" count="13"/>
-      <line num="411" type="stmt" count="13"/>
-      <line num="412" type="stmt" count="13"/>
-      <line num="413" type="stmt" count="13"/>
-      <line num="414" type="stmt" count="13"/>
-      <line num="415" type="stmt" count="13"/>
-      <line num="416" type="stmt" count="13"/>
-      <line num="417" type="stmt" count="13"/>
-      <line num="418" type="stmt" count="13"/>
-      <line num="419" type="stmt" count="13"/>
-      <line num="433" type="method" name="indeterminate_delay" visibility="private" complexity="1" crap="1" count="5"/>
-      <line num="434" type="stmt" count="5"/>
-      <line num="436" type="stmt" count="5"/>
-      <line num="449" type="method" name="probe" visibility="private" complexity="7" crap="7" count="12"/>
-      <line num="450" type="stmt" count="12"/>
-      <line num="452" type="stmt" count="12"/>
-      <line num="453" type="stmt" count="12"/>
-      <line num="454" type="stmt" count="1"/>
-      <line num="457" type="stmt" count="11"/>
-      <line num="459" type="stmt" count="11"/>
-      <line num="460" type="stmt" count="6"/>
-      <line num="461" type="stmt" count="6"/>
-      <line num="465" type="stmt" count="6"/>
-      <line num="466" type="stmt" count="6"/>
-      <line num="468" type="stmt" count="2"/>
-      <line num="472" type="stmt" count="4"/>
-      <line num="475" type="stmt" count="5"/>
-      <metrics loc="478" ncloc="221" classes="1" methods="15" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="93" elements="113" coveredelements="106"/>
+      <line num="217" type="stmt" count="16"/>
+      <line num="220" type="stmt" count="16"/>
+      <line num="236" type="method" name="answer_from" visibility="private" complexity="4" crap="4" count="17"/>
+      <line num="237" type="stmt" count="17"/>
+      <line num="238" type="stmt" count="9"/>
+      <line num="241" type="stmt" count="8"/>
+      <line num="242" type="stmt" count="1"/>
+      <line num="245" type="stmt" count="7"/>
+      <line num="254" type="method" name="probe_and_store" visibility="private" complexity="4" crap="4" count="16"/>
+      <line num="255" type="stmt" count="16"/>
+      <line num="257" type="stmt" count="16"/>
+      <line num="261" type="stmt" count="9"/>
+      <line num="262" type="stmt" count="9"/>
+      <line num="263" type="stmt" count="9"/>
+      <line num="266" type="stmt" count="7"/>
+      <line num="267" type="stmt" count="7"/>
+      <line num="268" type="stmt" count="7"/>
+      <line num="269" type="stmt" count="7"/>
+      <line num="270" type="stmt" count="7"/>
+      <line num="271" type="stmt" count="7"/>
+      <line num="273" type="stmt" count="7"/>
+      <line num="286" type="method" name="probe_disabled" visibility="private" complexity="2" crap="2" count="24"/>
+      <line num="287" type="stmt" count="24"/>
+      <line num="294" type="stmt" count="24"/>
+      <line num="306" type="method" name="claim_probe" visibility="private" complexity="2" crap="2" count="17"/>
+      <line num="307" type="stmt" count="17"/>
+      <line num="309" type="stmt" count="17"/>
+      <line num="310" type="stmt" count="1"/>
+      <line num="313" type="stmt" count="16"/>
+      <line num="314" type="stmt" count="16"/>
+      <line num="316" type="stmt" count="16"/>
+      <line num="325" type="method" name="release_probe" visibility="private" complexity="2" crap="2.15" count="16"/>
+      <line num="326" type="stmt" count="16"/>
+      <line num="327" type="stmt" count="16"/>
+      <line num="330" type="stmt" count="0"/>
+      <line num="341" type="method" name="lock_ttl" visibility="private" complexity="1" crap="1" count="16"/>
+      <line num="342" type="stmt" count="16"/>
+      <line num="350" type="method" name="flush" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="351" type="stmt" count="0"/>
+      <line num="352" type="stmt" count="0"/>
+      <line num="353" type="stmt" count="0"/>
+      <line num="354" type="stmt" count="0"/>
+      <line num="355" type="stmt" count="0"/>
+      <line num="357" type="stmt" count="0"/>
+      <line num="368" type="method" name="reset_request_cache" visibility="public" complexity="1" crap="1" count="24"/>
+      <line num="369" type="stmt" count="24"/>
+      <line num="378" type="method" name="read_state" visibility="private" complexity="8" crap="8" count="24"/>
+      <line num="379" type="stmt" count="24"/>
+      <line num="381" type="stmt" count="24"/>
+      <line num="382" type="stmt" count="12"/>
+      <line num="385" type="stmt" count="12"/>
+      <line num="387" type="stmt" count="12"/>
+      <line num="388" type="stmt" count="12"/>
+      <line num="389" type="stmt" count="12"/>
+      <line num="390" type="stmt" count="12"/>
+      <line num="391" type="stmt" count="12"/>
+      <line num="392" type="stmt" count="12"/>
+      <line num="407" type="method" name="adopt_legacy_state" visibility="private" complexity="4" crap="4" count="12"/>
+      <line num="408" type="stmt" count="12"/>
+      <line num="409" type="stmt" count="12"/>
+      <line num="411" type="stmt" count="12"/>
+      <line num="412" type="stmt" count="11"/>
+      <line num="413" type="stmt" count="11"/>
+      <line num="414" type="stmt" count="11"/>
+      <line num="415" type="stmt" count="11"/>
+      <line num="416" type="stmt" count="11"/>
+      <line num="417" type="stmt" count="11"/>
+      <line num="420" type="stmt" count="1"/>
+      <line num="421" type="stmt" count="1"/>
+      <line num="423" type="stmt" count="1"/>
+      <line num="424" type="stmt" count="1"/>
+      <line num="425" type="stmt" count="1"/>
+      <line num="426" type="stmt" count="1"/>
+      <line num="427" type="stmt" count="1"/>
+      <line num="428" type="stmt" count="1"/>
+      <line num="441" type="method" name="write_state" visibility="private" complexity="1" crap="1" count="17"/>
+      <line num="442" type="stmt" count="17"/>
+      <line num="443" type="stmt" count="17"/>
+      <line num="444" type="stmt" count="17"/>
+      <line num="445" type="stmt" count="17"/>
+      <line num="446" type="stmt" count="17"/>
+      <line num="447" type="stmt" count="17"/>
+      <line num="448" type="stmt" count="17"/>
+      <line num="449" type="stmt" count="17"/>
+      <line num="450" type="stmt" count="17"/>
+      <line num="464" type="method" name="indeterminate_delay" visibility="private" complexity="1" crap="1" count="9"/>
+      <line num="465" type="stmt" count="9"/>
+      <line num="467" type="stmt" count="9"/>
+      <line num="480" type="method" name="probe" visibility="private" complexity="10" crap="10" count="16"/>
+      <line num="481" type="stmt" count="16"/>
+      <line num="482" type="stmt" count="1"/>
+      <line num="485" type="stmt" count="15"/>
+      <line num="487" type="stmt" count="15"/>
+      <line num="488" type="stmt" count="15"/>
+      <line num="489" type="stmt" count="2"/>
+      <line num="491" type="stmt" count="2"/>
+      <line num="494" type="stmt" count="13"/>
+      <line num="496" type="stmt" count="13"/>
+      <line num="497" type="stmt" count="2"/>
+      <line num="499" type="stmt" count="2"/>
+      <line num="502" type="stmt" count="11"/>
+      <line num="503" type="stmt" count="6"/>
+      <line num="504" type="stmt" count="6"/>
+      <line num="508" type="stmt" count="6"/>
+      <line num="509" type="stmt" count="6"/>
+      <line num="511" type="stmt" count="2"/>
+      <line num="515" type="stmt" count="4"/>
+      <line num="518" type="stmt" count="5"/>
+      <line num="526" type="method" name="handle_huapi_auth_failure" visibility="private" complexity="3" crap="3" count="2"/>
+      <line num="527" type="stmt" count="2"/>
+      <line num="528" type="stmt" count="1"/>
+      <line num="529" type="stmt" count="1"/>
+      <line num="530" type="stmt" count="1"/>
+      <line num="531" type="stmt" count="1"/>
+      <line num="532" type="stmt" count="1"/>
+      <line num="533" type="stmt" count="1"/>
+      <line num="534" type="stmt" count="1"/>
+      <line num="535" type="stmt" count="1"/>
+      <line num="536" type="stmt" count="1"/>
+      <line num="537" type="stmt" count="1"/>
+      <line num="540" type="stmt" count="1"/>
+      <line num="543" type="stmt" count="1"/>
+      <line num="551" type="method" name="maybe_queue_hal_refresh" visibility="private" complexity="4" crap="4.20" count="2"/>
+      <line num="552" type="stmt" count="2"/>
+      <line num="553" type="stmt" count="0"/>
+      <line num="556" type="stmt" count="2"/>
+      <line num="557" type="stmt" count="2"/>
+      <line num="558" type="stmt" count="0"/>
+      <line num="561" type="stmt" count="2"/>
+      <line num="562" type="stmt" count="0"/>
+      <line num="565" type="stmt" count="2"/>
+      <line num="566" type="stmt" count="2"/>
+      <line num="567" type="stmt" count="2"/>
+      <line num="568" type="stmt" count="2"/>
+      <line num="569" type="stmt" count="2"/>
+      <line num="571" type="stmt" count="2"/>
+      <line num="580" type="method" name="maybe_queue_hal_refresh_after_context_error" visibility="private" complexity="2" crap="2" count="2"/>
+      <line num="581" type="stmt" count="2"/>
+      <line num="582" type="stmt" count="2"/>
+      <line num="583" type="stmt" count="1"/>
+      <line num="586" type="stmt" count="1"/>
+      <line num="595" type="method" name="is_huapi_auth_failure" visibility="private" complexity="6" crap="6" count="8"/>
+      <line num="596" type="stmt" count="8"/>
+      <line num="597" type="stmt" count="8"/>
+      <line num="598" type="stmt" count="8"/>
+      <line num="599" type="stmt" count="2"/>
+      <line num="602" type="stmt" count="6"/>
+      <line num="604" type="stmt" count="6"/>
+      <metrics loc="607" ncloc="306" classes="1" methods="19" coveredmethods="16" conditionals="0" coveredconditionals="0" statements="142" coveredstatements="132" elements="161" coveredelements="148"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Helpers/SiteApisConfig.php">
       <class name="NewfoldLabs\WP\Module\Performance\Helpers\SiteApisConfig" namespace="global">
@@ -2650,15 +2734,15 @@
       <line num="21" type="stmt" count="7"/>
       <line num="22" type="stmt" count="7"/>
       <line num="24" type="stmt" count="7"/>
-      <line num="32" type="method" name="hiive_request_timeout_seconds" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="33" type="stmt" count="1"/>
-      <line num="34" type="stmt" count="1"/>
+      <line num="32" type="method" name="hiive_request_timeout_seconds" visibility="public" complexity="1" crap="1" count="3"/>
+      <line num="33" type="stmt" count="3"/>
+      <line num="34" type="stmt" count="3"/>
       <line num="42" type="method" name="hosting_uapi_request_timeout_seconds" visibility="public" complexity="1" crap="1" count="6"/>
       <line num="43" type="stmt" count="6"/>
       <line num="44" type="stmt" count="6"/>
-      <line num="57" type="method" name="redis_probe_timeout_seconds" visibility="public" complexity="1" crap="1" count="13"/>
-      <line num="58" type="stmt" count="13"/>
-      <line num="59" type="stmt" count="13"/>
+      <line num="57" type="method" name="redis_probe_timeout_seconds" visibility="public" complexity="1" crap="1" count="17"/>
+      <line num="58" type="stmt" count="17"/>
+      <line num="59" type="stmt" count="17"/>
       <metrics loc="62" ncloc="33" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="10" elements="15" coveredelements="13"/>
     </file>
     <file name="/home/runner/work/wp-module-performance/wp-module-performance/includes/Images/Fragments/ExistingImageRedirectFragment.php">
@@ -4919,6 +5003,6 @@
       <line num="216" type="stmt" count="0"/>
       <metrics loc="218" ncloc="128" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="53" coveredstatements="13" elements="53" coveredelements="13"/>
     </file>
-    <metrics files="85" loc="12564" ncloc="7773" classes="81" methods="454" coveredmethods="87" conditionals="0" coveredconditionals="0" statements="3965" coveredstatements="832" elements="4419" coveredelements="919"/>
+    <metrics files="86" loc="12763" ncloc="7913" classes="82" methods="460" coveredmethods="90" conditionals="0" coveredconditionals="0" statements="4037" coveredstatements="896" elements="4497" coveredelements="986"/>
   </project>
 </coverage>
