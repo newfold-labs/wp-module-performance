@@ -9,22 +9,17 @@
  * - UI Interaction Helpers
  */
 import { expect } from '@playwright/test';
-import { join, dirname } from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
+import { createRequire } from 'module';
+import { join } from 'path';
 import { execSync } from 'child_process';
-
-// ES module equivalent of __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
 // ============================================================================
 
 const pluginDir = process.env.PLUGIN_DIR || process.cwd();
-const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.mjs');
-const helpersUrl = pathToFileURL(finalHelpersPath).href;
-const pluginHelpers = await import(helpersUrl);
+const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
+const pluginHelpers = requireFromPlugin('./tests/playwright/helpers/index.js');
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 const { fancyLog } = utils;

@@ -10,7 +10,7 @@ import {
   verifyLinkPrefetchDisplayed,
   ensureLinkPrefetchToggleEnabled,
   checkLinkPrefetchCapabilities,
-} from '../helpers/index.mjs';
+} from '../helpers/index.js';
 
 test.describe('Performance Page', () => {
   test.afterEach(async () => {
