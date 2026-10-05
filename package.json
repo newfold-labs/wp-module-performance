@@ -29,7 +29,7 @@
     "@wordpress/i18n": "^6.29.0",
     "@wordpress/scripts": "^36.0.0",
     "autoprefixer": "^10.6.1",
-    "chalk": "^6.0.0",
+    "chalk": "^6.0.1",
     "css-minimizer-webpack-plugin": "^8.0.0",
     "glob": "^13.0.6",
     "postcss": "^8.5.28",
