@@ -14,7 +14,6 @@ final class RestApi {
 	protected $controllers = array(
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\Skip404Controller',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\LinkPrefetchController',
-		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\JetpackController',
 		'NewfoldLabs\\WP\\Module\\Performance\\RestApi\\CacheController',
 	);
 

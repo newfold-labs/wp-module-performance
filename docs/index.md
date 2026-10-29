@@ -2,7 +2,7 @@
 name: wp-module-performance
 title: Documentation index
 description: Table of contents and quick links.
-updated: 2025-03-18
+updated: 2026-10-29
 ---
 
 # wp-module-performance – Documentation index
@@ -21,6 +21,7 @@ Documentation for wp-module-performance, for **humans** and **AI agents**. Start
 | [wp-cli.md](wp-cli.md) | The `wp nfd performance` WP-CLI commands. |
 | [dependencies.md](dependencies.md) | Composer dependencies. |
 | [release.md](release.md) | Release process: use the Newfold Prepare Release workflow. |
+| [changelog.md](changelog.md) | Notable changes by release. |
 
 ## Quick links
 

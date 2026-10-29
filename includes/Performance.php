@@ -12,7 +12,6 @@ use NewfoldLabs\WP\Module\Performance\Cache\Cache;
 use NewfoldLabs\WP\Module\Performance\Cache\ResponseHeaderManager;
 use NewfoldLabs\WP\Module\Performance\Cloudflare\LegacyCookieCleanup;
 use NewfoldLabs\WP\Module\Performance\Skip404\Skip404;
-use NewfoldLabs\WP\Module\Performance\JetpackBoost\JetpackBoost;
 
 use function NewfoldLabs\WP\Module\Performance\get_cache_level;
 use function NewfoldLabs\WP\ModuleLoader\container;
@@ -71,8 +70,6 @@ class Performance {
 		new HealthChecks( $container );
 
 		new LinkPrefetch( $container );
-
-		new JetpackBoost( $container );
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new RestAPI();

@@ -1,7 +1,6 @@
 /* Import UI library first — this registers its component styles */
 @import "@newfold/ui-component-library";
 @import "../sections/LinkPrefetch/stylesheet.css";
-@import "../sections/JetpackBoost/stylesheet.css";
 @import "../sections/ImageOptimization/stylesheet.css";
 @import "./branding.css";
 @import "../components/App/stylesheet.css";

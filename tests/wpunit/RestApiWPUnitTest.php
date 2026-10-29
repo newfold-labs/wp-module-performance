@@ -29,4 +29,23 @@ class RestApiWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		);
 		$this->assertNotEmpty( $found, 'Expected newfold-performance routes to be registered' );
 	}
+
+	/**
+	 * Jetpack Boost REST routes are not registered after integration removal.
+	 *
+	 * @return void
+	 */
+	public function test_rest_api_does_not_register_jetpack_boost_routes() {
+		new RestApi();
+		do_action( 'rest_api_init' );
+		$server = rest_get_server();
+		$routes = $server->get_routes();
+		$jetpack_routes = array_filter(
+			array_keys( $routes ),
+			function ( $route ) {
+				return strpos( $route, '/newfold-performance/v1/jetpack' ) === 0;
+			}
+		);
+		$this->assertEmpty( $jetpack_routes, 'Jetpack Boost performance routes should not be registered' );
+	}
 }
