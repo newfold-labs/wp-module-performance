@@ -15,7 +15,6 @@ import CacheExclusion from '../../sections/CacheExclusion';
 import ObjectCache from '../../sections/ObjectCache';
 import ClearCache from '../../sections/ClearCache';
 import Skip404 from '../../sections/Skip404';
-import JetpackBoost from '../../sections/JetpackBoost';
 import LinkPrefetch from '../../sections/LinkPrefetch';
 import ImageOptimization from '../../sections/ImageOptimization';
 
@@ -75,12 +74,6 @@ const App = () => {
 					</Container.Block>
 					<Container.Block separator className="newfold-skip404">
 						<Skip404 />
-					</Container.Block>
-					<Container.Block
-						separator
-						className="newfold-performance-advanced-settings"
-					>
-						<JetpackBoost />
 					</Container.Block>
 					{ ( false !== hasLinkPrefetchClick || false !== hasLinkPrefetchHover ) && (
 						<Container.Block
