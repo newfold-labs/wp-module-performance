@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-09-28T17:34:37+00:00",
+    "translation-revision-date": "2026-11-10T23:04:36+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -24,12 +24,6 @@
             ],
             "Object cache cannot be enabled automatically right now. Please contact support.": [
                 "O cache de objetos n\u00e3o pode ser ativado automaticamente no momento. Entre em contato com o suporte."
-            ],
-            "Concatenate CSS": [
-                "Concatenar CSS"
-            ],
-            "Defer Non-Essential JavaScript": [
-                "Atrasar o carregamento de JavaScript n\u00e3o essencial"
             ],
             "Object Caching": [
                 "Cache de objetos"
@@ -193,81 +187,6 @@
             "Something went wrong while updating the settings. Please try again.": [
                 "Algo deu errado ao atualizar as configura\u00e7\u00f5es. Por favor, tente novamente."
             ],
-            "Advanced settings": [
-                "Configura\u00e7\u00f5es avan\u00e7adas"
-            ],
-            "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be.": [
-                "Recursos adicionais de velocidade e escalabilidade fornecidos pelo Jetpack Boost para tornar seu site o mais r\u00e1pido poss\u00edvel."
-            ],
-            "Option saved correctly": [
-                "Op\u00e7\u00e3o salva corretamente"
-            ],
-            "Error saving option": [
-                "Erro ao salvar op\u00e7\u00e3o"
-            ],
-            "Upgrade to unlock": [
-                "Fa\u00e7a upgrade para desbloquear"
-            ],
-            "Install Jetpack Boost to unlock": [
-                "Instale o Jetpack Boost para desbloquear"
-            ],
-            "Installing Jetpack Boost\u2026": [
-                "Instalando Jetpack Boost\u2026"
-            ],
-            "Jetpack Boost is now active": [
-                "Jetpack Boost agora est\u00e1 ativo"
-            ],
-            "Activation failed": [
-                "Falha na ativa\u00e7\u00e3o"
-            ],
-            "Optimize Critical CSS Loading (manual)": [
-                "Otimizar Carregamento de CSS Cr\u00edtico (manual)"
-            ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                "Move as informa\u00e7\u00f5es de estilo importantes para o in\u00edcio da p\u00e1gina, o que ajuda a exibir seu conte\u00fado mais rapidamente e evita que os usu\u00e1rios esperem o carregamento completo."
-            ],
-            "Generate CSS": [
-                "Gerar CSS"
-            ],
-            "Critical CSS generated successfully.": [
-                "CSS cr\u00edtico gerado com sucesso."
-            ],
-            "Keep this page opened until the process finish": [
-                "Mantenha esta p\u00e1gina aberta at\u00e9 que o processo termine"
-            ],
-            "Error generating Critical CSS, try again": [
-                "Erro ao gerar CSS cr\u00edtico, tente novamente"
-            ],
-            "Optimize Critical CSS Loading (UPGRADED)": [
-                "Otimizar Carregamento de CSS Cr\u00edtico (ATUALIZADO)"
-            ],
-            "Generate Critical CSS Automatically": [
-                "Gerar CSS Cr\u00edtico Automaticamente"
-            ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "Move as informa\u00e7\u00f5es de estilo importantes para o in\u00edcio da p\u00e1gina, o que ajuda a exibir seu conte\u00fado mais rapidamente e evita que os usu\u00e1rios esperem o carregamento completo da p\u00e1gina.%1$s %2$sO Boost ir\u00e1 gerar automaticamente seu CSS cr\u00edtico%3$s sempre que voc\u00ea fizer altera\u00e7\u00f5es na estrutura HTML ou CSS do seu site."
-            ],
-            "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
-                "Execute JavaScript n\u00e3o essencial ap\u00f3s o carregamento da p\u00e1gina para que estilos e imagens possam carregar mais rapidamente."
-            ],
-            "Concatenate JS": [
-                "Concatenar JS"
-            ],
-            "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                "Os scripts s\u00e3o agrupados por sua coloca\u00e7\u00e3o original, concatenados e minificados para reduzir o tempo de carregamento do site e o n\u00famero de solicita\u00e7\u00f5es."
-            ],
-            "Exclude JS Strings": [
-                "Excluir Strings JS"
-            ],
-            "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                "Os estilos s\u00e3o agrupados por sua coloca\u00e7\u00e3o original, concatenados e minificados para reduzir o tempo de carregamento do site e o n\u00famero de solicita\u00e7\u00f5es."
-            ],
-            "Exclude CSS Strings": [
-                "Excluir Strings CSS"
-            ],
-            "Disable Coming Soon": [
-                "Desativar em breve"
-            ],
             "Link Prefetch": [
                 "Pr\u00e9-carregamento de Links"
             ],
@@ -363,6 +282,9 @@
             ],
             "Skip 404 saved": [
                 "Ignorar 404 salvo"
+            ],
+            "Error saving option": [
+                "Erro ao salvar op\u00e7\u00e3o"
             ]
         }
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "557ee8b8a083c6dbe4f1551eeddcd503",
+    "content-hash": "89c9e7cb2bbd557d8c1f09edb98c902c",
     "packages": [
         {
             "name": "colinmollenhour/credis",
@@ -8623,12 +8623,12 @@
             "version": "v4.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/vlucas/phpdotenv.git",
+                "url": "https://github.com/phpdotenv/phpdotenv.git",
                 "reference": "67a491df68208bef8c37092db11fa3885008efcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/67a491df68208bef8c37092db11fa3885008efcf",
+                "url": "https://api.github.com/repos/phpdotenv/phpdotenv/zipball/67a491df68208bef8c37092db11fa3885008efcf",
                 "reference": "67a491df68208bef8c37092db11fa3885008efcf",
                 "shasum": ""
             },
@@ -10979,5 +10979,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

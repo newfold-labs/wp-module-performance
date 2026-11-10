@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-09-28T17:34:37+00:00",
+    "translation-revision-date": "2026-11-10T23:04:36+00:00",
     "generator": "WP-CLI\/2.12.0",
     "source": "build\/performance\/performance.js",
     "domain": "messages",
@@ -24,12 +24,6 @@
             ],
             "Object cache cannot be enabled automatically right now. Please contact support.": [
                 "Le cache d'objets ne peut pas \u00eatre activ\u00e9 automatiquement pour le moment. Veuillez contacter l'assistance."
-            ],
-            "Concatenate CSS": [
-                "Concat\u00e9ner le CSS"
-            ],
-            "Defer Non-Essential JavaScript": [
-                "Reporter JavaScript non essentiel"
             ],
             "Object Caching": [
                 "Mise en cache des objets"
@@ -193,81 +187,6 @@
             "Something went wrong while updating the settings. Please try again.": [
                 "Une erreur s'est produite lors de la mise \u00e0 jour des param\u00e8tres. Veuillez r\u00e9essayer."
             ],
-            "Advanced settings": [
-                "Param\u00e8tres avanc\u00e9s"
-            ],
-            "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be.": [
-                "Fonctionnalit\u00e9s suppl\u00e9mentaires de vitesse et d'\u00e9volutivit\u00e9 aliment\u00e9es par Jetpack Boost pour rendre votre site aussi rapide que possible."
-            ],
-            "Option saved correctly": [
-                "Option enregistr\u00e9e correctement"
-            ],
-            "Error saving option": [
-                "Erreur lors de l'enregistrement de l'option"
-            ],
-            "Upgrade to unlock": [
-                "Mettez \u00e0 niveau pour d\u00e9bloquer"
-            ],
-            "Install Jetpack Boost to unlock": [
-                "Installez Jetpack Boost pour d\u00e9bloquer"
-            ],
-            "Installing Jetpack Boost\u2026": [
-                "Installation de Jetpack Boost\u2026"
-            ],
-            "Jetpack Boost is now active": [
-                "Jetpack Boost est maintenant actif"
-            ],
-            "Activation failed": [
-                "L'activation a \u00e9chou\u00e9"
-            ],
-            "Optimize Critical CSS Loading (manual)": [
-                "Optimiser le chargement du CSS critique (manuel)"
-            ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.": [
-                "D\u00e9place les informations de style importantes au d\u00e9but de la page, ce qui permet d\u2019afficher votre contenu plus rapidement et \u00e9vite aux utilisateurs d\u2019attendre le chargement complet."
-            ],
-            "Generate CSS": [
-                "G\u00e9n\u00e9rer le CSS"
-            ],
-            "Critical CSS generated successfully.": [
-                "CSS critique g\u00e9n\u00e9r\u00e9 avec succ\u00e8s."
-            ],
-            "Keep this page opened until the process finish": [
-                "Gardez cette page ouverte jusqu'\u00e0 la fin du processus"
-            ],
-            "Error generating Critical CSS, try again": [
-                "Erreur lors de la g\u00e9n\u00e9ration du CSS critique, r\u00e9essayez"
-            ],
-            "Optimize Critical CSS Loading (UPGRADED)": [
-                "Optimiser le chargement du CSS critique (AM\u00c9LIOR\u00c9)"
-            ],
-            "Generate Critical CSS Automatically": [
-                "G\u00e9n\u00e9rer le CSS critique automatiquement"
-            ],
-            "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don\u2019t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site.": [
-                "D\u00e9place les informations de style importantes au d\u00e9but de la page, ce qui permet d\u2019afficher votre contenu plus rapidement et \u00e9vite aux utilisateurs d\u2019attendre le chargement complet de la page.%1$s %2$sBoost g\u00e9n\u00e9rera automatiquement votre CSS critique%3$s \u00e0 chaque fois que vous modifiez la structure HTML ou CSS de votre site."
-            ],
-            "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly.": [
-                "Ex\u00e9cutez le JavaScript non essentiel apr\u00e8s le chargement de la page afin que les styles et les images puissent se charger plus rapidement."
-            ],
-            "Concatenate JS": [
-                "Concat\u00e9ner JS"
-            ],
-            "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                "Les scripts sont regroup\u00e9s par leur emplacement d'origine, concat\u00e9n\u00e9s et minifi\u00e9s pour r\u00e9duire le temps de chargement du site et r\u00e9duire le nombre de requ\u00eates."
-            ],
-            "Exclude JS Strings": [
-                "Exclure les cha\u00eenes JS"
-            ],
-            "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests.": [
-                "Les styles sont regroup\u00e9s par leur emplacement d'origine, concat\u00e9n\u00e9s et minifi\u00e9s pour r\u00e9duire le temps de chargement du site et r\u00e9duire le nombre de requ\u00eates."
-            ],
-            "Exclude CSS Strings": [
-                "Exclure les cha\u00eenes CSS"
-            ],
-            "Disable Coming Soon": [
-                "D\u00e9sactiver Bient\u00f4t"
-            ],
             "Link Prefetch": [
                 "Pr\u00e9chargement de liens"
             ],
@@ -363,6 +282,9 @@
             ],
             "Skip 404 saved": [
                 "Ignorer 404 enregistr\u00e9"
+            ],
+            "Error saving option": [
+                "Erreur lors de l'enregistrement de l'option"
             ]
         }
     }
