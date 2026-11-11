@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-28T17:34:37+00:00\n"
+"PO-Revision-Date: 2026-11-10T23:04:36+00:00\n"
 "Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-performance\n"
@@ -29,7 +29,7 @@ msgstr "Setting up object cache. Please wait a few seconds and try again."
 
 #: includes/Cache/Types/ObjectCache.php:334
 #: includes/Cache/Types/ObjectCache.php:343
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Could not download object cache files. Please try again later."
 msgstr "Could not download object cache files. Please try again later."
 
@@ -45,12 +45,12 @@ msgstr "Could not download object cache files. Please try again later."
 #: includes/Helpers/RedisCredentialsProvisioner.php:41
 #: includes/Helpers/RedisCredentialsProvisioner.php:51
 #: includes/Helpers/RedisCredentialsProvisioner.php:58
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Could not enable object cache right now. Please try again later."
 msgstr "Could not enable object cache right now. Please try again later."
 
 #: includes/Cache/Types/ObjectCache.php:376
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Could not save object cache file. Check file permissions or contact support."
 msgstr "Could not save object cache file. Check file permissions or contact support."
 
@@ -64,13 +64,13 @@ msgstr "Object cache is not configured yet."
 
 #: includes/Cache/Types/ObjectCache.php:609
 #: includes/Cache/Types/ObjectCache.php:813
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Could not connect to the object cache. Please try again later."
 msgstr "Could not connect to the object cache. Please try again later."
 
 #: includes/Cache/Types/ObjectCache.php:810
 #: includes/Helpers/RedisCredentialsProvisioner.php:26
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Object cache cannot be enabled automatically right now. Please contact support."
 msgstr "Object cache cannot be enabled automatically right now. Please contact support."
 
@@ -376,7 +376,6 @@ msgid "Cloudflare integration can improve performance and security."
 msgstr "Cloudflare integration can improve performance and security."
 
 #: includes/HealthChecks/ConcatenateCssHealthCheck.php:14
-#: build/performance/performance.min.js:5
 msgid "Concatenate CSS"
 msgstr "Concatenate CSS"
 
@@ -425,7 +424,6 @@ msgid "Cron lock timeout affects how long a cron job can run for. Setting it to 
 msgstr "Cron lock timeout affects how long a cron job can run for. Setting it to a lower number can improve performance."
 
 #: includes/HealthChecks/DeferNonEssentialJsHealthCheck.php:14
-#: build/performance/performance.min.js:5
 msgid "Defer Non-Essential JavaScript"
 msgstr "Defer Non-Essential JavaScript"
 
@@ -522,7 +520,7 @@ msgid "Setting permalinks to anything other than plain can improve performance a
 msgstr "Setting permalinks to anything other than plain can improve performance and SEO."
 
 #: includes/HealthChecks/PersistentObjectCacheHealthCheck.php:14
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Object Caching"
 msgstr "Object Caching"
 
@@ -828,25 +826,25 @@ msgstr "Newfold CLI: Invalid %s provided to NFD_WPCLI::add_command()."
 msgid "Newfold CLI: The handler class %s does not exist."
 msgstr "Newfold CLI: The handler class %s does not exist."
 
-#: includes/Performance.php:230
+#: includes/Performance.php:227
 msgid "Caching"
 msgstr "Caching"
 
-#: includes/Performance.php:239
+#: includes/Performance.php:236
 msgid "Purge All"
 msgstr "Purge All"
 
-#: includes/Performance.php:249
+#: includes/Performance.php:246
 msgid "Purge This Page"
 msgstr "Purge This Page"
 
-#: includes/Performance.php:260
+#: includes/Performance.php:257
 msgid "Cache Settings"
 msgstr "Cache Settings"
 
-#: includes/Performance.php:276
-#: includes/Performance.php:277
-#: includes/Performance.php:303
+#: includes/Performance.php:273
+#: includes/Performance.php:274
+#: includes/Performance.php:300
 #: build/performance/performance.min.js:2
 msgid "Performance"
 msgstr "Performance"
@@ -859,34 +857,22 @@ msgstr "Invalid cache exclusion format."
 msgid "Cache purged"
 msgstr "Cache purged"
 
-#: includes/RestApi/JetpackController.php:81
+#: includes/RestApi/LinkPrefetchController.php:90
+msgid "Invalid settings format"
+msgstr "Invalid settings format"
+
 #: includes/RestApi/Skip404Controller.php:62
 msgid "The parameter 'field' is missing or invalid."
 msgstr "The parameter 'field' is missing or invalid."
 
-#: includes/RestApi/JetpackController.php:93
 #: includes/RestApi/Skip404Controller.php:74
 msgid "The fields 'id' and 'value' are required."
 msgstr "The fields 'id' and 'value' are required."
 
-#: includes/RestApi/JetpackController.php:117
-#: includes/RestApi/JetpackController.php:137
 #: includes/RestApi/Skip404Controller.php:94
 #: includes/RestApi/Skip404Controller.php:123
 msgid "An error occurred while updating the option."
 msgstr "An error occurred while updating the option."
-
-#: includes/RestApi/JetpackController.php:167
-msgid "Failed to regenerate critical CSS."
-msgstr "Failed to regenerate critical CSS."
-
-#: includes/RestApi/JetpackController.php:177
-msgid "An error occurred while regenerating critical CSS."
-msgstr "An error occurred while regenerating critical CSS."
-
-#: includes/RestApi/LinkPrefetchController.php:90
-msgid "Invalid settings format"
-msgstr "Invalid settings format"
 
 #: includes/RestApi/Skip404Controller.php:105
 msgid "Invalid field ID provided."
@@ -1137,232 +1123,133 @@ msgid "Something went wrong while updating the settings. Please try again."
 msgstr "Something went wrong while updating the settings. Please try again."
 
 #: build/performance/performance.min.js:2
-msgid "Advanced settings"
-msgstr "Advanced settings"
-
-#: build/performance/performance.min.js:2
-msgid "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
-msgstr "Additional speed and scalability features powered by Jetpack Boost to make your site as fast as it can be."
-
-#: build/performance/performance.min.js:2
-msgid "Option saved correctly"
-msgstr "Option saved correctly"
-
-#: build/performance/performance.min.js:2
-#: build/performance/performance.min.js:5
-msgid "Error saving option"
-msgstr "Error saving option"
-
-#: build/performance/performance.min.js:2
-msgid "Upgrade to unlock"
-msgstr "Upgrade to unlock"
-
-#: build/performance/performance.min.js:2
-msgid "Install Jetpack Boost to unlock"
-msgstr "Install Jetpack Boost to unlock"
-
-#: build/performance/performance.min.js:2
-msgid "Installing Jetpack Boost…"
-msgstr "Installing Jetpack Boost…"
-
-#: build/performance/performance.min.js:2
-msgid "Jetpack Boost is now active"
-msgstr "Jetpack Boost is now active"
-
-#: build/performance/performance.min.js:2
-msgid "Activation failed"
-msgstr "Activation failed"
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Critical CSS Loading (manual)"
-msgstr "Optimise Critical CSS Loading (manual)"
-
-#: build/performance/performance.min.js:2
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-msgstr "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load."
-
-#: build/performance/performance.min.js:2
-msgid "Generate CSS"
-msgstr "Generate CSS"
-
-#: build/performance/performance.min.js:2
-msgid "Critical CSS generated successfully."
-msgstr "Critical CSS generated successfully."
-
-#: build/performance/performance.min.js:2
-msgid "Keep this page opened until the process finish"
-msgstr "Keep this page open until the process finishes"
-
-#: build/performance/performance.min.js:2
-msgid "Error generating Critical CSS, try again"
-msgstr "Error generating Critical CSS, try again"
-
-#: build/performance/performance.min.js:2
-msgid "Optimize Critical CSS Loading (UPGRADED)"
-msgstr "Optimise Critical CSS Loading (UPGRADED)"
-
-#: build/performance/performance.min.js:2
-msgid "Generate Critical CSS Automatically"
-msgstr "Generate Critical CSS Automatically"
-
-#. translators: %1$s is a line break (<br>), %2$s is the opening <strong> tag, %3$s is the closing </strong> tag.
-#: build/performance/performance.min.js:5
-#, js-format
-msgid "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-msgstr "Move important styling information to the start of the page, which helps pages display your content sooner, so your users don’t have to wait for the entire page to load.%1$s %2$sBoost will automatically generate your Critical CSS%3$s whenever you make changes to the HTML or CSS structure of your site."
-
-#: build/performance/performance.min.js:5
-msgid "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
-msgstr "Run non-essential JavaScript after the page has loaded so that styles and images can load more quickly."
-
-#: build/performance/performance.min.js:5
-msgid "Concatenate JS"
-msgstr "Concatenate JS"
-
-#: build/performance/performance.min.js:5
-msgid "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr "Scripts are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-
-#: build/performance/performance.min.js:5
-msgid "Exclude JS Strings"
-msgstr "Exclude JS Strings"
-
-#: build/performance/performance.min.js:5
-msgid "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-msgstr "Styles are grouped by their original placement, concatenated and minified to reduce site loading time and reduce the number of requests."
-
-#: build/performance/performance.min.js:5
-msgid "Exclude CSS Strings"
-msgstr "Exclude CSS Strings"
-
-#: build/performance/performance.min.js:5
-msgid "Disable Coming Soon"
-msgstr "Disable Coming Soon"
-
-#: build/performance/performance.min.js:5
 msgid "Link Prefetch"
 msgstr "Link Prefetch"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
 msgstr "Asks the browser to download and cache links on the page ahead of them being clicked on, so that when they are clicked they load almost instantly."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Link prefetching setting saved"
 msgstr "Link prefetching setting saved"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Enable link prefetching on desktop"
 msgstr "Enable link prefetching on desktop"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Activate on desktop"
 msgstr "Activate on desktop"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Behavior"
 msgstr "Behaviour"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch on Mouse Down"
 msgstr "Prefetch on Mouse Down"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
 msgstr "Prefetch on Mouse Down: Starts loading the page as soon as you click down, for faster response when you release the click."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch on Mouse Hover (Recommended)"
 msgstr "Prefetch on Mouse Hover (Recommended)"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
 msgstr "Prefetch on Mouse Hover: Begins loading the page the moment your cursor hovers over a link"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Enable link prefetching on mobile"
 msgstr "Enable link prefetching on mobile"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Activate on mobile"
 msgstr "Activate on mobile"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch on Touchstart (Recommended)"
 msgstr "Prefetch on Touchstart (Recommended)"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
 msgstr "Prefetch on Touchstart: Instantly starts loading the page as soon as you tap the screen, ensuring a quicker response when you lift your finger."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch Above the Fold"
 msgstr "Prefetch Above the Fold"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
 msgstr "Prefetch Above the Fold: Loads links in your current view instantly, ensuring they're ready when you need them."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Exclude keywords"
 msgstr "Exclude keywords"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
 msgstr "Exclude Keywords: A comma separated list of words or strings that will exclude a link from being prefetched. For example, excluding \"app\" will prevent https://example.com/apple from being prefetched."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled."
 msgstr "Store database query results in Redis so repeated requests are served from memory instead of the database. Clear cache above also flushes the object cache when enabled."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Enable Object Caching"
 msgstr "Enable Object Caching"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Object cache setting saved"
 msgstr "Object cache setting saved"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Failed to update object cache"
 msgstr "Failed to update object cache"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
 msgstr "Another plugin's object cache is active. Disable it in that plugin to use this toggle."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Object caching is not supported on this server. Please contact your hosting provider for help."
 msgstr "Object caching is not supported on this server. Please contact your hosting provider for help."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Object cache is not configured yet. Please try again in a moment."
 msgstr "Object cache is not configured yet. Please try again in a moment."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Setting up object cache. We will retry automatically in a few seconds."
 msgstr "Setting up object cache. We will retry automatically in a few seconds."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Object cache is not ready on this server yet. Please try again later."
 msgstr "Object cache is not ready on this server yet. Please try again later."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Could not enable object cache right now. Please contact support."
 msgstr "Could not enable object cache right now. Please contact support."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Skip 404"
 msgstr "Skip 404"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
 msgstr "When enabled, static resources like images and fonts will use a default server 404 page and not WordPress 404 pages. Pages and posts will continue using WordPress for 404 pages."
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Enable Skip 404 Handling For Static Files"
 msgstr "Enable Skip 404 Handling For Static Files"
 
-#: build/performance/performance.min.js:5
+#: build/performance/performance.min.js:2
 msgid "Skip 404 saved"
 msgstr "Skip 404 saved"
+
+#: build/performance/performance.min.js:2
+msgid "Error saving option"
+msgstr "Error saving option"
